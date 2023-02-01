@@ -1,0 +1,19 @@
+.login__button{
+    background: #F8863400 0% 0% no-repeat padding-box;
+border: 2px solid #F88634;
+border-radius: 24px;
+opacity: 1;
+color: #F88634;
+}
+
+.lostpassword__text {
+letter-spacing: 0px;
+color: #414141;
+opacity: 1;
+}
+
+.noaccout__text{
+    text-align: center;
+letter-spacing: 0px;
+color: #414141;
+}
