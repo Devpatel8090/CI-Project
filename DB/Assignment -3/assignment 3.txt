@@ -1,0 +1,105 @@
+
+
+CREATE DATABASE WorkDB;
+
+USE WorkDB;
+
+
+CREATE TABLE Department (
+
+dept_id INT PRIMARY KEY,
+dept_name NVARCHAR(50) NOT NULL
+)
+
+
+
+SELECT * FROM Department
+SELECT * FROM Employee
+
+CREATE TABLE  Employee (
+
+emp_id INT PRIMARY KEY,
+dept_id INT NOT NULL , 
+mngr_id INT ,
+emp_name NVARCHAR(50) NOT NULL,
+salary MONEY ,FOREIGN KEY (dept_id) REFERENCES Department (dept_id)
+);
+
+
+/*
+UPDATE Department SET dept_name = 'Finance'  WHERE dept_id=1001
+UPDATE Department SET dept_name = 'Audit'  WHERE dept_id=2001
+UPDATE Department SET dept_name = 'Marketing'  WHERE dept_id=3001
+UPDATE Department SET dept_name = 'Production'  WHERE dept_id=4001
+
+*/
+
+--   INSERTING VALUES IN THE DEPARTMENT TABLE
+
+
+INSERT INTO Department(dept_id, dept_name ) VALUES(1001, 'FINANCE')
+INSERT INTO Department(dept_id, dept_name ) VALUES(2001 ,'AUDIT')
+INSERT INTO Department(dept_id, dept_name ) VALUES(3001 , 'marketing')
+INSERT INTO Department(dept_id, dept_name )	VALUES(4001 , 'production')
+
+
+--		INSERTING VALUES IN THE EMPLOYEE TABLE
+
+
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (501,1001,NULL,'Krish',60000)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (502,3001,501,'Brijesh',27500)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (503,1001,501,'Chandu',25500)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (504,2001,501,'Jay',29570)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (505,2001,504,'Suresh',31000)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (506,2001,504,'Feni',31000)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (507,2001,506,'Sanket',9000)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (508,3001,502,'Aayush',17000)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (509,3001,502,'Bablu',13500)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES  (510,3001,502,'Madden',13500)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (511,3001,502,'Taksh',16000)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (512,2001,505,'Aesha',12000)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (513,3001,502,'Juli',10500)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (514,1001,503,'Moksh',14000)
+INSERT INTO Employee (emp_id,dept_id,mngr_id,emp_name,salary) 
+	VALUES (515,1001,501,'Chako',25000)
+
+/*
+
+UPDATE Employee SET dept_id = '4001'  WHERE emp_id=514
+UPDATE Employee SET dept_id = '4001'  WHERE emp_id=515
+
+*/
+
+
+--    1. write a SQL query to find Employees who have the biggest salary in their Department
+/*
+
+SELECT E.emp_id , E.emp_name AS "Employee name" , E.salary , D.dept_name 
+FROM Employee E INNER JOIN Department D ON E.dept_id = D.dept_id
+WHERE E.salary IN (SELECT MAX(salary) FROM Employee GROUP BY dept_id )
+*/
+
+SELECT DISTINCT E.Emp_id, E.Emp_name, D.Dept_id, D.Dept_name, E.Salary
+FROM Employee E
+Inner Join Department D
+ON D.Dept_id = E.Dept_id, 
+(SELECT K.Dept_id,MAX(Salary) AS 'MAXSAL' 
+FROM Employee K
+Group By Dept_id) Y
+WHERE E.Dept_id=Y.Dept_id AND E.Salary = Y.MAXSAL
+
+--    2. write a SQL query to find Departments that have less than 3 people in it SELECT  D.dept_name, D.dept_id , Y.Total AS "Total Employee"FROM ( SELECT COUNT(E.emp_id) AS Total , E.dept_idFROM Employee EGROUP BY (E.dept_id)HAVING COUNT(E.dept_id) < 3) Y INNER JOIN Department D ON Y.dept_id = D.dept_id /*SELECT dept_id , COUNT(emp_id) AS "Total Employee"FROM Employee  GROUP BY (dept_id)HAVING COUNT(dept_id) < 3*/ --  3. write a SQL query to find All Department along with the number of people there /* SELECT dept_id, COUNT(emp_id) AS "TOTAL PEOPLE"  FROM Employee GROUP BY dept_id */ SELECT Y.dept_id , D.dept_name ,Y.Total AS "Total Employee"   FROM(SELECT E.dept_id , COUNT(E.emp_id) AS Total FROM Employee E  GROUP BY E.dept_id ) Y  INNER JOIN Department D ON Y.dept_id = D.dept_id  --  4. write a SQL query to find All Department along with the total salary there /* SELECT dept_id , SUM(salary) AS "Total Salary" FROM Employee GROUP BY (dept_id) */ SELECT Y.dept_id, D.dept_name,Y.Total_Salary FROM(SELECT E.dept_id , SUM(E.salary) AS 'Total_Salary'  FROM Employee E  GROUP BY E.dept_id ) Y  INNER JOIN Department D ON  Y.dept_id=D.dept_id
