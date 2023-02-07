@@ -1,0 +1,164 @@
+use Northwind;
+Create Table Products (
+ ProductID int primary key identity(1,1),
+ ProductName nvarchar(100) NOT NULL,
+ SupplierID  int NOT NULL,
+  CategoryID int NOT NULL,
+  QuantityPerUnit nvarchar(20) NOT NULL,
+  UnitPrice int NOT NULL default 0,
+  UnitsInStock int NOT NULL default 0,
+  UnitsOnOrder int NOT NULL default 0,
+  ReorderLevel int NOT NULL default 0,
+  Discontinued nvarchar(5) NOT NULL default 'NO'
+
+)
+
+
+
+
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	 VALUES('Santoor Soap',8,4,'1 kg pkg.',21,22,30,30,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued") 
+	VALUES('Pears soap',5,4,'10 - 500 g pkgs.',38,86,0,0,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	 VALUES('Dabur hair Oil',6,8,'2 kg box',6,24,0,5,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('Headphone',6,7,'40 - 100 g pkgs.',23,35,0,0,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('TATA Salt',6,2,'24 - 250 ml bottles',15,39,0,5,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('Ginger',7,3,'32 - 500 g boxes',17.45,29,0,10,'YES')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('Water Bottle',7,6,'20 - 1 kg tins',39,0,0,0,'YES')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('Tigers bam',7,8,'16 kg pkg.',62,42,0,0,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	 VALUES('Parle Chocolate Biscuits',8,3,'10 boxes x 12 pieces',9,25,0,5,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	 VALUES('red boxes',8,3,'30 gift boxes',81,40,0,0,'NO')
+
+
+
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	 VALUES('Rice',8,3,'24 pkgs. x 4 pieces',10,3,40,5,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	 VALUES('mug Dal',9,5,'24 - 500 g pkgs.',21,104,0,25,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	 VALUES('Turmeric',9,5,'12 - 250 g pkgs.',9,61,0,25,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('red bull',10,1,'12 - 355 ml cans',45,20,0,0,'YES')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('Cream',11,3,'20 - 450 g glasses',14,76,0,30,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('tuver dal',11,3,'100 - 250 g bags',31,15,0,0,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('water bag',11,3,'100 - 100 g pieces',43,49,0,30,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('jeera',12,7,'25 - 825 g cans',45.6,26,0,0,'YES')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	 VALUES('school bag',12,6,'50 bags x 30 sausgs.',123,0,0,0,'YES')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('tuffan glass',13,8,'10 - 200 g glasses',25,10,0,15,'NO')
+
+
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued") 
+	VALUES('powder',19,8,'12 - 12 oz cans',9,85,0,10,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('French fries',20,5,'32 - 1 kg pkgs.',14,26,0,0,'YES')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	 VALUES('Mocha Coffee',20,1,'16 - 500 g tins',46,17,10,25,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	 VALUES('Capachino',20,2,'20 - 2 kg bags',19,27,0,15,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('Wagh bakri TEa',21,8,'1k pkg.',9,5,70,15,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	 VALUES('Orange Drinks',21,8,'4 - 450 g glasses',12,95,0,0,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('Red wine',22,3,'10 - 4 oz boxes',9,36,0,0,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('Chocolate',22,3,'10 pkgs.',12,15,70,25,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued")
+	VALUES('Kurkure',23,3,'24 - 50 g pkgs.',20,10,60,15,'NO')
+
+INSERT "Products"("ProductName","SupplierID","CategoryID","QuantityPerUnit","UnitPrice","UnitsInStock","UnitsOnOrder","ReorderLevel","Discontinued") 
+	VALUES('Pasta',23,3,'12 - 100 g bars',16,65,0,30,'NO')
+
+
+
+	select * from Products
+
+
+
+select ProductId,ProductName,UnitPrice 
+from Products 
+where UnitPrice < 20 AND Discontinued = 'NO'
+
+
+
+select ProductId,ProductName,UnitPrice 
+from Products 
+where UnitPrice Between 15 AND 25
+
+
+
+select ProductName,UnitPrice
+ from Products
+ where UnitPrice > (select AVG(UnitPrice) from Products )
+
+
+
+select  top 10 ProductName,UnitPrice 
+from Products 
+order by UnitPrice DESC
+
+
+
+
+
+
+
+
+
+SELECT (Count(ProductName)) AS CURRENT_PRODUCTS
+FROM Products
+GROUP BY Discontinued
+
+
+
+
+
+
+
+
+select ProductName,UnitsOnOrder,UnitsInStock 
+from Products
+where UnitsOnOrder>UnitsInStock
