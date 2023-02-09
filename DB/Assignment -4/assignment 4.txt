@@ -1,0 +1,217 @@
+USE Northwind;
+
+
+
+--     1. Create a stored procedure in the Northwind database that will calculate the average value of Freight for a specified customer.Then, a business rule will be added that will be triggered before every Update and Insert command in the Orders controller,and will use the stored procedure to verify that the Freight does not exceed the average freight. If it does, a message will be displayed and the command will be cancelled.  --
+
+	
+
+		
+		DROP PROCEDURE  IF EXISTS spAvgFreightForCustomer
+		create procedure spAvgFreightForCustomer
+		@customer_id char(5),
+		@AvgFreight real output
+		as
+		begin
+			select @AvgFreight = avg(freight)
+			from orders
+			where CustomerID = @customer_id;
+		end
+
+		Declare @AvgFreight real
+		EXECUTE spAvgFreightForCustomer 'HANAR', @AvgFreight = @AvgFreight OUTPUT
+		select @AvgFreight as [answer];
+
+
+
+
+		alter TRIGGER trCheckAvgVal
+		ON orders
+		FOR INSERT, UPDATE
+		AS
+		BEGIN
+			DECLARE @AverageFreightValue real, @InsertedFreight real, @OldAverage real
+			DECLARE @CustomerId char(5), @Count int
+			DECLARE @errorText  NVARCHAR(100)
+			SELECT @CustomerId = CustomerID, @InsertedFreight = freight FROM inserted
+
+			DECLARE @DeletedId int, @OldFreight real
+			SELECT @DeletedId = OrderID, @OldFreight = freight FROM deleted
+
+
+			SELECT @Count = COUNT(OrderID) FROM orders WHERE CustomerID = @CustomerId
+
+			EXECUTE  spAvgFreightForCustomer  @CustomerId , @AvgFreight = @AverageFreightValue OUTPUT
+
+			If @DeletedId IS NULL
+			BEGIN
+				SET @OldAverage = ((@AverageFreightValue * @Count) - @InsertedFreight)/(@Count-1)
+			END
+			ELSE
+			BEGIN
+				SET @OldAverage = ((@AverageFreightValue*@Count)-@InsertedFreight+@OldFreight)/(@Count)
+			END
+
+			IF @InsertedFreight > @OldAverage
+			BEGIN
+				SET @errorText = 'Frieght Value cannot be greater than Average Fright value = '+CAST(@OldAverage AS NVARCHAR)
+				RAISERROR(@errorText,16,1)
+				ROLLBACK TRAN
+			END
+		END
+
+
+		insert into Orders (EmployeeID,OrderDate,Freight,ShipCity,ShipCountry) values ( 1, '1998-05-06' , 200 , 'Albuquerque' , 'USA' )
+
+
+
+--  2. write a SQL query to Create Stored procedure in the Northwind database to retrieve Employee Sales by Country
+
+	CREATE PROCEDURE spRetrieveEmployeeSalesByCountry
+	@ShipCountry NVARCHAR(15),
+	@EmployeeID INT
+
+	AS 
+
+	BEGIN 
+
+	SELECT O.ShipCountry AS "Country",COUNT(E.EmployeeID) AS "Total Sale Items" , SUM(OD.Quantity *(1-OD.Discount)*  OD.UnitPrice)  AS "Total sales amount"
+	FROM  Orders O INNER JOIN Employees E ON O.EmployeeID = E.EmployeeID
+	INNER JOIN [Order Details] OD ON O.OrderID = OD.OrderID
+	WHERE ShipCountry = @ShipCountry AND E.EmployeeID = @EmployeeID
+	GROUP BY ShipCountry
+	
+	END 
+
+	EXECUTE spRetrieveEmployeeSalesByCountry USA , 3
+	
+--  3. write a SQL query to Create Stored procedure in the Northwind database to retrieve Sales by Year
+
+
+	CREATE PROCEDURE spRetrieveSalesByYear 
+	@Year NVARCHAR(60)
+
+	AS
+
+	BEGIN 
+
+	SELECT YEAR(O.ShippedDate) AS "Year", COUNT (YEAR(O.ShippedDate)) AS "Total Sale Items", SUM(OD.Quantity *(1-OD.Discount)*  OD.UnitPrice)  AS "Total sales amount"
+	FROM Orders O INNER JOIN Employees E ON O.EmployeeID = E.EmployeeID
+	INNER JOIN [Order Details] OD ON O.OrderID = OD.OrderID
+	WHERE YEAR(O.ShippedDate) = YEAR(@Year)
+	GROUP BY YEAR(O.ShippedDate)
+	END
+
+	EXECUTE spRetrieveSalesByYear 1996
+
+--  4. write a SQL query to Create Stored procedure in the Northwind database to retrieve Sales By Category
+	
+	CREATE PROCEDURE spRetrieveSalesByCategories
+	@CategoryName VARCHAR(15)
+
+	AS 
+
+	BEGIN 
+	 
+	SELECT  C.CategoryName, COUNT(C.CategoryName) AS "Total Sale items" , SUM(OD.Quantity *(1-OD.Discount)*  OD.UnitPrice)  AS "Total sales amount"
+	FROM [Order Details] OD INNER JOIN Orders O ON OD.OrderID = O.OrderID 
+	 INNER JOIN Products P ON OD.ProductID = P.ProductID
+	 INNER JOIN Categories C ON P.CategoryID= C.CategoryID
+	 WHERE C.CategoryName = @CategoryName
+	 group by C.CategoryName
+	 order by C.CategoryName ASC
+
+	END
+
+	EXECUTE spRetrieveSalesByCategories 'Confections'
+
+
+--  5. write a SQL query to Create Stored procedure in the Northwind database to retrieve Ten Most Expensive Products
+
+	CREATE PROCEDURE spTenMostExpensiveProduct 
+
+	AS 
+
+	BEGIN 
+
+	SELECT TOP 10 *
+	FROM Products
+	ORDER BY UnitPrice DESC
+
+	END
+
+	EXECUTE spTenMostExpensiveProduct
+
+
+--	6. write a SQL query to Create Stored procedure in the Northwind database to insert Customer Order Details
+
+		CREATE procedure spInsertCustomerOrderDetails
+
+		@CustomerId char(5),  @EmployeeId int, @ShipVia int , @FreightVal real,
+		@ShipCity nvarchar(15) , @ShipCountry nvarchar(15) , @product_id int , @quantity int , @discount real 
+
+		AS
+		BEGIN
+
+			DECLARE @order_id INT  , @unit_price REAL
+			set @order_id = (SELECT max(OrderID) from orders) + 1
+			set @unit_price = (SELECT  UnitPrice  from products where ProductID = @product_id)
+
+
+			begin try
+
+			insert into orders  (OrderID,CustomerID,EmployeeID,ShippedDate,ShipVia,Freight,ShipCity,ShipCountry) values (@order_id , @CustomerId , @EmployeeId ,  GETDATE() ,   @ShipVia , @FreightVal , @ShipCity  
+			, @ShipCountry)
+
+			insert into [Order Details] values (@order_id , @product_id , @unit_price , @quantity , @discount)
+
+			end try
+
+			BEGIN CATCH 
+				RAISERROR ('ERROR OCCURS',16,1)
+				ROLLBACK TRAN
+
+			END CATCH
+	
+		END
+
+
+--  7. write a SQL query to Create Stored procedure in the Northwind database to update Customer Order Detail
+
+
+
+CREATE PROCEDURE spUpdateCustomerOrderDetails
+@OrderId int, @CustomerId char(5), @EmployeeId int, @OrderDate date,
+@ShipVia int ,@Freight real, @ShipCountry nvarchar(15),
+@ProductId int, @Quantity int, @Discount real , @ShipCity nvarchar(15)
+AS
+BEGIN
+DECLARE @UnitPrice real
+BEGIN TRAN
+set @UnitPrice = (select UnitPrice from products where ProductID = @ProductId)
+
+BEGIN TRY
+UPDATE orders
+SET
+CustomerID = @CustomerId, EmployeeID = @EmployeeId, OrderDate = @OrderDate, ShipVia = @ShipVia, freight = @Freight, ShipCity = @ShipCity, ShipCountry = @ShipCountry WHERE OrderID = @OrderId
+
+UPDATE [Order Details]
+SET @ProductId = @ProductId, UnitPrice = @UnitPrice, quantity = @Quantity, discount = @Discount WHERE OrderID = @OrderId
+
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+SELECT ERROR_MESSAGE() as Error
+ROLLBACK TRAN
+END CATCH
+END
+
+
+
+
+
+
+
+
+
+
