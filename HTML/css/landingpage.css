@@ -1,0 +1,188 @@
+body {
+    font-family: "Lato", sans-serif;
+  }
+  
+  .sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidebar a:hover {
+    color: #3E54AC;
+  }
+  
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color:white;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+  }
+  
+  .openbtn:hover {
+    background-color: #444;
+  }
+  
+  #main {
+    transition: margin-left .5s;
+    padding: 16px;
+  }
+
+
+
+
+.city__container {
+    position: absolute;
+    top:5%;
+    left: 65%;
+    width: 95px;
+    height: 30px;
+    background-color:black;
+    opacity:40%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+}
+
+
+
+
+.heart_image_container {
+
+    background-color:black;
+    opacity:40%;
+    width: 35px;
+    height: 35px;
+    position:absolute;
+    top:50%;
+    left:85%;
+
+}
+.heart__image  {
+    
+    padding-top: 10px;
+    padding-left: 6px;
+    z-index: 1;
+}
+
+.add__person__image__container {
+    position:absolute;
+    top:75%;
+    left:85%;
+    background-color:black;
+    opacity:40%;
+    width: 35px;
+    height: 35px;
+}
+
+.add__person__image {
+    padding-left: 5px;
+}
+
+
+.time__text {
+
+    margin-top: -27px;
+    text-align: center;
+    background-color: white;
+}
+
+.apply__text {
+    color:#f88634;
+    border:2px solid  #f88634;
+    margin-left: 60px;
+
+}
+@media (max-width:380px ) {
+    .time__text {
+        margin-top: -40px;
+        text-align: center;
+    }
+
+}
+
+
+
+@media (max-width:768px) and (min-width:426px) 
+ {  
+    .city__container {
+    top: 5%;
+    left: 73%;
+    width: 83px;
+    height: 27px;
+    }
+    .heart_image_container {
+        width: 28px;
+        height: 30px;
+        top: 44%;
+        left: 84%;
+    }
+    .heart__image  {
+        padding-top: 7px;
+        padding-left: 3px;
+       
+    }
+    
+    .add__person__image__container {
+        
+        top: 74%;
+        left: 84%;
+        width: 28px;
+        height: 30px;
+    }
+    .time__text {
+        margin-top: -40px;
+        text-align: center;
+    }
+
+
+ }
+
+
+ @media (max-width:1440px) and (min-width:1024px) {
+    .city__container {
+    left: 66%;
+    }
+    .time__text {
+        margin-top: -30px;
+        text-align: center;
+    }
+
+ }
+
+ 
+ @media (min-width:1440px) {
+    .city__container {
+    left: 75%;
+    }
+
+ }
