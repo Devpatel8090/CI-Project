@@ -1,12 +1,15 @@
 body {
     font-family: "Lato", sans-serif;
   }
+
+
+  /* Side Bar Css */
   
   .sidebar {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     top: 0;
     left: 0;
     background-color: white;
@@ -55,16 +58,15 @@ body {
   }
 
 
-
+/* grid page css */
 
 .city__container {
     position: absolute;
     top:5%;
-    left: 65%;
-    width: 95px;
-    height: 30px;
-    background-color:black;
-    opacity:40%;
+    left: 62%;
+    width: 110px;
+  height: 30px;
+    background-color:rgba(0,0,0,0.5);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -78,8 +80,7 @@ body {
 
 .heart_image_container {
 
-    background-color:black;
-    opacity:40%;
+    background-color:rgba(0,0,0,0.5);
     width: 35px;
     height: 35px;
     position:absolute;
@@ -98,8 +99,7 @@ body {
     position:absolute;
     top:75%;
     left:85%;
-    background-color:black;
-    opacity:40%;
+    background-color:rgba(0,0,0,0.5);
     width: 35px;
     height: 35px;
 }
@@ -113,7 +113,9 @@ body {
 
     margin-top: -27px;
     text-align: center;
+    position: relative;
     background-color: white;
+    z-index: 1;
 }
 
 .apply__text {
@@ -122,23 +124,103 @@ body {
     margin-left: 60px;
 
 }
+
+
+
+
+/* list view */
+
+.time__text__list{
+  
+  margin-top: -30px;
+  margin-left: -10px;
+  background-color: white;
+  position: relative;
+  z-index: 1;
+  
+}
+
+
+
+.apply__text__list{
+  color:#f88634;
+  border:2px solid  #f88634;
+}
+
+.apply__text__list:hover{
+  color:#f88634;
+}
+
+.city__container__list{
+  position: absolute;
+  top:5%;
+  left: 60%;
+  width: 110px;
+  height: 30px;
+  background-color:rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+}
+.heart__image__container__listView {
+
+  background-color:rgba(0,0,0,0.5);
+  width: 35px;
+  height: 35px;
+  position:absolute;
+  top:60%;
+  left:85%;
+
+}
+
+
+.add__person__image__container__listView {
+  position: absolute;
+  background-color:rgba(0,0,0,0.5);
+  top: 75%;
+  left: 85%;
+  width: 35px;
+  height: 35px;
+
+}
+
+
+/* mission page css */
+
+.submit__mission__text {
+  color:#f88634;
+  border:2px solid  #f88634;
+}
+
 @media (max-width:380px ) {
     .time__text {
         margin-top: -40px;
         text-align: center;
     }
 
+
 }
 
+@media  (min-width:375px) and (max-width:425px){
+  .city__container {
+    top: 5%;
+    left: 68%;
+ 
+    }
+
+
+}
 
 
 @media (max-width:768px) and (min-width:426px) 
  {  
     .city__container {
     top: 5%;
-    left: 73%;
-    width: 83px;
-    height: 27px;
+    left: 66%;
+ 
     }
     .heart_image_container {
         width: 28px;
@@ -165,24 +247,56 @@ body {
     }
 
 
+
+
  }
 
 
- @media (max-width:1440px) and (min-width:1024px) {
+ @media (max-width:1439px) and (min-width:1024px) {
     .city__container {
-    left: 66%;
+    left: 60%;
     }
-    .time__text {
-        margin-top: -30px;
-        text-align: center;
+   
+    .time__text__list{
+  
+      margin-top: -37px;
+      
+    
+     
+      
     }
+
+   .add__person__image__container__listView {
+    
+    top:75%;
+    left:85%;
+   }
+   
+  .heart__image__container__listView {
+  top:55%;
+  left:85%;
+}
 
  }
 
  
  @media (min-width:1440px) {
     .city__container {
-    left: 75%;
+    left: 72%;
     }
+
+    .add__person__image__container__listView {
+    
+      top:75%;
+      left:85%;
+     }
+     
+    .heart__image__container__listView {
+    top:55%;
+    left:85%;
+  }
+  .city__container__list {
+    left:70%;
+  }
 
  }
