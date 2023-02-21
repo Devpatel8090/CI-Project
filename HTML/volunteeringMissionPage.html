@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Mission Page</title>
+
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/volunteeringMissionPage.css">
+    <link rel="stylesheet" href="./css/landingpage.css">
+</head>
+
+<body>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+
+
+        <a href="#">
+            <a class="nav-link" href="#" role="button" aria-expanded="false">
+                Stories
+            </a>
+        </a>
+
+        <a href="#">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Policies
+            </a>
+            <ul class="dropdown-menu ms-5 ps-5 border-0" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="#">Policy 1</a></li>
+                <li><a class="dropdown-item" href="#">Policy 2</a></li>
+                <li><a class="dropdown-item" href="#">Policy 3</a></li>
+            </ul>
+        </a>
+
+    </div>
+
+
+    <div class="main">
+        <div class="d-flex justify-content-between border-bottom d-sm-none" id="menubr">
+            <button class="openbtn " id="openbtn" onclick="openNav()">
+                <img src="./images/list.png" class="list__nav" alt="">
+            </button>
+            <p>&nbsp</p>
+            <div class="dropdown text-end start-0 d-sm-none " id="img_user">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="./images/user-img.png" alt="user image" width="40" height="40" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item" href="#">New project...</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <header class="p-3 mb-3 border-bottom  d-none d-sm-block">
+            <div class="container d-none d-sm-block">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start ">
+
+                    <ul class="nav col-auto col-lg-auto me-auto mb-2 justify-content-center mb-md-0 gap-3 ms-5">
+                        <li><a href="#" class="nav-link px-2 link-dark">Stories</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownMenuLink"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Policies
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="dropdown text-end">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle me-lg-5"
+                            id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="./images/user-img.png" alt="user image" width="40" height="40"
+                                class="rounded-circle">
+                            <span class="">Evan Donohue</span>
+                        </a>
+                        <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+
+    </div>
+
+
+    <!-- photoes pages  -->
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-5">
+                <div class="row">
+                    <img src="./images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png " id="image1" alt="" />
+                    <img src="./images/img3.png" id="image2" />
+                    <img src="./images/Grow-Trees-On-the-path-to-environment-sustainability-4.png" id="image3" />
+                    <img src="./images/img22.png" id="image4" />
+
+                </div>
+
+                <!-- <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img src="./images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png" class="d-block w-50" alt="...">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="./images/img3.png" class="d-block w-50" alt="...">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="./images/Grow-Trees-On-the-path-to-environment-sustainability-4.png" class="d-block w-50" alt="...">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="./images/img22.png" class="d-block w-50" alt="...">
+                      </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div> -->
+
+
+
+            </div>
+
+            <div class="col-7">
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-7  col-sm-12  me-lg-3">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="nav-mission-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-mission" type="button" role="tab" aria-controls="nav-mission"
+                            aria-selected="true">mission</button>
+                        <button class="nav-link" id="nav-organization-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-organization" type="button" role="tab" aria-controls="nav-organization"
+                            aria-selected="false">organization</button>
+                        <button class="nav-link" id="nav-comment-tab" data-bs-toggle="tab" data-bs-target="#nav-comment"
+                            type="button" role="tab" aria-controls="nav-comment" aria-selected="false">Comments</button>
+
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-mission" role="tabpanel"
+                        aria-labelledby="nav-mission-tab" tabindex="0">
+                        <div class="mt-3">
+                            <h3>Introducation</h3>
+                            <p class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et
+                                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                nisi ut aliquip
+                                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                cillum dolore eu
+                                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                                officia
+                                deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit, sed do
+                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure
+                                dolor in
+                                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                                sint occaecat
+                                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
+                        </div>
+                        <div>
+                            <h3>Challenge</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                                ut labore et
+                                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                nisi ut aliquip
+                                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                cillum dolore eu
+                                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                                officia
+                                deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit, sed do
+                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint
+                                occaecat cupidatat
+                                non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                        <div>
+                            <h3>Documents</h3>
+                            <form>
+                                <div class="form-group">
+                                    <div class="mb-3">
+                                        <label for="formFileSm" class="form-label">Small file input example</label>
+                                        <input class="form-control form-control-sm" id="formFileSm" type="file">
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-organization" role="tabpanel"
+                        aria-labelledby="nav-organization-tab" tabindex="0">
+
+
+
+                    </div>
+                    <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="nav-comment-tab"
+                        tabindex="0">..gdfgdg.</div>
+
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 ms-lg-5">
+                <div class="rightside__container d-sm-flex d-md-block align-items-center justify-content-center gap-1">
+                    <div class="border information__section p-4  ">
+                        <div class=" row  mt-2 border-bottom ">
+                            <h4 class="">Information</h4>
+                        </div>
+                        <div class="row flex-column ">
+                            <div class="col d-flex  mt-3 gap-sm-3 gap-lg-5 border-1 border-bottom ">
+                                <span>Skills</span>
+                                <span>Cool, Easy going, Math, Computer</span>
+                            </div>
+                            <div class="col d-flex  mt-3 gap-5 border-1 border-bottom ">
+                                <span> Days </span>
+                                <span> Weekend only</span>
+                            </div>
+                            <div class="col d-flex  mt-3 gap-5 border-1 ">
+                                <span>Rating</span>
+                                <div class="">
+                                    <img src="./images/selected-star.png" />
+                                    <img src="./images/selected-star.png" />
+                                    <img src="./images/selected-star.png" />
+                                    <img src="./images/selected-star.png" />
+                                    <img src="./images/selected-star.png" />
+                                    <span>(by 125 Volunteers)</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent__volunteer border mt-3 p-lg-3 p-sm-1">
+                        <h4 class="mt-2 ms-sm-2 ">Recent Volunteers</h4>
+                        <div class="row row-cols-3">
+                            <div class="col d-flex flex-column align-items-center justify-content-center">
+                                <img src="./images/volunteer1.png" class="rounded-circle " width="70px" height="70px" />
+                                <span class="text-center">Andrew Johnson</span>
+                            </div>
+
+                            <div class="col d-flex flex-column align-items-center justify-content-center">
+                                <img src="./images/volunteer2.png" class="rounded-circle align-items-center"
+                                    width="70px" height="70px" />
+                                <span class="text-center">Charles Vigue</span>
+                            </div>
+                            <div class="col d-flex flex-column align-items-center justify-content-center">
+                                <img src="./images/volunteer3.png" class="rounded-circle" width="70px" height="70px" />
+                                <span class="text-center">Kathryn Roberts</span>
+                            </div>
+                            <div class="col d-flex flex-column align-items-center justify-content-center">
+                                <img src="./images/volunteer4.png" class="rounded-circle" width="70px" height="70px" />
+                                <span class="text-center">Estella Fowles</span>
+                            </div>
+                            <div class="col d-flex flex-column align-items-center justify-content-center">
+                                <img src="./images/volunteer5.png" class="rounded-circle" width="70px" height="70px" />
+                                <span class="text-center">Rose Lewis</span>
+                            </div>
+                            <div class="col d-flex flex-column align-items-center justify-content-center">
+                                <img src="./images/volunteer6.png" class="rounded-circle" width="70px" height="70px" />
+                                <span class="text-center">Raymond Pabon</span>
+                            </div>
+                            <div class="col d-flex flex-column align-items-center justify-content-center">
+                                <img src="./images/volunteer7.png" class="rounded-circle" width="70px" height="70px" />
+                                <span class="text-center">Travis Steen</span>
+                            </div>
+                            <div class="col d-flex flex-column align-items-center justify-content-center">
+                                <img src="./images/volunteer8.png" class="rounded-circle" width="70px" height="70px" />
+                                <span class="text-center">Sarah Santillan</span>
+                            </div>
+                            <div class="col d-flex flex-column align-items-center justify-content-center">
+                                <img src="./images/volunteer9.png" class="rounded-circle" width="70px" height="70px" />
+                                <span class="text-center">Linda Richards</span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <hr>
+        <div class="container-fluid container-lg"></div>
+        <h5 class="text-center"> Related Mission</h5>
+
+        <div class="related__mission__card container me-lg-5 pe-lg-5">
+            <div class="row mt-3 row-cols-1 row-cols-sm-2 row-cols-lg-3">
+                <div class="col  mb-3">
+                    <div class="card" style="max-width: 26rem;">
+                        <div style="position: relative;">
+                            <img class="card-img-top"
+                                src="./images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
+                                alt="Card image cap">
+                            <div style="position: absolute;bottom: 0;width: 100%;">
+                                <p class="m-0 bg-white border rounded-pill text-center w-50"
+                                    style="transform: translate(50%, 50%) ;">Enviorment</p>
+                            </div>
+                            <div class="heart_image_container rounded-circle ">
+                                <img src="./images/heart.png" class=" heart__image">
+                            </div>
+                            <div class="rounded-circle add__person__image__container">
+                                <img src="./images/user.png" class="add__person__image">
+                            </div>
+                            <div class="city__container rounded-pill d-sm-none d-md-block">
+                                <img src="./images/pin.png" class="locatin__image ">
+                                <span class="text-white">Toronto</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title text-start mt-2">Grow Trees – On the path to environment
+                                sustainability </h3>
+                            <p class="card-text text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                do
+                                eiusmod
+                                tempor incididunt ut labore...</p>
+                            <div class="d-flex justify-content-between mb-1 ">
+                                <span>Tree Canada</span>
+                                <div class="star__container">
+                                    <img src="./images/selected-star.png">
+                                    <img src="./images/selected-star.png">
+                                    <img src="./images/selected-star.png">
+                                    <img src="./images/selected-star.png">
+                                    <img src="./images/star.png">
+                                </div>
+                            </div>
+                            <br />
+                            <hr>
+                            <div class="time__text border rounded-pill w-75 mx-auto ">
+                                <span>From 10/01/2019 until 25/02/2019</span>
+                            </div>
+
+
+
+
+
+                            <div class="row mt-3 ms-2 mb-3">
+                                <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                    <img src="./images/Seats-left.png" class="" width="30px" height="30px">
+                                    <div class="d-flex flex-column ">
+                                        <h5 class="mb-0">10</h5>
+                                        <span>Seats left</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                    <img src="./images/deadline.png" width="40px" height="40px">
+                                    <div class="d-flex flex-column">
+                                        <h5 class="mb-0">09/01/2019</h5>
+                                        <span>Deadline</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="mt-2 apply__button   w-75 text-center apply__button">
+                                <a href="#" class="btn rounded-pill   text-center apply__text">Apply <img
+                                        src="./images/right-arrow.png" class="ms-2"></a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col  mb-3">
+                    <div class="card" style="max-width: 26rem;">
+                        <div style="position: relative;">
+                            <img class="card-img-top"
+                                src="./images/Education-Supplies-for-Every--Pair-of-Shoes-Sold-1.png"
+                                alt="Card image cap">
+                            <div style="position: absolute;bottom: 0;width: 100%;">
+                                <p class="m-0 bg-white border rounded-pill text-center w-50"
+                                    style="transform: translate(50%, 50%) ;">Children</p>
+                            </div>
+                            <div class="heart_image_container rounded-circle ">
+                                <img src="./images/heart.png" class=" heart__image">
+                            </div>
+                            <div class="rounded-circle add__person__image__container">
+                                <img src="./images/user.png" class="add__person__image">
+                            </div>
+                            <div class="city__container rounded-pill d-sm-none d-md-block">
+                                <img src="./images/pin.png" class="locatin__image">
+                                <span class="text-white">Melbourne</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title text-start mt-2">Education Supplies for Every Pair of Shoes Sold
+                            </h3>
+                            <p class="card-text text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                do
+                                eiusmod
+                                tempor incididunt ut labore...</p>
+                            <div class="d-flex justify-content-between mb-1 ">
+                                <span>Australian Paradise</span>
+                                <div class="star__container">
+                                    <img src="./images/selected-star.png">
+                                    <img src="./images/selected-star.png">
+                                    <img src="./images/selected-star.png">
+                                    <img src="./images/selected-star.png">
+                                    <img src="./images/star.png">
+                                </div>
+                            </div>
+                            <br />
+
+                            <hr>
+                            <div class="time__text border rounded-pill w-75 mx-auto ">
+                                <span>From 10/01/2019 until 25/02/2019</span>
+                            </div>
+
+
+                            <div class="row mt-3 ms-2 mb-3">
+                                <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                    <img src="./images/Seats-left.png" width="30px" height="30px">
+                                    <div class="d-flex flex-column ">
+                                        <h5 class="mb-0">250</h5>
+                                        <span class="ms-0">Already Volunteer</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                    <img src="./images/deadline.png" width="40px" height="40px">
+                                    <div class="d-flex flex-column">
+                                        <h5 class="mb-0">09/01/2019</h5>
+                                        <span>Deadline</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="mt-2 apply__button   w-75 text-center apply__button">
+                                <a href="#" class="btn rounded-pill   text-center apply__text">Apply <img
+                                        src="./images/right-arrow.png" class="ms-2"></a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col  mb-3">
+                    <div class="card" style="max-width: 26rem;">
+                        <div style="position: relative;">
+                            <img class="card-img-top" src="./images/Nourish-the-Children-in--African-country-1.png"
+                                alt="Card image cap">
+                            <div style="position: absolute;bottom: 0;width: 100%;">
+                                <p class="m-0 bg-white border rounded-pill text-center w-50"
+                                    style="transform: translate(50%, 50%) ;">Nutrition</p>
+                            </div>
+                            <div class="heart_image_container rounded-circle ">
+                                <img src="./images/heart.png" class=" heart__image">
+                            </div>
+                            <div class="rounded-circle add__person__image__container">
+                                <img src="./images/user.png" class="add__person__image">
+                            </div>
+                            <div class="city__container rounded-pill d-sm-none d-md-block">
+                                <img src="./images/pin.png" class="locatin__image">
+                                <span class="text-white">Barcelona</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title text-start mt-2">Nourish the Children in African country
+                            </h3>
+                            <p class="card-text text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                do
+                                eiusmod
+                                tempor incididunt ut labore...</p>
+                            <div class="d-flex justify-content-between mb-1 ">
+                                <span>The Hunger</span>
+                                <div class="star__container">
+                                    <img src="./images/selected-star.png">
+                                    <img src="./images/selected-star.png">
+                                    <img src="./images/selected-star.png">
+                                    <img src="./images/selected-star.png">
+                                    <img src="./images/star.png">
+                                </div>
+                            </div>
+                            <br />
+                            <hr>
+                            <div class="time__text border rounded-pill w-75 mx-auto ">
+                                <span>Ongoing Opportunity </span>
+                            </div>
+
+
+                            <div class="row mt-3 ms-2 mb-3">
+                                <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                    <img src="./images/Seats-left.png" width="30px" height="30px">
+                                    <div class="d-flex flex-column ">
+                                        <h5 class="mb-0">10</h5>
+                                        <span>Seats left</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                    <img src="./images/deadline.png" width="40px" height="40px">
+                                    <div class="d-flex flex-column">
+                                        <h5 class="mb-0">09/01/2019</h5>
+                                        <span>Deadline</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="mt-2 apply__button   w-75 text-center apply__button">
+                                <a href="#" class="btn rounded-pill   text-center apply__text">Apply <img
+                                        src="./images/right-arrow.png" class="ms-2"></a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+   
+
+
+
+
+
+
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script>
+
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "275px";
+            document.getElementById("main").style.marginLeft = "275px";
+            document.getElementById("openbtn").style.display = "none";
+            document.getElementById("menubr").style.display = "none";
+            document.getElementById("img_user").onload = function () { displayNone() };
+            document.getElementById("img_user").style.display = "block";
+
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            document.getElementById("openbtn").style.display = "block";
+            document.getElementById("menubr").style.display = "block";
+        }
+    </script>
+
+</body>
+
+</html>

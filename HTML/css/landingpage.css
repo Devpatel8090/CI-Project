@@ -125,6 +125,23 @@ body {
 
 }
 
+progress {
+  border-radius: 5px!important;
+  height: 10px;
+
+}
+
+
+progress::-webkit-progress-value {
+  border-radius: 5px!important;
+  background: #F88634;
+}
+
+progress::-webkit-progress-bar {
+  border-radius: 5px!important;
+  background: #E8E8E8;
+}
+
 
 
 
