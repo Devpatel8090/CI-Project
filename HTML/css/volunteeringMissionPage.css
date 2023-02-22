@@ -53,9 +53,11 @@ body {
     transition: margin-left .5s;
     padding: 16px;
 }
-
-
-
-#image1,#image2,#image3,#image4 {
-    display: none;
+.star__images , .tree__text {
+    background-color: white;
+    position: relative;
+    z-index: 1;
+    margin-top: -33px;
+    
 }
+
