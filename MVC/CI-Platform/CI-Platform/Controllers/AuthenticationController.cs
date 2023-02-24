@@ -19,9 +19,6 @@ namespace CI_Platform.Controllers
             return View();
         }
 
-        public IActionResult registration()
-        {
-            return View();
-        }
+       
     }
 }

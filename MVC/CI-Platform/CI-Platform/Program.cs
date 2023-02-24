@@ -31,4 +31,8 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "Authentication",
     pattern: "{controller=Authentication}/{action=forgotPassword}");
+
+app.MapControllerRoute(
+    name: "Registration",
+    pattern: "{controller=Registration}/{action=Register}");
 app.Run();

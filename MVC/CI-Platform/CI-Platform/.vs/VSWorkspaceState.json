@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Views"
+    "\\Views",
+    "\\Views\\Authentication",
+    "\\wwwroot",
+    "\\wwwroot\\css"
   ],
-  "SelectedNode": "\\CI-Platform.csproj",
+  "SelectedNode": "\\Views\\Authentication\\resetPassword.cshtml",
   "PreviewInSolutionExplorer": false
 }

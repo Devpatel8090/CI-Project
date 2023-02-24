@@ -23,10 +23,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25cbG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Authentication/registration.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25ccmVnaXN0cmF0aW9uLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Authentication/resetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25ccmVzZXRQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -37,6 +33,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Registration/register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVnaXN0cmF0aW9uXHJlZ2lzdGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Shared/Error.cshtml]

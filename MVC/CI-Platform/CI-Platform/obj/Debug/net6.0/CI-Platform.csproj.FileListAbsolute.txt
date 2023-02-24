@@ -24,3 +24,4 @@ C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\obj\Debug\net6.0\
 C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\obj\Debug\net6.0\ref\CI-Platform.dll
 C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\obj\Debug\net6.0\CI-Platform.pdb
 C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\obj\Debug\net6.0\CI-Platform.genruntimeconfig.cache
+C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\bin\Debug\net6.0\.filenesting.json
