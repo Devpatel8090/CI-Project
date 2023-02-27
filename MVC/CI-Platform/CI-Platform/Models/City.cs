@@ -11,7 +11,7 @@ public partial class City
 
     public string Name { get; set; } = null!;
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 

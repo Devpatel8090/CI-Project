@@ -9,9 +9,9 @@ public partial class UserSkill
 
     public long UserId { get; set; }
 
-    public long SkillId { get; set; }
+    public int SkillId { get; set; }
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 

@@ -1,0 +1,319 @@
+body {
+    font-family: "Lato", sans-serif;
+  }
+
+
+  /* Side Bar Css */
+  
+  .sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidebar a:hover {
+    color: #3E54AC;
+  }
+  
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color:white;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+  }
+  
+  .openbtn:hover {
+    background-color: #444;
+  }
+  
+  #main {
+    transition: margin-left .5s;
+    padding: 16px;
+  }
+
+
+/* grid page css */
+
+.city__container {
+    position: absolute;
+    top:5%;
+    left: 62%;
+    width: 110px;
+  height: 30px;
+    background-color:rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+}
+
+
+
+
+.heart_image_container {
+
+    background-color:rgba(0,0,0,0.5);
+    width: 35px;
+    height: 35px;
+    position:absolute;
+    top:50%;
+    left:85%;
+
+}
+.heart__image  {
+    
+    padding-top: 10px;
+    padding-left: 6px;
+    z-index: 1;
+}
+
+.add__person__image__container {
+    position:absolute;
+    top:75%;
+    left:85%;
+    background-color:rgba(0,0,0,0.5);
+    width: 35px;
+    height: 35px;
+}
+
+.add__person__image {
+    padding-left: 5px;
+}
+
+
+.time__text {
+
+    margin-top: -27px;
+    text-align: center;
+    position: relative;
+    background-color: white;
+    z-index: 1;
+}
+
+.apply__text {
+    color:#f88634;
+    border:2px solid  #f88634;
+    
+
+}
+
+progress {
+  border-radius: 5px!important;
+  height: 10px;
+
+}
+
+
+progress::-webkit-progress-value {
+  border-radius: 5px!important;
+  background: #F88634;
+}
+
+progress::-webkit-progress-bar {
+  border-radius: 5px!important;
+  background: #E8E8E8;
+}
+
+
+
+
+/* list view */
+
+.time__text__list{
+  
+  margin-top: -30px;
+  margin-left: -10px;
+  background-color: white;
+  position: relative;
+  z-index: 1;
+  
+}
+
+
+
+.apply__text__list{
+  color:#f88634;
+  border:2px solid  #f88634;
+}
+
+.apply__text__list:hover{
+  color:#f88634;
+}
+
+.city__container__list{
+  position: absolute;
+  top:5%;
+  left: 60%;
+  width: 110px;
+  height: 30px;
+  background-color:rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+}
+.heart__image__container__listView {
+
+  background-color:rgba(0,0,0,0.5);
+  width: 35px;
+  height: 35px;
+  position:absolute;
+  top:60%;
+  left:85%;
+
+}
+
+
+.add__person__image__container__listView {
+  position: absolute;
+  background-color:rgba(0,0,0,0.5);
+  top: 75%;
+  left: 85%;
+  width: 35px;
+  height: 35px;
+
+}
+
+
+/* mission page css */
+
+.submit__mission__text {
+  color:#f88634;
+  border:2px solid  #f88634;
+}
+
+@media (max-width:380px ) {
+    .time__text {
+        margin-top: -40px;
+        text-align: center;
+    }
+
+
+}
+
+@media  (min-width:375px) and (max-width:425px){
+  .city__container {
+    top: 5%;
+    left: 68%;
+ 
+    }
+
+
+}
+
+
+@media (max-width:768px) and (min-width:426px) 
+ {  
+    .city__container {
+    top: 5%;
+    left: 66%;
+ 
+    }
+    .heart_image_container {
+        width: 28px;
+        height: 30px;
+        top: 44%;
+        left: 84%;
+    }
+    .heart__image  {
+        padding-top: 7px;
+        padding-left: 3px;
+       
+    }
+    
+    .add__person__image__container {
+        
+        top: 74%;
+        left: 84%;
+        width: 28px;
+        height: 30px;
+    }
+    .time__text {
+        margin-top: -40px;
+        text-align: center;
+    }
+
+
+
+
+ }
+
+
+ @media (max-width:1439px) and (min-width:1024px) {
+    .city__container {
+    left: 60%;
+    }
+   
+    .time__text__list{
+  
+      margin-top: -37px;
+      
+    
+     
+      
+    }
+
+   .add__person__image__container__listView {
+    
+    top:75%;
+    left:85%;
+   }
+   
+  .heart__image__container__listView {
+  top:55%;
+  left:85%;
+}
+
+ }
+
+ 
+ @media (min-width:1440px) {
+    .city__container {
+    left: 72%;
+    }
+
+    .add__person__image__container__listView {
+    
+      top:75%;
+      left:85%;
+     }
+     
+    .heart__image__container__listView {
+    top:55%;
+    left:85%;
+  }
+  .city__container__list {
+    left:70%;
+  }
+
+ }

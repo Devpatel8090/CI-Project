@@ -11,11 +11,11 @@ public partial class CmsPage
 
     public string? Description { get; set; }
 
-    public string Slug { get; set; } = null!;
+    public string? Slug { get; set; }
 
-    public int? Status { get; set; }
+    public int Status { get; set; }
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 

@@ -13,7 +13,7 @@ public partial class Comment
 
     public string ApprovalStatus { get; set; } = null!;
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 

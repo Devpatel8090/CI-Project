@@ -37,7 +37,7 @@ public partial class User
 
     public int Status { get; set; }
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
@@ -49,7 +49,7 @@ public partial class User
 
     public virtual Country Country { get; set; } = null!;
 
-    public virtual ICollection<FavouriteMission> FavouriteMissions { get; } = new List<FavouriteMission>();
+    public virtual ICollection<FavoriteMission> FavoriteMissions { get; } = new List<FavoriteMission>();
 
     public virtual ICollection<MissionApplication> MissionApplications { get; } = new List<MissionApplication>();
 

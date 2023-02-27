@@ -7,11 +7,11 @@ public partial class MissionSkill
 {
     public long MissionSkillId { get; set; }
 
-    public long SkillId { get; set; }
+    public int SkillId { get; set; }
 
     public long? MissionId { get; set; }
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 

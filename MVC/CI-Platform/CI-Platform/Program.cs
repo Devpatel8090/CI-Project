@@ -26,9 +26,13 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Authentication}/{action=login}");
 
 app.MapControllerRoute(
     name: "Authentication",
@@ -41,4 +45,14 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "Registration",
     pattern: "{controller=Registration}/{action=Register}");
+
+app.MapControllerRoute(
+    name: "Registration",
+    pattern: "{controller=Mission}/{action=LandingPage}");
+
+app.MapControllerRoute(
+    name: "Registration",
+    pattern: "{controller=Story}/{action=StoryListingPage}");
+
+
 app.Run();

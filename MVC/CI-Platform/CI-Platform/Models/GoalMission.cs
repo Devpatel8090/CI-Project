@@ -13,7 +13,7 @@ public partial class GoalMission
 
     public int GoalValue { get; set; }
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 

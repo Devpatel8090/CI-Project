@@ -9,13 +9,13 @@ public partial class MissionTheme
 
     public string? Title { get; set; }
 
-    public byte Status { get; set; }
+    public bool? Status { get; set; }
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 
-    public virtual Mission? Mission { get; set; }
+    public virtual ICollection<Mission> Missions { get; } = new List<Mission>();
 }

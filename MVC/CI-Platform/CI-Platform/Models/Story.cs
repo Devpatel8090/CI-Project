@@ -19,13 +19,15 @@ public partial class Story
 
     public DateTime? PublishedAt { get; set; }
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 
     public virtual Mission Mission { get; set; } = null!;
+
+    public virtual ICollection<StoryInvite> StoryInvites { get; } = new List<StoryInvite>();
 
     public virtual ICollection<StoryMedium> StoryMedia { get; } = new List<StoryMedium>();
 

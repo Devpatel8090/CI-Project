@@ -1,0 +1,538 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+<partial name ="_MissionHeader" />
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Listing Page</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/storyListingPage.css" rel="stylesheet" />
+    <link href="~/css/landingpage.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+</head>
+
+<body>
+
+@*
+    <div class="container">*@
+
+    @*    <!-- side Bar for small screen -->
+
+        <div id="mySidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <form class="d-flex align-items-center mx-1 ">
+                <input class="form-control  ms-2 border-0" type="search" placeholder="Search missions...."
+                    aria-label="Search">
+            </form>
+            <a href="#">
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Country
+                </a>
+                <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="#">India</a></li>
+                    <li><a class="dropdown-item" href="#">Canada</a></li>
+                    <li><a class="dropdown-item" href="#">USA</a></li>
+                </ul>
+            </a>
+
+            <a href="#">
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    City
+                </a>
+                <ul class="dropdown-menu ps-4" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Tirana
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Durres
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Vlore
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Elbasan
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Shkoder
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Fier
+                        </label>
+                    </div>
+                </ul>
+            </a>
+
+            <a href="#">
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Theme
+                </a>
+                <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="#">Environment</a></li>
+                    <li><a class="dropdown-item" href="#">Nutrition</a></li>
+                    <li><a class="dropdown-item" href="#">Education</a></li>
+                </ul>
+            </a>
+            <a href="#">
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Skills
+                </a>
+                <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="#">Cool</a></li>
+                    <li><a class="dropdown-item" href="#">Easy Going</a></li>
+                    <li><a class="dropdown-item" href="#">Math</a></li>
+                    <li><a class="dropdown-item" href="#">Computer</a></li>
+                </ul>
+            </a>
+            <a href="#">
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Stories
+                </a>
+                <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Somethi</a></li>
+                </ul>
+
+            </a>
+            <a href="#">
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Policies
+                </a>
+                <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="#">Policy 1</a></li>
+                    <li><a class="dropdown-item" href="#">Policy 2</a></li>
+                    <li><a class="dropdown-item" href="#">Policy 3</a></li>
+                </ul>
+            </a>
+
+            <!-- <a href="#">Contact</a>
+            <a href="#">Contact</a>  -->
+
+
+        </div>
+   
+   
+
+    
+    
+
+
+        <!-- buttons and profile image for small screen -->
+    <div class="container">
+        <div class="main">
+            <div class="d-flex justify-content-between border-bottom d-sm-none" id="menubr">
+                <button class="openbtn " id="openbtn" onclick="openNav()">
+                    <img src="~/images/list.png" alt="">
+                </button>
+                <p>&nbsp</p>
+                <div class="dropdown text-end start-0 d-sm-none " id="img_user">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="~/images/user-img.png" alt="user image" width="40" height="40" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+            <!-- mobile view html for serch and filter  -->
+        
+            <div class="container-fluid border-bottom border-2 d-sm-none mb-3">
+                <div class="col-auto col-sm-4 mt-2 mb-2">
+                    <form class="d-flex align-items-center ">
+                        <input class="form-control ms-2 border-0" type="search" placeholder="Search missions..."
+                            aria-label="Search">
+                        <img src="~/images/filter.png" class="gap-2" onclick="openNav()" alt="">
+                    </form>
+                </div>
+            </div>
+       
+        </div>
+    
+    </div>
+
+        <!-- policies and stories and profile image for big screens  -->
+
+        <div class="container">
+            <header class="p-3 mb-3 ">
+                <div class="container d-none d-sm-block ">
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start ">
+
+
+                        <ul class="nav col-auto col-lg-auto me-auto mb-2 justify-content-center mb-md-0 gap-3 ms-5 ">
+                            <li><a href="#" class="nav-link px-2 link-dark">Stories</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownMenuLink"
+                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Policies
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+
+                        <div class="dropdown text-end ">
+                            <a href="#" class="d-inline d-sm-block link-dark text-decoration-none dropdown-toggle"
+                                id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="~/images/user-img.png" alt="user image" width="40" height="40"
+                                    class="rounded-circle">
+                                <span class="">Evan Donohue</span>
+                            </a>
+                            <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
+                                <li><a class="dropdown-item" href="#">New project...</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+        </div>
+
+
+
+
+        <!-- Serch and fileter options -->
+        <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white  d-none d-sm-block ">
+            <div class="container-fluid">
+                <div class="col-auto col-sm-4  mt-2 border-end ">
+                    <form class="d-flex align-items-center ">
+                        <img class="" width="20" height="20" src="~/images/search.png">
+                        <input class="form-control  ms-2 border-0" type="search" placeholder="Search"
+                            aria-label="Search">
+
+                    </form>
+                </div>
+                <div class="col-auto col-sm-2 mt-2 border-end ">
+                    <div class="dropdown">
+                        <a class="btn bg-white  " data-toggle="dropdown" href="#" role="button" id="dropdownMenuLink"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Country
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-chevron-down ms-lg-5" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">India</a></li>
+                            <li><a class="dropdown-item" href="#">Canada</a></li>
+                            <li><a class="dropdown-item" href="#">USA</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-auto col-sm-2 mt-2 border-end">
+                    <div class="dropdown">
+                        <a class="btn bg-white  " data-toggle="dropdown" href="#" role="button" id="dropdownMenuLink"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            City
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-chevron-down ms-lg-5" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </a>
+
+
+                        <ul class="dropdown-menu ps-4 " aria-labelledby="navbarDropdownMenuLink">
+                            <div class="form-check ">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Tirana
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Durres
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Vlore
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Elbasan
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Shkoder
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Fier
+                                </label>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-auto col-sm-2 mt-2 border-end">
+                    <div class="dropdown">
+                        <a class="btn bg-white " data-toggle="dropdown" href="#" role="button" id="dropdownMenuLink"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Skill
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-chevron-down ms-lg-5" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </a>
+
+
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Environment</a></li>
+                            <li><a class="dropdown-item" href="#">Nutrition</a></li>
+                            <li><a class="dropdown-item" href="#">Education</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-auto col-sm-2 mt-2 border-end">
+                    <div class="dropdown">
+                        <a class="btn bg-white" data-toggle="dropdown" href="#" role="button" id="dropdownMenuLink"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Theme
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-chevron-down ms-lg-5" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Cool</a></li>
+                            <li><a class="dropdown-item" href="#">Easy Going</a></li>
+                            <li><a class="dropdown-item" href="#">Math</a></li>
+                            <li><a class="dropdown-item" href="#">Computer</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </nav>
+        </div>
+*@
+
+        <div class=" container-fluid " >
+            <div>
+                <div class="story__header">
+                    <div class="container text-center">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, eveniet quod corporis tenetur harum rerum nesciunt voluptatibus et impedit dignissimos fugiat eos accusamus hic? Laboriosam dolorem rem similique ad consequatur.</p>
+                        <Button class="story__btn">Share Your Story <i class="bi bi-arrow-right arrow-btn"></i></Button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+           <!-- Cards with hover functionality -->
+
+        <div class="container">
+        <div id="grid__view__container">
+            <div class="row mt-3 row-cols-1 row-cols-sm-2 row-cols-lg-3">
+                <div class="col  mb-3">
+                    <div class="card" style="max-width: 26rem;">
+                        <div style="position: relative;" class="image__container">
+                            <img class="card-img-top Blur__image"
+                                src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
+                                alt="Card image cap">
+                            <div style="position: absolute;bottom: 0;width: 100%;">
+                                <p class="m-0 bg-white border rounded-pill text-center w-50"
+                                    style="transform: translate(50%, 50%) ;">Customer Experience</p>
+                            </div>
+                            <div style="position: absolute;top: 30%;width: 100%;" class="view__detail__button">
+                                <button class="m-0 bg-transparent text-white border rounded-pill text-center w-50 p-2 "
+                                    style="transform: translate(50%, 50%) ;">View Details 
+                                    <i class="bi bi-arrow-right icon-white text-center ms-2 "></i>
+                                </button>
+                            </div>
+                           
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title text-start mt-2">10 User and Customer Engagement Strategies for 2019
+                            </h3>
+                            <p class="card-text text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                do
+                                eiusmod
+                                tempor incididunt ut labore...</p>
+                          
+                          <div class="col d-flex flex-row align-items-center gap-2 ">
+                                <img src="~/images/volunteer2.png" alt=""  class="rounded-circle" width="50px" height="50px">
+                                <span>Andrew Johnson</span>
+                          </div>
+                          <div class="view__details">
+                            <hr class="">
+                            <div class="mt-2  d-flex justify-content-center flex-row align-items-center  w-100 text-center  ">
+                                <a href="#" class="btn rounded-pill   text-center apply__text">View Details
+                                    <img src="~/images/right-arrow.png" class="ms-2"></a>
+                        
+                            </div>
+                        </div>
+
+                         
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col  mb-3">
+                    <div class="card" style="max-width: 26rem;">
+                        <div style="position: relative;" class="image__container">
+                            <img class="card-img-top Blur__image"
+                                src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
+                                alt="Card image cap">
+                            <div style="position: absolute;bottom: 0;width: 100%;">
+                                <p class="m-0 bg-white border rounded-pill text-center w-50"
+                                    style="transform: translate(50%, 50%) ;">Enviorment</p>
+                            </div>
+                            <div style="position: absolute;top: 30%;width: 100%;" class="view__detail__button">
+                                <button class="m-0 bg-transparent text-white border rounded-pill text-center w-50 p-2"
+                                    style="transform: translate(50%, 50%) ;">View Details 
+                                    <i class="bi bi-arrow-right icon-white text-center ms-2 "></i>
+                                </button>
+                            </div>
+                           
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title text-start mt-2">Grow Trees – On the path to environment
+                                sustainability
+                            </h3>
+                            <p class="card-text text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                do
+                                eiusmod
+                                tempor incididunt ut labore...</p>
+                          
+                          <div class="col d-flex flex-row align-items-center gap-2 ">
+                                <img src="~/images/volunteer2.png" alt=""  class="rounded-circle" width="50px" height="50px">
+                                <span>Andrew Johnson</span>
+                          </div>
+                          <div class="view__details">
+                            <hr class="">
+                            <div class="mt-2  d-flex justify-content-center flex-row align-items-center  w-100 text-center  ">
+                                <a href="#" class="btn rounded-pill   text-center apply__text">View Details
+                                    <img src="~/images/right-arrow.png" class="ms-2"></a>
+                        
+                            </div>
+                        </div>
+
+                         
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col  mb-3">
+                    <div class="card" style="max-width: 26rem;">
+                        <div style="position: relative;" class="image__container">
+                            <img class="card-img-top Blur__image"
+                                src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
+                                alt="Card image cap">
+                            <div style="position: absolute;bottom: 0;width: 100%;">
+                                <p class="m-0 bg-white border rounded-pill text-center w-50"
+                                    style="transform: translate(50%, 50%) ;">Enviorment</p>
+                            </div>
+                            <div style="position: absolute;top: 30%;width: 100%;" class="view__detail__button">
+                                <button class="m-0 bg-transparent text-white border rounded-pill text-center w-50 p-2"
+                                    style="transform: translate(50%, 50%) ;">View Details 
+                                    <i class="bi bi-arrow-right icon-white text-center ms-2 "></i>
+                                </button>
+                            </div>
+                           
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title text-start mt-2">Grow Trees – On the path to environment
+                                sustainability
+                            </h3>
+                            <p class="card-text text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                do
+                                eiusmod
+                                tempor incididunt ut labore...</p>
+                          
+                          <div class="col d-flex flex-row align-items-center gap-2 ">
+                                <img src="~/images/volunteer2.png" alt=""  class="rounded-circle" width="50px" height="50px">
+                                <span>Andrew Johnson</span>
+                          </div>
+                        <div class="view__details">
+                            <hr class="">
+                            <div class="mt-2  d-flex justify-content-center flex-row align-items-center  w-100 text-center  ">
+                                <a href="#" class="btn rounded-pill   text-center apply__text">View Details
+                                    <img src="~/images/right-arrow.png" class="ms-2"></a>
+                        
+                            </div>
+                        </div>
+                         
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    
+   
+</body>
+
+</html>

@@ -29,11 +29,11 @@ public partial class Mission
 
     public string? OrganizationName { get; set; }
 
-    public string? OrganizationDetail { get; set; }
+    public string? OrganizationDetails { get; set; }
 
-    public string? Availability { get; set; }
+    public string Availability { get; set; } = null!;
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
@@ -45,7 +45,7 @@ public partial class Mission
 
     public virtual Country Country { get; set; } = null!;
 
-    public virtual ICollection<FavouriteMission> FavouriteMissions { get; } = new List<FavouriteMission>();
+    public virtual ICollection<FavoriteMission> FavoriteMissions { get; } = new List<FavoriteMission>();
 
     public virtual ICollection<GoalMission> GoalMissions { get; } = new List<GoalMission>();
 
@@ -57,13 +57,13 @@ public partial class Mission
 
     public virtual ICollection<MissionMedium> MissionMedia { get; } = new List<MissionMedium>();
 
-    public virtual MissionTheme MissionNavigation { get; set; } = null!;
-
     public virtual ICollection<MissionRating> MissionRatings { get; } = new List<MissionRating>();
 
     public virtual ICollection<MissionSkill> MissionSkills { get; } = new List<MissionSkill>();
 
     public virtual ICollection<Story> Stories { get; } = new List<Story>();
+
+    public virtual MissionTheme Theme { get; set; } = null!;
 
     public virtual ICollection<Timesheet> Timesheets { get; } = new List<Timesheet>();
 }

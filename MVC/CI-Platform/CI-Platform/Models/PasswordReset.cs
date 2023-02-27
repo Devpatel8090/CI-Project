@@ -9,5 +9,5 @@ public partial class PasswordReset
 
     public string Token { get; set; } = null!;
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 }

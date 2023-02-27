@@ -28,7 +28,7 @@ public partial class CiPlatformContext : DbContext
 
     public virtual DbSet<Country> Countries { get; set; }
 
-    public virtual DbSet<FavouriteMission> FavouriteMissions { get; set; }
+    public virtual DbSet<FavoriteMission> FavoriteMissions { get; set; }
 
     public virtual DbSet<GoalMission> GoalMissions { get; set; }
 
@@ -72,17 +72,17 @@ public partial class CiPlatformContext : DbContext
     {
         modelBuilder.Entity<Admin>(entity =>
         {
-            entity.HasKey(e => e.AdminId).HasName("PK__admin__43AA4141D52FE441");
+            entity.HasKey(e => e.AdminId).HasName("PK__admin__43AA41417C1BF41F");
 
             entity.ToTable("admin");
 
-            entity.Property(e => e.AdminId).HasColumnName("admin_id");
+            entity.Property(e => e.AdminId)
+                .ValueGeneratedNever()
+                .HasColumnName("admin_id");
             entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
+                .HasColumnType("datetime")
                 .HasColumnName("created_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Email)
@@ -92,36 +92,32 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.FirstName)
                 .HasMaxLength(16)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnName("first_name");
             entity.Property(e => e.LastName)
                 .HasMaxLength(16)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnName("last_name");
             entity.Property(e => e.Password)
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("password");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<Banner>(entity =>
         {
-            entity.HasKey(e => e.BannerId).HasName("PK__banner__10373C344D81AADE");
+            entity.HasKey(e => e.BannerId).HasName("PK__banner__10373C34D58E923D");
 
             entity.ToTable("banner");
 
             entity.Property(e => e.BannerId).HasColumnName("banner_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Image)
@@ -135,25 +131,23 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnType("text")
                 .HasColumnName("text");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<City>(entity =>
         {
-            entity.HasKey(e => e.CityId).HasName("PK__city__031491A8927C7E03");
+            entity.HasKey(e => e.CityId).HasName("PK__city__031491A859075AC4");
 
             entity.ToTable("city");
 
             entity.Property(e => e.CityId).HasColumnName("city_id");
             entity.Property(e => e.CountryId).HasColumnName("country_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Name)
@@ -161,29 +155,27 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("name");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
 
             entity.HasOne(d => d.Country).WithMany(p => p.Cities)
                 .HasForeignKey(d => d.CountryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__city__country_id__59FA5E80");
+                .HasConstraintName("FK__city__country_id__473C8FC7");
         });
 
         modelBuilder.Entity<CmsPage>(entity =>
         {
-            entity.HasKey(e => e.CmsPageId).HasName("PK__cms_page__B46D5B5247505BC5");
+            entity.HasKey(e => e.CmsPageId).HasName("PK__cms_page__B46D5B52105DEF7B");
 
             entity.ToTable("cms_page");
 
             entity.Property(e => e.CmsPageId).HasColumnName("cms_page_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Description)
@@ -201,14 +193,13 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("title");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<Comment>(entity =>
         {
-            entity.HasKey(e => e.CommentId).HasName("PK__comment__E7957687F50F401D");
+            entity.HasKey(e => e.CommentId).HasName("PK__comment__E7957687DB77044D");
 
             entity.ToTable("comment");
 
@@ -218,17 +209,15 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValueSql("('PENDING')")
                 .HasColumnName("approval_status");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
@@ -236,27 +225,26 @@ public partial class CiPlatformContext : DbContext
             entity.HasOne(d => d.Mission).WithMany(p => p.Comments)
                 .HasForeignKey(d => d.MissionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__comment__mission__05D8E0BE");
+                .HasConstraintName("FK__comment__mission__5555A4F4");
 
             entity.HasOne(d => d.User).WithMany(p => p.Comments)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__comment__deleted__04E4BC85");
+                .HasConstraintName("FK__comment__user_id__546180BB");
         });
 
         modelBuilder.Entity<Country>(entity =>
         {
-            entity.HasKey(e => e.CountryId).HasName("PK__country__7E8CD055938FCECC");
+            entity.HasKey(e => e.CountryId).HasName("PK__country__7E8CD05561C4624C");
 
             entity.ToTable("country");
 
             entity.Property(e => e.CountryId).HasColumnName("country_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Iso)
@@ -268,127 +256,112 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("name");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
         });
 
-        modelBuilder.Entity<FavouriteMission>(entity =>
+        modelBuilder.Entity<FavoriteMission>(entity =>
         {
-            entity.HasKey(e => e.FavouriteMissionId).HasName("PK__favourit__94E4D8CAF4E39751");
+            entity.HasKey(e => e.FavouriteMissionId).HasName("PK__favorite__94E4D8CA86314C74");
 
-            entity.ToTable("favourite_mission");
+            entity.ToTable("favorite_mission");
 
             entity.Property(e => e.FavouriteMissionId).HasColumnName("favourite_mission_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.Mission).WithMany(p => p.FavouriteMissions)
+            entity.HasOne(d => d.Mission).WithMany(p => p.FavoriteMissions)
                 .HasForeignKey(d => d.MissionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__favourite__missi__114A936A");
+                .HasConstraintName("FK__favorite___missi__4CC05EF3");
 
-            entity.HasOne(d => d.User).WithMany(p => p.FavouriteMissions)
+            entity.HasOne(d => d.User).WithMany(p => p.FavoriteMissions)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__favourite__delet__10566F31");
+                .HasConstraintName("FK__favorite___user___4BCC3ABA");
         });
 
         modelBuilder.Entity<GoalMission>(entity =>
         {
-            entity.HasKey(e => e.GoalMissionId).HasName("PK__goal_mis__358E02C75896C45C");
+            entity.HasKey(e => e.GoalMissionId).HasName("PK__goal_mis__358E02C786FFFF02");
 
             entity.ToTable("goal_mission");
 
             entity.Property(e => e.GoalMissionId).HasColumnName("goal_mission_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.GoalObjectiveText)
                 .HasMaxLength(255)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnName("goal_objective_text");
             entity.Property(e => e.GoalValue).HasColumnName("goal_value");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
 
             entity.HasOne(d => d.Mission).WithMany(p => p.GoalMissions)
                 .HasForeignKey(d => d.MissionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__goal_miss__delet__17036CC0");
+                .HasConstraintName("FK__goal_miss__missi__65C116E7");
         });
 
         modelBuilder.Entity<Mission>(entity =>
         {
-            entity.HasKey(e => e.MissionId).HasName("PK__mission__B5419AB2B2D91CD7");
+            entity.HasKey(e => e.MissionId).HasName("PK__mission__B5419AB2C78DAB52");
 
             entity.ToTable("mission");
 
-            entity.Property(e => e.MissionId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("mission_id");
+            entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.Availability)
                 .HasMaxLength(20)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnName("availability");
             entity.Property(e => e.CityId).HasColumnName("city_id");
             entity.Property(e => e.CountryId).HasColumnName("country_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Description)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("text")
                 .HasColumnName("description");
             entity.Property(e => e.EndDate)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("end_date");
             entity.Property(e => e.MissionType)
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasColumnName("mission_type");
-            entity.Property(e => e.OrganizationDetail)
-                .HasDefaultValueSql("('NULL')")
+            entity.Property(e => e.OrganizationDetails)
                 .HasColumnType("text")
-                .HasColumnName("organization_detail");
+                .HasColumnName("organization_details");
             entity.Property(e => e.OrganizationName)
                 .HasMaxLength(255)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnName("organization_name");
             entity.Property(e => e.ShortDescription)
                 .HasColumnType("text")
                 .HasColumnName("short_description");
             entity.Property(e => e.StartDate)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("start_date");
             entity.Property(e => e.Status).HasColumnName("status");
@@ -398,29 +371,28 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("title");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
 
             entity.HasOne(d => d.City).WithMany(p => p.Missions)
                 .HasForeignKey(d => d.CityId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission__city_id__7D439ABD");
+                .HasConstraintName("FK__mission__city_id__60083D91");
 
             entity.HasOne(d => d.Country).WithMany(p => p.Missions)
                 .HasForeignKey(d => d.CountryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission__country__7E37BEF6");
+                .HasConstraintName("FK__mission__country__5E1FF51F");
 
-            entity.HasOne(d => d.MissionNavigation).WithOne(p => p.Mission)
-                .HasForeignKey<Mission>(d => d.MissionId)
+            entity.HasOne(d => d.Theme).WithMany(p => p.Missions)
+                .HasForeignKey(d => d.ThemeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission__mission__7C4F7684");
+                .HasConstraintName("FK__mission__theme_i__5F141958");
         });
 
         modelBuilder.Entity<MissionApplication>(entity =>
         {
-            entity.HasKey(e => e.MissionApplicationId).HasName("PK__mission___DF92838A1DDB3798");
+            entity.HasKey(e => e.MissionApplicationId).HasName("PK__mission___DF92838A1B7269C9");
 
             entity.ToTable("mission_application");
 
@@ -428,22 +400,20 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.AppliedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("applied_at");
-            entity.Property(e => e.ApprovedStatus)
+            entity.Property(e => e.ApprovalStatus)
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasDefaultValueSql("('PENDING')")
-                .HasColumnName("approved_status");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+                .HasColumnName("approval_status");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
@@ -451,27 +421,26 @@ public partial class CiPlatformContext : DbContext
             entity.HasOne(d => d.Mission).WithMany(p => p.MissionApplications)
                 .HasForeignKey(d => d.MissionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_a__missi__1EA48E88");
+                .HasConstraintName("FK__mission_a__missi__46136164");
 
             entity.HasOne(d => d.User).WithMany(p => p.MissionApplications)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_a__delet__1DB06A4F");
+                .HasConstraintName("FK__mission_a__user___451F3D2B");
         });
 
         modelBuilder.Entity<MissionDocument>(entity =>
         {
-            entity.HasKey(e => e.MissionDocumentId).HasName("PK__mission___E80E0CC85847E5E8");
+            entity.HasKey(e => e.MissionDocumentId).HasName("PK__mission___E80E0CC81D7077F4");
 
             entity.ToTable("mission_document");
 
             entity.Property(e => e.MissionDocumentId).HasColumnName("mission_document_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.DocumentName)
@@ -488,75 +457,69 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnName("document_type");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
 
             entity.HasOne(d => d.Mission).WithMany(p => p.MissionDocuments)
                 .HasForeignKey(d => d.MissionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_d__delet__236943A5");
+                .HasConstraintName("FK__mission_d__missi__6B79F03D");
         });
 
         modelBuilder.Entity<MissionInvite>(entity =>
         {
-            entity.HasKey(e => e.MissionInviteId).HasName("PK__mission___A97ED158A9CA0166");
+            entity.HasKey(e => e.MissionInviteId).HasName("PK__mission___A97ED1580FCB9D63");
 
             entity.ToTable("mission_invite");
 
             entity.Property(e => e.MissionInviteId).HasColumnName("mission_invite_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.FromUserId).HasColumnName("from_user_id");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.ToUserId).HasColumnName("to_user_id");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
 
             entity.HasOne(d => d.FromUser).WithMany(p => p.MissionInviteFromUsers)
                 .HasForeignKey(d => d.FromUserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_i__from___29221CFB");
+                .HasConstraintName("FK__mission_i__from___3B95D2F1");
 
             entity.HasOne(d => d.Mission).WithMany(p => p.MissionInvites)
                 .HasForeignKey(d => d.MissionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_i__missi__282DF8C2");
+                .HasConstraintName("FK__mission_i__missi__3D7E1B63");
 
             entity.HasOne(d => d.ToUser).WithMany(p => p.MissionInviteToUsers)
                 .HasForeignKey(d => d.ToUserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_i__to_us__2A164134");
+                .HasConstraintName("FK__mission_i__to_us__3C89F72A");
         });
 
         modelBuilder.Entity<MissionMedium>(entity =>
         {
-            entity.HasKey(e => e.MissionMediaId).HasName("PK__mission___848A78E85BBD57F0");
+            entity.HasKey(e => e.MissionMediaId).HasName("PK__mission___848A78E827341293");
 
             entity.ToTable("mission_media");
 
             entity.Property(e => e.MissionMediaId).HasColumnName("mission_media_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
-            entity.Property(e => e.Default)
-                .HasDefaultValueSql("((0))")
-                .HasColumnName("default");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
+            entity.Property(e => e.DefaultMissionMedia).HasColumnName("default_mission_media");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.MediaName)
-                .HasMaxLength(64)
+                .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("media_name");
             entity.Property(e => e.MediaPath)
@@ -564,40 +527,37 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("media_path");
             entity.Property(e => e.MediaType)
-                .HasMaxLength(4)
+                .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("media_type");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
 
             entity.HasOne(d => d.Mission).WithMany(p => p.MissionMedia)
                 .HasForeignKey(d => d.MissionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_m__missi__30C33EC3");
+                .HasConstraintName("FK__mission_m__missi__731B1205");
         });
 
         modelBuilder.Entity<MissionRating>(entity =>
         {
-            entity.HasKey(e => e.MissionRatingId).HasName("PK__mission___320E5172469541BD");
+            entity.HasKey(e => e.MissionRatingId).HasName("PK__mission___320E5172FB4F4A71");
 
             entity.ToTable("mission_rating");
 
             entity.Property(e => e.MissionRatingId).HasColumnName("mission_rating_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.Rating).HasColumnName("rating");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
@@ -605,64 +565,60 @@ public partial class CiPlatformContext : DbContext
             entity.HasOne(d => d.Mission).WithMany(p => p.MissionRatings)
                 .HasForeignKey(d => d.MissionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_r__missi__37703C52");
+                .HasConstraintName("FK__mission_r__missi__35DCF99B");
 
             entity.HasOne(d => d.User).WithMany(p => p.MissionRatings)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_r__user___367C1819");
+                .HasConstraintName("FK__mission_r__user___34E8D562");
         });
 
         modelBuilder.Entity<MissionSkill>(entity =>
         {
-            entity.HasKey(e => e.MissionSkillId).HasName("PK__mission___8271200892488DC2");
+            entity.HasKey(e => e.MissionSkillId).HasName("PK__mission___827120085E3FF83C");
 
             entity.ToTable("mission_skill");
 
             entity.Property(e => e.MissionSkillId).HasColumnName("mission_skill_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
-            entity.Property(e => e.MissionId)
-                .HasDefaultValueSql("('NULL')")
-                .HasColumnName("mission_id");
+            entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.SkillId).HasColumnName("skill_id");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
 
             entity.HasOne(d => d.Mission).WithMany(p => p.MissionSkills)
                 .HasForeignKey(d => d.MissionId)
-                .HasConstraintName("FK__mission_s__missi__43D61337");
+                .HasConstraintName("FK__mission_s__missi__7E8CC4B1");
 
             entity.HasOne(d => d.Skill).WithMany(p => p.MissionSkills)
                 .HasForeignKey(d => d.SkillId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_s__skill__42E1EEFE");
+                .HasConstraintName("FK__mission_s__skill__7F80E8EA");
         });
 
         modelBuilder.Entity<MissionTheme>(entity =>
         {
-            entity.HasKey(e => e.MissionThemeId).HasName("PK__mission___4925C5AC97ADAD1C");
+            entity.HasKey(e => e.MissionThemeId).HasName("PK__mission___4925C5AC672101E5");
 
             entity.ToTable("mission_theme");
 
             entity.Property(e => e.MissionThemeId).HasColumnName("mission_theme_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Status)
+                .IsRequired()
                 .HasDefaultValueSql("((1))")
                 .HasColumnName("status");
             entity.Property(e => e.Title)
@@ -670,7 +626,6 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("title");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
         });
@@ -681,10 +636,10 @@ public partial class CiPlatformContext : DbContext
                 .HasNoKey()
                 .ToTable("password_reset");
 
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.Email)
                 .HasMaxLength(191)
                 .IsUnicode(false)
@@ -697,17 +652,16 @@ public partial class CiPlatformContext : DbContext
 
         modelBuilder.Entity<Skill>(entity =>
         {
-            entity.HasKey(e => e.SkillId).HasName("PK__skill__FBBA8379904DEB41");
+            entity.HasKey(e => e.SkillId).HasName("PK__skill__FBBA8379DA86A893");
 
             entity.ToTable("skill");
 
             entity.Property(e => e.SkillId).HasColumnName("skill_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.SkillName)
@@ -715,50 +669,45 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("skill_name");
             entity.Property(e => e.Status)
+                .IsRequired()
                 .HasDefaultValueSql("((1))")
                 .HasColumnName("status");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<Story>(entity =>
         {
-            entity.HasKey(e => e.StoryId).HasName("PK__story__66339C5683627BD6");
+            entity.HasKey(e => e.StoryId).HasName("PK__story__66339C56F79FC0B2");
 
             entity.ToTable("story");
 
             entity.Property(e => e.StoryId).HasColumnName("story_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Description)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("text")
                 .HasColumnName("description");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.PublishedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("published_at");
             entity.Property(e => e.Status)
-                .HasMaxLength(10)
+                .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasDefaultValueSql("('DRAFT')")
                 .HasColumnName("status");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnName("title");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
@@ -766,51 +715,53 @@ public partial class CiPlatformContext : DbContext
             entity.HasOne(d => d.Mission).WithMany(p => p.Stories)
                 .HasForeignKey(d => d.MissionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__story__mission_i__540C7B00");
+                .HasConstraintName("FK__story__mission_i__22CA2527");
 
             entity.HasOne(d => d.User).WithMany(p => p.Stories)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__story__user_id__531856C7");
+                .HasConstraintName("FK__story__user_id__21D600EE");
         });
 
         modelBuilder.Entity<StoryInvite>(entity =>
         {
-            entity.HasKey(e => e.StoryInviteId).HasName("PK__story_in__044978678168C373");
+            entity.HasKey(e => e.StoryInviteId).HasName("PK__story_in__044978675D5FE353");
 
             entity.ToTable("story_invite");
 
             entity.Property(e => e.StoryInviteId).HasColumnName("story_invite_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.FromUserId).HasColumnName("from_user_id");
             entity.Property(e => e.StoryId).HasColumnName("story_id");
             entity.Property(e => e.ToUserId).HasColumnName("to_user_id");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.Story).WithMany(p => p.StoryInvites)
+                .HasForeignKey(d => d.StoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__story_inv__story__2882FE7D");
         });
 
         modelBuilder.Entity<StoryMedium>(entity =>
         {
-            entity.HasKey(e => e.StoryMediaId).HasName("PK__story_me__29BD053CCD982827");
+            entity.HasKey(e => e.StoryMediaId).HasName("PK__story_me__29BD053CBC33869E");
 
             entity.ToTable("story_media");
 
             entity.Property(e => e.StoryMediaId).HasColumnName("story_media_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Path)
@@ -822,33 +773,31 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("type");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
 
             entity.HasOne(d => d.Story).WithMany(p => p.StoryMedia)
                 .HasForeignKey(d => d.StoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__story_med__delet__5CA1C101");
+                .HasConstraintName("FK__story_med__story__2E3BD7D3");
         });
 
         modelBuilder.Entity<Timesheet>(entity =>
         {
-            entity.HasKey(e => e.TimesheetId).HasName("PK__timeshee__7BBF5068FAC6DB76");
+            entity.HasKey(e => e.TimesheetId).HasName("PK__timeshee__7BBF5068812B26C7");
 
             entity.ToTable("timesheet");
 
             entity.Property(e => e.TimesheetId).HasColumnName("timesheet_id");
             entity.Property(e => e.Action).HasColumnName("action");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DateVolunteered)
                 .HasColumnType("datetime")
                 .HasColumnName("date_volunteered");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
@@ -862,25 +811,22 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnName("status");
             entity.Property(e => e.Time).HasColumnName("time");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
             entity.HasOne(d => d.Mission).WithMany(p => p.Timesheets)
                 .HasForeignKey(d => d.MissionId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__timesheet__missi__6442E2C9");
+                .HasConstraintName("FK__timesheet__missi__1940BAED");
 
             entity.HasOne(d => d.User).WithMany(p => p.Timesheets)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__timesheet__delet__634EBE90");
+                .HasConstraintName("FK__timesheet__user___184C96B4");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__user__B9BE370F761FA004");
+            entity.HasKey(e => e.UserId).HasName("PK__user__B9BE370F5FA5806C");
 
             entity.ToTable("user");
 
@@ -888,22 +834,19 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.Avatar)
                 .HasMaxLength(2048)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnName("avatar");
             entity.Property(e => e.CityId).HasColumnName("city_id");
             entity.Property(e => e.CountryId).HasColumnName("country_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Department)
                 .HasMaxLength(16)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnName("department");
             entity.Property(e => e.Email)
                 .HasMaxLength(128)
@@ -912,22 +855,18 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.EmployeeId)
                 .HasMaxLength(16)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnName("employee_id");
             entity.Property(e => e.FirstName)
                 .HasMaxLength(16)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnName("first_name");
             entity.Property(e => e.LastName)
                 .HasMaxLength(16)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnName("last_name");
             entity.Property(e => e.LinkedInUrl)
                 .HasMaxLength(255)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnName("linked_in_url");
             entity.Property(e => e.Password)
                 .HasMaxLength(255)
@@ -935,7 +874,6 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnName("password");
             entity.Property(e => e.PhoneNumber).HasColumnName("phone_number");
             entity.Property(e => e.ProfileText)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("text")
                 .HasColumnName("profile_text");
             entity.Property(e => e.Status)
@@ -944,46 +882,41 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnName("title");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
             entity.Property(e => e.WhyIVolunteer)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("text")
                 .HasColumnName("why_i_volunteer");
 
             entity.HasOne(d => d.City).WithMany(p => p.Users)
                 .HasForeignKey(d => d.CityId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__user__deleted_at__693CA210");
+                .HasConstraintName("FK__user__city_id__090A5324");
 
             entity.HasOne(d => d.Country).WithMany(p => p.Users)
                 .HasForeignKey(d => d.CountryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__user__country_id__6A30C649");
+                .HasConstraintName("FK__user__country_id__09FE775D");
         });
 
         modelBuilder.Entity<UserSkill>(entity =>
         {
-            entity.HasKey(e => e.UserSkillId).HasName("PK__user_ski__FD3B576B44828484");
+            entity.HasKey(e => e.UserSkillId).HasName("PK__user_ski__FD3B576BBED1AA45");
 
             entity.ToTable("user_skill");
 
             entity.Property(e => e.UserSkillId).HasColumnName("user_skill_id");
-            entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                .HasColumnName("created_at");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.DeletedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.SkillId).HasColumnName("skill_id");
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("('NULL')")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
@@ -991,12 +924,12 @@ public partial class CiPlatformContext : DbContext
             entity.HasOne(d => d.Skill).WithMany(p => p.UserSkills)
                 .HasForeignKey(d => d.SkillId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__user_skil__skill__489AC854");
+                .HasConstraintName("FK__user_skil__skill__10AB74EC");
 
             entity.HasOne(d => d.User).WithMany(p => p.UserSkills)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__user_skil__user___498EEC8D");
+                .HasConstraintName("FK__user_skil__user___0FB750B3");
         });
 
         OnModelCreatingPartial(modelBuilder);

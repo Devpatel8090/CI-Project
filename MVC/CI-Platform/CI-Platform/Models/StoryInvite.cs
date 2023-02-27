@@ -13,9 +13,11 @@ public partial class StoryInvite
 
     public long ToUserId { get; set; }
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
+
+    public virtual Story Story { get; set; } = null!;
 }

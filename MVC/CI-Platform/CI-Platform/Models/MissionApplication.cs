@@ -13,9 +13,9 @@ public partial class MissionApplication
 
     public DateTime AppliedAt { get; set; }
 
-    public string ApprovedStatus { get; set; } = null!;
+    public string ApprovalStatus { get; set; } = null!;
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 

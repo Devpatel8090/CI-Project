@@ -4,6 +4,7 @@
 @{
     Layout = null;
 }
+@model User;
 
 <!doctype html>
 <html lang="en">
@@ -64,19 +65,19 @@
         <!-- <img src="./images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" class="img-fluid" alt="Grow-Trees-On-the-path-to-environment-sustainability-login" /> -->
       </div>
       <div class="col-md-4 col-12  d-flex flex-column mt-2 flex-sm-row justify-content-center align-items-center">
-        <form class="form mt-3">
+        <form class="form mt-3" method="post" asp-controller="Authentication" asp-action="login">
           <div class="mb-1 mb-sm-3">
-            <h6><label for="Email" class="form-label font-lg-">Email address</label></h6>
-            <input type="email" class="form-control" id="Email" aria-describedby="emailHelp"
+            <h6><label asp-for="Email" class="form-label font-lg-">Email address</label></h6>
+            <input type="email" asp-for="Email" required class="form-control" id="Email" aria-describedby="emailHelp"
               placeholder="evan.donohue@gmail.com">
 
           </div>
           <div class="mb-1 mb-sm-3">
-            <h6><label for="password" class="form-label">Password</label></h6>
-            <input type="password" class="form-control" id="password" placeholder="**********">
+            <h6><label  class="form-label" asp-for="Password">Password</label></h6>
+            <input type="password" asp-for="Password" required  class="form-control" id="password" placeholder="**********">
           </div>
           <div class="mb-1 mb-sm-3">
-            <input type="submit" class="btn btn-primary  rounded-end-circle w-100 h-auto p-2 mt-2 login__button"
+            <input type="submit"  class="btn btn-primary  rounded-end-circle w-100 h-auto p-2 mt-2 login__button"
               value="Login">
           </div>
           <div class="mb-1 mb-sm-3 text-center">

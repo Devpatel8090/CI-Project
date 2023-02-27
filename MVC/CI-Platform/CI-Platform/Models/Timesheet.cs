@@ -7,9 +7,9 @@ public partial class Timesheet
 {
     public long TimesheetId { get; set; }
 
-    public long UserId { get; set; }
+    public long? UserId { get; set; }
 
-    public long MissionId { get; set; }
+    public long? MissionId { get; set; }
 
     public TimeOnly? Time { get; set; }
 
@@ -21,13 +21,13 @@ public partial class Timesheet
 
     public string Status { get; set; } = null!;
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 
-    public virtual Mission Mission { get; set; } = null!;
+    public virtual Mission? Mission { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    public virtual User? User { get; set; }
 }

@@ -11,7 +11,7 @@ public partial class Country
 
     public string? Iso { get; set; }
 
-    public byte[] CreatedAt { get; set; } = null!;
+    public DateTime CreateAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
