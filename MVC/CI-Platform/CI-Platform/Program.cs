@@ -1,5 +1,9 @@
-using CI_Platform.Data;
+
+using CI_Platfrom.Entities.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +12,21 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CiPlatformContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("Data Source=PCA39\\SQL2017;DataBase=CI_PLATFORM;User ID=sa;Password=Tatva@123;Encrypt=False")
     ));
+
+
+//JWT Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+});
 
 var app = builder.Build();
 

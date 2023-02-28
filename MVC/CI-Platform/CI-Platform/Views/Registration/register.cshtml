@@ -1,24 +1,11 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@using CI_Platfrom.Entities.Models.ViewModel
 
-    Layout = null;
+@model ConfirmPasswordVM
+
+@{
+ViewData["Title"] = "Registration";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Registration page</title>
-  <link rel="icon" type="image/x-icon" href="~/images/logo.png">
-  <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="~/css/login.css" type="text/css">
-</head>
-
-<body>
   <div class="container-fluid">
     <div class="row d-flex align-items-center">
       <div class="col-12 col-xl-8">
@@ -69,60 +56,66 @@
         <!-- <img src="./images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" class="img-fluid" alt="Grow-Trees-On-the-path-to-environment-sustainability-login" /> -->
       </div>
       <div class="col-12 col-xl-4 d-flex flex-column mt-2 flex-sm-row justify-content-center align-items-center">
-        <form class="form mt-3 w-75">
+
+        <form class="form mt-3 w-75" method="post" asp-controller="Registration" asp-action="Register" >
           <div class="mb-1 mb-sm-3">
-            <h6><label for="Email" class="form-label">First Name</label></h6>
-            <input type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="evan" />
+            <h6><label asp-for="User.FirstName" class="form-label">First Name</label></h6>
+            <input type="text"  asp-for="User.FirstName" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="evan" />
           </div>
+
           <div class="mb-1 mb-sm-3">
-            <h6><label for="Email" class="form-label">Last Name</label></h6>
-            <input type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="donohue" />
-          </div>
-          <div class="mb-1 mb-sm-3">
-            <h6>
-              <label for="Email" class="form-label">Phone Number</label>
-            </h6>
-            <input type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="8923454615" />
+            <h6><label asp-for="User.LastName" class="form-label">Last Name</label></h6>
+            <input type="text" asp-for="User.LastName" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="donohue" />
           </div>
 
           <div class="mb-1 mb-sm-3">
             <h6>
-              <label for="Email" class="form-label">Email address</label>
+              <label asp-for="User.PhoneNumber" class="form-label">Phone Number</label>
             </h6>
-            <input type="email" class="form-control" id="Email" aria-describedby="emailHelp"
-              placeholder="evan.donohue@gmail.com" />
+            <input type="tel" asp-for="User.PhoneNumber" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="8923454615" />
           </div>
-          <div class="mb-1 mb-sm-3">
-            <h6><label for="password" class="form-label">Password</label></h6>
-            <input type="password" class="form-control" id="password" placeholder="**********" />
-          </div>
+
           <div class="mb-1 mb-sm-3">
             <h6>
-              <label for="password" class="form-label">Confirm Password</label>
+              <label asp-for="User.Email" class="form-label">Email address</label>
             </h6>
-            <input type="password" class="form-control" id="password" placeholder="**********" />
+            <input asp-for="User.Email" class="form-control" id="Email" aria-describedby="emailHelp"
+              placeholder="evan.donohue@gmail.com" />
           </div>
+
+          <div class="mb-1 mb-sm-3">
+            <h6><label asp-for="User.Password" class="form-label">Password</label></h6>
+            <input type="password" asp-for="User.Password" class="form-control"  placeholder="**********" />
+          </div>
+
+         <div class="mb-1 mb-sm-3">
+            <h6>
+              <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+            </h6>
+            <input type="password" asp-for="ConfirmPassword" class="form-control"   placeholder="**********" />
+          </div>
+
           <div class="mb-1 mb-sm-3">
             <input type="submit" class="btn btn-primary rounded-end-circle w-100 h-auto p-2 mt-2 login__button"
               value="Register" />
           </div>
+
           <div class="mb-1 mb-sm-3 text-center">
             <span class="lostpassword__text fst-NotoSans-Light"><a href="/Authentication/forgotPassword"
                 class="text-decoration-none">Lost your password?</a></span>
           </div>
+
           <div class="mb-1 mb-sm-3 text-center">
             <span class="noaccout__text ">Already register?<a href="/Authentication/login"
                 class="text-decoration-none">Login now</a></span>
           </div>
+
           <div class="col text-center mt-5 mt-sm-0 mt-xl-5 pt-xl-5">
             Privacy Policy
           </div>
+
         </form>
       </div>
     </div>
   </div>
 
-  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-</body>
-
-</html>

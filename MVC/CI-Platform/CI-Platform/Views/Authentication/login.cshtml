@@ -1,24 +1,15 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+@model CI_Platfrom.Entities.Models.User
+
+
 @{
-    Layout = null;
+ViewData["Title"] = "Login Page";
 }
-@model User;
 
-<!doctype html>
-<html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login page</title>
-  <link rel="icon" type="image/x-icon" href="~/images/logo.png">
-  <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="~/css/login.css" type="text/css">
-</head>
-
-<body>
 
 
   <div class="container-fluid  ">
@@ -81,7 +72,7 @@
               value="Login">
           </div>
           <div class="mb-1 mb-sm-3 text-center">
-            <span class=" lostpassword__text fst-NotoSans-Light  "><a href="./forgotPassword"
+            <span class=" lostpassword__text fst-NotoSans-Light  "><a asp-controller="Authentication" asp-action="forgotPassword"
                 class="text-decoration-none">Lost your password?</a></span>
           </div>
           <div class="mb-1 mb-sm-3 text-center">
@@ -95,7 +86,5 @@
       </div>
     </div>
     </div>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-</body>
+   
 
-</html>
