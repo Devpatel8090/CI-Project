@@ -632,22 +632,22 @@ public partial class CiPlatformContext : DbContext
 
         modelBuilder.Entity<PasswordReset>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("password_reset");
+            entity.HasKey(e => new { e.Email, e.Token }).HasName("PK__password__07C76CC2D36E5C67");
 
-            entity.Property(e => e.CreateAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
-                .HasColumnName("create_at");
+            entity.ToTable("password_reset");
+
             entity.Property(e => e.Email)
                 .HasMaxLength(191)
                 .IsUnicode(false)
                 .HasColumnName("email");
             entity.Property(e => e.Token)
-                .HasMaxLength(191)
+                .HasMaxLength(400)
                 .IsUnicode(false)
                 .HasColumnName("token");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
         });
 
         modelBuilder.Entity<Skill>(entity =>

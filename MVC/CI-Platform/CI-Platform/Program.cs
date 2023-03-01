@@ -1,4 +1,5 @@
 
+using CI_Platform.Model;
 using CI_Platfrom.Entities.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CiPlatformContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("Data Source=PCA39\\SQL2017;DataBase=CI_PLATFORM;User ID=sa;Password=Tatva@123;Encrypt=False")
     ));
+
+builder.Services.Configure<SMTPConfigModel>(builder.Configuration.GetSection("SMTPConfig"));
 
 
 //JWT Authentication

@@ -43,8 +43,6 @@ public partial class User
     public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
-
-
     [ValidateNever]
     public virtual City City { get; set; } = null!;
 

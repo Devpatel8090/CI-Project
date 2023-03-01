@@ -293,3 +293,6 @@ C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\bin\Debug\net6.0\
 C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\bin\Debug\net6.0\CI-Platfrom.Entities.pdb
 C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\bin\Debug\net6.0\CI-Platfrom.Repository.pdb
 C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\bin\Debug\net6.0\MailKit.dll
+C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\bin\Debug\net6.0\MimeKit.dll
+C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\bin\Debug\net6.0\BouncyCastle.Crypto.dll

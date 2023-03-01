@@ -59,25 +59,30 @@ ViewData["Title"] = "Login Page";
         <form class="form mt-3" method="post" asp-controller="Authentication" asp-action="login">
           <div class="mb-1 mb-sm-3">
             <h6><label asp-for="Email" class="form-label font-lg-">Email address</label></h6>
-            <input type="email" asp-for="Email" required class="form-control" id="Email" aria-describedby="emailHelp"
+            <input type="email" asp-for="Email" class="form-control" id="Email" aria-describedby="emailHelp"
               placeholder="evan.donohue@gmail.com">
+               <span asp-validation-for="Email" class="text-danger"></span>
 
           </div>
           <div class="mb-1 mb-sm-3">
             <h6><label  class="form-label" asp-for="Password">Password</label></h6>
-            <input type="password" asp-for="Password" required  class="form-control" id="password" placeholder="**********">
+            <input type="password" asp-for="Password"   class="form-control" id="password" placeholder="**********">
+             <span asp-validation-for="Password" class="text-danger"></span>
           </div>
+
           <div class="mb-1 mb-sm-3">
             <input type="submit"  class="btn btn-primary  rounded-end-circle w-100 h-auto p-2 mt-2 login__button"
               value="Login">
           </div>
+
           <div class="mb-1 mb-sm-3 text-center">
             <span class=" lostpassword__text fst-NotoSans-Light  "><a asp-controller="Authentication" asp-action="forgotPassword"
                 class="text-decoration-none">Lost your password?</a></span>
           </div>
+
           <div class="mb-1 mb-sm-3 text-center">
             <span class="noaccout__text offset-md-1  offset-lg-3 offset-xl-0  ">Don’t have an account?<a
-                href="/Registration/register" class="text-decoration-none "> Create an account</a></span>
+                asp-controller="Registration" asp-action="Register" class="text-decoration-none "> Create an account</a></span>
           </div>
           <div class="col text-center mt-5 mt-sm-0 mt-xl-5 pt-xl-5  ">Privacy Policy</div>
         </form>
