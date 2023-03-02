@@ -3661,6 +3661,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "CI-Platfrom.Entities": "1.0.0",
           "MailKit": "3.5.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.14",
           "Microsoft.EntityFrameworkCore": "8.0.0-preview.1.23111.4",

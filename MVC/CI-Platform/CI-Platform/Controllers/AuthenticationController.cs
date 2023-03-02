@@ -27,6 +27,11 @@ namespace CI_Platform.Controllers
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+
         [HttpGet]
         public IActionResult login()
         {
@@ -53,6 +58,7 @@ namespace CI_Platform.Controllers
                 else if (userDetails.Password == user.Password)
                 {
                         TempData["success"] = "Hurray! Login Successfully";
+                        
                         return RedirectToAction("LandingPage", "Mission");
                 }
                 else
@@ -65,15 +71,21 @@ namespace CI_Platform.Controllers
             
             else
             {
-                //if( userDetails == null)
-                //{
+                
+               
                 TempData["error"] = "Please Enter the Complete Details";
                 
 
-                //    }
 
             }
             return View();
+        }
+
+        public IActionResult logout()
+        {
+            HttpContext.Session.Remove("Login");
+            TempData["success"] = "log out Successfully ";
+            return RedirectToAction("login", "Authentication");
         }
 
         [HttpGet]

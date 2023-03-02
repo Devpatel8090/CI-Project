@@ -1,6 +1,8 @@
 
 using CI_Platform.Model;
 using CI_Platfrom.Entities.Data;
+using CI_Platfrom.Repository.Interface;
+using CI_Platfrom.Repository.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,7 +16,25 @@ builder.Services.AddDbContext<CiPlatformContext>(options => options.UseSqlServer
     builder.Configuration.GetConnectionString("Data Source=PCA39\\SQL2017;DataBase=CI_PLATFORM;User ID=sa;Password=Tatva@123;Encrypt=False")
     ));
 
+
+/// <summary>
+///  session will be expire automatically after 60 minutes 
+/// </summary>
+/// 
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(60);
+});
+
 builder.Services.Configure<SMTPConfigModel>(builder.Configuration.GetSection("SMTPConfig"));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<ICountryRepository, CountryRepository>();
+builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+builder.Services.AddScoped<IThemeRepository, ThemeRepository>();
+builder.Services.AddScoped<IMissionRepository, MissionRepository>();
 
 
 //JWT Authentication
@@ -45,6 +65,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 

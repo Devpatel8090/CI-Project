@@ -43,11 +43,14 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Country
                 </a>
-                <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">India</a></li>
-                    <li><a class="dropdown-item" href="#">Canada</a></li>
-                    <li><a class="dropdown-item" href="#">USA</a></li>
-                </ul>
+                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            @foreach (var item in @ViewBag.CountryDetails)
+                            {
+                                 <li><a class="dropdown-item" href="#">@item.Name</a></li>
+                            }
+                           
+                           
+                 </ul>
             </a>
 
             <a href="#">
@@ -55,43 +58,19 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     City
                 </a>
-                <ul class="dropdown-menu ps-4" aria-labelledby="navbarDropdownMenuLink">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            Tirana
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            Durres
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            Vlore
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            Elbasan
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            Shkoder
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            Fier
-                        </label>
-                    </div>
+                 <ul class="dropdown-menu ps-4 " aria-labelledby="navbarDropdownMenuLink">
+                            @foreach (var item in @ViewBag.CityDetails)
+                            {
+                               <div class="form-check ">
+                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                         <label class="form-check-label" for="defaultCheck1">
+                                            @item.Name
+                                         </label>
+                               </div>
+                            }
+                          
+                          
+                           
                 </ul>
             </a>
 
@@ -100,23 +79,29 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Theme
                 </a>
-                <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Environment</a></li>
-                    <li><a class="dropdown-item" href="#">Nutrition</a></li>
-                    <li><a class="dropdown-item" href="#">Education</a></li>
-                </ul>
+                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            @foreach (var item in @ViewBag.ThemeDetails)
+                            {
+                                <li><a class="dropdown-item" href="#">@item.Title</a></li> 
+                            }
+                            
+                        
+                 </ul>
             </a>
             <a href="#">
                 <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Skills
                 </a>
-                <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Cool</a></li>
-                    <li><a class="dropdown-item" href="#">Easy Going</a></li>
-                    <li><a class="dropdown-item" href="#">Math</a></li>
-                    <li><a class="dropdown-item" href="#">Computer</a></li>
-                </ul>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            
+                           @foreach (var item in @ViewBag.SkillDetails)
+                           {
+                                 <li><a class="dropdown-item" href="#">@item.SkillName</a></li>
+                           }
+                          
+                           
+                  </ul>
             </a>
             <a href="#">
                 <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
@@ -251,9 +236,12 @@
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">India</a></li>
-                            <li><a class="dropdown-item" href="#">Canada</a></li>
-                            <li><a class="dropdown-item" href="#">USA</a></li>
+                            @foreach (var item in @ViewBag.CountryDetails)
+                            {
+                                 <li><a class="dropdown-item" href="#">@item.Name</a></li>
+                            }
+                           
+                           
                         </ul>
                     </div>
                 </div>
@@ -271,42 +259,18 @@
 
 
                         <ul class="dropdown-menu ps-4 " aria-labelledby="navbarDropdownMenuLink">
-                            <div class="form-check ">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Tirana
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Durres
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Vlore
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Elbasan
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Shkoder
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Fier
-                                </label>
-                            </div>
+                            @foreach (var item in @ViewBag.CityDetails)
+                            {
+                               <div class="form-check ">
+                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                         <label class="form-check-label" for="defaultCheck1">
+                                            @item.Name
+                                         </label>
+                               </div>
+                            }
+                          
+                          
+                           
                         </ul>
                     </div>
                 </div>
@@ -325,9 +289,13 @@
 
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Environment</a></li>
-                            <li><a class="dropdown-item" href="#">Nutrition</a></li>
-                            <li><a class="dropdown-item" href="#">Education</a></li>
+                            
+                           @foreach (var item in @ViewBag.SkillDetails)
+                           {
+                                 <li><a class="dropdown-item" href="#">@item.SkillName</a></li>
+                           }
+                          
+                           
                         </ul>
                     </div>
                 </div>
@@ -344,10 +312,12 @@
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Cool</a></li>
-                            <li><a class="dropdown-item" href="#">Easy Going</a></li>
-                            <li><a class="dropdown-item" href="#">Math</a></li>
-                            <li><a class="dropdown-item" href="#">Computer</a></li>
+                            @foreach (var item in @ViewBag.ThemeDetails)
+                            {
+                                <li><a class="dropdown-item" href="#">@item.Title</a></li> 
+                            }
+                            
+                        
                         </ul>
                     </div>
                 </div>
@@ -375,6 +345,8 @@
 
 </div>
 
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
  <script>
         function openNav() {
             document.getElementById("mySidebar").style.width = "250px";

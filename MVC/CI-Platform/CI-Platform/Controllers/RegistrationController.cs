@@ -22,20 +22,34 @@ namespace CI_Platform.Controllers
         }
 
         [HttpPost]
+    
+       
         public IActionResult Register(ConfirmPasswordVM obj)
+        
         {
+            var userDetails = _db.Users.FirstOrDefault(e => e.Email == obj.User.Email);
             if(ModelState.IsValid)
             {
-                if (obj.ConfirmPassword == obj.User.Password)
+                if(userDetails != null)
                 {
-                    _db.Users.Add(obj.User) ;
-                    _db.SaveChanges();
-                    return RedirectToAction("login", "Authentication");
+                    TempData["error"] = "Email is already Registered!";
                 }
-                
+                else
+                {
+                    if (obj.ConfirmPassword == obj.User.Password)
+                    {
+                        _db.Users.Add(obj.User);
+                        _db.SaveChanges();
+                        TempData["success"] = "Congratulation! You are Registered Now login with the same Email and Password";
+                        return RedirectToAction("login", "Authentication");
+                    }
+                    else
+                    {
+                        TempData["error"] = "Password doesn't match";
+                    }
+                }
             }
             return View();
-
         }
     }
 }

@@ -244,7 +244,11 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platfrom.Entities\\CI-Platfrom.Entities.csproj": {
+                "projectPath": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platfrom.Entities\\CI-Platfrom.Entities.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
