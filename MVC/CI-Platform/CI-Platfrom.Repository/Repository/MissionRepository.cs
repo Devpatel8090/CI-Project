@@ -1,6 +1,7 @@
 ﻿using CI_Platfrom.Entities.Data;
 using CI_Platfrom.Entities.Models;
 using CI_Platfrom.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace CI_Platfrom.Repository.Repository
 
         public List<Mission> GetMissionDetails()
         {
-            List<Mission> missionDetails = _db.Missions.ToList();
+            List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).ToList();
             return missionDetails;
         }
     }
