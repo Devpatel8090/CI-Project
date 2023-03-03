@@ -12,33 +12,47 @@ namespace CI_Platform.Controllers
         private readonly ISkillRepository _skill;
         private readonly IThemeRepository _theme;
         private readonly IUserRepository _user;
+        private readonly IMissionRepository _mission;
 
-        public MissionController(ICityRepository cities, ICountryRepository country, ISkillRepository skill, IThemeRepository theme,IUserRepository user)
+        public MissionController(ICityRepository cities, ICountryRepository country, ISkillRepository skill, IThemeRepository theme,IUserRepository user, IMissionRepository mission)
         {
             _cities = cities;
             _country = country;
             _skill = skill;
             _theme = theme;
             _user = user;
+            _mission = mission;
         }
         public IActionResult LandingPage() 
         {
-            List<City> cityDetails = _cities.GetCityDetails();
-            ViewBag.CityDetails = cityDetails;
+            var ses =  HttpContext.Session.GetString("userEmail");
 
-            List<Country> countryDetails = _country.GetCountriesDetails();
-            ViewBag.CountryDetails = countryDetails;
+            if (ses == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else
+            {
+                List<City> cityDetails = _cities.GetCityDetails();
+                ViewBag.CityDetails = cityDetails;
 
-            List<Skill> skillDetails = _skill.GetSkillDetails();
-            ViewBag.SkillDetails = skillDetails;
+                List<Country> countryDetails = _country.GetCountriesDetails();
+                ViewBag.CountryDetails = countryDetails;
 
-            List<MissionTheme> themeDetails = _theme.GetThemeDetails();
-            ViewBag.ThemeDetails = themeDetails;
+                List<Skill> skillDetails = _skill.GetSkillDetails();
+                ViewBag.SkillDetails = skillDetails;
 
-            List<User> userDetails = _user.GetUserDetails();
-            ViewBag.UserDetails = userDetails;
-           
-            return View();
+                List<MissionTheme> themeDetails = _theme.GetThemeDetails();
+                ViewBag.ThemeDetails = themeDetails;
+
+                List<User> userDetails = _user.GetUserDetails();
+                ViewBag.UserDetails = userDetails;
+
+                List<Mission> missionDeails = _mission.GetMissionDetails();
+                ViewBag.MissionDeails = missionDeails;
+
+                return View();
+            }
         }
 
 

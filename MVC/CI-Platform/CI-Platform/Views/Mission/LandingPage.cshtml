@@ -489,6 +489,10 @@
 
         <div id="grid__view__container">
             <div class="row mt-3 row-cols-1 row-cols-sm-2 row-cols-lg-3">
+                @foreach (var item in @ViewBag.MissionDeails)
+                {
+                    
+                
                 <div class="col  mb-3">
                     <div class="card" style="max-width: 26rem;">
                         <div style="position: relative;">
@@ -497,7 +501,7 @@
                                 alt="Card image cap">
                             <div style="position: absolute;bottom: 0;width: 100%;">
                                 <p class="m-0 bg-white border rounded-pill text-center w-50"
-                                    style="transform: translate(50%, 50%) ;">Enviorment</p>
+                                    style="transform: translate(50%, 50%) ;">@item.Theme.Title</p>
                             </div>
                             <div class="heart_image_container rounded-circle ">
                                 <img src="~/images/heart.png" class=" heart__image">
@@ -505,21 +509,17 @@
                             <div class="rounded-circle add__person__image__container">
                                 <img src="~/images/user.png" class="add__person__image">
                             </div>
-                            <div class="city__container rounded-pill">
+                            <div class="city__container rounded-pill p-2">
                                 <img src="~/images/pin.png" class="locatin__image">
-                                <span class="text-white">Toronto</span>
+                                <span class="text-white ">@item.City.Name</span>
                             </div>
                         </div>
                         <div class="card-body">
-                            <h3 class="card-title text-start mt-2">Grow Trees – On the path to environment
-                                sustainability
+                            <h3 class="card-title text-start mt-2">@item.Title
                             </h3>
-                            <p class="card-text text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                                do
-                                eiusmod
-                                tempor incididunt ut labore...</p>
+                            <p class="card-text text-start">@item.ShortDescription</p>
                             <div class="d-flex justify-content-between mb-1 ">
-                                <span>Tree Canada</span>
+                                <span>@item.OrganizationName</span>
                                 <div class="star__container">
                                     <img src="~/images/selected-star.png">
                                     <img src="~/images/selected-star.png">
@@ -531,25 +531,9 @@
                             <br />
                             <hr>
                             <div class="time__text border rounded-pill w-75 mx-auto ">
-                                <span>From 10/01/2019 until 25/02/2019</span>
+                                <span>From @item.StartDate.ToShortDateString() until @item.EndDate.ToShortDateString()</span>
                             </div>
-                            <!-- <div class="d-flex flex-row mt-3 justify-content-between ">
-                            <div class="d-flex flex-row gap-3 align-items-center justify-content-center">
-                                <img src="~/images/Seats-left.png" width="30px" height="30px">
-                                <div class="d-flex flex-column ">
-                                    <h5 class="mb-0">10</h5>
-                                    <span>Seats left</span>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-row gap-3 align-items-center justify-content-center">
-                                <img src="~/images/deadline.png" width="40px" height="40px">
-                                <div class="d-flex flex-column">
-                                    <h5 class="mb-0">09/01/2019</h5>
-                                    <span>Deadline</span>
-                                </div>
-                            </div>
-                        
-                        </div> -->
+                         
 
                             <div class="row mt-3 ms-2 mb-3">
                                 <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
@@ -562,7 +546,7 @@
                                 <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
                                     <img src="~/images/deadline.png" width="40px" height="40px">
                                     <div class="d-flex flex-column">
-                                        <h5 class="mb-0">09/01/2019</h5>
+                                        <h5 class="mb-0">@item.EndDate.ToShortDateString()</h5>
                                         <span>Deadline</span>
                                     </div>
                                 </div>
@@ -577,6 +561,12 @@
                         </div>
                     </div>
                 </div>
+
+
+                }
+
+
+@*
                 <div class="col  mb-3">
                     <div class="card" style="max-width: 26rem;">
                         <div style="position: relative;">
@@ -867,7 +857,7 @@
             </div>
         </div>
         </div>
-
+*@
 
 
 

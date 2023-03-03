@@ -28,9 +28,9 @@ namespace CI_Platform.Controllers
         }
 
         /// <summary>
-        /// 
+        ///     Provides the login screen to user 
         /// </summary>
-        /// <returns></returns>
+        /// <returns> empty view with only login page </returns>
 
         [HttpGet]
         public IActionResult login()
@@ -38,6 +38,11 @@ namespace CI_Platform.Controllers
             return View();
         }
 
+        /// <summary>
+        /// it takes the user details from the user and checks the email id and password from database .
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
 
         [HttpPost]
         public IActionResult login(User user)
@@ -58,7 +63,7 @@ namespace CI_Platform.Controllers
                 else if (userDetails.Password == user.Password)
                 {
                         TempData["success"] = "Hurray! Login Successfully";
-                        
+                        HttpContext.Session.SetString("userEmail",userDetails.Email);
                         return RedirectToAction("LandingPage", "Mission");
                 }
                 else
@@ -83,7 +88,7 @@ namespace CI_Platform.Controllers
 
         public IActionResult logout()
         {
-            HttpContext.Session.Remove("Login");
+            HttpContext.Session.Remove("userEmail");
             TempData["success"] = "log out Successfully ";
             return RedirectToAction("login", "Authentication");
         }
