@@ -75,7 +75,7 @@ ViewData["Title"] = "Registration";
             <h6>
               <label asp-for="User.PhoneNumber" class="form-label">Phone Number</label>
             </h6>
-            <input type="tel" asp-for="User.PhoneNumber" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="8923454615" />
+            <input type="tel" pattern="[0-9]{10}"  asp-for="User.PhoneNumber" class="form-control"  aria-describedby="emailHelp" placeholder="8923454615" />
             <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
           </div>
 

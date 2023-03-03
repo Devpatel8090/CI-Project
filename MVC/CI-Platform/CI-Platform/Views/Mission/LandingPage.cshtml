@@ -3,13 +3,15 @@
 *@
 
 
+@{
+    ViewData["Title"] = "Landing Page";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
 
 
-<partial name ="_MissionHeader" />
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
+
+@*<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,10 +25,10 @@
             document.getElementById("grid__view__button").click();
         };
     </script>
-</head>
+</head>*@
 
-<body>
-
+@*<body>*@
+  @*  <partial name ="_MissionHeader" />*@
     <div class="container">
         
 
@@ -1321,7 +1323,7 @@
         </div>
     </div>
 
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+@*    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
     <script>
         function openNav() {
             document.getElementById("mySidebar").style.width = "250px";
@@ -1360,6 +1362,6 @@
             document.getElementById("openbtn").style.display = "block";
         }
     </script>
-</body>
+@*</body>
 
-</html>
+</html>*@

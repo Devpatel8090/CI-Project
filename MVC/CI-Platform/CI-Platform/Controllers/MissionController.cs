@@ -51,6 +51,9 @@ namespace CI_Platform.Controllers
                 List<Mission> missionDeails = _mission.GetMissionDetails();
                 ViewBag.MissionDeails = missionDeails;
 
+                var emailFromSession = HttpContext.Session.GetString("userEmail");
+                var user = userDetails.FirstOrDefault(e => e.Email == emailFromSession);
+                ViewBag.LoginUser = user;
                 return View();
             }
         }

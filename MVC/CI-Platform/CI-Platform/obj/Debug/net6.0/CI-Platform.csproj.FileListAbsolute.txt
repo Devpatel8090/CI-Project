@@ -296,3 +296,4 @@ C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\bin\Debug\net6.0\
 C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\bin\Debug\net6.0\MailKit.dll
 C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\bin\Debug\net6.0\MimeKit.dll
 C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\bin\Debug\net6.0\BouncyCastle.Crypto.dll
+C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform\obj\Debug\net6.0\scopedcss\Views\Shared\_HomeLayout.cshtml.rz.scp.css

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CI_Platfrom.Entities.Models;
 
@@ -16,7 +17,12 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    public int PhoneNumber { get; set; }
+    //[DataType(DataType.PhoneNumber)]
+    //[Display(Name = "Phone Number")]
+    //[Required(ErrorMessage = "Phone Number Required!")]
+    //[RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
+    //                ErrorMessage = "Entered phone format is not valid.")]
+    public long PhoneNumber { get; set; }
 
     public string? Avatar { get; set; }
 

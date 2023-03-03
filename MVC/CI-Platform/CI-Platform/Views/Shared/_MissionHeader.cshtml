@@ -8,7 +8,7 @@
 
 
 
-<!DOCTYPE html>
+@*<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -27,7 +27,7 @@
 </head>
 
 
-<body>
+<body>*@
 <div class="container">
 
         <!--   side bar for small Screen  -->
@@ -190,7 +190,7 @@
                                 id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="~/images/user-img.png" alt="user image" width="40" height="40"
                                     class="rounded-circle">
-                                <span class="">Evan Donohue</span>
+                                <span class="">@ViewBag.LoginUser.FirstName   @ViewBag.LoginUser.LastName</span>
                             </a>
                             <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
                                 <li><a class="dropdown-item" href="#">New project...</a></li>
@@ -345,7 +345,7 @@
 
 </div>
 
-  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+@*    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
  <script>
         function openNav() {
@@ -364,6 +364,6 @@
     </script>
 
 </body>
-</html>
+</html>*@
 
 
