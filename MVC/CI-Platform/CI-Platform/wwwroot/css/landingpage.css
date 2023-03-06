@@ -212,19 +212,28 @@ progress::-webkit-progress-bar {
   border:2px solid  #f88634;
 }
 
+
+
+.hide {
+    display: none;
+}
+
 @media (max-width:380px ) {
     .time__text {
         margin-top: -40px;
         text-align: center;
     }
-
+    .city__container {
+        top: 5%;
+        left: 57%;
+    }
 
 }
 
 @media  (min-width:375px) and (max-width:425px){
   .city__container {
     top: 5%;
-    left: 68%;
+    left: 63%;
  
     }
 
@@ -236,7 +245,7 @@ progress::-webkit-progress-bar {
  {  
     .city__container {
     top: 5%;
-    left: 66%;
+    left: 62%;
  
     }
     .heart_image_container {
@@ -271,7 +280,7 @@ progress::-webkit-progress-bar {
 
  @media (max-width:1439px) and (min-width:1024px) {
     .city__container {
-    left: 60%;
+    left: 57%;
     }
    
     .time__text__list{
@@ -299,7 +308,7 @@ progress::-webkit-progress-bar {
  
  @media (min-width:1440px) {
     .city__container {
-    left: 72%;
+    left: 69%;
     }
 
     .add__person__image__container__listView {

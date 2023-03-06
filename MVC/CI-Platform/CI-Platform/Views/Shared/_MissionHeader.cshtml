@@ -43,7 +43,7 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Country
                 </a>
-                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                 <ul class="dropdown-menu" id="countryDropdown" aria-labelledby="dropdownMenuLink">
                             @foreach (var item in @ViewBag.CountryDetails)
                             {
                                  <li><a class="dropdown-item" href="#">@item.Name</a></li>
@@ -211,15 +211,15 @@
 
 
 
-        <!-- Serch and fileter options -->
+        <!-- Search and fileter options -->
 
         <nav class="navbar navbar-expand-lg navbar-light bg-white  d-none d-sm-block ">
             <div class="container-fluid">
                 <div class="col-auto col-sm-4  mt-2 border-end ">
                     <form class="d-flex align-items-center ">
-                        <img class="" width="20" height="20" src="~/images/search.png">
-                        <input class="form-control  ms-2 border-0" type="search" placeholder="Search"
-                            aria-label="Search">
+                        <img class="" width="20" height="20"  src="~/images/search.png">
+                        <input class="form-control  ms-2 border-0 " id="search__bar" type="search" placeholder="Search"
+                            aria-label="Search" >
 
                     </form>
                 </div>
@@ -247,7 +247,7 @@
                 </div>
                 <div class="col-auto col-sm-2 mt-2 border-end">
                     <div class="dropdown">
-                        <a class="btn bg-white  " data-toggle="dropdown" href="#" role="button" id="dropdownMenuLink"
+                        <a class="btn bg-white  " data-toggle="dropdown" href="#" role="button" id="country"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             City
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -335,7 +335,7 @@
         <div class="container-fluid border-bottom border-2 d-sm-none mb-3">
             <div class="col-auto col-sm-4 mt-2 mb-2">
                 <form class="d-flex align-items-center ">
-                    <input class="form-control ms-2 border-0" type="search" placeholder="Search missions..."
+                    <input class="form-control ms-2 border-0 " id="search__bar__sm" type="search"  placeholder="Search missions..."
                         aria-label="Search">
                     <img src="~/images/filter.png" class="gap-2" onclick="openNav()" alt="">
                 </form>
@@ -363,7 +363,30 @@
         }
     </script>
 
-</body>
-</html>*@
+    *@
+@*
+    <script>
 
+        $(document).ready(function() {
+        $('#country a').click(function () {
+            var CountryId = $(this).val();
+            $.ajax({
+                url: '/Mission/GetThemesByCity',
+                type: 'GET',
+                data: { CountryId: CountryId },
+                dataType: 'json',
+                success: function (data) {
+                    var cities = $('#cities');
+                    cities.empty();
+                    var items = "";
+                    $.each(data, function (i, item) {
+                        items += `<li class="ms-2"><input type="checkbox" class="form-check-input me-3" id="exampleCheck1" value=` + item.cityId + `><label class="form-check-label" for="exampleCheck1" >` + item.name + `</label></li>`
+        
+                    });
+                    cities.html(items);
+                }
+            });
+        });
+    });
+    </script>*@
 
