@@ -10,5 +10,7 @@ namespace CI_Platfrom.Repository.Interface
     public interface IMissionRepository
     {
         public List<Mission> GetMissionDetails();
+
+        //public List<Mission> GetMissionBySort(string sort);
     }
 }

@@ -231,6 +231,12 @@ namespace CI_Platform.Controllers
                     return RedirectToAction("login", "Authentication");
 
                 }
+                else
+                {
+                    TempData["error"] = "Password doesn't match";
+                    ModelState.AddModelError("ConfirmPassword", "password dosn't match!!");
+
+                }
             }
             return View();
 

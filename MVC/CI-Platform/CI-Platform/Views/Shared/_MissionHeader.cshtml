@@ -1,4 +1,5 @@
-﻿
+﻿@using CI_Platfrom.Entities.Models.ViewModel
+
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -6,7 +7,7 @@
 
 
 
-
+@model MissionVM
 
 @*<!DOCTYPE html>
 <html lang="en">
@@ -44,7 +45,7 @@
                     Country
                 </a>
                  <ul class="dropdown-menu" id="countryDropdown" aria-labelledby="dropdownMenuLink">
-                            @foreach (var item in @ViewBag.CountryDetails)
+                            @foreach (var item in Model.Country)
                             {
                                  <li><a class="dropdown-item" href="#">@item.Name</a></li>
                             }
@@ -59,7 +60,7 @@
                     City
                 </a>
                  <ul class="dropdown-menu ps-4 " aria-labelledby="navbarDropdownMenuLink">
-                            @foreach (var item in @ViewBag.CityDetails)
+                            @foreach (var item in Model.City)
                             {
                                <div class="form-check ">
                                      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -80,7 +81,7 @@
                     Theme
                 </a>
                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @foreach (var item in @ViewBag.ThemeDetails)
+                            @foreach (var item in Model.MissionTheme)
                             {
                                 <li><a class="dropdown-item" href="#">@item.Title</a></li> 
                             }
@@ -95,7 +96,7 @@
                 </a>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             
-                           @foreach (var item in @ViewBag.SkillDetails)
+                           @foreach (var item in Model.skills)
                            {
                                  <li><a class="dropdown-item" href="#">@item.SkillName</a></li>
                            }
@@ -190,7 +191,7 @@
                                 id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="~/images/user-img.png" alt="user image" width="40" height="40"
                                     class="rounded-circle">
-                                <span class="">@ViewBag.LoginUser.FirstName   @ViewBag.LoginUser.LastName</span>
+                                <span class=""> @Model.user.FirstName   @Model.user.LastName</span>
                             </a>
                             <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
                                 <li><a class="dropdown-item" href="#">New project...</a></li>
@@ -236,9 +237,9 @@
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @foreach (var item in @ViewBag.CountryDetails)
+                            @foreach (var item in Model.Country)
                             {
-                                 <li><a class="dropdown-item" href="#">@item.Name</a></li>
+                                 <li><a class="dropdown-item" asp-controller="Mission" asp-action="LandingPage" asp-route-id=@item.CountryId>@item.Name</a></li>
                             }
                            
                            
@@ -259,7 +260,7 @@
 
 
                         <ul class="dropdown-menu ps-4 " aria-labelledby="navbarDropdownMenuLink">
-                            @foreach (var item in @ViewBag.CityDetails)
+                            @foreach (var item in Model.City)
                             {
                                <div class="form-check ">
                                      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -290,7 +291,7 @@
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             
-                           @foreach (var item in @ViewBag.SkillDetails)
+                           @foreach (var item in Model.skills)
                            {
                                  <li><a class="dropdown-item" href="#">@item.SkillName</a></li>
                            }
@@ -312,7 +313,7 @@
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @foreach (var item in @ViewBag.ThemeDetails)
+                            @foreach (var item in Model.MissionTheme)
                             {
                                 <li><a class="dropdown-item" href="#">@item.Title</a></li> 
                             }

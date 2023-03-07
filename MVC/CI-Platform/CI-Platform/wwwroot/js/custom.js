@@ -18,8 +18,8 @@ let gridAndListButtonsRow = document.getElementById("grid__list__buttons__row");
 
 let notfound = document.getElementById("noMission__page");
 
-serchBarSm.addEventListener("keyup", search_mission);
-searchBar.addEventListener("keyup", search_mission);
+serchBarSm.addEventListener("input", search_mission);
+searchBar.addEventListener("input", search_mission);
 
 function search_mission() {
     let count = 0;

@@ -24,5 +24,10 @@ namespace CI_Platfrom.Repository.Repository
             List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).ToList();
             return missionDetails;
         }
+
+        //public List<Mission> GetMissionBySort(string sort)
+        //{
+        //    List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).Where(e => e.);
+        //}
     }
 }

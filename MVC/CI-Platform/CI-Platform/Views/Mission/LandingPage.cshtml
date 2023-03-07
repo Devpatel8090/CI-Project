@@ -1,4 +1,5 @@
-﻿@*
+﻿@using CI_Platfrom.Entities.Models.ViewModel
+@*
 For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
@@ -10,7 +11,7 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
 
 
 
-
+@model MissionVM
 @*
 
 <head>
@@ -449,7 +450,7 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
         <div class="col-sm-6 col-auto">
             <span style="font-size: 25px;">Explore <h2 class="d-inline text-center " id="totalCountedMissions"> </h2></span>
         </div>
-        <div class="col-sm-3 col-auto d-none d-sm-block">
+        <div class="col-sm-3 col-auto  d-none d-sm-block">
             <div class="dropdown text-end">
                 <a class="btn bg-white  border " data-toggle="dropdown" href="#" role="button" id="dropdownMenuLink"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -462,13 +463,13 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
                 </a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Date </a></li>
-                    <li><a class="dropdown-item" href="#">Time</a></li>
-                    <li><a class="dropdown-item" href="#">Mission Type</a></li>
+                    <li><a class="dropdown-item" asp-route-sortBy="Date">Date </a></li>
+                    <li><a class="dropdown-item" asp-route-sortBy= "Time">Time</a></li>
+                    <li><a class="dropdown-item" asp-route-sortBy="Missiontype">Mission Type</a></li>
                 </ul>
             </div>
         </div>
-        <div class="col-auto col-sm-3 d-flex justify-content-center align-items-center gap-3">
+        <div class="col-auto col-sm-3 d-flex justify-content-end align-items-center gap-3">
             <button class="border-0 bg-white d-none d-sm-inline"> <img src="~/images/grid.png" id="grid__view__button"
                     onclick="gridView()"></button>
             <button class="border-0 bg-white d-none d-lg-inline"> <img src="~/images/list.png" id="list__view__button"
@@ -500,7 +501,7 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
 
     <div id="grid__view__container">
         <div class="row mt-3 row-cols-1 row-cols-sm-2 row-cols-lg-3">
-            @foreach (var item in @ViewBag.MissionDeails)
+            @foreach (var item in Model.Mission)
             {
 
 
@@ -542,8 +543,8 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
                         <br />
                         <hr>
                         <div class="time__text border rounded-pill w-75 mx-auto ">
-                            <span>From @item.StartDate.ToShortDateString() until
-                                @item.EndDate.ToShortDateString()</span>
+                            <span>From @item.StartDate.Value.ToShortDateString() until
+                                @item.EndDate.Value.ToShortDateString()</span>
                         </div>
 
 
@@ -555,13 +556,27 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
                                     <span>Seats left</span>
                                 </div>
                             </div>
-                            <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
-                                <img src="~/images/deadline.png" width="40px" height="40px">
-                                <div class="d-flex flex-column">
-                                    <h5 class="mb-0">@item.EndDate.ToShortDateString()</h5>
-                                    <span>Deadline</span>
-                                </div>
-                            </div>
+
+                                @if (@item.MissionType == "TIME")
+                                {
+                                    <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                        <img src="~/images/deadline.png" width="40px" height="40px">
+                                        <div class="d-flex flex-column">
+                                            <h5 class="mb-0">@item.EndDate.Value.ToShortDateString()</h5>
+                                            <span>Deadline</span>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                     <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                            <img src="~/images/mission.png" width="30px" height="30px">
+                                             <div class="d-flex flex-column">
+                                                 <div class="Progress__bar"><progress max="10000" value="8000"></progress></div>
+                                                 <span>8000 Achived</span>
+                                            </div>
+                                    </div>
+                                }
 
                         </div>
                         <hr>
@@ -880,93 +895,119 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
 
 
     <div id="list__view__container">
-        <div class="card mb-3 mt-3" style="max-width: 100%;">
-            <div class="row no-gutters">
-                <div class="col-md-4 ">
-                    <div style="position: relative;height: 100%;">
-                        <img class="card-img-top h-100"
-                            src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png" alt="Card image cap">
-                        <div style="position: absolute;bottom: 0;width: 100%;">
-                            <p class="m-0 bg-white border rounded-pill text-center w-50"
-                                style="transform: translate(50%, 50%) ;">Enviorment</p>
-                        </div>
-                        <div class="heart__image__container__listView rounded-circle ">
-                            <img src="~/images/heart.png" class=" heart__image">
-                        </div>
-                        <div class="rounded-circle add__person__image__container__listView">
-                            <img src="~/images/user.png" class="add__person__image">
-                        </div>
-                        <div class="city__container__list rounded-pill">
-                            <img src="~/images/pin.png" class="locatin__image">
-                            <span class="text-white">Toronto</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8  ">
-                    <div class="card-body">
-                        <h3 class="card-title mt-2">Grow Trees -On the path to environment sustainability</h3>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                            additional
-                            content. This content is a little bit longer.</p>
-                        <div class="row  justify-content-between ">
 
-
-                            <div class="col d-flex flex-row align-items-center justify-content-start">
-                                <span class="">Tree Canada</span>
-                                <div class="star__container ms-3 ">
-                                    <img src="~/images/selected-star.png">
-                                    <img src="~/images/selected-star.png">
-                                    <img src="~/images/selected-star.png">
-                                    <img src="~/images/selected-star.png">
-                                    <img src="~/images/star.png">
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <hr class="">
-                                <div class="time__text__list w-75 ms-5 text-center border rounded-pill ">
-                                    <span>From 10/01/2019 until 25/02/2019</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row justify-content-between  mt-3">
-                            <div class="col mt-2 ml-0 apply__button__list     ">
-
-                                <a href="#" class="btn rounded-pill   text-center apply__text__list">Apply <img
-                                        src="~/images/right-arrow.png" class="ms-2"></a>
-
-
-                            </div>
-                            <div class="col">
-                                <div class="row  mb-3">
-                                    <div class="d-flex flex-row gap-1 align-items-center justify-content-center col">
-                                        <img src="~/images/Seats-left.png" class="" width="30px" height="30px">
-                                        <div class="d-flex flex-column ">
-                                            <h5 class="mb-0">10</h5>
-                                            <span>Seats left</span>
+         @foreach (var item in Model.Mission)
+                {
+                     <div class="card mb-3 mt-3 total__mission" style="max-width: 100%;">
+                           <div class="row no-gutters">
+               
+                    
+                
+                                <div class="col-md-4 ">
+                                    <div style="position: relative;height: 100%;">
+                                        <img class="card-img-top h-100"
+                                            src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png" alt="Card image cap">
+                                        <div style="position: absolute;bottom: 0;width: 100%;">
+                                            <p class="m-0 bg-white border rounded-pill text-center w-50"
+                                                style="transform: translate(50%, 50%) ;">@item.Theme.Title</p>
+                                        </div>
+                                        <div class="heart__image__container__listView rounded-circle ">
+                                            <img src="~/images/heart.png" class=" heart__image">
+                                        </div>
+                                        <div class="rounded-circle add__person__image__container__listView">
+                                            <img src="~/images/user.png" class="add__person__image">
+                                        </div>
+                                        <div class="city__container__list rounded-pill">
+                                            <img src="~/images/pin.png" class="locatin__image">
+                                            <span class="text-white">@item.City.Name</span>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-row gap-1 align-items-center justify-content-center col">
-                                        <img src="~/images/deadline.png" width="40px" height="40px">
-                                        <div class="d-flex flex-column">
-                                            <h5 class="mb-0">09/01/2019</h5>
-                                            <span>Deadline</span>
+                                </div>
+                                <div class="col-md-8  ">
+                                    <div class="card-body">
+                                        <h3 class="card-title mt-2">@item.Title</h3>
+                                        <p class="card-text">@item.ShortDescription</p>
+                                        <div class="row  justify-content-between ">
+
+
+                                            <div class="col d-flex flex-row align-items-center justify-content-start">
+                                                <span class="">@item.OrganizationName</span>
+                                                <div class="star__container ms-3 ">
+                                                    <img src="~/images/selected-star.png">
+                                                    <img src="~/images/selected-star.png">
+                                                    <img src="~/images/selected-star.png">
+                                                    <img src="~/images/selected-star.png">
+                                                    <img src="~/images/star.png">
+                                                </div>
+                                            </div>
+
+                                            <div class="col">
+                                                <hr class="">
+                                                <div class="time__text__list w-75 ms-5 text-center border rounded-pill ">
+                                                    <span>From @item.StartDate.Value.ToShortDateString() until @item.EndDate.Value.ToShortDateString()</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row justify-content-between  mt-3">
+                                            <div class="col mt-2 ml-0 apply__button__list     ">
+
+                                                <a href="#" class="btn rounded-pill   text-center apply__text__list">Apply <img
+                                                        src="~/images/right-arrow.png" class="ms-2"></a>
+
+
+                                            </div>
+                                            <div class="col">
+
+
+                              
+                                                <div class="row  mb-3">
+
+
+                                                  <div class="d-flex flex-row gap-1 align-items-center justify-content-center col">
+                                                        <img src="~/images/Seats-left.png" class="" width="30px" height="30px">
+                                                        <div class="d-flex flex-column ">
+                                                            <h5 class="mb-0">10</h5>
+                                                            <span>Seats left</span>
+                                                        </div>
+                                                   </div>
+
+                                    
+                                                  @if (@item.MissionType == "TIME")
+                                                   {
+                                                    <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                                           <img src="~/images/deadline.png" width="40px" height="40px">
+                                                           <div class="d-flex flex-column">
+                                                                 <h5 class="mb-0">@item.EndDate.Value.ToShortDateString()</h5>
+                                                                 <span>Deadline</span>
+                                                           </div>
+                                                    </div>
+                                                    }
+                                                    else
+                                                    {
+                                                       <div class="d-flex flex-row gap-1 align-items-center justify-content-center col">
+                                                              <img src="~/images/mission.png" width="30px" height="30px">
+                                                              <div class="d-flex flex-column">
+                                                                  <div class="Progress__bar"><progress max="10000" value="8000"></progress></div>
+                                                                  <span>8000 Achived</span>
+                                                              </div>
+                                                       </div>
+                                                    }
+
+                                                </div>
+
+
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
-
-
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                      </div>
+
+        }
 
 
-        <div class="card mb-3 mt-4" style="max-width: 100%;">
+     @*   <div class="card mb-3 mt-4" style="max-width: 100%;">
             <div class="row no-gutters ">
                 <div class="col-md-4 ">
                     <div style="position: relative;height: 100%;">
@@ -1307,7 +1348,7 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
 
 
