@@ -34,7 +34,7 @@ namespace CI_Platfrom.Repository.Repository
         }
 
 
-        public MissionVM GetAllMissions(string emailFromSession, long CountryId = 0, string sortby="Date")
+        public MissionVM GetAllMissions(string emailFromSession)
         {
 
             MissionVM missionVM = new();
@@ -61,30 +61,30 @@ namespace CI_Platfrom.Repository.Repository
             missionVM.user = user;
 
 
-            if(CountryId == 0)
-            {
-                IEnumerable<City> cityDetails = _cities.GetCityDetails();
-                missionVM.City = cityDetails;
-            }
-            else
-            {
+            //if(CountryId == 0)
+            //{
+            //    IEnumerable<City> cityDetails = _cities.GetCityDetails();
+            //    missionVM.City = cityDetails;
+            //}
+            //else
+            //{
 
-                missionVM.City = _cities.CityByCountry(CountryId);
-            }
+            //    missionVM.City = _cities.CityByCountry(CountryId);
+            //}
 
-            if(sortby == "Date")
-            {
+            //if(sortby == "Date")
+            //{
                
-                missionVM.Mission = missionDetails.OrderBy(u => u.StartDate);
-            }
-            else if(sortby == "Time")
-            {
-                missionVM.Mission = missionDetails.OrderBy(u => u.CreateAt);
-            }
-            else if(sortby == "Missiontype")
-            {
-                missionVM.Mission = missionDetails.OrderBy(u => u.MissionType);
-            }
+            //    missionVM.Mission = missionDetails.OrderBy(u => u.StartDate);
+            //}
+            //else if(sortby == "Time")
+            //{
+            //    missionVM.Mission = missionDetails.OrderBy(u => u.CreateAt);
+            //}
+            //else if(sortby == "Missiontype")
+            //{
+            //    missionVM.Mission = missionDetails.OrderBy(u => u.MissionType);
+            //}
 
 
 

@@ -25,6 +25,29 @@ namespace CI_Platfrom.Repository.Repository
             return missionDetails;
         }
 
+        public List<Mission> GetBySort(string sort)
+        {
+            List<Mission> missionsortdate = GetMissionDetails();
+
+            if(sort == "Oldest")
+            {
+                return missionsortdate.OrderBy(m => m.CreateAt).ToList();
+            }
+            else if(sort == "Newest")
+            {
+                return missionsortdate.OrderByDescending(m => m.EndDate).ToList();
+            }
+            else if(sort == "Mission Type")
+            {
+                return missionsortdate.OrderBy(m => m.MissionType).ToList();
+            }
+            else
+            {
+                return missionsortdate.OrderBy(m => m.StartDate).ToList();
+            }
+        }
+
+
         //public List<Mission> GetMissionBySort(string sort)
         //{
         //    List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).Where(e => e.);

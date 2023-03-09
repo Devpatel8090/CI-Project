@@ -11,6 +11,6 @@ namespace CI_Platfrom.Repository.Interface
     {
         public List<City> GetCityDetails();
 
-        public List<City> CityByCountry(long id);
+        public List<City> CityByCountry(long CountryId);
     }
 }

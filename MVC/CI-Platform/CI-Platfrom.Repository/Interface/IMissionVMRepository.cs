@@ -9,6 +9,8 @@ namespace CI_Platfrom.Repository.Interface
 {
     public interface IMissionVMRepository
     {
-        public  MissionVM GetAllMissions(string emailFromSession , long CountryId, string sortby);
+        public  MissionVM GetAllMissions(string emailFromSession);
+
+
     }
 }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7xCpvJTfEpZZMo/6ZEAIhPRN4vM1BTzPSIq30z4i/pY=",
+  "Hash": "BhjeMkD3XsOnCl7q877QGuC0Z6ye+gx18Q0hg2iwKHM=",
   "Source": "CI-Platform",
   "BasePath": "_content/CI-Platform",
   "Mode": "Default",
@@ -2004,6 +2004,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\custom.js"
+    },
+    {
+      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\js\\JQueryfile.js",
+      "SourceId": "CI-Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\",
+      "BasePath": "_content/CI-Platform",
+      "RelativePath": "js/JQueryfile.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\JQueryfile.js"
     },
     {
       "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\js\\site.js",

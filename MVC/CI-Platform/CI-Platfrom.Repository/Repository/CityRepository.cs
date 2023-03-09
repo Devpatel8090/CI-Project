@@ -23,13 +23,13 @@ namespace CI_Platfrom.Repository.Repository
             List<City> cityList = _db.Cities.ToList();
             return cityList;
         }
-        public List<City> CityByCountry(long id = 0)
+        public List<City> CityByCountry(long CountryId)
         {
-            List<City> cityList = _db.Cities.Where(u => u.CountryId == id ).ToList();
+            List<City> cityList = _db.Cities.Where(u => u.CountryId == CountryId ).ToList();
             return cityList;
         }
 
-
+      
 
 
     }

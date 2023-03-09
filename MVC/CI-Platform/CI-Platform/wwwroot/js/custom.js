@@ -12,6 +12,10 @@ let filterRow = document.getElementById("grid__list__buttons__row")
 
 let cardTitle = document.getElementsByClassName("card-title");
 
+let cardSubtitle = document.getElementsByClassName("card-text");
+
+console.log(cardSubtitle);
+
 let gridAndListButtonsRow = document.getElementById("grid__list__buttons__row");
 
 
@@ -28,7 +32,7 @@ function search_mission() {
 
 
     for (i = 0; i < totalMissions.length; i++) {
-        if (!cardTitle[i].innerHTML.toLowerCase().includes(input)) {
+        if (!cardTitle[i].innerHTML.toLowerCase().includes(input) && !cardSubtitle[i].innerHTML.toLowerCase().includes(input) ) {
             totalMissions[i].classList.add("hide");
 
 

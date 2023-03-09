@@ -44,13 +44,11 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Country
                 </a>
-                 <ul class="dropdown-menu" id="countryDropdown" aria-labelledby="dropdownMenuLink">
+                 <ul id="country" class="dropdown-menu" id="countryDropdown" aria-labelledby="dropdownMenuLink">
                             @foreach (var item in Model.Country)
                             {
-                                 <li><a class="dropdown-item" href="#">@item.Name</a></li>
-                            }
-                           
-                           
+                                 <li value="@item.CountryId"><a class="dropdown-item" href="#">@item.Name</a></li>
+                            }        
                  </ul>
             </a>
 
@@ -59,8 +57,8 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     City
                 </a>
-                 <ul class="dropdown-menu ps-4 " aria-labelledby="navbarDropdownMenuLink">
-                            @foreach (var item in Model.City)
+                 <ul id="" class="dropdown-menu ps-4 " aria-labelledby="navbarDropdownMenuLink">
+                            @*@foreach (var item in Model.City)
                             {
                                <div class="form-check ">
                                      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -68,7 +66,7 @@
                                             @item.Name
                                          </label>
                                </div>
-                            }
+                            }*@
                           
                           
                            
@@ -236,10 +234,11 @@
                             </svg>
                         </a>
 
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <ul class="dropdown-menu" id="country" aria-labelledby="dropdownMenuLink">
                             @foreach (var item in Model.Country)
                             {
-                                 <li><a class="dropdown-item" asp-controller="Mission" asp-action="LandingPage" asp-route-id=@item.CountryId>@item.Name</a></li>
+                                 <li value="@item.CountryId"><a class="dropdown-item" @*asp-controller="Mission" asp-action="LandingPage" asp-route-id=@item.CountryId*@>@item.Name</a></li>
+                               
                             }
                            
                            
@@ -259,8 +258,8 @@
                         </a>
 
 
-                        <ul class="dropdown-menu ps-4 " aria-labelledby="navbarDropdownMenuLink">
-                            @foreach (var item in Model.City)
+                        <ul id="cities" class="dropdown-menu ps-4 " aria-labelledby="navbarDropdownMenuLink">
+                            @*@foreach (var item in Model.City)
                             {
                                <div class="form-check ">
                                      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -268,7 +267,7 @@
                                             @item.Name
                                          </label>
                                </div>
-                            }
+                            }*@
                           
                           
                            

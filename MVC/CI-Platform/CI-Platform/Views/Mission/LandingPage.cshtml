@@ -381,63 +381,61 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
 
     <!-- chips section -->
 
+    <div id="filteritems" class="my-4 d-none d-sm-block">
 
-    <div class="my-4 d-none d-sm-block">
+            <div id="cleardiv">
+                <div id="closing"
+                    class="badge badge-pill badge-light text-muted bg-white border border-secondary rounded-pill me-2">
+                    <span>Tree Plantation</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" onclick="removedisplay('closing');" width="16" height="16"
+                        fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                        <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </div>
+                <div id="closing1"
+                    class="badge badge-pill badge-light text-muted bg-white border border-secondary rounded-pill me-2">
+                    <span>Canada</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" onclick="removedisplay('closing1');" width="16" height="16"
+                        fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                        <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </div>
+                <div id="closing2"
+                    class="badge badge-pill badge-light text-muted bg-white border border-secondary rounded-pill me-2">
+                    <span>Toronto</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" onclick="removedisplay('closing2')" width="16" height="16"
+                        fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                        <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </div>
+                <div id="closing3"
+                    class="badge badge-pill badge-light text-muted bg-white border border-secondary rounded-pill me-2">
+                    <span>Montereal</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" onclick="removedisplay('closing3');" width="16" height="16"
+                        fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                        <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </div>
+                <div id="closing4"
+                    class="badge badge-pill badge-light text-muted bg-white border border-secondary rounded-pill me-2">
+                    <span>Enviorment</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" onclick="removedisplay('closing4');" width="16" height="16"
+                        fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                        <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </div>
 
+                <span class="p-2" id="cleardiv111">
+                    <a onclick="clearall()" class="text-decoration-none text-dark">Clear All</a>
+                </span>
 
-        <div id="cleardiv">
-            <div id="closing"
-                class="badge badge-pill badge-light text-muted bg-white border border-secondary rounded-pill me-2">
-                <span>Tree Plantation</span>
-                <svg xmlns="http://www.w3.org/2000/svg" onclick="removedisplay('closing');" width="16" height="16"
-                    fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                    <path
-                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                </svg>
             </div>
-            <div id="closing1"
-                class="badge badge-pill badge-light text-muted bg-white border border-secondary rounded-pill me-2">
-                <span>Canada</span>
-                <svg xmlns="http://www.w3.org/2000/svg" onclick="removedisplay('closing1');" width="16" height="16"
-                    fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                    <path
-                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                </svg>
-            </div>
-            <div id="closing2"
-                class="badge badge-pill badge-light text-muted bg-white border border-secondary rounded-pill me-2">
-                <span>Toronto</span>
-                <svg xmlns="http://www.w3.org/2000/svg" onclick="removedisplay('closing2')" width="16" height="16"
-                    fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                    <path
-                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                </svg>
-            </div>
-            <div id="closing3"
-                class="badge badge-pill badge-light text-muted bg-white border border-secondary rounded-pill me-2">
-                <span>Montereal</span>
-                <svg xmlns="http://www.w3.org/2000/svg" onclick="removedisplay('closing3');" width="16" height="16"
-                    fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                    <path
-                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                </svg>
-            </div>
-            <div id="closing4"
-                class="badge badge-pill badge-light text-muted bg-white border border-secondary rounded-pill me-2">
-                <span>Enviorment</span>
-                <svg xmlns="http://www.w3.org/2000/svg" onclick="removedisplay('closing4');" width="16" height="16"
-                    fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                    <path
-                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                </svg>
-            </div>
-
-            <span class="p-2" id="cleardiv111">
-                <a onclick="clearall()" href="" class="text-decoration-none text-dark">Clear All</a>
-            </span>
-
-        </div>
-    </div>    
+        </div> 
 
 
 
@@ -462,10 +460,10 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
                     </svg>
                 </a>
 
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <li><a class="dropdown-item" asp-route-sortBy="Date">Date </a></li>
-                    <li><a class="dropdown-item" asp-route-sortBy= "Time">Time</a></li>
-                    <li><a class="dropdown-item" asp-route-sortBy="Missiontype">Mission Type</a></li>
+                <ul class="dropdown-menu" id="SortBy" aria-labelledby="dropdownMenuLink">
+                    <li id="Date"><button class="dropdown-item sortByInput" value="Oldest" >Oldest</button></li>
+                    <li><button class="dropdown-item sortByInput" value="Newest">Newest</button></li>
+                    <li><button class="dropdown-item sortByInput" value="Mission Type" >Mission Type</button></li>
                 </ul>
             </div>
         </div>
@@ -500,7 +498,7 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
     <!-- Grid Cards  -->
 
     <div id="grid__view__container">
-        <div class="row mt-3 row-cols-1 row-cols-sm-2 row-cols-lg-3">
+        <div class="row mt-3 row-cols-1 row-cols-sm-2 row-cols-lg-3  " id="gridmission__row">
             @foreach (var item in Model.Mission)
             {
 
