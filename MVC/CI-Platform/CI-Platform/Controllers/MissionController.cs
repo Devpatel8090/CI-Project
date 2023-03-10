@@ -24,8 +24,9 @@ namespace CI_Platform.Controllers
             _mission = mission;
             _db = db;
         }
-        public IActionResult LandingPage(long id=0, string sortby="Date") 
+        public IActionResult LandingPage(string filter,long countryId=0, string sortby="Date") 
         {
+            
             var ses =  HttpContext.Session.GetString("userEmail");
 
             if (ses == null)
@@ -53,12 +54,49 @@ namespace CI_Platform.Controllers
                 //ViewBag.MissionDeails = missionDeails;
 
                 var emailFromSession = HttpContext.Session.GetString("userEmail");
-                MissionVM missionObj =  _missionvm.GetAllMissions(emailFromSession);
+                MissionVM missionObj =  _missionvm.GetAllMissions(emailFromSession,countryId);
                 //var user = userDetails.FirstOrDefault(e => e.Email == emailFromSession);
                 //ViewBag.LoginUser = user;
+                if(filter != null)
+                {
+                    return RedirectToAction("GetAllMissions",new {filter,countryId});
+                }
+
                 return View(missionObj);
             }
         }
+
+
+        public JsonResult[] GetAllMissions(string filter, long id = 0)
+        {
+            var sessionValue = HttpContext.Session.GetString("UserEmail");
+
+            IEnumerable<Mission> allmissions = _missionvm.ApplyFilter(filter, id , sessionValue);
+            JsonResult[] missions = new JsonResult[allmissions.ToList().Count];
+
+            int i = 0;
+            foreach (Mission mission in allmissions)
+            {
+                JsonResult eachmission = new JsonResult(
+                    new
+                    {
+                        mission.Title,
+                        mission.City.Name,
+                        startDate = mission.StartDate.Value.ToShortDateString(),
+                        endDate = mission.EndDate.Value.ToShortDateString(),
+                        theme = mission.Theme.Title,
+                        mission.ShortDescription,
+                        mission.OrganizationName,
+                        deadLine = ((mission.StartDate - TimeSpan.FromDays(1)).Value.ToShortDateString())
+                    }
+
+                );
+                missions[i] = eachmission;
+                i++;
+            }
+            return missions;
+        }
+
 
         public JsonResult GetCityByCountry(long CountryId)
         {

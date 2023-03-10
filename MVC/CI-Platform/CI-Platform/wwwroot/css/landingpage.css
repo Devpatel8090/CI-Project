@@ -142,6 +142,10 @@ progress::-webkit-progress-bar {
   background: #E8E8E8;
 }
 
+.scrollbar {
+    max-height: 150px;
+    overflow: scroll;
+}
 
 
 

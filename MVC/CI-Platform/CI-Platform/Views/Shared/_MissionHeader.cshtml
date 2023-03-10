@@ -57,20 +57,21 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     City
                 </a>
-                 <ul id="" class="dropdown-menu ps-4 " aria-labelledby="navbarDropdownMenuLink">
-                            @*@foreach (var item in Model.City)
+              
+                        <ul id="cities" class="dropdown-menu ps-4 scrollbar" aria-labelledby="navbarDropdownMenuLink">
+                            @foreach (var item in Model.City)
                             {
                                <div class="form-check ">
-                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                     <input class="form-check-input cityNames" type="checkbox" value="@item.Name" id="defaultCheck1">
                                          <label class="form-check-label" for="defaultCheck1">
                                             @item.Name
                                          </label>
                                </div>
-                            }*@
+                            }
                           
                           
                            
-                </ul>
+                        </ul>
             </a>
 
             <a href="#">
@@ -78,29 +79,40 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Theme
                 </a>
-                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @foreach (var item in Model.MissionTheme)
-                            {
-                                <li><a class="dropdown-item" href="#">@item.Title</a></li> 
-                            }
+                      <ul class="dropdown-menu ps-4 scrollbar" aria-labelledby="dropdownMenuLink">
                             
                         
-                 </ul>
+                             @foreach (var item in Model.MissionTheme)
+                            {
+                               <div class="form-check ">
+                                     <input class="form-check-input themeNames " type="checkbox" value="@item.Title" id="defaultCheck1">
+                                         <label class="form-check-label" for="defaultCheck1">
+                                           @item.Title
+                                         </label>
+                               </div>
+                            }
+                           
+                        </ul>
             </a>
             <a href="#">
                 <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Skills
                 </a>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <ul class="dropdown-menu ps-4 scrollbar" aria-labelledby="dropdownMenuLink">
                             
-                           @foreach (var item in Model.skills)
-                           {
-                                 <li><a class="dropdown-item" href="#">@item.SkillName</a></li>
-                           }
-                          
+                        
+                             @foreach (var item in Model.skills)
+                            {
+                               <div class="form-check  ">
+                                     <input class="form-check-input skillNames" type="checkbox" value="@item.SkillName" id="defaultCheck1">
+                                         <label class="form-check-label" for="defaultCheck1">
+                                            @item.SkillName
+                                         </label>
+                               </div>
+                            }
                            
-                  </ul>
+                        </ul>
             </a>
             <a href="#">
                 <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
@@ -237,12 +249,13 @@
                         <ul class="dropdown-menu" id="country" aria-labelledby="dropdownMenuLink">
                             @foreach (var item in Model.Country)
                             {
-                                 <li value="@item.CountryId"><a class="dropdown-item" @*asp-controller="Mission" asp-action="LandingPage" asp-route-id=@item.CountryId*@>@item.Name</a></li>
+                                 <li value="@item.CountryId"><a class="dropdown-item" asp-controller="Mission" asp-action="LandingPage" asp-route-countryId=@item.CountryId>@item.Name</a></li>
                                
                             }
                            
                            
                         </ul>
+                       
                     </div>
                 </div>
                 <div class="col-auto col-sm-2 mt-2 border-end">
@@ -258,16 +271,16 @@
                         </a>
 
 
-                        <ul id="cities" class="dropdown-menu ps-4 " aria-labelledby="navbarDropdownMenuLink">
-                            @*@foreach (var item in Model.City)
+                        <ul id="cities" class="dropdown-menu ps-4 scrollbar" aria-labelledby="navbarDropdownMenuLink">
+                            @foreach (var item in Model.City)
                             {
                                <div class="form-check ">
-                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                     <input class="form-check-input cityNames" type="checkbox" value="@item.Name" id="defaultCheck1">
                                          <label class="form-check-label" for="defaultCheck1">
                                             @item.Name
                                          </label>
                                </div>
-                            }*@
+                            }
                           
                           
                            
@@ -288,13 +301,18 @@
 
 
 
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <ul class="dropdown-menu ps-4 scrollbar" aria-labelledby="dropdownMenuLink">
                             
-                           @foreach (var item in Model.skills)
-                           {
-                                 <li><a class="dropdown-item" href="#">@item.SkillName</a></li>
-                           }
-                          
+                        
+                             @foreach (var item in Model.skills)
+                            {
+                               <div class="form-check  ">
+                                     <input class="form-check-input skillNames" type="checkbox" value="@item.SkillName" id="defaultCheck1">
+                                         <label class="form-check-label" for="defaultCheck1">
+                                            @item.SkillName
+                                         </label>
+                               </div>
+                            }
                            
                         </ul>
                     </div>
@@ -311,13 +329,19 @@
                             </svg>
                         </a>
 
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @foreach (var item in Model.MissionTheme)
-                            {
-                                <li><a class="dropdown-item" href="#">@item.Title</a></li> 
-                            }
+                           <ul class="dropdown-menu ps-4 scrollbar" aria-labelledby="dropdownMenuLink">
                             
                         
+                             @foreach (var item in Model.MissionTheme)
+                            {
+                               <div class="form-check ">
+                                     <input class="form-check-input themeNames " type="checkbox" value="@item.Title" id="defaultCheck1">
+                                         <label class="form-check-label" for="defaultCheck1">
+                                           @item.Title
+                                         </label>
+                               </div>
+                            }
+                           
                         </ul>
                     </div>
                 </div>

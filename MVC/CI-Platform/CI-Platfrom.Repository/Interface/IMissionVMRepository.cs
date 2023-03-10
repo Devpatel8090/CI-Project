@@ -1,4 +1,5 @@
-﻿using CI_Platfrom.Entities.Models.ViewModel;
+﻿using CI_Platfrom.Entities.Models;
+using CI_Platfrom.Entities.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,9 @@ namespace CI_Platfrom.Repository.Interface
 {
     public interface IMissionVMRepository
     {
-        public  MissionVM GetAllMissions(string emailFromSession);
+        public  MissionVM GetAllMissions(string emailFromSession, long ContryId);
 
+        public IEnumerable<Mission> ApplyFilter(string filter, long id, string sessionValue);
 
     }
 }
