@@ -404,7 +404,7 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
 
     <div class="row mt-2 " id="grid__list__buttons__row">
         <div class="col-sm-6 col-auto">
-            <span style="font-size: 25px;">Explore <h2 class="d-inline text-center " id="totalCountedMissions"> </h2></span>
+            <span style="font-size: 25px;">Explore <h2 class="d-inline text-center " id="totalCountedMissions">@Model.Mission.Count()  </h2> Missions</span>
         </div>
         <div class="col-sm-3 col-auto  d-none d-sm-block">
             <div class="dropdown text-end">
@@ -464,9 +464,18 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
             <div class="col  mb-3 total__mission" >
                 <div class="card" style="max-width: 26rem;">
                     <div style="position: relative;">
-                        <img class="card-img-top"
-                            src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
-                            alt="Card image cap">
+                       @if(item.MissionMedia.Count > 0)
+                                {
+                                    <img class="card-img-top"
+                                     src="@item.MissionMedia.FirstOrDefault(m => m.DefaultMissionMedia == 1).MediaPath"
+                                     alt="Card image cap">
+                                }
+                                else
+                                {
+                                    <img class="card-img-top"
+                                     src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png"
+                                     alt="Card image cap">                                    
+                                }
                         <div style="position: absolute;bottom: 0;width: 100%;">
                             <p class="m-0 bg-white border rounded-pill text-center w-50"
                                 style="transform: translate(50%, 50%) ;">@item.Theme.Title</p>
@@ -536,8 +545,8 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
 
                         </div>
                         <hr>
-                        <div class="mt-2 apply__button    text-center apply__button">
-                            <a href="#" class="btn rounded-pill   text-center apply__text">Apply <img
+                        <div class="mt-2 apply__button    text-center apply__button  ">
+                            <a class="btn rounded-pill   text-center apply__text " asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId" >Apply <img
                                     src="~/images/right-arrow.png" class="ms-2"></a>
 
                         </div>
@@ -861,8 +870,18 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
                 
                                 <div class="col-md-4 ">
                                     <div style="position: relative;height: 100%;">
-                                        <img class="card-img-top h-100"
-                                            src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png" alt="Card image cap">
+                                         @if(item.MissionMedia.Count > 0)
+                                {
+                                    <img class="card-img-top"
+                                     src="@item.MissionMedia.FirstOrDefault(m => m.DefaultMissionMedia == 1).MediaPath"
+                                     alt="Card image cap">
+                                }
+                                else
+                                {
+                                    <img class="card-img-top"
+                                     src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png"
+                                     alt="Card image cap">                                    
+                                }
                                         <div style="position: absolute;bottom: 0;width: 100%;">
                                             <p class="m-0 bg-white border rounded-pill text-center w-50"
                                                 style="transform: translate(50%, 50%) ;">@item.Theme.Title</p>
@@ -908,7 +927,7 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
                                         <div class="row justify-content-between  mt-3">
                                             <div class="col mt-2 ml-0 apply__button__list     ">
 
-                                                <a href="#" class="btn rounded-pill   text-center apply__text__list">Apply <img
+                                                <a asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId" class="btn rounded-pill   text-center apply__text__list">Apply <img
                                                         src="~/images/right-arrow.png" class="ms-2"></a>
 
 
@@ -1329,6 +1348,8 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
           
 
         }
+        
+     
 
         function listView() {
             document.getElementById("grid__view__container").style.display = "none";
@@ -1345,15 +1366,7 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
             document.getElementById("openbtn").style.display = "block";
         }
 
-        function clearall() {
-                console.log("Before clear div");
-                document.getElementById('cleardiv').style.display = "none";
-                console.log("After clearing div");
-            }
-            
-         function removedisplay(id)
-            {   
-            document.getElementById(id).style.display = "none";
-            }
+      
+         
 
     </script>

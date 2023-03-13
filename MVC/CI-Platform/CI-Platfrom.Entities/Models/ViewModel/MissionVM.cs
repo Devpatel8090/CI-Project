@@ -12,6 +12,7 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         
         
         public IEnumerable<Mission> Mission { get; set; }
+        public Mission particularMission { get; set; }
 
        public IEnumerable<Country> Country { get; set; }
 
@@ -22,6 +23,7 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         public IEnumerable<MissionTheme> MissionTheme { get; set; }
 
         //public IEnumerable<MissionMedium> MissionMedium { get; set; }
+        public IEnumerable<Mission> RelatedMission { get; set; }
 
         public IEnumerable<City> City { get; set; }
 

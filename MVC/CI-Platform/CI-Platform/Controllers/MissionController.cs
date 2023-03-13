@@ -24,7 +24,7 @@ namespace CI_Platform.Controllers
             _mission = mission;
             _db = db;
         }
-        public IActionResult LandingPage(string filter,long countryId=0, string sortby="Date") 
+        public IActionResult LandingPage(string sort,string filter,long countryId=0) 
         {
             
             var ses =  HttpContext.Session.GetString("userEmail");
@@ -57,21 +57,26 @@ namespace CI_Platform.Controllers
                 MissionVM missionObj =  _missionvm.GetAllMissions(emailFromSession,countryId);
                 //var user = userDetails.FirstOrDefault(e => e.Email == emailFromSession);
                 //ViewBag.LoginUser = user;
-                if(filter != null)
+                if(filter != null || sort != null)
                 {
-                    return RedirectToAction("GetAllMissions",new {filter,countryId});
+                    return RedirectToAction("GetAllMissions",new {sort, filter,countryId});
                 }
 
                 return View(missionObj);
             }
         }
 
-
-        public JsonResult[] GetAllMissions(string filter, long id = 0)
+        /// <summary>
+        ///  getting the all missions by filter and country id 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult[] GetAllMissions(string sort,string filter, long id = 0)
         {
-            var sessionValue = HttpContext.Session.GetString("UserEmail");
+            var sessionValue = HttpContext.Session.GetString("userEmail");
 
-            IEnumerable<Mission> allmissions = _missionvm.ApplyFilter(filter, id , sessionValue);
+            IEnumerable<Mission> allmissions = _missionvm.ApplyFilter(sort,filter, id , sessionValue);
             JsonResult[] missions = new JsonResult[allmissions.ToList().Count];
 
             int i = 0;
@@ -104,45 +109,56 @@ namespace CI_Platform.Controllers
             return Json(city);
         }
 
-        public JsonResult[] DateSort(string sort)
-        {
+        //public JsonResult[] DateSort(string sort)
+        //{
 
-            //var session_details = HttpContext.Session.GetString("Login");
-            var missiondata = _mission.GetBySort(sort);
-            var missionlist = new JsonResult[missiondata.ToList().Count];
+        //    //var session_details = HttpContext.Session.GetString("Login");
+        //    var missiondata = _mission.GetBySort(sort);
+        //    var missionlist = new JsonResult[missiondata.ToList().Count];
 
-            int i = 0;
+        //    int i = 0;
 
-            foreach (Mission mission in missiondata)
-            {
-                var missionObj = new JsonResult(new
-                {
-                    mission.MissionId,
-                    mission.Title,
-                    mission.City.Name,
-                    mission.ShortDescription,
-                    Theme = mission.Theme.Title,
-                    mission.OrganizationName,
-                    mission.OrganizationDetails,
-                    StartDate = mission.StartDate.Value.ToShortDateString(),
-                    EndDate = mission.EndDate.Value.ToShortDateString(),
-                    Deadline = (mission.StartDate - TimeSpan.FromDays(1)).Value.ToShortDateString(),
-                    mission.MissionType
-                });
-                missionlist[i] = missionObj;
-                i++;
-            }
+        //    foreach (Mission mission in missiondata)
+        //    {
+        //        var missionObj = new JsonResult(new
+        //        {
+        //            mission.MissionId,
+        //            mission.Title,
+        //            mission.City.Name,
+        //            mission.ShortDescription,
+        //            Theme = mission.Theme.Title,
+        //            mission.OrganizationName,
+        //            mission.OrganizationDetails,
+        //            StartDate = mission.StartDate.Value.ToShortDateString(),
+        //            EndDate = mission.EndDate.Value.ToShortDateString(),
+        //            Deadline = (mission.StartDate - TimeSpan.FromDays(1)).Value.ToShortDateString(),
+        //            mission.MissionType
+        //        });
+        //        missionlist[i] = missionObj;
+        //        i++;
+        //    }
 
-            return missionlist;
+        //    return missionlist;
 
 
             
+        //}
+
+
+        public IActionResult VolunteeringPage(long id)
+        {
+            var sessionValue = HttpContext.Session.GetString("userEmail");
+            MissionVM missionpage =   getmissionPage(id, sessionValue);
+            return View(missionpage);
         }
 
-
-        public IActionResult VolunteeringPage()
+        public MissionVM getmissionPage(long id, string sessionValue)
         {
-            return View();
+            MissionVM vm = new MissionVM();
+            vm.particularMission = _db.Missions.FirstOrDefault(e => e.MissionId == id);
+            vm.user =   _db.Users.FirstOrDefault(e => e.Email == sessionValue);
+            return vm;
+
         }
     }
 }

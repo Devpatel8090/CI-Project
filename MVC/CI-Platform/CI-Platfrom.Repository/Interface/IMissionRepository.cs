@@ -11,7 +11,9 @@ namespace CI_Platfrom.Repository.Interface
     {
         public List<Mission> GetMissionDetails();
 
-        public List<Mission> GetBySort(string sort);
+        public List<Mission> GetMissionByCountry(long id);
+
+        //public List<Mission> GetBySort(string sort);
 
 
 

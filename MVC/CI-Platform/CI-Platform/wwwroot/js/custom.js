@@ -8,13 +8,13 @@ let searchBar = document.getElementById("search__bar");
 
 let serchBarSm = document.getElementById("search__bar__sm");
 
-let filterRow = document.getElementById("grid__list__buttons__row")
+let sortBy = document.getElementsByClassName("sortByInput");
+
 
 let cardTitle = document.getElementsByClassName("card-title");
 
 let cardSubtitle = document.getElementsByClassName("card-text");
 
-console.log(cardSubtitle);
 
 let gridAndListButtonsRow = document.getElementById("grid__list__buttons__row");
 
@@ -31,6 +31,8 @@ function search_mission() {
     input = input.toLowerCase();
 
 
+    /*check for the mission title and subtitle to serch */
+
     for (i = 0; i < totalMissions.length; i++) {
         if (!cardTitle[i].innerHTML.toLowerCase().includes(input) && !cardSubtitle[i].innerHTML.toLowerCase().includes(input) ) {
             totalMissions[i].classList.add("hide");
@@ -45,6 +47,8 @@ function search_mission() {
     }
 
 
+    /*Check the total hidden missions*/
+
     for (i = 0; i < totalMissions.length; i++) {
         if (totalMissions[i].classList.contains("hide")) {
             count++;
@@ -54,7 +58,7 @@ function search_mission() {
 
 
 
-        console.log(count, totalMissions.length)
+      /*  if hidden mission are equalls to number of total mission then show nofound div*/
 
         if (count == totalMissions.length) {
             notfound.classList.remove('hide')
@@ -68,6 +72,22 @@ function search_mission() {
 
 
     }
+
+
+}
+
+
+        //taking the sortby value 
+
+for (var i = 0; i < sortBy.length; i++) {
+    sortBy[i].addEventListener('click', sortByMethod);
+}
+
+let sortByText;
+function sortByMethod() {
+    sortByText = event.target.value;
+    sendInfo();
+
 }
 
     // taking the city names list from filter option
@@ -219,7 +239,7 @@ function addthemeFilterTag(text) {
 
 
     for (const item of themeNameList) {
-        temp = temp + `<h3 class="badge bg-light text-dark mx-1 rounded-pill">  ${item} <button class="not-selected badge-close border-0 rounded-circle" value="${item}" aria-label="Close" onclick="displaythemeInPill()">X</button> </h3>`;
+        temp = temp + `<h1 class="badge bg-light text-dark mx-1 rounded-pill">  ${item} <button class="not-selected badge-close border-0 rounded-circle" value="${item}" aria-label="Close" onclick="displaythemeInPill()">X</button> </h1>`;
 
     }
 
@@ -237,43 +257,43 @@ function sendInfo() {
     filtercitystr = "";
     filterthemestr = "";
     filterSkillstr = "";
-   /* let sort = sortname;*/
+    let sort = sortByText;
 
 
 
-    if (/* && sort == null && pageNo == 0*/ cityNameList.size == 0 && skillNameList.size == 0 && themeNameList == 0) {
+    if (sort == null && cityNameList.size == 0 && skillNameList.size == 0 && themeNameList.size == 0) {
 
         var url = "/Mission/LandingPage/";
         window.location.reload();
     }
 
     //else if (filterList.size == 0 && filterTheme.size == 0 && filterSkill.size == 0 && sort == null) {
-    //    var url = "/Mission/Home?page=" + pageNo;
+    //    var url = "/Mission/LandingPage?page=" + pageNo;
     //}
 
 
 
 
 
-    //else if (filterList.size == 0 && filterTheme.size == 0 && filterSkill.size == 0) {
+    else if (cityNameList.size == 0 && skillNameList.size == 0 && themeNameList.size == 0) {
 
-    //    var url = "/Mission/Home?sort=" + sort + "&page=" + pageNo;
-    //}
+        var url = "/Mission/LandingPage?sort=" + sort /*+ "&page=" + pageNo*/;
+    }
 
-    ////else if (sort == null) {
-    ////    for (const item of filterList) {
-    ////        filtercitystr += item + ",";
-    ////    }
-    ////    for (const item of filterTheme) {
-    ////        filterthemestr += item + ",";
-    ////    }
-    ////    for (const item of filterSkill) {
-    ////        filterSkillstr += item + ",";
-    ////    }
-    ////    let obj = { city: filtercitystr, theme: filterthemestr, skill: filterSkillstr }
+    else if (sort == null) {
+        for (const item of cityNameList) {
+            filtercitystr += item + ",";
+        }
+        for (const item of themeNameList) {
+            filterthemestr += item + ",";
+        }
+        for (const item of skillNameList) {
+            filterSkillstr += item + ",";
+        }
+        let obj = { city: filtercitystr, theme: filterthemestr, skill: filterSkillstr }
 
-    ////    var url = "/Mission/Home?filter=" + JSON.stringify(obj) + "&page=" + pageNo;
-    ////}
+        var url = "/Mission/LandingPage?filter=" + JSON.stringify(obj) /*+ "&page=" + pageNo*/;
+    }
     else {
         for (const item of cityNameList) {
             filtercitystr += item + ",";
@@ -303,7 +323,11 @@ function sendInfo() {
             }
             console.log(data);
             var items = "";
+            var listitems = "";
+
+            var totalCountedMissions = data.length;
            
+            $("#totalCountedMissions").text(totalCountedMissions);
 
             $(data).each(function (i, item) {
 
@@ -383,11 +407,116 @@ function sendInfo() {
 
 
 
+                listitems += ` <div class="card mb-3 mt-3 total__mission" style="max-width: 100%;">
+                           <div class="row no-gutters">
+
+
+
+                                <div class="col-md-4 ">
+                                    <div style="position: relative;height: 100%;">
+                                        <img class="card-img-top h-100"
+                                            src="/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png" alt="Card image cap">
+                                        <div style="position: absolute;bottom: 0;width: 100%;">
+                                            <p class="m-0 bg-white border rounded-pill text-center w-50"
+                                                style="transform: translate(50%, 50%) ;">`+ item.value.theme + `</p>
+                                        </div>
+                                        <div class="heart__image__container__listView rounded-circle ">
+                                            <img src="/images/heart.png" class=" heart__image">
+                                        </div>
+                                        <div class="rounded-circle add__person__image__container__listView">
+                                            <img src="/images/user.png" class="add__person__image">
+                                        </div>
+                                        <div class="city__container__list rounded-pill">
+                                            <img src="/images/pin.png" class="locatin__image">
+                                            <span class="text-white">${item.value.name}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8  ">
+                                    <div class="card-body">
+                                        <h3 class="card-title mt-2">${item.value.title}</h3>
+                                        <p class="card-text">${item.value.shortDescription}</p>
+                                        <div class="row  justify-content-between ">
+
+
+                                            <div class="col d-flex flex-row align-items-center justify-content-start">
+                                                <span class="">${ item.value.organizationName}</span>
+                                                <div class="star__container ms-3 ">
+                                                    <img src="/images/selected-star.png">
+                                                    <img src="/images/selected-star.png">
+                                                    <img src="/images/selected-star.png">
+                                                    <img src="/images/selected-star.png">
+                                                    <img src="/images/star.png">
+                                                </div>
+                                            </div>
+
+                                            <div class="col">
+                                                <hr class="">
+                                                <div class="time__text__list w-75 ms-5 text-center border rounded-pill ">
+                                                    <span>From ${item.value.startDate}  until ${item.value.endDate}</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row justify-content-between  mt-3">
+                                            <div class="col mt-2 ml-0 apply__button__list     ">
+
+                                                <a href="#" class="btn rounded-pill   text-center apply__text__list">Apply <img
+                                                        src="/images/right-arrow.png" class="ms-2"></a>
+
+
+                                            </div>
+                                            <div class="col">
+
+
+
+                                                <div class="row  mb-3">
+
+
+                                                  <div class="d-flex flex-row gap-1 align-items-center justify-content-center col">
+                                                        <img src="/images/Seats-left.png" class="" width="30px" height="30px">
+                                                        <div class="d-flex flex-column ">
+                                                            <h5 class="mb-0">10</h5>
+                                                            <span>Seats left</span>
+                                                        </div>
+                                                   </div>
+
+
+                                                  
+                                                    <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                                           <img src="/images/deadline.png" width="40px" height="40px">
+                                                           <div class="d-flex flex-column">
+                                                                 <h5 class="mb-0">${item.value.endDate}</h5>
+                                                                 <span>Deadline</span>
+                                                           </div>
+                                                    </div>
+                                                    
+                                                  
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>`
+
+
+
+
+
+
             });
-            var view = `<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3  g-4" id="list">
+            var view = `<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3  g-4" >
                 ${items}
             </div>`
+      
             $("#grid__view__container").html(view);
+            var listview = $('#list__view__container');
+            listview.empty();
+            listview.html(listitems);
         },
         error: function (err) {
             console.error(err);

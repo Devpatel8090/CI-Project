@@ -52,10 +52,12 @@ namespace CI_Platfrom.Repository.Repository
             IEnumerable<MissionTheme> themeDetails = _theme.GetThemeDetails();
             missionVM.MissionTheme = themeDetails;
 
+            
+
             IEnumerable<User> userDetails = _user.GetUserDetails();
             missionVM.User = userDetails;
 
-            IEnumerable<Mission> missionDetails = _mission.GetMissionDetails();
+            IEnumerable<Mission> missionDetails = _mission.GetMissionDetails();/*GetMissionByCountry(CountryId)*/;
             missionVM.Mission = missionDetails;
 
 
@@ -66,6 +68,7 @@ namespace CI_Platfrom.Repository.Repository
             if (CountryId == 0)
             {
                 IEnumerable<City> citydetails = _cities.GetCityDetails();
+                
                 missionVM.City = citydetails;
             }
             else
@@ -74,30 +77,12 @@ namespace CI_Platfrom.Repository.Repository
                 missionVM.City = _cities.CityByCountry(CountryId);
             }
 
-            //if(sortby == "Date")
-            //{
-
-            //    missionVM.Mission = missionDetails.OrderBy(u => u.StartDate);
-            //}
-            //else if(sortby == "Time")
-            //{
-            //    missionVM.Mission = missionDetails.OrderBy(u => u.CreateAt);
-            //}
-            //else if(sortby == "Missiontype")
-            //{
-            //    missionVM.Mission = missionDetails.OrderBy(u => u.MissionType);
-            //}
-
-
-
-
-
 
 
             return missionVM;
         }
 
-        public IEnumerable<Mission> ApplyFilter(string filter, long id, string sessionValue)
+        public IEnumerable<Mission> ApplyFilter(string sort,string filter, long id, string sessionValue)
         {
             MissionVM missionObj = GetAllMissions(sessionValue, id);
             IEnumerable<Mission> missions = missionObj.Mission;
@@ -109,6 +94,7 @@ namespace CI_Platfrom.Repository.Repository
                 var cityName = obj.Value<string>("city");
                 var themeName = obj.Value<string>("theme");
                 var skillName = obj.Value<string>("skill");
+                
 
 
                 var filterCity = cityName.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
@@ -206,7 +192,47 @@ namespace CI_Platfrom.Repository.Repository
                     filterMissions = missions;
                 }
                 filterMissions = filterMissions.Distinct();
+
+
+                
+
+                if (sort == "Oldest")
+                {
+                    filterMissions =  filterMissions.OrderBy(m => m.CreateAt).ToList();
+                }
+                else if (sort == "Newest")
+                {
+                    filterMissions = filterMissions.OrderByDescending(m => m.EndDate).ToList();
+                }
+                else if (sort == "Mission Type")
+                {
+                    filterMissions = filterMissions.OrderBy(m => m.Title).ToList();
+                }
+                else
+                {
+                    filterMissions = filterMissions.OrderBy(m => m.StartDate).ToList();
+                }
+
+
                 return filterMissions;
+            }
+
+
+            if (sort == "Oldest")
+            {
+                missions = missions.OrderBy(m => m.CreateAt).ToList();
+            }
+            else if (sort == "Newest")
+            {
+                missions = missions.OrderByDescending(m => m.EndDate).ToList();
+            }
+            else if (sort == "Mission Type")
+            {
+                missions = missions.OrderBy(m => m.Title).ToList();
+            }
+            else
+            {
+                missions = missions.OrderBy(m => m.StartDate).ToList();
             }
             return missions;
         }

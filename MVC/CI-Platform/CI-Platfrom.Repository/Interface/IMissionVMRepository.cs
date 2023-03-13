@@ -12,7 +12,9 @@ namespace CI_Platfrom.Repository.Interface
     {
         public  MissionVM GetAllMissions(string emailFromSession, long ContryId);
 
-        public IEnumerable<Mission> ApplyFilter(string filter, long id, string sessionValue);
+        
+
+        public IEnumerable<Mission> ApplyFilter(string sort,string filter, long id, string sessionValue);
 
     }
 }
