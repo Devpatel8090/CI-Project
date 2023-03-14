@@ -18,6 +18,7 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
         public IEnumerable<Skill> skills { get; set; }
 
+
         //public IEnumerable<MissionRating> MissionRating { get; set; }
 
         public IEnumerable<MissionTheme> MissionTheme { get; set; }

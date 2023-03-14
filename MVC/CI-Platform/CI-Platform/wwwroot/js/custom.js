@@ -1,6 +1,7 @@
 ﻿
 
 
+
 let totalMissions = document.getElementsByClassName("total__mission");
 
 
@@ -9,6 +10,8 @@ let searchBar = document.getElementById("search__bar");
 let serchBarSm = document.getElementById("search__bar__sm");
 
 let sortBy = document.getElementsByClassName("sortByInput");
+
+
 
 
 let cardTitle = document.getElementsByClassName("card-title");
@@ -25,10 +28,17 @@ let notfound = document.getElementById("noMission__page");
 serchBarSm.addEventListener("input", search_mission);
 searchBar.addEventListener("input", search_mission);
 
+
+
+
+
+
+
 function search_mission() {
     let count = 0;
     let input = searchBar.value || serchBarSm.value;
     input = input.toLowerCase();
+
 
 
     /*check for the mission title and subtitle to serch */

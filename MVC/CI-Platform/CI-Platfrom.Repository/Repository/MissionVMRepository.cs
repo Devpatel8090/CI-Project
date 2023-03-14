@@ -68,13 +68,14 @@ namespace CI_Platfrom.Repository.Repository
             if (CountryId == 0)
             {
                 IEnumerable<City> citydetails = _cities.GetCityDetails();
-                
+                missionVM.Mission = missionVM.Mission;
                 missionVM.City = citydetails;
             }
             else
             {
 
                 missionVM.City = _cities.CityByCountry(CountryId);
+                missionVM.Mission = missionVM.Mission.Where(m => m.CountryId == CountryId);
             }
 
 

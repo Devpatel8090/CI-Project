@@ -21,7 +21,7 @@ namespace CI_Platfrom.Repository.Repository
 
         public List<Mission> GetMissionDetails()
         {
-            List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionMedia).ToList();
+            List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionMedia).Include(m => m.MissionSkills).ToList();
             return missionDetails;
         }
 
@@ -29,6 +29,12 @@ namespace CI_Platfrom.Repository.Repository
         {
             List<Mission> missionDetailsByCountry = _db.Missions.Where(m => m.CountryId == id).ToList();
             return missionDetailsByCountry;
+        }
+
+        public Mission GetMissionByMissionId(long missionId)
+        {
+            var particularMission = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Where(m => m.MissionId == missionId).FirstOrDefault();
+            return particularMission;
         }
 
         //public List<Mission> GetBySort(string sort)

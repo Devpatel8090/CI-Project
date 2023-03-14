@@ -3,6 +3,7 @@ using CI_Platfrom.Entities.Models;
 using CI_Platfrom.Entities.Models.ViewModel;
 using CI_Platfrom.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace CI_Platform.Controllers
 {
@@ -146,7 +147,7 @@ namespace CI_Platform.Controllers
 
 
         public IActionResult VolunteeringPage(long id)
-        {
+         {
             var sessionValue = HttpContext.Session.GetString("userEmail");
             MissionVM missionpage =   getmissionPage(id, sessionValue);
             return View(missionpage);
@@ -155,10 +156,42 @@ namespace CI_Platform.Controllers
         public MissionVM getmissionPage(long id, string sessionValue)
         {
             MissionVM vm = new MissionVM();
-            vm.particularMission = _db.Missions.FirstOrDefault(e => e.MissionId == id);
+            vm.skills = _db.Skills.ToList(); 
+            vm.particularMission = _mission.GetMissionByMissionId(id);
+            vm.User = _db.Users;
             vm.user =   _db.Users.FirstOrDefault(e => e.Email == sessionValue);
             return vm;
 
         }
+
+        public void AddToFavourite(string favObj)
+        {
+            var parseObj = JObject.Parse(favObj);
+            var missionId = parseObj.Value<long>("missionId");
+            var userId = parseObj.Value<long>("userId");
+
+            var obj = new FavoriteMission()
+            {
+               MissionId = missionId,
+               UserId = userId,
+            };
+            var favouritemission = _db.FavoriteMissions.FirstOrDefault(m => m.MissionId == missionId && m.UserId == userId);
+
+            if(favouritemission != null)
+            {
+                _db.FavoriteMissions.Remove(favouritemission);
+                _db.SaveChanges();
+            }
+            else
+            {
+                _db.FavoriteMissions.Add(obj);
+                _db.SaveChanges();
+            }
+
+            
+        }
+
+
+
     }
 }
