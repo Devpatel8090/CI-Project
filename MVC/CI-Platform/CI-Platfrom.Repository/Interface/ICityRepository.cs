@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CI_Platfrom.Repository.Interface
 {
-    public interface ICityRepository
+    public interface ICityRepository : IRepository<City>
     {
         public List<City> GetCityDetails();
 

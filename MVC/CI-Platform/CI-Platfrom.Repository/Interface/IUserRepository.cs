@@ -7,7 +7,7 @@ using CI_Platfrom.Entities.Models;
 
 namespace CI_Platfrom.Repository.Interface
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
         public List<User> GetUserDetails(); 
     }

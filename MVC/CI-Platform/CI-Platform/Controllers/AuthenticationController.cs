@@ -11,17 +11,20 @@ using CI_Platform.Model;
 using MimeKit;
 using Microsoft.Extensions.Options;
 using CI_Platfrom.Entities.Models.ViewModel;
+using CI_Platfrom.Repository.Interface;
 
 namespace CI_Platform.Controllers
 {
     public class AuthenticationController : Controller
     {
-        private readonly CiPlatformContext _db;
+        //private readonly CiPlatformContext _db;
         private IConfiguration _configuration;
         private readonly SMTPConfigModel _smtpconfig;
-        public AuthenticationController(CiPlatformContext db , IConfiguration configuration , IOptions<SMTPConfigModel> smtpConfig)
+        private readonly IUnitOfWorkRepository _unitOfWork;
+        public AuthenticationController(/*CiPlatformContext db*/IUnitOfWorkRepository unitOfWorkRepository , IConfiguration configuration , IOptions<SMTPConfigModel> smtpConfig)
         {
-            _db = db;
+            //_db = db;
+            _unitOfWork = unitOfWorkRepository;
             _configuration = configuration;
             _smtpconfig = smtpConfig.Value;
 
@@ -47,9 +50,9 @@ namespace CI_Platform.Controllers
         [HttpPost]
         public IActionResult login(User user)
         {
-            var userDetails = _db.Users.FirstOrDefault(e => e.Email == user.Email);
+            //var userDetails = _db.Users.FirstOrDefault(e => e.Email == user.Email);
+            var userDetails = _unitOfWork.User.GetUserDetails().Where(e => e.Email == user.Email).FirstOrDefault();
 
-          
             if (ModelState.IsValid)
             {
                 if (userDetails == null)
@@ -110,7 +113,8 @@ namespace CI_Platform.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = _db.Users.FirstOrDefault(u => u.Email == email);
+                //var user = _db.Users.FirstOrDefault(u => u.Email == email);
+                var user = _unitOfWork.User.GetUserDetails().Where(e => e.Email == email).FirstOrDefault();
                 if (user != null)
                 {
                     var token = GenerateToken(user);
@@ -123,8 +127,10 @@ namespace CI_Platform.Controllers
                         CreateAt = DateTime.Now
                     };
 
-                    _db.PasswordResets.Add(obj);
-                    _db.SaveChanges();
+                    //_db.PasswordResets.Add(obj);
+                    //_db.SaveChanges();
+                    _unitOfWork.PasswordReset.Add(obj);
+                    _unitOfWork.save();
 
                     var passwordresetlink = Url.Action("resetPassword", "Authentication", new { token = token2 }, Request.Scheme);
                     TempData["link"] = passwordresetlink;
@@ -206,7 +212,7 @@ namespace CI_Platform.Controllers
        
         public IActionResult resetPassword(string token)
         {
-            var findToken = _db.PasswordResets.FirstOrDefault(x => x.Token == token);
+            var findToken = _unitOfWork.PasswordReset.GetFirstOrDefault(x => x.Token == token);
             var tokenObject = new JwtSecurityTokenHandler().ReadJwtToken(token);
             var email = tokenObject.Payload.Claims.ToList()[0].Value;
             ViewBag.Email = new
@@ -224,10 +230,10 @@ namespace CI_Platform.Controllers
             {
                 if (obj.password == obj.confirmpassword)
                 {
-                    var user = _db.Users.FirstOrDefault(e => e.Email == obj.email);
+                    var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == obj.email);
                     user.Password = obj.password;
-                    _db.Users.Update(user);
-                    _db.SaveChanges();
+                    _unitOfWork.User.Update(user);
+                    _unitOfWork.save();
                     return RedirectToAction("login", "Authentication");
 
                 }

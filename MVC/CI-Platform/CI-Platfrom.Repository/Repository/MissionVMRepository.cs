@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,25 +14,29 @@ namespace CI_Platfrom.Repository.Repository
     public class MissionVMRepository : IMissionVMRepository
     {
 
-        private readonly ICityRepository _cities;
-        private readonly ICountryRepository _country;
-        private readonly ISkillRepository _skill;
-        private readonly IThemeRepository _theme;
-        private readonly IUserRepository _user;
-        private readonly IMissionRepository _mission;
+        //private readonly ICityRepository _cities;
+        //private readonly ICountryRepository _country;
+        //private readonly ISkillRepository _skill;
+        //private readonly IThemeRepository _theme;
+        //private readonly IUserRepository _user;
+        //private readonly IMissionRepository _mission;
+
+        private readonly IUnitOfWorkRepository _unitOfWork;
         
 
         
 
-        public MissionVMRepository(ICityRepository cities, ICountryRepository country, ISkillRepository skill, IThemeRepository theme, IUserRepository user, IMissionRepository mission)
+        public MissionVMRepository(/*ICityRepository cities, ICountryRepository country, ISkillRepository skill, IThemeRepository theme, IUserRepository user, IMissionRepository mission*/IUnitOfWorkRepository unitOfWork)
         {
-            _cities = cities;
-            _country = country;
-            _skill = skill;
-            _theme = theme;
-            _user = user;
-            _mission = mission;
-          
+            //_cities = cities;
+            //_country = country;
+            //_skill = skill;
+            //_theme = theme;
+            //_user = user;
+            //_mission = mission;
+            _unitOfWork = unitOfWork;
+
+
         }
 
 
@@ -40,24 +45,24 @@ namespace CI_Platfrom.Repository.Repository
 
             MissionVM missionVM = new();
 
-            IEnumerable<City> cityDetails = _cities.GetCityDetails();
+            IEnumerable<City> cityDetails = _unitOfWork.City.GetCityDetails();
             missionVM.City = cityDetails;
 
-            IEnumerable<Country> countryDetails = _country.GetCountriesDetails();
+            IEnumerable<Country> countryDetails = _unitOfWork.Country.GetCountriesDetails();
             missionVM.Country = countryDetails;
 
-            IEnumerable<Skill> skillDetails = _skill.GetSkillDetails();
+            IEnumerable<Skill> skillDetails = _unitOfWork.Skill.GetSkillDetails();
             missionVM.skills = skillDetails;
 
-            IEnumerable<MissionTheme> themeDetails = _theme.GetThemeDetails();
+            IEnumerable<MissionTheme> themeDetails = _unitOfWork.Theme.GetThemeDetails();
             missionVM.MissionTheme = themeDetails;
 
             
 
-            IEnumerable<User> userDetails = _user.GetUserDetails();
+            IEnumerable<User> userDetails = _unitOfWork.User.GetUserDetails();
             missionVM.User = userDetails;
 
-            IEnumerable<Mission> missionDetails = _mission.GetMissionDetails();/*GetMissionByCountry(CountryId)*/;
+            IEnumerable<Mission> missionDetails = _unitOfWork.Mission.GetMissionDetails();/*GetMissionByCountry(CountryId)*/;
             missionVM.Mission = missionDetails;
 
 
@@ -67,14 +72,16 @@ namespace CI_Platfrom.Repository.Repository
 
             if (CountryId == 0)
             {
-                IEnumerable<City> citydetails = _cities.GetCityDetails();
+                IEnumerable<City> citydetails = _unitOfWork.City.GetCityDetails();
                 missionVM.Mission = missionVM.Mission;
                 missionVM.City = citydetails;
             }
             else
             {
 
-                missionVM.City = _cities.CityByCountry(CountryId);
+                missionVM.City = _unitOfWork.City.CityByCountry(CountryId);
+                
+                missionVM.particularCountry = _unitOfWork.Country.GetFirstOrDefault( e => e.CountryId == CountryId );
                 missionVM.Mission = missionVM.Mission.Where(m => m.CountryId == CountryId);
             }
 
@@ -237,7 +244,17 @@ namespace CI_Platfrom.Repository.Repository
             }
             return missions;
         }
-            
+
+     
+
+     
+
+
+       
+
+       
+
+        
     }
 
 }

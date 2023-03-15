@@ -9,25 +9,29 @@ namespace CI_Platform.Controllers
 {
     public class MissionController : Controller
     {
-        private readonly CiPlatformContext _db;
-        private readonly ICityRepository _cities;
-        //private readonly ICountryRepository _country;
-        //private readonly ISkillRepository _skill;
-        //private readonly IThemeRepository _theme;
-        //private readonly IUserRepository _user;
-        private readonly IMissionRepository _mission;
+        //private readonly CiPlatformContext _db;
+        //private readonly ICityRepository _cities;
+        ////private readonly ICountryRepository _country;
+        ////private readonly ISkillRepository _skill;
+        ////private readonly IThemeRepository _theme;
+        ////private readonly IUserRepository _user;
+        //private readonly IMissionRepository _mission;
+        private readonly IUnitOfWorkRepository _unitOfWork;
+
         private readonly IMissionVMRepository _missionvm;
 
-        public MissionController(IMissionVMRepository missionvm, ICityRepository cities, IMissionRepository mission,CiPlatformContext db)
+        public MissionController(IMissionVMRepository missionvm, /*ICityRepository cities, IMissionRepository mission,CiPlatformContext db*/  IUnitOfWorkRepository unitOfWork)
         {
             _missionvm = missionvm;
-            _cities = cities;
-            _mission = mission;
-            _db = db;
+            _unitOfWork = unitOfWork;
+            //_cities = cities;
+            //_mission = mission;
+            //_db = db;
         }
         public IActionResult LandingPage(string sort,string filter,long countryId=0) 
         {
-            
+            //var country = _unitOfWork.Country.GetAllCountries(countryId);
+            //ViewBag.countryname = country;
             var ses =  HttpContext.Session.GetString("userEmail");
 
             if (ses == null)
@@ -56,9 +60,10 @@ namespace CI_Platform.Controllers
 
                 var emailFromSession = HttpContext.Session.GetString("userEmail");
                 MissionVM missionObj =  _missionvm.GetAllMissions(emailFromSession,countryId);
+          
                 //var user = userDetails.FirstOrDefault(e => e.Email == emailFromSession);
                 //ViewBag.LoginUser = user;
-                if(filter != null || sort != null)
+                if (filter != null || sort != null)
                 {
                     return RedirectToAction("GetAllMissions",new {sort, filter,countryId});
                 }
@@ -103,47 +108,17 @@ namespace CI_Platform.Controllers
             return missions;
         }
 
+        
+
 
         public JsonResult GetCityByCountry(long CountryId)
         {
-            var city = _cities.CityByCountry(CountryId);
+            //var city = _cities.CityByCountry(CountryId);
+            var city = _unitOfWork.City.CityByCountry(CountryId);
+            
             return Json(city);
         }
 
-        //public JsonResult[] DateSort(string sort)
-        //{
-
-        //    //var session_details = HttpContext.Session.GetString("Login");
-        //    var missiondata = _mission.GetBySort(sort);
-        //    var missionlist = new JsonResult[missiondata.ToList().Count];
-
-        //    int i = 0;
-
-        //    foreach (Mission mission in missiondata)
-        //    {
-        //        var missionObj = new JsonResult(new
-        //        {
-        //            mission.MissionId,
-        //            mission.Title,
-        //            mission.City.Name,
-        //            mission.ShortDescription,
-        //            Theme = mission.Theme.Title,
-        //            mission.OrganizationName,
-        //            mission.OrganizationDetails,
-        //            StartDate = mission.StartDate.Value.ToShortDateString(),
-        //            EndDate = mission.EndDate.Value.ToShortDateString(),
-        //            Deadline = (mission.StartDate - TimeSpan.FromDays(1)).Value.ToShortDateString(),
-        //            mission.MissionType
-        //        });
-        //        missionlist[i] = missionObj;
-        //        i++;
-        //    }
-
-        //    return missionlist;
-
-
-            
-        //}
 
 
         public IActionResult VolunteeringPage(long id)
@@ -156,10 +131,15 @@ namespace CI_Platform.Controllers
         public MissionVM getmissionPage(long id, string sessionValue)
         {
             MissionVM vm = new MissionVM();
-            vm.skills = _db.Skills.ToList(); 
-            vm.particularMission = _mission.GetMissionByMissionId(id);
-            vm.User = _db.Users;
-            vm.user =   _db.Users.FirstOrDefault(e => e.Email == sessionValue);
+            //vm.skills = _db.Skills.ToList(); 
+            //vm.particularMission = _mission.GetMissionByMissionId(id);
+            //vm.User = _db.Users;
+            //vm.user =   _db.Users.FirstOrDefault(e => e.Email == sessionValue);
+
+            vm.skills = _unitOfWork.Skill.GetAll().ToList();
+            vm.particularMission = _unitOfWork.Mission.GetMissionByMissionId(id);
+            vm.User = _unitOfWork.User.GetAll();
+            vm.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == sessionValue);
             return vm;
 
         }
@@ -175,17 +155,17 @@ namespace CI_Platform.Controllers
                MissionId = missionId,
                UserId = userId,
             };
-            var favouritemission = _db.FavoriteMissions.FirstOrDefault(m => m.MissionId == missionId && m.UserId == userId);
+            var favouritemission = _unitOfWork.FavoriteMission.GetFirstOrDefault(m => m.MissionId == missionId && m.UserId == userId);
 
             if(favouritemission != null)
             {
-                _db.FavoriteMissions.Remove(favouritemission);
-                _db.SaveChanges();
+                _unitOfWork.FavoriteMission.Remove(favouritemission);
+                _unitOfWork.save();
             }
             else
             {
-                _db.FavoriteMissions.Add(obj);
-                _db.SaveChanges();
+                _unitOfWork.FavoriteMission.Add(obj);
+                _unitOfWork.save();
             }
 
             

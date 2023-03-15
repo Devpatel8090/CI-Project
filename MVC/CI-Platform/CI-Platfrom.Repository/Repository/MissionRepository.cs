@@ -5,23 +5,24 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CI_Platfrom.Repository.Repository
 {
-    public class MissionRepository : IMissionRepository
+    public class MissionRepository : Repository<Mission>,IMissionRepository
     {
         private readonly CiPlatformContext _db;
 
-        public MissionRepository(CiPlatformContext db)
+        public MissionRepository(CiPlatformContext db) : base(db)
         {
             _db = db;
         }
 
         public List<Mission> GetMissionDetails()
         {
-            List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionMedia).Include(m => m.MissionSkills).ToList();
+            List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionMedia).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).ToList();
             return missionDetails;
         }
 
@@ -36,6 +37,13 @@ namespace CI_Platfrom.Repository.Repository
             var particularMission = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Where(m => m.MissionId == missionId).FirstOrDefault();
             return particularMission;
         }
+
+     
+
+      
+       
+
+    
 
         //public List<Mission> GetBySort(string sort)
         //{

@@ -481,7 +481,26 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
                                 style="transform: translate(50%, 50%) ;">@item.Theme.Title</p>
                         </div>
                         <div class="heart_image_container rounded-circle ">
-                            <img src="~/images/heart.png" class=" heart__image">
+                              @{
+                             var favCountofgrid = item.FavoriteMissions.Where(m => m.UserId == Model.user.UserId).Count();
+                            if (favCountofgrid > 0)
+                        {
+                            <button
+                                        class="heart__image addToFavdiv rounded-circle bg-transparent border-0" value="@item.MissionId @Model.user.UserId"   >
+                                     <img src="~/images/red Heart.png" class="p-1">
+ 
+                            
+                            </button>
+                            }
+                            else
+                            {
+                                <button
+                                    class=" heart__image addToFavdiv rounded-circle bg-transparent border-0"    value="@item.MissionId @Model.user.UserId">
+                                    <img src="~/images/heart.png" alt="" class="" style="pointer-events:none" width="22px" height="22px" />
+                            
+                                </button>
+                            }
+                            }
                         </div>
                         <div class="rounded-circle add__person__image__container">
                             <img src="~/images/user.png" class="add__person__image">
@@ -859,7 +878,7 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
 
 
 
-    <div id="list__view__container">
+    <div id="list__view__container" class="hide">
 
          @foreach (var item in Model.Mission)
                 {
@@ -887,7 +906,28 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
                                                 style="transform: translate(50%, 50%) ;">@item.Theme.Title</p>
                                         </div>
                                         <div class="heart__image__container__listView rounded-circle ">
-                                            <img src="~/images/heart.png" class=" heart__image">
+                                          @* <img src="~/images/heart.png" class=" heart__image">*@
+                                              @{
+                             var favCount = item.FavoriteMissions.Where(m => m.UserId == Model.user.UserId).Count();
+                            if (favCount > 0)
+                        {
+                            <button
+                            class="heart__image addToFavdiv rounded-circle bg-transparent border-0" value="@item.MissionId @Model.user.UserId"   >
+                          <img src="~/images/red Heart.png" class="">
+ 
+                            
+                                </button>
+                            }
+                            else
+                            {
+                                <button
+                            class=" heart__image addToFavdiv rounded-circle bg-transparent border-0"    value="@item.MissionId @Model.user.UserId">
+                            <img src="~/images/heart.png" alt="" class="" style="pointer-events:none" width="22px" height="22px" />
+                            
+                        </button>
+                            }
+                        }
+
                                         </div>
                                         <div class="rounded-circle add__person__image__container__listView">
                                             <img src="~/images/user.png" class="add__person__image">
@@ -1343,8 +1383,8 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
         }
 
         function gridView() {
-            document.getElementById("grid__view__container").style.display = "block";
-            document.getElementById("list__view__container").style.display = "none";
+               document.getElementById("grid__view__container").classList.remove("hide");
+            document.getElementById("list__view__container").classList.add("hide");
           
 
         }
@@ -1352,9 +1392,10 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
      
 
         function listView() {
-            document.getElementById("grid__view__container").style.display = "none";
-            document.getElementById("list__view__container").style.display = "block";
+          
+            document.getElementById("list__view__container").classList.remove("hide");
            
+             document.getElementById("grid__view__container").classList.add("hide");
 
         }
 
@@ -1370,3 +1411,4 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
          
 
     </script>
+     <script src="~/js/VolunteeringPage.js" asp-append-version="true"></script>

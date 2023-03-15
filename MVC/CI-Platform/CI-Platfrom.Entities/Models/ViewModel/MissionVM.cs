@@ -30,6 +30,8 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
         public IEnumerable<User> User { get; set; }
 
+        public Country particularCountry { get; set; }  
+
         /// <summary>
         ///  for taking the login in user information 
         /// </summary>

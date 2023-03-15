@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CI_Platfrom.Repository.Interface
 {
-    public interface IThemeRepository
+    public interface IThemeRepository : IRepository<MissionTheme>
     {
         public List<MissionTheme> GetThemeDetails();
     }

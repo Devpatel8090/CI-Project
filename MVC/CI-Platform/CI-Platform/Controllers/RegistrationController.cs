@@ -2,6 +2,7 @@
 using CI_Platfrom.Entities.Data;
 using CI_Platfrom.Entities.Models;
 using CI_Platfrom.Entities.Models.ViewModel;
+using CI_Platfrom.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CI_Platform.Controllers
@@ -10,11 +11,13 @@ namespace CI_Platform.Controllers
     public class RegistrationController : Controller
     {
 
-        private readonly CiPlatformContext _db;
+        //private readonly CiPlatformContext _db;
+        private readonly IUnitOfWorkRepository _unitOfWork;
 
-        public RegistrationController(CiPlatformContext db)
+        public RegistrationController(/*CiPlatformContext db*/IUnitOfWorkRepository unitOfWork)
         {
-            _db = db;
+            //_db = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Register()
         {
@@ -27,7 +30,7 @@ namespace CI_Platform.Controllers
         public IActionResult Register(ConfirmPasswordVM obj)
         
         {
-            var userDetails = _db.Users.FirstOrDefault(e => e.Email == obj.User.Email);
+            var userDetails = _unitOfWork.User.GetFirstOrDefault(e => e.Email == obj.User.Email);
             if(ModelState.IsValid)
             {
                 if(userDetails != null)
@@ -38,8 +41,8 @@ namespace CI_Platform.Controllers
                 {
                     if (obj.ConfirmPassword == obj.User.Password)
                     {
-                        _db.Users.Add(obj.User);
-                        _db.SaveChanges();
+                        _unitOfWork.User.Add(obj.User);
+                        _unitOfWork.save();
                         TempData["success"] = "Congratulation! You are Registered Now login with the same Email and Password";
                         return RedirectToAction("login", "Authentication");
                     }

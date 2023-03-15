@@ -29,14 +29,14 @@ builder.Services.AddSession(options =>
 
 builder.Services.Configure<SMTPConfigModel>(builder.Configuration.GetSection("SMTPConfig"));
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<ICityRepository, CityRepository>();
-builder.Services.AddScoped<ICountryRepository, CountryRepository>();
-builder.Services.AddScoped<ISkillRepository, SkillRepository>();
-builder.Services.AddScoped<IThemeRepository, ThemeRepository>();
-builder.Services.AddScoped<IMissionRepository, MissionRepository>();
-builder.Services.AddScoped<IMissionVMRepository,MissionVMRepository>();
-
+//builder.Services.AddScoped<IUserRepository, UserRepository>();
+//builder.Services.AddScoped<ICityRepository, CityRepository>();
+//builder.Services.AddScoped<ICountryRepository, CountryRepository>();
+//builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+//builder.Services.AddScoped<IThemeRepository, ThemeRepository>();
+//builder.Services.AddScoped<IMissionRepository, MissionRepository>();
+builder.Services.AddScoped<IMissionVMRepository, MissionVMRepository>();
+builder.Services.AddScoped<IUnitOfWorkRepository, UnitOfWorkRepository>();
 
 //JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {

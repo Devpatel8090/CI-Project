@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 namespace CI_Platfrom.Repository.Repository
 {
     
-    public  class CountryRepository : ICountryRepository
+    public  class CountryRepository : Repository<Country>,ICountryRepository
     {
         private readonly CiPlatformContext _db; 
 
-        public CountryRepository(CiPlatformContext db)
+        public CountryRepository(CiPlatformContext db): base(db)
         {
             _db = db;
         }
@@ -23,6 +23,12 @@ namespace CI_Platfrom.Repository.Repository
         {
             List<Country> countryList =  _db.Countries.ToList();
             return countryList;
+        }
+
+        public List<Country> GetAllCountries(long countryid)
+        {
+            List<Country> ccc = _db.Countries.Where(m => m.CountryId == countryid).ToList();    
+            return ccc;
         }
     }
 }

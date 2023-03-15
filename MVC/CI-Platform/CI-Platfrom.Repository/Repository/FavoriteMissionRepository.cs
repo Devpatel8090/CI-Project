@@ -4,30 +4,17 @@ using CI_Platfrom.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CI_Platfrom.Repository.Repository
 {
-     public class ThemeRepository : Repository<MissionTheme>, IThemeRepository
+    public class FavoriteMissionRepository : Repository<FavoriteMission>, IFavoriteMissionRepository
     {
         private readonly CiPlatformContext _db;
-        public ThemeRepository(CiPlatformContext db) : base(db)
+        public FavoriteMissionRepository(CiPlatformContext db) : base(db)
         {
             _db = db;
         }
-
-    
-
-       
-
-        public List<MissionTheme> GetThemeDetails()
-        {
-            List<MissionTheme> themeList = _db.MissionThemes.ToList();
-            return themeList;
-        }
-
-    
     }
 }

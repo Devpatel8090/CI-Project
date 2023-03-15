@@ -3,9 +3,9 @@
 
 
 
-//for (var i = 0; i < addToFavourite.length; i++) {
-//    addToFavourite[i].addEventListener("click", addToFavouritefun);
-//}
+for (var i = 0; i < addToFavourite.length; i++) {
+    addToFavourite[i].addEventListener("click", addToFavouritefun);
+}
 
 
 function addToFavouritefun() {

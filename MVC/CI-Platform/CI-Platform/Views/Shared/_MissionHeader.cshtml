@@ -6,7 +6,6 @@
 
 
 
-
 @model MissionVM
 
 @*<!DOCTYPE html>
@@ -32,7 +31,7 @@
 <div class="container">
 
         <!--   side bar for small Screen  -->
-
+        <span class="" id="Countryname" value="ViewBag.countryname.Name"></span>
         <div id="mySidebar" class="sidebar">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
             <form class="d-flex align-items-center mx-1 ">
@@ -236,7 +235,7 @@
                 </div>
                 <div class="col-auto col-sm-2 mt-2 border-end ">
                     <div class="dropdown">
-                        <a class="btn bg-white  " data-toggle="dropdown" href="#" role="button" id="dropdownMenuLink"
+                        <a class="btn bg-white  " data-toggle="dropdown" href="#" role="button" id="countryDropdown"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Country
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -249,13 +248,16 @@
                         <ul class="dropdown-menu" id="country" aria-labelledby="dropdownMenuLink">
                             @foreach (var item in Model.Country)
                             {
-                                 <li value="@item.CountryId"><a class="dropdown-item" asp-controller="Mission" asp-action="LandingPage" asp-route-countryId=@item.CountryId>@item.Name</a></li>
+                                 <li value="@item.CountryId @item.Name"><a class="dropdown-item countryList" asp-controller="Mission" asp-action="LandingPage" asp-route-countryId=@item.CountryId>@item.Name</a></li>
                                
                             }
                            
                            
                         </ul>
-                       
+                       @* <script>
+                            $(document).ready(function(){
+                              
+                        </script>*@
                     </div>
                 </div>
                 <div class="col-auto col-sm-2 mt-2 border-end">

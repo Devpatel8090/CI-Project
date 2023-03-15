@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace CI_Platfrom.Repository.Interface
 {
-    public interface ISkillRepository : IRepository<Skill>
+    public interface IPasswordResetRepository : IRepository<PasswordReset>
     {
-        public List<Skill> GetSkillDetails();
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CI_Platfrom.Repository.Interface
 {
-    public interface IMissionRepository
+    public interface IMissionRepository : IRepository<Mission>
     {
         public List<Mission> GetMissionDetails();
 
