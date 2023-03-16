@@ -34,7 +34,7 @@ namespace CI_Platfrom.Repository.Repository
 
         public Mission GetMissionByMissionId(long missionId)
         {
-            var particularMission = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Where(m => m.MissionId == missionId).FirstOrDefault();
+            var particularMission = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m=> m.MissionRatings).FirstOrDefault(m => m.MissionId == missionId);
             return particularMission;
         }
 

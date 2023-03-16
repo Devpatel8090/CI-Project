@@ -21,6 +21,10 @@ namespace CI_Platfrom.Repository.Interface
         public IPasswordResetRepository PasswordReset { get; }
 
         public IFavoriteMissionRepository FavoriteMission { get; }
+
+        public IMissionInviteRepository MissionInvite { get; }
+
+        public IMissionRatingRepository MissionRating { get; }  
         public void save();
 
     }

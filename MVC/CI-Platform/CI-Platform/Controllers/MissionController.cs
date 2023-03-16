@@ -1,9 +1,14 @@
-﻿using CI_Platfrom.Entities.Data;
+﻿using CI_Platform.Model;
+using CI_Platfrom.Entities.Data;
 using CI_Platfrom.Entities.Models;
 using CI_Platfrom.Entities.Models.ViewModel;
 using CI_Platfrom.Repository.Interface;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using MimeKit;
 using Newtonsoft.Json.Linq;
+
 
 namespace CI_Platform.Controllers
 {
@@ -19,20 +24,23 @@ namespace CI_Platform.Controllers
         private readonly IUnitOfWorkRepository _unitOfWork;
 
         private readonly IMissionVMRepository _missionvm;
-
-        public MissionController(IMissionVMRepository missionvm, /*ICityRepository cities, IMissionRepository mission,CiPlatformContext db*/  IUnitOfWorkRepository unitOfWork)
+        private readonly SMTPConfigModel _smtpconfig;
+        private IConfiguration _configuration;
+        public MissionController(IMissionVMRepository missionvm, /*ICityRepository cities, IMissionRepository mission,CiPlatformContext db*/  IUnitOfWorkRepository unitOfWork, IOptions<SMTPConfigModel> smtpConfig, IConfiguration configuration)
         {
             _missionvm = missionvm;
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
+            _smtpconfig = smtpConfig.Value;
             //_cities = cities;
             //_mission = mission;
             //_db = db;
         }
-        public IActionResult LandingPage(string sort,string filter,long countryId=0) 
+        public IActionResult LandingPage(string sort, string filter, long countryId = 0)
         {
             //var country = _unitOfWork.Country.GetAllCountries(countryId);
             //ViewBag.countryname = country;
-            var ses =  HttpContext.Session.GetString("userEmail");
+            var ses = HttpContext.Session.GetString("userEmail");
 
             if (ses == null)
             {
@@ -59,13 +67,13 @@ namespace CI_Platform.Controllers
                 //ViewBag.MissionDeails = missionDeails;
 
                 var emailFromSession = HttpContext.Session.GetString("userEmail");
-                MissionVM missionObj =  _missionvm.GetAllMissions(emailFromSession,countryId);
-          
+                MissionVM missionObj = _missionvm.GetAllMissions(emailFromSession, countryId);
+
                 //var user = userDetails.FirstOrDefault(e => e.Email == emailFromSession);
                 //ViewBag.LoginUser = user;
                 if (filter != null || sort != null)
                 {
-                    return RedirectToAction("GetAllMissions",new {sort, filter,countryId});
+                    return RedirectToAction("GetAllMissions", new { sort, filter, countryId });
                 }
 
                 return View(missionObj);
@@ -78,11 +86,11 @@ namespace CI_Platform.Controllers
         /// <param name="filter"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public JsonResult[] GetAllMissions(string sort,string filter, long id = 0)
+        public JsonResult[] GetAllMissions(string sort, string filter, long id = 0)
         {
             var sessionValue = HttpContext.Session.GetString("userEmail");
 
-            IEnumerable<Mission> allmissions = _missionvm.ApplyFilter(sort,filter, id , sessionValue);
+            IEnumerable<Mission> allmissions = _missionvm.ApplyFilter(sort, filter, id, sessionValue);
             JsonResult[] missions = new JsonResult[allmissions.ToList().Count];
 
             int i = 0;
@@ -108,23 +116,23 @@ namespace CI_Platform.Controllers
             return missions;
         }
 
-        
+
 
 
         public JsonResult GetCityByCountry(long CountryId)
         {
             //var city = _cities.CityByCountry(CountryId);
             var city = _unitOfWork.City.CityByCountry(CountryId);
-            
+
             return Json(city);
         }
 
 
 
         public IActionResult VolunteeringPage(long id)
-         {
+        {
             var sessionValue = HttpContext.Session.GetString("userEmail");
-            MissionVM missionpage =   getmissionPage(id, sessionValue);
+            MissionVM missionpage = getmissionPage(id, sessionValue);
             return View(missionpage);
         }
 
@@ -152,12 +160,12 @@ namespace CI_Platform.Controllers
 
             var obj = new FavoriteMission()
             {
-               MissionId = missionId,
-               UserId = userId,
+                MissionId = missionId,
+                UserId = userId,
             };
             var favouritemission = _unitOfWork.FavoriteMission.GetFirstOrDefault(m => m.MissionId == missionId && m.UserId == userId);
 
-            if(favouritemission != null)
+            if (favouritemission != null)
             {
                 _unitOfWork.FavoriteMission.Remove(favouritemission);
                 _unitOfWork.save();
@@ -168,10 +176,105 @@ namespace CI_Platform.Controllers
                 _unitOfWork.save();
             }
 
-            
+
+
+
         }
 
 
 
+        public void Recommendation(string inviteObj)
+        {
+            var parseObj = JObject.Parse(inviteObj);
+            var missionId = parseObj.Value<long>("missionId");
+            var userId = parseObj.Value<long>("userId");
+            var toUserId = parseObj.Value<long>("toUserId");
+            var mailTo = parseObj.Value<string>("toUserMail");
+
+
+            var recObj = new MissionInvite()
+            {
+                MissionId = missionId,
+                FromUserId = userId,
+                ToUserId = toUserId,
+                
+            };
+
+            var inviteLink = Url.Action("LandingPage", "Mission", new { id = 1 }, Request.Scheme);
+            TempData["link"] = inviteLink;
+
+            UserEmailOptions userEmailOptions = new UserEmailOptions()
+            {
+                Subject = "He is invinting you in this mission ",
+                Body = "<a href=" + inviteLink + ">"  + inviteLink +  "</a>"
+            };
+
+            _unitOfWork.MissionInvite.Add(recObj);
+            _unitOfWork.save();
+            SendEmail(mailTo, userEmailOptions);
+
+            //}
+
+
+
+        }
+
+
+        public void SendEmail(string toEmail, UserEmailOptions userEmailOptions)
+        {
+            var email = new MimeMessage();
+
+            email.From.Add(new MailboxAddress(_smtpconfig.SenderDisplayName, _smtpconfig.SenderAddress));
+            email.To.Add(new MailboxAddress("Jay", toEmail));
+
+            email.Subject = userEmailOptions.Subject;
+            var bodyBuilder = new BodyBuilder();
+
+            bodyBuilder.HtmlBody = userEmailOptions.Body;
+            email.Body = bodyBuilder.ToMessageBody();
+
+            using (var smtp = new SmtpClient())
+            {
+                smtp.Connect("smtp.gmail.com", 465, true);
+
+                smtp.Authenticate(_smtpconfig.UserName, _smtpconfig.Password);
+
+                smtp.Send(email);
+
+                smtp.Disconnect(true);
+            }
+        }
+
+
+        public void userStarRating(string userRatingObj)
+        {
+            var parseObject = JObject.Parse(userRatingObj);
+            var rating = parseObject.Value<int>("rating");
+            var missionId = parseObject.Value<long>("missionId");
+            var userId = parseObject.Value<long>("userId");
+
+            MissionRating rateObj = new MissionRating()
+            {
+                Rating = rating,
+                MissionId = missionId,
+                UserId = userId,
+
+            };
+
+            var alreadyRated = _unitOfWork.MissionRating.GetFirstOrDefault(m => m.UserId == userId && m.MissionId == missionId);
+
+            if (alreadyRated != null)
+            {
+                alreadyRated.Rating = rating;
+                _unitOfWork.MissionRating.Update(alreadyRated);
+                _unitOfWork.save();
+            }
+            else
+            {
+                _unitOfWork.MissionRating.Add(rateObj);
+                _unitOfWork.save();
+            }
+
+        }
     }
 }

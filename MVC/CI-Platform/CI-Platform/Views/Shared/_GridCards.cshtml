@@ -1,0 +1,432 @@
+﻿
+@using CI_Platfrom.Entities.Models.ViewModel
+
+@model MissionVM
+
+     <div id="grid__view__container">
+
+
+        <div class="row mt-3 row-cols-1 row-cols-sm-2 row-cols-lg-3  " id="gridmission__row">
+            @foreach (var item in Model.Mission) {
+
+
+            <div class="col  mb-3 total__mission" >
+                <div class="card" style="max-width: 26rem;">
+
+                    <div style="position: relative;">
+                        @{
+                       if(item.MissionMedia.Count > 0)
+                                {
+                                    <img class="card-img-top"
+                                     src="@item.MissionMedia.FirstOrDefault(m => m.DefaultMissionMedia == 1).MediaPath"
+                                     alt="Card image cap">
+                                }
+                                else
+                                {
+                                    <img class="card-img-top"
+                                     src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png"
+                                     alt="Card image cap">                                    
+                                }
+                                }
+                        <div style="position: absolute;bottom: 0;width: 100%;">
+                            <p class="m-0 bg-white border rounded-pill text-center w-50"
+                                style="transform: translate(50%, 50%) ;">@item.Theme.Title</p>
+                        </div>
+
+                        <div class="heart_image_container rounded-circle ">
+                                @{
+                                     var favCountofgrid = item.FavoriteMissions.Where(m => m.UserId == Model.user.UserId).Count();
+                                    if (favCountofgrid > 0)
+                                     {
+                                    <button
+                                                class="heart__image addToFavdiv rounded-circle bg-transparent border-0 pt-2 pt-sm-1 ps-sm-1 ps-2 pt-md-2 ps-md-2 m-0" value="@item.MissionId @Model.user.UserId"   >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill fill-red  " style="color:red;pointer-events:none" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+
+                                      
+                                    </svg>
+ 
+                            
+                                    </button>
+                                     }
+                                    else
+                                    {
+                                        <button
+                                            class=" heart__image addToFavdiv rounded-circle bg-transparent border-0 m-0 p-2"    value="@item.MissionId @Model.user.UserId">
+                                            <img src="~/images/heart.png" alt="" class="" style="pointer-events:none" width="22px" height="22px" />
+                            
+                                        </button>
+                                    }
+                                 }
+                        </div>
+
+                        <div class="rounded-circle add__person__image__container " data-bs-toggle="modal" data-bs-target="#RecomendModal">
+                            <img src="~/images/user.png" class="add__person__image">
+                        </div>
+
+                        <div class="city__container rounded-pill p-2">
+                            <img src="~/images/pin.png" class="locatin__image">
+                            <span class="text-white ">@item.City.Name</span>
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+                        <h3 class="card-title  text-start mt-2">@item.Title
+                        </h3>
+                        <p class="card-text text-start">@item.ShortDescription</p>
+                        <div class="d-flex justify-content-between mb-1 ">
+                            <span>@item.OrganizationName</span>
+                            <div class="star__container">
+                                <img src="~/images/selected-star.png">
+                                <img src="~/images/selected-star.png">
+                                <img src="~/images/selected-star.png">
+                                <img src="~/images/selected-star.png">
+                                <img src="~/images/star.png">
+                            </div>
+                        </div>
+                        <br />
+                        <hr>
+                        <div class="time__text border rounded-pill w-75 mx-auto ">
+                            <span>From @item.StartDate.Value.ToShortDateString() until
+                                @item.EndDate.Value.ToShortDateString()</span>
+                        </div>
+
+
+                        <div class="row mt-3 ms-2 mb-3">
+                            <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                <img src="~/images/Seats-left.png" class="" width="30px" height="30px">
+                                <div class="d-flex flex-column ">
+                                    <h5 class="mb-0">10</h5>
+                                    <span>Seats left</span>
+                                </div>
+                            </div>
+
+                                @if (@item.MissionType == "TIME")
+                                {
+                                    <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                        <img src="~/images/deadline.png" width="40px" height="40px">
+                                        <div class="d-flex flex-column">
+                                            <h5 class="mb-0">@item.EndDate.Value.ToShortDateString()</h5>
+                                            <span>Deadline</span>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                     <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                            <img src="~/images/mission.png" width="30px" height="30px">
+                                             <div class="d-flex flex-column">
+                                                 <div class="Progress__bar"><progress max="10000" value="8000"></progress></div>
+                                                 <span>8000 Achived</span>
+                                            </div>
+                                    </div>
+                                }
+
+                        </div>
+                        <hr>
+                        <div class="mt-2 apply__button    text-center apply__button  ">
+                            <a class="btn rounded-pill   text-center apply__text " asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId" >Apply <img
+                                    src="~/images/right-arrow.png" class="ms-2"></a>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            }
+        </div>
+
+            </div>
+
+     @*   <div class="col  mb-3">
+            <div class="card" style="max-width: 26rem;">
+                <div style="position: relative;">
+                    <img class="card-img-top" src="~/images/Education-Supplies-for-Every--Pair-of-Shoes-Sold-1.png"
+                        alt="Card image cap">
+                    <div style="position: absolute;bottom: 0;width: 100%;">
+                        <p class="m-0 bg-white border rounded-pill text-center w-50"
+                            style="transform: translate(50%, 50%) ;">Children</p>
+                    </div>
+                    <div class="heart_image_container rounded-circle ">
+                        <img src="~/images/heart.png" class=" heart__image">
+                    </div>
+                    <div class="rounded-circle add__person__image__container">
+                        <img src="~/images/user.png" class="add__person__image">
+                    </div>
+                    <div class="city__container rounded-pill">
+                        <img src="~/images/pin.png" class="locatin__image">
+                        <span class="text-white">Melbourne</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title text-start mt-2">Education Supplies for Every Pair of Shoes Sold
+                    </h3>
+                    <p class="card-text text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                        do
+                        eiusmod
+                        tempor incididunt ut labore...</p>
+                    <div class="d-flex justify-content-between mb-1 ">
+                        <span>Australian Paradise</span>
+                        <div class="star__container">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/star.png">
+                        </div>
+                    </div>
+                    <br />
+
+                    <hr>
+                    <div class="time__text border rounded-pill w mx-auto ">
+                        <span>From 10/01/2019 until 25/02/2019</span>
+                    </div>
+
+
+                    <div class="row mt-3 ms-2 mb-3">
+                        <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                            <img src="~/images/Seats-left.png" width="30px" height="30px">
+                            <div class="d-flex flex-column ">
+                                <h5 class="mb-0">250</h5>
+                                <span class="ms-0">Already Volunteer</span>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                            <img src="~/images/deadline.png" width="40px" height="40px">
+                            <div class="d-flex flex-column">
+                                <h5 class="mb-0">09/01/2019</h5>
+                                <span>Deadline</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <div class="mt-2 apply__button    text-center apply__button">
+                        <a href="#" class="btn rounded-pill   text-center apply__text">Apply <img
+                                src="~/images/right-arrow.png" class="ms-2"></a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col  mb-3">
+            <div class="card" style="max-width: 26rem;">
+                <div style="position: relative;">
+                    <img class="card-img-top" src="~/images/Nourish-the-Children-in--African-country-1.png"
+                        alt="Card image cap">
+                    <div style="position: absolute;bottom: 0;width: 100%;">
+                        <p class="m-0 bg-white border rounded-pill text-center w-50"
+                            style="transform: translate(50%, 50%) ;">Nutrition</p>
+                    </div>
+                    <div class="heart_image_container rounded-circle ">
+                        <img src="~/images/heart.png" class=" heart__image">
+                    </div>
+                    <div class="rounded-circle add__person__image__container">
+                        <img src="~/images/user.png" class="add__person__image">
+                    </div>
+                    <div class="city__container rounded-pill">
+                        <img src="~/images/pin.png" class="locatin__image">
+                        <span class="text-white">Barcelona</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title text-start mt-2">Nourish the Children in African country
+                    </h3>
+                    <p class="card-text text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                        do
+                        eiusmod
+                        tempor incididunt ut labore...</p>
+                    <div class="d-flex justify-content-between mb-1 ">
+                        <span>The Hunger</span>
+                        <div class="star__container">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/star.png">
+                        </div>
+                    </div>
+                    <br />
+                    <hr>
+                    <div class="time__text border rounded-pill w-75 mx-auto ">
+                        <span>Ongoing Opportunity </span>
+                    </div>
+
+
+                    <div class="row mt-3 ms-2 mb-3">
+                        <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                            <img src="~/images/Seats-left.png" width="30px" height="30px">
+                            <div class="d-flex flex-column ">
+                                <h5 class="mb-0">10</h5>
+                                <span>Seats left</span>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                            <img src="~/images/deadline.png" width="40px" height="40px">
+                            <div class="d-flex flex-column">
+                                <h5 class="mb-0">09/01/2019</h5>
+                                <span>Deadline</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <div class="mt-2 apply__button    text-center apply__button">
+                        <a href="#" class="btn rounded-pill   text-center apply__text">Apply <img
+                                src="~/images/right-arrow.png" class="ms-2"></a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col  mb-3">
+            <div class="card" style="max-width: 26rem;">
+                <div style="position: relative;">
+                    <img class="card-img-top" src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png"
+                        alt="Card image cap">
+                    <div style="position: absolute;bottom: 0;width: 100%;">
+                        <p class="m-0 bg-white border rounded-pill text-center w-50"
+                            style="transform: translate(50%, 50%) ;">Nutrition</p>
+                    </div>
+                    <div class="heart_image_container rounded-circle ">
+                        <img src="~/images/heart.png" class=" heart__image">
+                    </div>
+                    <div class="rounded-circle add__person__image__container">
+                        <img src="~/images/user.png" class="add__person__image">
+                    </div>
+                    <div class="city__container rounded-pill">
+                        <img src="~/images/pin.png" class="locatin__image">
+                        <span class="text-white">Barcelona</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title text-start mt-2">CSR initiative stands for Coffee and Farmer Equity
+                    </h3>
+                    <p class="card-text text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                        do
+                        eiusmod
+                        tempor incididunt ut labore...</p>
+                    <div class="d-flex justify-content-between mb-1 ">
+                        <span>CSE Network</span>
+                        <div class="star__container">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/star.png">
+                        </div>
+                    </div>
+                    <br />
+                    <hr>
+                    <div class="time__text border rounded-pill w-75 mx-auto ">
+                        <span>Ongoing Opportunity </span>
+                    </div>
+
+
+                    <div class="row mt-3 ms-2 mb-3">
+                        <div class="d-flex flex-row gap-1 align-items-center justify-content-center col-auto">
+                            <img src="~/images/Seats-left.png" width="30px" height="30px">
+                            <div class="d-flex flex-column ">
+                                <h5 class="mb-0">250</h5>
+                                <span> Already volunteered</span>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row gap-1 align-items-center justify-content-center col-auto">
+                            <img src="~/images/deadline.png" width="40px" height="40px">
+                            <div class="d-flex flex-column">
+                                <h5 class="mb-0">09/01/2019</h5>
+                                <span>Deadline</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <div class="mt-2 apply__button    text-center apply__button">
+                        <a href="#" class="btn rounded-pill   text-center apply__text">Apply <img
+                                src="~/images/right-arrow.png" class="ms-2"></a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col  mb-3">
+            <div class="card" style="max-width: 26rem;">
+                <div style="position: relative;">
+                    <img class="card-img-top" src="~/images/Animal-welfare-&-save-birds-campaign-1.png"
+                        alt="Card image cap">
+                    <div style="position: absolute;bottom: 0;width: 100%;">
+                        <p class="m-0 bg-white border rounded-pill text-center w-50"
+                            style="transform: translate(50%, 50%) ;">Animals</p>
+                    </div>
+                    <div class="heart_image_container rounded-circle ">
+                        <img src="~/images/heart.png" class=" heart__image">
+                    </div>
+                    <div class="rounded-circle add__person__image__container">
+                        <img src="~/images/user.png" class="add__person__image">
+                    </div>
+                    <div class="city__container rounded-pill">
+                        <img src="~/images/pin.png" class="locatin__image">
+                        <span class="text-white">Cape Town</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title text-start mt-2">Animal welfare & save birds campaign
+                    </h3>
+                    <p class="card-text text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                        do
+                        eiusmod
+                        tempor incididunt ut labore...</p>
+                    <div class="d-flex justify-content-between mb-1 ">
+                        <span>JR Foundation</span>
+                        <div class="star__container">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/selected-star.png">
+                            <img src="~/images/star.png">
+                        </div>
+                    </div>
+                    <br />
+                    <hr>
+                    <div class="time__text border rounded-pill w-75 mx-auto ">
+                        <span>Plant 10,000 Trees </span>
+                    </div>
+
+
+                    <div class="row mt-3 ms-2 mb-3">
+                        <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                            <img src="~/images/Seats-left.png" width="30px" height="30px">
+                            <div class="d-flex flex-column ">
+                                <h5 class="mb-0">10</h5>
+                                <span>Seats left</span>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                            <img src="~/images/mission.png" width="30px" height="30px">
+                            <div class="d-flex flex-column">
+                                <div class="Progress__bar"><progress max="10000" value="8000"></progress></div>
+                                <span>8000 Achived</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <div class="mt-2 apply__button    text-center apply__button">
+                        <a href="#" class="btn rounded-pill   text-center apply__text">Apply <img
+                                src="~/images/right-arrow.png" class="ms-2"></a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        *@
+

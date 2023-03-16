@@ -24,6 +24,8 @@ namespace CI_Platfrom.Repository.Repository
             User = new UserRepository(_db);
             PasswordReset = new PasswordResetRepository(_db);
             FavoriteMission = new FavoriteMissionRepository(_db);
+            MissionInvite = new MissionInviteRepository(_db);
+            MissionRating = new MissionRatingRepository(_db);
         }
 
         public IMissionRepository Mission { get; private set; }
@@ -39,6 +41,10 @@ namespace CI_Platfrom.Repository.Repository
         public IPasswordResetRepository PasswordReset { get; private set; }
 
         public IFavoriteMissionRepository FavoriteMission { get; private set;}
+
+        public IMissionInviteRepository MissionInvite { get; private set; } 
+
+        public IMissionRatingRepository MissionRating { get; private set; } 
         public void save()
         {
             _db.SaveChanges();
