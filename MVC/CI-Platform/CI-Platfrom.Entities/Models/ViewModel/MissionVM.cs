@@ -36,5 +36,9 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         ///  for taking the login in user information 
         /// </summary>
         public User user { get; set; }
+
+        public IEnumerable<MissionRating> missionRatings { get; set; }
+
+        public int AverageRating { get; set; }
     }
 }

@@ -449,18 +449,45 @@
                             <h3>Documents</h3>
                             <div
                                 class="documents d-flex align-items-center justify-content-start flex-row gap-3 gap-sm-2 flex-wrap ">
-                                <div class="d-flex align-items-center border rounded-pill flex-row p-lg-1 mt-1">
-                                    <img src="~/images/pdf.png" class="p-1" width="21px" height="21px">
-                                    <span class="pe-sm-1">lorem-ipsum.pdf</span>
-                                </div>
-                                <div class="d-flex align-items-center border rounded-pill flex-row p-lg-1 mt-1">
-                                    <img src="~/images/pdf.png" class="p-1" width="21px" height="21px">
-                                    <span class="pe-sm-1">at_vero_accusamus.doc</span>
-                                </div>
-                                <div class="d-flex align-items-center border rounded-pill flex-row p-lg-1 mt-1">
-                                    <img src="~/images/pdf.png" class="p-1" width="21px" height="21px">
-                                    <span class="pe-sm-1">important_doc.xls</span>
-                                </div>
+                                @{
+                                    //    var missionDocument = Model.particularMission.MissionDocuments.Where(e => e.MissionId == Model.particularMission.MissionId).Count();
+                                    //    if(missionDocument > 0)
+                                    //    {
+                                    //        for(var i =0 ; i< missionDocument ; i++ ) {
+                                    //          <div class="d-flex align-items-center border rounded-pill flex-row p-lg-1 mt-1">
+                                    //            <img src="~/images/pdf.png" class="p-1" width="21px" height="21px">
+                                    //             <span class="pe-sm-1">@Model.particularMission.MissionDocuments.Where(e => e.DocumentType == "pdf")</span>
+                                    //           </div>
+                                    //}
+                                    //    }
+                                    foreach (var item in Model.particularMission.MissionDocuments)
+                                    {
+                                        if(item.DocumentType == "doc")
+                                        {
+                                            <div class="d-flex align-items-center border rounded-pill flex-row p-lg-1 mt-1">
+                                               <a href="@item.DocumentPath" target="_blank" class="text-decoration-none"><img src="~/images/doc.png" class="p-1" width="21px" height="21px">
+                                               <span class="pe-sm-1">@item.DocumentName</span></a>
+                                            </div>
+                                        }
+                                        else if(item.DocumentType == "pdf")
+                                        {
+                                             <div class="d-flex align-items-center border rounded-pill flex-row p-lg-1 mt-1">
+                                             <a href="@item.DocumentPath" target="_blank" class="text-decoration-none">  <img src="~/images/pdf.png" class="p-1" width="21px" height="21px">
+                                               <span class="pe-sm-1">@item.DocumentName</span></a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                             <div class="d-flex align-items-center border rounded-pill flex-row p-lg-1 mt-1">
+                                             <a href="@item.DocumentPath" target="_blank" class="text-decoration-none">  <img src="~/images/xlsx.png" class="p-1" width="21px" height="21px">
+                                               <span class="pe-sm-1">@item.DocumentName</span></a>
+                                            </div>
+                                        }
+                                    }
+                                }
+                                
+                              
+                                
 
                             </div>
                         </div>
@@ -481,34 +508,25 @@
 
                     <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="nav-comment-tab"
                         tabindex="0">
-                        <form class="mt-4">
-                            <div class="form-group">
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                        
+                            <div class="form-group mt-4">
+                                <textarea class="form-control" id="WriteCommentText" rows="3"
                                     placeholder="Enter your comments"></textarea>
                             </div>
-                        </form>
+                        
 
                         <div class="d-flex align-items-center justify-content-start mt-2">
                             <div class="mt-2  w-75  ">
-                                <a href="#" class="btn rounded-pill text-center btn_no py-2 px-3 apply__text__list">Post
-                                    Comment<img src="~/images/right-arrow.png" class="ms-2"></a>
+                                <button id="postCommentButton" class="btn rounded-pill text-center btn_no py-2 px-3 apply__text__list" value="@Model.particularMission.MissionId @Model.user.UserId">Post
+                                    Comment<img src="~/images/right-arrow.png" style="pointer-events:none" class="ms-2"></button>
 
                             </div>
                         </div>
+                        
 
-                        <div class="row ms-2 me-0 gap-3 bg-light align-item-center rounded mt-2 flex-wrap p-2 ">
-
-                            <div
-                                class="col-12 d-flex flex-row gap-2 gap-lg-3 align-items-center  border mt-2  bg-white rounded">
-                                <img src="~/images/volunteer9.png" class="rounded-circle" alt="" width="54px"
-                                    height="54px">
-                                <div class="d-flex flex-column gap-1  justify-content-start">
-                                    <span>Margaret Walsh</span>
-                                    <span>Monday, October 21, 2019, 4:37 PM</span>
-                                    <p class="mt-2">Nice Mission great opportunity for peoples</p>
-                                </div>
-
-                            </div>
+                       <div id="commentbyuser">
+                           
+            @*                </div>
                             <div
                                 class="col-12 d-flex flex-row gap-2 gap-lg-3 align-items-center  border mt-2  bg-white  rounded">
                                 <img src="~/images/volunteer2.png" class="rounded-circle" alt="" width="54px"
@@ -529,7 +547,7 @@
                                     <span>Monday, October 21, 2019, 10:52 AM</span>
                                     <p class="mt-2">I liked this Mission</p>
                                 </div>
-
+                                
                             </div>
                             <div
                                 class="col-12 d-flex flex-row gap-2 gap-lg-3 align-items-center  border mt-2 mb-2   bg-white rounded">
@@ -539,9 +557,10 @@
                                     <span>Ronald Korb</span>
                                     <span>Wednesday, October 09, 2019, 6:16 PM</span>
                                     <p class="mt-2">Good Opportunity</p>
-                                </div>
+                                </div> 
+                                *@
 
-                            </div>
+                            <partial name="_Comments" model="Model.particularMission.Comments.OrderByDescending(e => e.CreateAt)" />
                         </div>
                     </div>
 
@@ -578,12 +597,19 @@
                             <div class="col d-flex  mt-3 gap-5 border-1 ">
                                 <span>Rating</span>
                                 <div class="">
-                                    <img src="~/images/selected-star.png" />
-                                    <img src="~/images/selected-star.png" />
-                                    <img src="~/images/selected-star.png" />
-                                    <img src="~/images/selected-star.png" />
-                                    <img src="~/images/selected-star.png" />
-                                    <span>(by 125 Volunteers)</span>
+                                    @{
+                                        for(var i =0 ; i < Model.AverageRating; i++)
+                                        {
+                                            <img src="~/images/selected-star.png" />
+                                        }
+                                        for(var i= Model.AverageRating ;i< 5 ;i++  )
+                                        {
+                                            <img src="~/images/star-empty.png" /> 
+                                        }
+                                       
+                                    
+                                    <span>(by @Model.missionRatings.Count()  Volunteers)</span>
+                                    }
                                 </div>
 
                             </div>

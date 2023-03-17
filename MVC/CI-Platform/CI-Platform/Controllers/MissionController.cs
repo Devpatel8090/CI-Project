@@ -148,6 +148,21 @@ namespace CI_Platform.Controllers
             vm.particularMission = _unitOfWork.Mission.GetMissionByMissionId(id);
             vm.User = _unitOfWork.User.GetAll();
             vm.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == sessionValue);
+            vm.missionRatings = _unitOfWork.MissionRating.GetAll().Where(m => m.MissionId == id);
+
+            int sum = 0;
+            foreach (MissionRating rating in vm.missionRatings)
+            {
+                sum += rating.Rating;
+            }
+            if (sum > 0)
+            {
+                vm.AverageRating = sum / vm.missionRatings.Count();
+            }
+            else
+            {
+                vm.AverageRating = 0;
+            }
             return vm;
 
         }
@@ -275,6 +290,39 @@ namespace CI_Platform.Controllers
                 _unitOfWork.save();
             }
 
+        }
+
+        public IActionResult postComment(string commentObj)
+        {
+            var parseObject = JObject.Parse(commentObj);
+            var missionId = parseObject.Value<long>("missionId");
+            var userId = parseObject.Value<long>("userId");
+            var commentText = parseObject.Value<string>("commenttext");
+
+            var commentObject = new Comment()
+            {
+                CommentText = commentText,
+                MissionId = missionId,
+                UserId = userId
+            };
+
+            //var alreadyCommented = _unitOfWork.Comment.GetFirstOrDefault(m => m.UserId == userId && m.MissionId==missionId);
+            //if (alreadyCommented != null)
+            //{
+            //    alreadyCommented.CommentText = commentText;
+            //    alreadyCommented.UpdatedAt = DateTime.Now;
+            //    _unitOfWork.Comment.Update(alreadyCommented);
+            //    _unitOfWork.save();
+            //    IEnumerable<Comment> comments = _unitOfWork.Comment.GetAllCommentsByMission(missionId);
+            //    return PartialView("_Comments",comments);
+            //}
+            //else
+            //{
+                _unitOfWork.Comment.Add(commentObject);
+                _unitOfWork.save();
+                IEnumerable<Comment> comments = _unitOfWork.Comment.GetAllCommentsByMission(missionId);
+                return PartialView("_Comments", comments);
+            //}
         }
     }
 }

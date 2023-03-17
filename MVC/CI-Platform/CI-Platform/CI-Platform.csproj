@@ -28,4 +28,8 @@
     <ProjectReference Include="..\CI-Platfrom.Repository\CI-Platfrom.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Document\" />
+  </ItemGroup>
+
 </Project>

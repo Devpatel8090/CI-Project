@@ -11,6 +11,8 @@ public partial class Comment
 
     public long MissionId { get; set; }
 
+    public string? CommentText { get; set; }
+
     public string ApprovalStatus { get; set; } = null!;
 
     public DateTime CreateAt { get; set; }

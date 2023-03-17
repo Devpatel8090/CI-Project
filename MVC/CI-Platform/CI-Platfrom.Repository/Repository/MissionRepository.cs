@@ -20,6 +20,10 @@ namespace CI_Platfrom.Repository.Repository
             _db = db;
         }
 
+        /// <summary>
+        /// For Getting the missions for the landing page
+        /// </summary>
+        /// <returns></returns>
         public List<Mission> GetMissionDetails()
         {
             List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionMedia).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).ToList();
@@ -32,9 +36,14 @@ namespace CI_Platfrom.Repository.Repository
             return missionDetailsByCountry;
         }
 
+        /// <summary>
+        /// For Getting the mission Detail for Mission Volunteering page
+        /// </summary>
+        /// <param name="missionId"></param>
+        /// <returns></returns>
         public Mission GetMissionByMissionId(long missionId)
         {
-            var particularMission = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m=> m.MissionRatings).FirstOrDefault(m => m.MissionId == missionId);
+            var particularMission = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m=> m.MissionRatings).Include(m => m.Comments).Include(m=> m.MissionDocuments).FirstOrDefault(m => m.MissionId == missionId);
             return particularMission;
         }
 

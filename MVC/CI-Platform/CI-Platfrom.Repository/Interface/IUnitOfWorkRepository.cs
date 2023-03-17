@@ -25,6 +25,8 @@ namespace CI_Platfrom.Repository.Interface
         public IMissionInviteRepository MissionInvite { get; }
 
         public IMissionRatingRepository MissionRating { get; }  
+
+        public ICommentRepository Comment { get; }
         public void save();
 
     }

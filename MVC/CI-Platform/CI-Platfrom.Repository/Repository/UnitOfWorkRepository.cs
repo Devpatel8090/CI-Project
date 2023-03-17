@@ -26,6 +26,7 @@ namespace CI_Platfrom.Repository.Repository
             FavoriteMission = new FavoriteMissionRepository(_db);
             MissionInvite = new MissionInviteRepository(_db);
             MissionRating = new MissionRatingRepository(_db);
+            Comment = new CommentRepository(_db);
         }
 
         public IMissionRepository Mission { get; private set; }
@@ -44,7 +45,9 @@ namespace CI_Platfrom.Repository.Repository
 
         public IMissionInviteRepository MissionInvite { get; private set; } 
 
-        public IMissionRatingRepository MissionRating { get; private set; } 
+        public IMissionRatingRepository MissionRating { get; private set; }
+        
+        public ICommentRepository Comment { get; private set; }
         public void save()
         {
             _db.SaveChanges();

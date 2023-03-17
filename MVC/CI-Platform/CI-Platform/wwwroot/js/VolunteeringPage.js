@@ -32,17 +32,10 @@ function addToFavouritefun() {
 
 }
 
-//var recommedationButton = document.getElementsByClassName("RecommendationButton");
 
-//for (var i = 0; i < recommedationButton.length; i++) {
-//    recommedationButton[i].addEventListener('click', RecommendationToCoWorker);
-//}
+/* Recommendation to Co-worker */
 
-//function RecommendationToCoWorker() {
-//    var 
 
-//}
-/*$('#RecommendationDiv button').on("click",*/
 function recomendtoyourfriend() {
 
     var userDetails = event.target.getAttribute("value");
@@ -69,6 +62,10 @@ function recomendtoyourfriend() {
 
 }
 
+
+    /*Rating the mission */
+
+
 let RatingStars = document.getElementsByClassName("ratingStar");
 
 for (var i = 0; i < RatingStars.length; i++) {
@@ -94,4 +91,39 @@ function StarRatingFunction() {
             console.log(error);
         }
     });
-}
+}   
+
+
+
+/*comment section */
+
+
+/*var commentText = document.getElementById("WriteCommentText").value;*/
+
+
+let commentButton = document.getElementById("postCommentButton");
+
+commentButton.addEventListener("click", postcommentfunction);
+/*$('#postCommentButton').on("click",*/ function postcommentfunction () {
+    var commentText = document.getElementById("WriteCommentText").value;
+    var input = event.target.getAttribute("value");
+    let commentArray = input.split(" ");
+ 
+    let commentObj = {
+        missionId: commentArray[0],
+        userId: commentArray[1],
+        commenttext: commentText
+    };
+    var url = "/Mission/postComment?commentObj=" + JSON.stringify(commentObj);
+
+    $.ajax({
+        url: url,
+        success: function (data) {
+            $('#commentbyuser').html(data);
+            $('#WriteCommentText').val('');
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+};

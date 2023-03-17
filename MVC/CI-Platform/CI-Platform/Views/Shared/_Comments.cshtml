@@ -1,0 +1,27 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+
+@model IEnumerable<Comment>
+
+
+
+     <div class="row ms-2 me-0 gap-3 bg-light align-item-center rounded mt-2 flex-wrap p-2 " style=" max-height: 500px;overflow: scroll;">
+      @foreach (var item in Model)
+      {
+                            <div  class="col-12 d-flex flex-row gap-2 gap-lg-3 align-items-center  border mt-2  bg-white rounded">
+                                <img src="~/images/volunteer9.png" class="rounded-circle" alt="" width="54px"
+                                    height="54px">
+                                <div class="d-flex flex-column gap-1  justify-content-start">
+                                    <span>@item.User.FirstName @item.User.LastName</span>
+                                    <span>@item.CreateAt</span>
+                                    <p class="mt-2">@item.CommentText</p>
+                                </div>
+                            </div>  
+      }
+      </div>     
+                          
+                            
