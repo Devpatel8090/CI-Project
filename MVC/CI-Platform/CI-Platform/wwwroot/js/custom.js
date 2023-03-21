@@ -139,14 +139,14 @@ function addFilterTag(text) {
 
     
     
-    $("#countryDropdown").text();
+    //$("#countryDropdown").text();
 
-    $("#countryDropdown").append($(`<svg xmlns="http://www.w3.org/2000/svg" class="ms-lg-4" width="16" height="16" fill="currentColor"
-        class= "bi bi-chevron-down" viewBox = "0 0 16 16" >
-        <path fill-rule="evenodd"
-            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
-                            </svg >`)
-    );
+    //$("#countryDropdown").append($(`<svg xmlns="http://www.w3.org/2000/svg" class="ms-lg-4" width="16" height="16" fill="currentColor"
+    //    class= "bi bi-chevron-down" viewBox = "0 0 16 16" >
+    //    <path fill-rule="evenodd"
+    //        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+    //                        </svg >`)
+    //);
 
 
 
@@ -279,18 +279,19 @@ function sendInfo() {
     filterthemestr = "";
     filterSkillstr = "";
     let sort = sortByText;
+    
 
 
 
-    if (sort == null && cityNameList.size == 0 && skillNameList.size == 0 && themeNameList.size == 0) {
+    if (sort == null && cityNameList.size == 0 && skillNameList.size == 0 && themeNameList.size == 0 && page == 0) {
 
         var url = "/Mission/LandingPage/";
         window.location.reload();
     }
 
-    //else if (filterList.size == 0 && filterTheme.size == 0 && filterSkill.size == 0 && sort == null) {
-    //    var url = "/Mission/LandingPage?page=" + pageNo;
-    //}
+    else if (filterList.size == 0 && filterTheme.size == 0 && filterSkill.size == 0 && sort == null) {
+        var url = "/Mission/LandingPage?page=" + pageNo;
+    }
 
 
 
@@ -298,7 +299,7 @@ function sendInfo() {
 
     else if (cityNameList.size == 0 && skillNameList.size == 0 && themeNameList.size == 0) {
 
-        var url = "/Mission/LandingPage?sort=" + sort /*+ "&page=" + pageNo*/;
+        var url = "/Mission/LandingPage?sort=" + sort + "&page=" + pageNo;
     }
 
     else if (sort == null) {
@@ -313,7 +314,7 @@ function sendInfo() {
         }
         let obj = { city: filtercitystr, theme: filterthemestr, skill: filterSkillstr }
 
-        var url = "/Mission/LandingPage?filter=" + JSON.stringify(obj) /*+ "&page=" + pageNo*/;
+        var url = "/Mission/LandingPage?filter=" + JSON.stringify(obj) + "&page=" + pageNo;
     }
     else {
         for (const item of cityNameList) {
@@ -327,7 +328,7 @@ function sendInfo() {
         }
         let obj = { city: filtercitystr, theme: filterthemestr, skill: filterSkillstr }
 
-        var url = "/Mission/LandingPage?filter=" + JSON.stringify(obj)/* + "&sort=" + sort + "&page=" + pageNo;*/;
+        var url = "/Mission/LandingPage?filter=" + JSON.stringify(obj) + "&sort=" + sort + "&page=" + pageNo;;
     }
 
 
@@ -342,202 +343,8 @@ function sendInfo() {
             else {
                 notfound.classList.add('hide')
             }
-            console.log(data);
-            var items = "";
-            var listitems = "";
 
-            var totalCountedMissions = data.length;
-           
-            $("#totalCountedMissions").text(totalCountedMissions);
-
-            $(data).each(function (i, item) {
-
-                items += ` <div class="col  mb-3 total__mission" >
-                <div class="card" style="max-width: 26rem;">
-                    <div style="position: relative;">
-                        <img class="card-img-top"
-                            src="/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
-                            alt="Card image cap">
-                        <div style="position: absolute;bottom: 0;width: 100%;">
-                            <p class="m-0 bg-white border rounded-pill text-center w-50"
-                                style="transform: translate(50%, 50%) ;">`+ item.value.theme + `</p>
-                        </div>
-                        <div class="heart_image_container rounded-circle ">
-                            <img src="/images/heart.png" class=" heart__image">
-                        </div>
-                        <div class="rounded-circle add__person__image__container">
-                            <img src="/images/user.png" class="add__person__image">
-                        </div>
-                        <div class="city__container rounded-pill p-2">
-                            <img src="/images/pin.png" class="locatin__image">
-                            <span class="text-white ">`+ item.value.name + `</span>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title  text-start mt-2">` + item.value.title + `
-                        </h3>
-                        <p class="card-text text-start">`+ item.value.shortDescription + `</p>
-                        <div class="d-flex justify-content-between mb-1 ">
-                            <span>`+ item.value.organizationName + `</span>
-                            <div class="star__container">
-                                <img src=" /images/selected-star.png">
-                                <img src=" /images/selected-star.png">
-                                <img src=" /images/selected-star.png">
-                                <img src=" /images/selected-star.png">
-                                <img src=" /images/star.png">
-                            </div>
-                        </div>
-                        <br />
-                        <hr>
-                        <div class="time__text border rounded-pill w-75 mx-auto ">
-                            <span>  From `+ item.value.startDate + ` until ` + item.value.endDate + `</span>
-                        </div>
-
-
-                        <div class="row mt-3 ms-2 mb-3">
-                            <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
-                                <img src=" /images/Seats-left.png" class="" width="30px" height="30px">
-                                <div class="d-flex flex-column ">
-                                    <h5 class="mb-0">10</h5>
-                                    <span>Seats left</span>
-                                </div>
-                            </div>
-                            
-                              
-                                    <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
-                                        <img src=" /images/deadline.png" width="40px" height="40px">
-                                        <div class="d-flex flex-column">
-                                            <h5 class="mb-0">`+ item.value.endDate + `</h5>
-                                            <span>Deadline</span>
-                                        </div>
-                                    </div>
-                               
-                                 
-
-
-                        </div>
-                        <hr>
-                        <div class="mt-2 apply__button    text-center apply__button">
-                            <a href="#" class="btn rounded-pill   text-center apply__text">Apply <img
-                                    src=" /images/right-arrow.png" class="ms-2"></a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>`
-
-
-
-                listitems += ` <div class="card mb-3 mt-3 total__mission" style="max-width: 100%;">
-                           <div class="row no-gutters">
-
-
-
-                                <div class="col-md-4 ">
-                                    <div style="position: relative;height: 100%;">
-                                        <img class="card-img-top h-100"
-                                            src="/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png" alt="Card image cap">
-                                        <div style="position: absolute;bottom: 0;width: 100%;">
-                                            <p class="m-0 bg-white border rounded-pill text-center w-50"
-                                                style="transform: translate(50%, 50%) ;">`+ item.value.theme + `</p>
-                                        </div>
-                                        <div class="heart__image__container__listView rounded-circle ">
-                                            <img src="/images/heart.png" class=" heart__image">
-                                        </div>
-                                        <div class="rounded-circle add__person__image__container__listView">
-                                            <img src="/images/user.png" class="add__person__image">
-                                        </div>
-                                        <div class="city__container__list rounded-pill">
-                                            <img src="/images/pin.png" class="locatin__image">
-                                            <span class="text-white">${item.value.name}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-8  ">
-                                    <div class="card-body">
-                                        <h3 class="card-title mt-2">${item.value.title}</h3>
-                                        <p class="card-text">${item.value.shortDescription}</p>
-                                        <div class="row  justify-content-between ">
-
-
-                                            <div class="col d-flex flex-row align-items-center justify-content-start">
-                                                <span class="">${ item.value.organizationName}</span>
-                                                <div class="star__container ms-3 ">
-                                                    <img src="/images/selected-star.png">
-                                                    <img src="/images/selected-star.png">
-                                                    <img src="/images/selected-star.png">
-                                                    <img src="/images/selected-star.png">
-                                                    <img src="/images/star.png">
-                                                </div>
-                                            </div>
-
-                                            <div class="col">
-                                                <hr class="">
-                                                <div class="time__text__list w-75 ms-5 text-center border rounded-pill ">
-                                                    <span>From ${item.value.startDate}  until ${item.value.endDate}</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="row justify-content-between  mt-3">
-                                            <div class="col mt-2 ml-0 apply__button__list     ">
-
-                                                <a href="#" class="btn rounded-pill   text-center apply__text__list">Apply <img
-                                                        src="/images/right-arrow.png" class="ms-2"></a>
-
-
-                                            </div>
-                                            <div class="col">
-
-
-
-                                                <div class="row  mb-3">
-
-
-                                                  <div class="d-flex flex-row gap-1 align-items-center justify-content-center col">
-                                                        <img src="/images/Seats-left.png" class="" width="30px" height="30px">
-                                                        <div class="d-flex flex-column ">
-                                                            <h5 class="mb-0">10</h5>
-                                                            <span>Seats left</span>
-                                                        </div>
-                                                   </div>
-
-
-                                                  
-                                                    <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
-                                                           <img src="/images/deadline.png" width="40px" height="40px">
-                                                           <div class="d-flex flex-column">
-                                                                 <h5 class="mb-0">${item.value.endDate}</h5>
-                                                                 <span>Deadline</span>
-                                                           </div>
-                                                    </div>
-                                                    
-                                                  
-
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                      </div>`
-
-
-
-
-
-
-            });
-            var view = `<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3  g-4" >
-                ${items}
-            </div>`
-      
-            $("#grid__view__container").html(view);
-            var listview = $('#list__view__container');
-            listview.empty();
-            listview.html(listitems);
+            $('#GridCardContainer').html(data);
         },
         error: function (err) {
             console.error(err);
@@ -547,6 +354,31 @@ function sendInfo() {
 
 
 
+}
+
+//pagination function
+var pageNo = 1;
+function AddPagination() {
+    pageNo = event.target.innerHTML;
+    pageNo = Number.parseInt(pageNo);
+    sendInfo();
+}
+
+
+//nextpointer
+
+function NextPointer() {
+    pageNo = Number.parseInt(pageNo);
+    pageNo = pageNo + 1;
+    sendInfo();
+}
+
+//prevpointer
+
+function PrevPointer() {
+    pageNo = Number.parseInt(pageNo);
+    pageNo = pageNo - 1;
+    sendInfo();
 }
 
 

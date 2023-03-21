@@ -24,5 +24,10 @@ namespace CI_Platfrom.Repository.Repository
             return usersDetails;
         }
 
+        //public List<User> GetUsersByMission(int missionId)
+        //{
+        //    List<User> userByMission = _db.Users.Where(m => m)
+        //    return null;
+        //}
     }
 }

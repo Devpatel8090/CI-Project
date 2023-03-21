@@ -37,7 +37,13 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         /// </summary>
         public User user { get; set; }
 
+        //public IEnumerable<GoalMission> Goals { get; set; }
+
         public IEnumerable<MissionRating> missionRatings { get; set; }
+
+        public IEnumerable<MissionApplication> RecentVolunteers { get; set; }
+
+        public int TotalCount { get; set; }
 
         public int AverageRating { get; set; }
     }

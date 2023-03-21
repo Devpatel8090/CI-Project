@@ -127,3 +127,42 @@ commentButton.addEventListener("click", postcommentfunction);
         }
     });
 };
+
+let recent_vol = document.getElementsByClassName("recent-vol");
+let prev_vol = document.getElementById("prev-vol");
+let next_vol = document.getElementById("next-vol");
+let page = 1;
+let pageSize = 9;
+let maxpages = recent_vol.length / 9;
+let recentvolpagenumber = document.getElementById("recentvolpagenumber");
+
+
+
+recentpagination();
+
+prev_vol.addEventListener("click", () => {
+    if (page > 1) {
+        page = page - 1;
+    }
+    recentpagination();
+});
+
+next_vol.addEventListener("click", () => {
+    if (page != maxpages) {
+        page = page + 1;
+    }
+    recentpagination();
+});
+
+function recentpagination() {
+    for (i = 0; i < recent_vol.length; i++) {
+        if (i < (page * pageSize) && i > (((page - 1) *pageSize) - 1)) {
+            recent_vol[i].classList.remove("d-none");
+        }
+        else {
+            recent_vol[i].classList.add("d-none");
+        }
+    }
+    recentvolpagenumber.innerHTML = `<a class="page-link"  href="#" style="color:black">${((page - 1)*  9) + 1
+} - ${ (page) * 9 < recent_vol.length ? (page) * 9 : recent_vol.length} of ${ recent_vol.length } Recent Volunteers</a > `
+}

@@ -338,12 +338,25 @@
                     <div
                         class="d-flex  align-items-center justify-content-center  text-center w-25 mx-auto  flex-row star__images" data-bs-toggle="modal" data-bs-target="#RatingModal" >
                         @{
-                            var Rating = Model.particularMission.MissionRatings.FirstOrDefault(m => m.UserId == Model.user.UserId).Rating;
-                            for(var i= 0; i< Rating; i++) {
-                                <img src="~/images/selected-star.png" width="26px" height="26px" alt="" />
+                            var Rating = Model.particularMission.MissionRatings.FirstOrDefault(m => m.UserId == Model.user.UserId);
+                            if (Rating != null)
+                            {
+                                var rating = Rating.Rating;
+                                for (var i = 0; i < rating; i++)
+                                {
+                                    <img src="~/images/selected-star.png" width="26px" height="26px" alt="" />
+                                }
+                                for (var i = rating; i < 5; i++)
+                                {
+                                    <img src="/images/star-empty.png"    alt="" />
+                                }
                             }
-                            for(var i=Rating;i<5;i++) {
-                                <img src="/images/star-empty.png"    alt="" />
+                            else
+                            {
+                                for (var i = 0; i < 5; i++)
+                                {
+                                    <img src="/images/star-empty.png"    alt="" />
+                                }
                             }
                         }
 
@@ -600,7 +613,7 @@
                                     @{
                                         for(var i =0 ; i < Model.AverageRating; i++)
                                         {
-                                            <img src="~/images/selected-star.png" />
+                                            <img src="~/images/selected-star.png" width="26px" height="26px" />
                                         }
                                         for(var i= Model.AverageRating ;i< 5 ;i++  )
                                         {
@@ -622,86 +635,81 @@
                         <h4 class="mt-2 ms-4  ">Recent Volunteers</h4>
                         <hr>
 
-                        <div class="row row-cols-3">
-                            <div class="col d-flex flex-column align-items-center justify-content-center">
-                                <img src="~/images/volunteer1.png" class="rounded-circle " width="70px" height="70px" />
-                                <span class="text-center">Andrew Johnson</span>
+                        <div class="row row-cols-3 ">
+                          
+                        @{   @foreach (var item in Model.RecentVolunteers)
+                             {
+                                    <div class="col d-flex flex-column align-items-center justify-content-center recent-vol">
+                                <img src="@item.User.Avatar" class="rounded-circle " width="70px" height="70px" />
+                                <span class="text-center">@item.User.FirstName @item.User.LastName</span>
                             </div>
+                             }
+                         
+
+                            }
+
+
+                            @*
 
                             <div class="col d-flex flex-column align-items-center justify-content-center">
                                 <img src="~/images/volunteer2.png" class="rounded-circle align-items-center"
                                     width="70px" height="70px" />
                                 <span class="text-center">Charles Vigue</span>
                             </div>
+
                             <div class="col d-flex flex-column align-items-center justify-content-center">
                                 <img src="~/images/volunteer3.png" class="rounded-circle" width="70px" height="70px" />
                                 <span class="text-center">Kathryn Roberts</span>
                             </div>
+
                             <div class="col d-flex flex-column align-items-center justify-content-center">
                                 <img src="~/images/volunteer4.png" class="rounded-circle" width="70px" height="70px" />
                                 <span class="text-center">Estella Fowles</span>
                             </div>
+
                             <div class="col d-flex flex-column align-items-center justify-content-center">
                                 <img src="~/images/volunteer5.png" class="rounded-circle" width="70px" height="70px" />
                                 <span class="text-center">Rose Lewis</span>
                             </div>
+
                             <div class="col d-flex flex-column align-items-center justify-content-center">
                                 <img src="~/images/volunteer6.png" class="rounded-circle" width="70px" height="70px" />
                                 <span class="text-center">Raymond Pabon</span>
                             </div>
+
                             <div class="col d-flex flex-column align-items-center justify-content-center">
                                 <img src="~/images/volunteer7.png" class="rounded-circle" width="70px" height="70px" />
                                 <span class="text-center">Travis Steen</span>
                             </div>
+
                             <div class="col d-flex flex-column align-items-center justify-content-center">
                                 <img src="~/images/volunteer8.png" class="rounded-circle" width="70px" height="70px" />
                                 <span class="text-center">Sarah Santillan</span>
                             </div>
+
                             <div class="col d-flex flex-column align-items-center justify-content-center">
                                 <img src="~/images/volunteer9.png" class="rounded-circle" width="70px" height="70px" />
                                 <span class="text-center">Linda Richards</span>
                             </div>
+                            *@
 
 
                         </div>
 
-                        <div class="border ">
-                            <div class="row">
-                                <div class="d-flex justify-content-between">
-                                    <div class="col-2  mt-2 mb-2 border-end">
-                                        <a href="">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                class="align-item-center ms-md-2 mt-md-2 ms-sm-4 ms-xl-4" width="23"
-                                                height="23" fill="currentColor" class="bi bi-chevron-left"
-                                                viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-                                            </svg>
-                                        </a>
-
-                                    </div>
-
-                                    <div class="col-7 mt-2 text-center division">
-                                        <div class="d1">
-                                            1-9 of 25 Recent Volunteers
-                                        </div>
-
-
-                                    </div>
-
-                                    <div class="col-2 ms-2 mt-2 mb-2 border-start ps-3">
-                                        <a href="">
-                                            <svg xmlns="http://www.w3.org/2000/svg" id="next" width="23" height="23"
-                                                class="align-item-center me-md-5   ms-sm-2 mt-md-2 ms-xl-2 "
-                                                fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                    d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div>
+                        <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-between border border-1" style="margin : 0px; align-items : center;">
+                                    <li class="page-item disabled">
+                                        <button id = "prev-vol" style="border : none; background : none;"><img
+                                                src="~/images/left.png" alt=""></button>
+                                    </li>
+                                    <li class="page-item" id="recentvolpagenumber"></li>
+                                    <li class="page-item">
+                                        <button id = "next-vol" style="border : none; background : none;"><img src="~/images/right-arrow1.png" alt=""></button>
+                                    </li>
+                                </ul>
+                            </nav>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -720,77 +728,143 @@
 
         <div class="related__mission__card container me-lg-5 pe-xl-5">
             <div class="row mt-3 row-cols-1 row-cols-sm-2 row-cols-lg-3">
-                <div class="col  mb-3">
-                    <div class="card" style="max-width: 26rem;">
-                        <div style="position: relative;">
-                            <img class="card-img-top"
-                                src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
-                                alt="Card image cap">
-                            <div style="position: absolute;bottom: 0;width: 100%;">
-                                <p class="m-0 bg-white border rounded-pill text-center w-50"
-                                    style="transform: translate(50%, 50%) ;">Enviorment</p>
-                            </div>
-                            <div class="heart_image_container rounded-circle ">
-                                <img src="~/images/heart.png" class=" heart__image">
-                            </div>
-                            <div class="rounded-circle add__person__image__container">
-                                <img src="~/images/user.png" class="add__person__image">
-                            </div>
-                            <div class="city__container rounded-pill d-sm-none d-md-block">
-                                <img src="~/images/pin.png" class="locatin__image ">
-                                <span class="text-white">Toronto</span>
+
+             @{
+                 foreach (var item in Model.RelatedMission)
+                 {
+
+                      <div class="col  mb-3 total__mission" >
+                <div class="card" style="max-width: 26rem;">
+
+                    <div style="position: relative;">
+                        @{
+                       if(item.MissionMedia.Count > 0)
+                                {
+                                    <img class="card-img-top"
+                                     src="@item.MissionMedia.FirstOrDefault(m => m.DefaultMissionMedia == 1).MediaPath"
+                                     alt="Card image cap">
+                                }
+                                else
+                                {
+                                    <img class="card-img-top"
+                                     src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png"
+                                     alt="Card image cap">                                    
+                                }
+                                }
+                        <div style="position: absolute;bottom: 0;width: 100%;">
+                            <p class="m-0 bg-white border rounded-pill text-center w-50"
+                                style="transform: translate(50%, 50%) ;">@item.Theme.Title</p>
+                        </div>
+
+                        <div class="heart_image_container rounded-circle ">
+                                @{
+                                     var favCountofgrid = item.FavoriteMissions.Where(m => m.UserId == Model.user.UserId).Count();
+                                    if (favCountofgrid > 0)
+                                     {
+                                    <button
+                                                class="heart__image addToFavdiv rounded-circle bg-transparent border-0 pt-2 pt-sm-1 ps-sm-1 ps-2 pt-md-2 ps-md-2 m-0" value="@item.MissionId @Model.user.UserId"   >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill fill-red  " style="color:red;pointer-events:none" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+
+                                      
+                                    </svg>
+ 
+                            
+                                    </button>
+                                     }
+                                    else
+                                    {
+                                        <button
+                                            class=" heart__image addToFavdiv rounded-circle bg-transparent border-0 m-0 p-2"    value="@item.MissionId @Model.user.UserId">
+                                            <img src="~/images/heart.png" alt="" class="" style="pointer-events:none" width="20px" height="20px" />
+                            
+                                        </button>
+                                    }
+                                 }
+                        </div>
+
+                        <div class="rounded-circle add__person__image__container " data-bs-toggle="modal" data-bs-target="#RecomendModal">
+                            <img src="~/images/user.png" class="add__person__image">
+                        </div>
+
+                        <div class="city__container rounded-pill p-2">
+                            <img src="~/images/pin.png" class="locatin__image">
+                            <span class="text-white ">@item.City.Name</span>
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+                        <h3 class="card-title  text-start mt-2">@item.Title
+                        </h3>
+                        <p class="card-text text-start">@item.ShortDescription</p>
+                        <div class="d-flex justify-content-between mb-1 ">
+                            <span>@item.OrganizationName</span>
+                            <div class="star__container">
+                                <img src="~/images/selected-star.png">
+                                <img src="~/images/selected-star.png">
+                                <img src="~/images/selected-star.png">
+                                <img src="~/images/selected-star.png">
+                                <img src="~/images/star.png">
                             </div>
                         </div>
-                        <div class="card-body">
-                            <h3 class="card-title text-start mt-2">@Model.particularMission.Title </h3>
-                            <p class="card-text text-start">@Model.particularMission.ShortDescription</p>
-                            <div class="d-flex justify-content-between mb-1 ">
-                                <span>Tree Canada</span>
-                                <div class="star__container">
-                                    <img src="~/images/selected-star.png">
-                                    <img src="~/images/selected-star.png">
-                                    <img src="~/images/selected-star.png">
-                                    <img src="~/images/selected-star.png">
-                                    <img src="~/images/star.png">
+                        <br />
+                        <hr>
+                        <div class="time__text border rounded-pill w-75 mx-auto ">
+                            <span>From @item.StartDate.Value.ToShortDateString() until
+                                @item.EndDate.Value.ToShortDateString()</span>
+                        </div>
+
+
+                        <div class="row mt-3 ms-2 mb-3">
+                            <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                <img src="~/images/Seats-left.png" class="" width="30px" height="30px">
+                                <div class="d-flex flex-column ">
+                                    <h5 class="mb-0">10</h5>
+                                    <span>Seats left</span>
                                 </div>
                             </div>
-                            <br />
-                            <hr>
-                            <div class="time__text border rounded-pill w-75 mx-auto ">
-                                <span>From 10/01/2019 until 25/02/2019</span>
-                            </div>
 
-
-
-
-
-                            <div class="row mt-3 ms-2 mb-3">
-                                <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
-                                    <img src="~/images/Seats-left.png" class="" width="30px" height="30px">
-                                    <div class="d-flex flex-column ">
-                                        <h5 class="mb-0">10</h5>
-                                        <span>Seats left</span>
+                                @if (@item.MissionType == "TIME")
+                                {
+                                    <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                        <img src="~/images/deadline.png" width="40px" height="40px">
+                                        <div class="d-flex flex-column">
+                                            <h5 class="mb-0">@item.EndDate.Value.ToShortDateString()</h5>
+                                            <span>Deadline</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
-                                    <img src="~/images/deadline.png" width="40px" height="40px">
-                                    <div class="d-flex flex-column">
-                                        <h5 class="mb-0">09/01/2019</h5>
-                                        <span>Deadline</span>
+                                }
+                                else
+                                {
+                                     <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                            <img src="~/images/mission.png" width="30px" height="30px">
+                                             <div class="d-flex flex-column">
+                                                 <div class="Progress__bar"><progress max="10000" value="8000"></progress></div>
+                                                 <span>8000 Achived</span>
+                                            </div>
                                     </div>
-                                </div>
+                                }
 
-                            </div>
-                            <hr>
-                            <div class="mt-2 apply__button    text-center apply__button">
-                                <a href="#" class="btn rounded-pill   text-center apply__text">Apply <img
-                                        src="~/images/right-arrow.png" class="ms-2"></a>
+                        </div>
+                        <hr>
+                        <div class="mt-2 apply__button    text-center apply__button  ">
+                            <a class="btn rounded-pill   text-center apply__text " asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId" >Apply <img
+                                    src="~/images/right-arrow.png" class="ms-2"></a>
 
-                            </div>
                         </div>
                     </div>
+
                 </div>
-                <div class="col  mb-3">
+            </div>
+
+                 }
+                 }
+                 
+                 @*<partial name = "_GridCards" model="Model.relatedmissions" />*@
+               
+                
+       @*        <div class="col  mb-3">
                     <div class="card" style="max-width: 26rem;">
                         <div style="position: relative;">
                             <img class="card-img-top"
@@ -934,7 +1008,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>  
+                *@ 
 
             </div>
         </div>

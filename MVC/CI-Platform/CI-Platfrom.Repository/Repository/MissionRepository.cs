@@ -26,7 +26,7 @@ namespace CI_Platfrom.Repository.Repository
         /// <returns></returns>
         public List<Mission> GetMissionDetails()
         {
-            List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionMedia).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).ToList();
+            List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionMedia).Include(m=> m.MissionRatings).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m => m.GoalMissions).ToList();
             return missionDetails;
         }
 
@@ -43,16 +43,44 @@ namespace CI_Platfrom.Repository.Repository
         /// <returns></returns>
         public Mission GetMissionByMissionId(long missionId)
         {
-            var particularMission = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m=> m.MissionRatings).Include(m => m.Comments).Include(m=> m.MissionDocuments).FirstOrDefault(m => m.MissionId == missionId);
+            var particularMission = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m=> m.MissionRatings).Include(m => m.Comments).Include(m=> m.MissionDocuments).Include( e=> e.GoalMissions).FirstOrDefault(m => m.MissionId == missionId);
             return particularMission;
         }
 
-     
+        public List<Mission> getRelatedMissions(long missionId)
+        {
+            var relatedmission = GetMissionDetails().FirstOrDefault( e => e.MissionId == missionId);
+            long countryId = relatedmission.CountryId;
+            long cityId = relatedmission.CityId;
+            long themeId = relatedmission.ThemeId;
 
-      
-       
+            //var relatedMissionList = _db.Missions.Where(e => e.CityId == cityId).ToList();
+            var relatedMissionList = GetMissionDetails().Where(e => e.CityId == cityId && e.MissionId != missionId).ToList();
+            if(relatedMissionList.Distinct().Count() < 3)
+            {
+                //relatedMissionList += _db.Missions.Where(e => e.CountryId == countryId).ToList();   
+                var relatedMissionListByCountry = GetMissionDetails().Where(e => e.CountryId == countryId && e.MissionId != missionId).ToList();
+                relatedMissionList =  relatedMissionList.Concat(relatedMissionListByCountry).Distinct().ToList();
+                if(relatedMissionList.Distinct().Count() < 3)
+                {
+                    var relatedMissionListByTheme = GetMissionDetails().Where( e => e.ThemeId == themeId && e.MissionId != missionId).ToList(); 
+                    relatedMissionList =  relatedMissionList.Concat(relatedMissionListByTheme).Distinct().ToList();
+                }
 
-    
+            }
+            //relatedMissionList = relatedMissionList.Distinct().ToList();
+            relatedMissionList = relatedMissionList.Take(3).ToList();
+           
+            
+
+            return relatedMissionList;
+        }
+
+
+
+
+
+
 
         //public List<Mission> GetBySort(string sort)
         //{

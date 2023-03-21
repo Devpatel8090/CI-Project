@@ -21,7 +21,7 @@ namespace CI_Platfrom.Repository.Repository
 
         public  List<Comment> GetAllCommentsByMission(long id)
         {
-            List<Comment> comments = _db.Comments.Include(u => u.User).Where(c => c.MissionId == id).ToList();
+            List<Comment> comments = _db.Comments.Include(u => u.User).Where(c => c.MissionId == id).OrderByDescending(e => e.CreateAt).ToList();
             return comments;
             
         }

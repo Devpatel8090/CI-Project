@@ -36,7 +36,7 @@ namespace CI_Platform.Controllers
             //_mission = mission;
             //_db = db;
         }
-        public IActionResult LandingPage(string sort, string filter, long countryId = 0)
+        public IActionResult LandingPage(string sort, string filter, long countryId = 0, int page = 0)
         {
             //var country = _unitOfWork.Country.GetAllCountries(countryId);
             //ViewBag.countryname = country;
@@ -45,6 +45,7 @@ namespace CI_Platform.Controllers
             if (ses == null)
             {
                 return RedirectToAction("login", "Authentication");
+
             }
             else
             {
@@ -69,11 +70,14 @@ namespace CI_Platform.Controllers
                 var emailFromSession = HttpContext.Session.GetString("userEmail");
                 MissionVM missionObj = _missionvm.GetAllMissions(emailFromSession, countryId);
 
+             
+
                 //var user = userDetails.FirstOrDefault(e => e.Email == emailFromSession);
                 //ViewBag.LoginUser = user;
-                if (filter != null || sort != null)
+                if (filter != null || sort != null || page>0)
                 {
-                    return RedirectToAction("GetAllMissions", new { sort, filter, countryId });
+                    
+                    return RedirectToAction("GetAllMissions", new { sort, filter, countryId,page });
                 }
 
                 return View(missionObj);
@@ -86,34 +90,36 @@ namespace CI_Platform.Controllers
         /// <param name="filter"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public JsonResult[] GetAllMissions(string sort, string filter, long id = 0)
+        public IActionResult GetAllMissions(string sort, string filter, long id = 0,int page=0)
         {
             var sessionValue = HttpContext.Session.GetString("userEmail");
 
-            IEnumerable<Mission> allmissions = _missionvm.ApplyFilter(sort, filter, id, sessionValue);
-            JsonResult[] missions = new JsonResult[allmissions.ToList().Count];
+            MissionVM allmissions = _missionvm.ApplyFilter(sort, filter, id, sessionValue,page);
 
-            int i = 0;
-            foreach (Mission mission in allmissions)
-            {
-                JsonResult eachmission = new JsonResult(
-                    new
-                    {
-                        mission.Title,
-                        mission.City.Name,
-                        startDate = mission.StartDate.Value.ToShortDateString(),
-                        endDate = mission.EndDate.Value.ToShortDateString(),
-                        theme = mission.Theme.Title,
-                        mission.ShortDescription,
-                        mission.OrganizationName,
-                        deadLine = ((mission.StartDate - TimeSpan.FromDays(1)).Value.ToShortDateString())
-                    }
+            return PartialView("_GridCards",allmissions);
+            //JsonResult[] missions = new JsonResult[allmissions.Mission.ToList().Count];
 
-                );
-                missions[i] = eachmission;
-                i++;
-            }
-            return missions;
+            //int i = 0;
+            //foreach (Mission mission in allmissions.Mission)
+            //{
+            //    JsonResult eachmission = new JsonResult(
+            //        new
+            //        {
+            //            mission.Title,
+            //            mission.City.Name,
+            //            startDate = mission.StartDate.Value.ToShortDateString(),
+            //            endDate = mission.EndDate.Value.ToShortDateString(),
+            //            theme = mission.Theme.Title,
+            //            mission.ShortDescription,
+            //            mission.OrganizationName,
+            //            deadLine = ((mission.StartDate - TimeSpan.FromDays(1)).Value.ToShortDateString())
+            //        }
+
+            //    );
+            //    missions[i] = eachmission;
+            //    i++;
+            //}
+            //return missions;
         }
 
 
@@ -145,10 +151,14 @@ namespace CI_Platform.Controllers
             //vm.user =   _db.Users.FirstOrDefault(e => e.Email == sessionValue);
 
             vm.skills = _unitOfWork.Skill.GetAll().ToList();
-            vm.particularMission = _unitOfWork.Mission.GetMissionByMissionId(id);
-            vm.User = _unitOfWork.User.GetAll();
-            vm.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == sessionValue);
+            vm.particularMission = _unitOfWork.Mission.GetMissionByMissionId(id); 
+            vm.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == sessionValue);   
+            var loginuser = vm.user.UserId;
+            vm.User = _unitOfWork.User.GetAll().Where(e => e.UserId != loginuser );
             vm.missionRatings = _unitOfWork.MissionRating.GetAll().Where(m => m.MissionId == id);
+            vm.RelatedMission = _unitOfWork.Mission.getRelatedMissions(id);
+            vm.RecentVolunteers = _unitOfWork.MissionApplication.GetUsersByMissionId(id);
+            
 
             int sum = 0;
             foreach (MissionRating rating in vm.missionRatings)

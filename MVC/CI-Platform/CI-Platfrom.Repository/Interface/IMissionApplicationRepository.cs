@@ -7,10 +7,8 @@ using CI_Platfrom.Entities.Models;
 
 namespace CI_Platfrom.Repository.Interface
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IMissionApplicationRepository: IRepository<MissionApplication>
     {
-        public List<User> GetUserDetails(); 
-
-        //public List<User> GetUsersByMission(int missionId);
+        public List<MissionApplication> GetUsersByMissionId(long missionId);
     }
 }

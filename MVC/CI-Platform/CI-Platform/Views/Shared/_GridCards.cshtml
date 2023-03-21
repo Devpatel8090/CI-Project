@@ -78,18 +78,64 @@
                         <div class="d-flex justify-content-between mb-1 ">
                             <span>@item.OrganizationName</span>
                             <div class="star__container">
-                                <img src="~/images/selected-star.png">
-                                <img src="~/images/selected-star.png">
-                                <img src="~/images/selected-star.png">
-                                <img src="~/images/selected-star.png">
-                                <img src="~/images/star.png">
+                                @{
+                                    int sum = 0;
+                                    var averageRating = 0;
+                                    foreach (MissionRating rating in item.MissionRatings)
+                                            {
+                                                sum += rating.Rating;
+                                            }
+                                            if (sum > 0)
+                                            {
+                                                 averageRating = sum / item.MissionRatings.Count();
+                                            }
+                                            else
+                                            {
+                                                averageRating = 0;
+                                            }
+                                        for(var i =0 ; i <  averageRating; i++)
+                                        {
+                                            <img src="~/images/selected-star.png" width="26px" height="26px" />
+                                        }
+                                        for(var i=  averageRating ;i< 5 ;i++  )
+                                        {
+                                            <img src="~/images/star-empty.png" /> 
+                                        }
+                                  }
                             </div>
                         </div>
                         <br />
                         <hr>
                         <div class="time__text border rounded-pill w-75 mx-auto ">
-                            <span>From @item.StartDate.Value.ToShortDateString() until
-                                @item.EndDate.Value.ToShortDateString()</span>
+                            @{
+                                if(@item.MissionType == "TIME") {
+
+                                    if(item.EndDate > DateTime.Now)
+                                    {
+                                        <span>Ongoing Opportunity</span>
+
+                                    }
+                                    else
+                                    {
+                                       <span>From @item.StartDate.Value.ToShortDateString() until @item.EndDate.Value.ToShortDateString()</span>
+                                    }
+                                }
+
+                                else
+                                {
+                                    var goalText = item.GoalMissions.FirstOrDefault();
+                                    if(goalText == null )
+                                    {
+                                        <span>Goal is not defined</span>
+                                    }
+                                    else
+                                    {
+                                      <span>@goalText.GoalObjectiveText</span>  
+                                    }
+                                    
+                                }
+
+                         }
                         </div>
 
 

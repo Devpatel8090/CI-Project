@@ -65,6 +65,13 @@ namespace CI_Platfrom.Repository.Repository
             IEnumerable<Mission> missionDetails = _unitOfWork.Mission.GetMissionDetails();/*GetMissionByCountry(CountryId)*/;
             missionVM.Mission = missionDetails;
 
+            IEnumerable<MissionRating> missionRatings = _unitOfWork.MissionRating.GetAll();
+            missionVM.missionRatings = missionRatings;
+
+            //IEnumerable<GoalMission> goalmissionDetails = _unitOfWork.
+  
+
+
 
             var user = userDetails.FirstOrDefault(e => e.Email == emailFromSession);
             missionVM.user = user;
@@ -90,7 +97,7 @@ namespace CI_Platfrom.Repository.Repository
             return missionVM;
         }
 
-        public IEnumerable<Mission> ApplyFilter(string sort,string filter, long id, string sessionValue)
+        public MissionVM ApplyFilter(string sort,string filter, long id, string sessionValue,int page= 1)
         {
             MissionVM missionObj = GetAllMissions(sessionValue, id);
             IEnumerable<Mission> missions = missionObj.Mission;
@@ -221,8 +228,10 @@ namespace CI_Platfrom.Repository.Repository
                     filterMissions = filterMissions.OrderBy(m => m.StartDate).ToList();
                 }
 
-
-                return filterMissions;
+                missionObj.TotalCount = filterMissions.Count();
+                filterMissions = filterMissions.Skip((page = 1) * 9).Take(9);
+                missionObj.Mission = filterMissions;
+                return missionObj;
             }
 
 
@@ -242,8 +251,12 @@ namespace CI_Platfrom.Repository.Repository
             {
                 missions = missions.OrderBy(m => m.StartDate).ToList();
             }
-            return missions;
+            missionObj.TotalCount = missions.Count();
+            missions = missions.Skip((page = 1) * 9).Take(9);
+            missionObj.Mission = missions;
+            return missionObj;
         }
+    }
 
      
 
@@ -257,4 +270,4 @@ namespace CI_Platfrom.Repository.Repository
         
     }
 
-}
+
