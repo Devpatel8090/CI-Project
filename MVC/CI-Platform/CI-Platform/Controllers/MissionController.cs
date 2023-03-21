@@ -79,7 +79,7 @@ namespace CI_Platform.Controllers
                     
                     return RedirectToAction("GetAllMissions", new { sort, filter, countryId,page });
                 }
-
+               
                 return View(missionObj);
             }
         }
@@ -334,5 +334,22 @@ namespace CI_Platform.Controllers
                 return PartialView("_Comments", comments);
             //}
         }
+
+        public void ApplyToMission(string applyObj)
+        {
+            var parseObject = JObject.Parse(applyObj);
+            var missionId = parseObject.Value<long>("missionId");
+            var userId = parseObject.Value<long>("userId");
+            var applyObject = new MissionApplication()
+            {
+                MissionId = missionId,
+                UserId=userId,
+                AppliedAt = DateTime.Now
+            };
+
+            _unitOfWork.MissionApplication.Add(applyObject);
+            _unitOfWork.save();
+        }
+
     }
 }

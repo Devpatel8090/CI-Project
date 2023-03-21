@@ -12,6 +12,8 @@ let serchBarSm = document.getElementById("search__bar__sm");
 
 let sortBy = document.getElementsByClassName("sortByInput");
 
+let PaginationFooter = document.getElementById("Pagination");
+
 
 
 
@@ -74,11 +76,13 @@ function search_mission() {
         if (count == totalMissions.length) {
             notfound.classList.remove('hide')
             gridAndListButtonsRow.classList.add('hide');
+            PaginationFooter.classList.add('hide');
 
         }
         else {
             notfound.classList.add('hide');
             gridAndListButtonsRow.classList.remove('hide');
+            PaginationFooter.classList.remove('hide');
         }
 
 
@@ -283,13 +287,13 @@ function sendInfo() {
 
 
 
-    if (sort == null && cityNameList.size == 0 && skillNameList.size == 0 && themeNameList.size == 0 && page == 0) {
+    if (sort == null && cityNameList.size == 0 && skillNameList.size == 0 && themeNameList.size == 0 && pageNo == 0) {
 
         var url = "/Mission/LandingPage/";
         window.location.reload();
     }
 
-    else if (filterList.size == 0 && filterTheme.size == 0 && filterSkill.size == 0 && sort == null) {
+    else if (cityNameList.size == 0 && themeNameList.size == 0 && skillNameList.size == 0 && sort == null) {
         var url = "/Mission/LandingPage?page=" + pageNo;
     }
 
@@ -343,7 +347,8 @@ function sendInfo() {
             else {
                 notfound.classList.add('hide')
             }
-
+          
+           
             $('#GridCardContainer').html(data);
         },
         error: function (err) {

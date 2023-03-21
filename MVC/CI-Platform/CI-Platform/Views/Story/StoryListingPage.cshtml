@@ -1,10 +1,12 @@
-﻿@*
+﻿@using CI_Platfrom.Entities.Models.ViewModel
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
     Layout = null;
 }
 
+@model StoryVM
 @*<partial name ="_MissionHeader" />*@
 <!DOCTYPE html>
 <html lang="en">
@@ -391,40 +393,59 @@
         <div class="container">
         <div id="grid__view__container">
             <div class="row mt-3 row-cols-1 row-cols-sm-2 row-cols-lg-3">
-                <div class="col  mb-3">
-                    <div class="card" style="max-width: 26rem;">
+                @{
+
+                    @foreach (var item in Model.Story)
+                    {
+                        <div class="col  mb-3">
+                            <div class="card" style="max-width: 26rem;">
                         <div style="position: relative;" class="image__container">
+                            
+                           @{
+                               var image = @item.StoryMedia.FirstOrDefault(e => e.StoryId == @item.StoryId);
                             <img class="card-img-top Blur__image"
-                                src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
+                                src="@image.Path"
                                 alt="Card image cap">
+                           }
                             <div style="position: absolute;bottom: 0;width: 100%;">
                                 <p class="m-0 bg-white border rounded-pill text-center w-50"
-                                    style="transform: translate(50%, 50%) ;">Customer Experience</p>
+                                    style="transform: translate(50%, 50%) ;">
+
+                                    @{
+                                                var theme = @Model.MissionTheme.FirstOrDefault(e => e.MissionThemeId == @item.Mission.ThemeId);
+                                      }
+                                            @theme.Title</p>
                             </div>
                             <div style="position: absolute;top: 30%;width: 100%;" class="view__detail__button">
                                 <button class="m-0 bg-transparent text-white border rounded-pill text-center w-50 p-2 "
-                                    style="transform: translate(50%, 50%) ;">View Details 
-                                    <i class="bi bi-arrow-right icon-white text-center ms-2 "></i>
+                                    style="transform: translate(50%, 50%) ;" asp-controller="Mission" asp-action="LandingPage">View Details 
+                                    <i class="bi bi-arrow-right icon-white text-center ms-2 " style="pointer-events:none"></i>
                                 </button>
                             </div>
                            
                         </div>
                         <div class="card-body">
-                            <h3 class="card-title text-start mt-2">10 User and Customer Engagement Strategies for 2019
+                            <h3 class="card-title text-start mt-2">@item.Title
                             </h3>
-                            <p class="card-text text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                                do
-                                eiusmod
-                                tempor incididunt ut labore...</p>
+                            <p class="card-text text-start">@item.Description.</p>
                           
                           <div class="col d-flex flex-row align-items-center gap-2 ">
-                                <img src="~/images/volunteer2.png" alt=""  class="rounded-circle" width="50px" height="50px">
-                                <span>Andrew Johnson</span>
+
+                          @{
+                              var name =  @Model.User.FirstOrDefault(e => e.UserId == @item.UserId);
+                              
+                          
+                                <img src="@name.Avatar" alt=""  class="rounded-circle" width="50px" height="50px">
+                                <span>
+                                    
+                                   @name.FirstName  @name.LastName
+                                </span>
+                            }
                           </div>
                           <div class="view__details">
                             <hr class="">
                             <div class="mt-2  d-flex justify-content-center flex-row align-items-center  w-100 text-center  ">
-                                <a href="#" class="btn rounded-pill   text-center apply__text">View Details
+                                <a href="/Mission/LandingPage" class="btn rounded-pill   text-center apply__text">View Details
                                     <img src="~/images/right-arrow.png" class="ms-2"></a>
                         
                             </div>
@@ -435,6 +456,13 @@
                         </div>
                     </div>
                 </div>
+                    }
+                
+               
+
+                }
+
+                @*
                 <div class="col  mb-3">
                     <div class="card" style="max-width: 26rem;">
                         <div style="position: relative;" class="image__container">
@@ -480,6 +508,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col  mb-3">
                     <div class="card" style="max-width: 26rem;">
                         <div style="position: relative;" class="image__container">
@@ -524,6 +553,8 @@
                         </div>
                     </div>
                 </div>
+                *@
+
             </div>
         </div>
         </div>

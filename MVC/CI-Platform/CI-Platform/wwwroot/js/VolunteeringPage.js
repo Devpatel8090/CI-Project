@@ -128,6 +128,31 @@ commentButton.addEventListener("click", postcommentfunction);
     });
 };
 
+$('#ApplyTomission').on('click', function () {
+    var input = $(this).attr('value');
+    var applyArray = input.split(" ");
+
+    var applyObj = {
+        missionId: applyArray[0],
+        userId: applyArray[1]
+    };
+    var url = "/Mission/ApplyToMission?applyObj=" + JSON.stringify(applyObj);
+
+    $.ajax({
+        url: url,
+        success: function (data) {
+            var temp = "";
+            var applyToMissionText = $('#applyToMissionText');
+            temp +=` <a class="btn rounded-pill text-center border-1 border-success text-success btn_no py-3 px-5   apply__text__list"> Already Applied 
+            </a>`;
+            applyToMissionText.html(temp);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+});
+
 let recent_vol = document.getElementsByClassName("recent-vol");
 let prev_vol = document.getElementById("prev-vol");
 let next_vol = document.getElementById("next-vol");

@@ -29,6 +29,8 @@ namespace CI_Platfrom.Repository.Interface
         public ICommentRepository Comment { get; }
 
         public IMissionApplicationRepository MissionApplication { get; }
+
+        public IStoryRepository Story { get; }
         public void save();
 
     }

@@ -32,116 +32,7 @@
 
         <!--   side bar for small Screen  -->
         <span class="" id="Countryname" value="ViewBag.countryname.Name"></span>
-        <div id="mySidebar" class="sidebar">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-            <form class="d-flex align-items-center mx-1 ">
-                <input class="form-control  ms-2 border-0" type="search" placeholder="Search missions...."
-                    aria-label="Search">
-            </form>
-            <a href="#">
-                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Country
-                </a>
-                 <ul id="country" class="dropdown-menu" id="countryDropdown" aria-labelledby="dropdownMenuLink">
-                            @foreach (var item in Model.Country)
-                            {
-                                 <li value="@item.CountryId"><a class="dropdown-item" href="#">@item.Name</a></li>
-                            }        
-                 </ul>
-            </a>
-
-            <a href="#">
-                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    City
-                </a>
-              
-                        <ul id="cities" class="dropdown-menu ps-4 scrollbar" aria-labelledby="navbarDropdownMenuLink">
-                            @foreach (var item in Model.City)
-                            {
-                               <div class="form-check ">
-                                     <input class="form-check-input cityNames" type="checkbox" value="@item.Name" id="defaultCheck1">
-                                         <label class="form-check-label" for="defaultCheck1">
-                                            @item.Name
-                                         </label>
-                               </div>
-                            }
-                          
-                          
-                           
-                        </ul>
-            </a>
-
-            <a href="#">
-                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Theme
-                </a>
-                      <ul class="dropdown-menu ps-4 scrollbar" aria-labelledby="dropdownMenuLink">
-                            
-                        
-                             @foreach (var item in Model.MissionTheme)
-                            {
-                               <div class="form-check ">
-                                     <input class="form-check-input themeNames " type="checkbox" value="@item.Title" id="defaultCheck1">
-                                         <label class="form-check-label" for="defaultCheck1">
-                                           @item.Title
-                                         </label>
-                               </div>
-                            }
-                           
-                        </ul>
-            </a>
-            <a href="#">
-                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Skills
-                </a>
-                  <ul class="dropdown-menu ps-4 scrollbar" aria-labelledby="dropdownMenuLink">
-                            
-                        
-                             @foreach (var item in Model.skills)
-                            {
-                               <div class="form-check  ">
-                                     <input class="form-check-input skillNames" type="checkbox" value="@item.SkillName" id="defaultCheck1">
-                                         <label class="form-check-label" for="defaultCheck1">
-                                            @item.SkillName
-                                         </label>
-                               </div>
-                            }
-                           
-                        </ul>
-            </a>
-            <a href="#">
-                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Stories
-                </a>
-                <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Somethi</a></li>
-                </ul>
-
-            </a>
-            <a href="#">
-                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Policies
-                </a>
-                <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Policy 1</a></li>
-                    <li><a class="dropdown-item" href="#">Policy 2</a></li>
-                    <li><a class="dropdown-item" href="#">Policy 3</a></li>
-                </ul>
-            </a>
-
-            <!-- <a href="#">Contact</a>
-            <a href="#">Contact</a>  -->
-
-
-        </div>
+       
 
         <!-- <div id="main">
             <button class="openbtn d-sm-none" id="openbtn" onclick="openNav()">☰ </button> -->
@@ -366,6 +257,117 @@
                     <img src="~/images/filter.png" class="gap-2" onclick="openNav()" alt="">
                 </form>
             </div>
+        </div>
+
+         <div id="mySidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <form class="d-flex align-items-center mx-1 ">
+                <input class="form-control  ms-2 border-0" type="search" placeholder="Search missions...."
+                    aria-label="Search">
+            </form>
+            <a href="#">
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Country
+                </a>
+                 <ul id="country" class="dropdown-menu" id="countryDropdown" aria-labelledby="dropdownMenuLink">
+                            @foreach (var item in Model.Country)
+                            {
+                                 <li value="@item.CountryId"><a class="dropdown-item" href="#">@item.Name</a></li>
+                            }        
+                 </ul>
+            </a>
+
+            <a href="#">
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    City
+                </a>
+              
+                        <ul id="cities" class="dropdown-menu ps-4 scrollbar" aria-labelledby="navbarDropdownMenuLink">
+                            @foreach (var item in Model.City)
+                            {
+                               <div class="form-check ">
+                                     <input class="form-check-input cityNames" type="checkbox" value="@item.Name" id="defaultCheck1">
+                                         <label class="form-check-label" for="defaultCheck1">
+                                            @item.Name
+                                         </label>
+                               </div>
+                            }
+                          
+                          
+                           
+                        </ul>
+            </a>
+
+            <a href="#">
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Theme
+                </a>
+                      <ul class="dropdown-menu ps-4 scrollbar" aria-labelledby="dropdownMenuLink">
+                            
+                        
+                             @foreach (var item in Model.MissionTheme)
+                            {
+                               <div class="form-check ">
+                                     <input class="form-check-input themeNames " type="checkbox" value="@item.Title" id="defaultCheck1">
+                                         <label class="form-check-label" for="defaultCheck1">
+                                           @item.Title
+                                         </label>
+                               </div>
+                            }
+                           
+                        </ul>
+            </a>
+            <a href="#">
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Skills
+                </a>
+                  <ul class="dropdown-menu ps-4 scrollbar" aria-labelledby="dropdownMenuLink">
+                            
+                        
+                             @foreach (var item in Model.skills)
+                            {
+                               <div class="form-check  ">
+                                     <input class="form-check-input skillNames" type="checkbox" value="@item.SkillName" id="defaultCheck1">
+                                         <label class="form-check-label" for="defaultCheck1">
+                                            @item.SkillName
+                                         </label>
+                               </div>
+                            }
+                           
+                        </ul>
+            </a>
+            <a   asp-action="StoryListingPage" asp-controller="Story">
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Stories
+                </a>
+                <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Somethi</a></li>
+                </ul>
+
+            </a>
+            <a href="#">
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Policies
+                </a>
+                <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="#">Policy 1</a></li>
+                    <li><a class="dropdown-item" href="#">Policy 2</a></li>
+                    <li><a class="dropdown-item" href="#">Policy 3</a></li>
+                </ul>
+            </a>
+
+            <!-- <a href="#">Contact</a>
+            <a href="#">Contact</a>  -->
+
+
         </div>
 
 

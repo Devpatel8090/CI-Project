@@ -228,9 +228,10 @@ namespace CI_Platfrom.Repository.Repository
                     filterMissions = filterMissions.OrderBy(m => m.StartDate).ToList();
                 }
 
-                missionObj.TotalCount = filterMissions.Count();
-                filterMissions = filterMissions.Skip((page = 1) * 9).Take(9);
+                
+                filterMissions = filterMissions.Skip((page - 1) * 9).Take(9);
                 missionObj.Mission = filterMissions;
+                missionObj.TotalCount = missionObj.Mission.Count();
                 return missionObj;
             }
 
@@ -251,9 +252,10 @@ namespace CI_Platfrom.Repository.Repository
             {
                 missions = missions.OrderBy(m => m.StartDate).ToList();
             }
-            missionObj.TotalCount = missions.Count();
-            missions = missions.Skip((page = 1) * 9).Take(9);
+           
+            missions = missions.Skip((page -1) * 9).Take(9);
             missionObj.Mission = missions;
+            missionObj.TotalCount = missionObj.Mission.Count();
             return missionObj;
         }
     }
