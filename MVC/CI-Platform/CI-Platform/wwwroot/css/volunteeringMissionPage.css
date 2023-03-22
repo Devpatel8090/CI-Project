@@ -54,6 +54,16 @@ body {
     padding: 16px;
 }
 
+.mission-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.demo {
+    width: 700px;
+}
+
 @media (max-width: 767px) {
     /* .carousel-inner .carousel-item>div {
         display: none;

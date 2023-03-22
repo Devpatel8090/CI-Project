@@ -21,13 +21,22 @@ namespace CI_Platform.Controllers
 
         public StoryVM getAllStory()
         {
+            var emailFromSession = HttpContext.Session.GetString("userEmail");
             StoryVM story = new StoryVM();
             story.Story = _unitOfWork.Story.GetStoryDetails().ToList();
             story.Mission = _unitOfWork.Mission.GetMissionDetails().ToList();
             story.User = _unitOfWork.User.GetUserDetails().ToList();
             story.MissionTheme = _unitOfWork.Theme.GetThemeDetails().ToList();
+            story.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
 
                 return story;
         }
+
+        public IActionResult AddYourStoryPage()
+        {
+            StoryVM GetStories = getAllStory();
+            return View(GetStories);
+        }
+
     }
 }

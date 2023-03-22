@@ -1,0 +1,168 @@
+    
+        .drag-card {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            }
+            
+            .drag-card .top {
+            width: 100%;
+            }
+         
+        
+        .story-btn{
+            background:none;
+            padding: 16px 30px;
+            border : 2px solid white;
+            border-radius : 30px;
+            color : white;
+        }
+        
+        .sharestoryheader {
+            margin-top: 10px;
+            font-size: 40px;
+            color: #414141;
+            font-weight : 300
+        }
+        
+        .orage_color{
+            border: 2px solid #F88634;
+            color:#F88634;
+        }
+        /*textarea*/
+        
+        
+        #icons {
+            background-color: #75757514;
+            border: 1px solid #938c8c;
+        }
+        
+        #icons button {
+            background: none;
+            border: none;
+        }
+        
+        #mystory {
+            width: 100%;
+            height: 130px;
+            margin: 0px !important;
+            border-left: 1px solid #938c8c;
+            border-right: 1px solid #938c8c;
+            overflow-y : scroll;
+        }
+        
+        #areabottom {
+            width: 100%;
+            background-color: #75757514;
+            height: 30px;
+            border: 1px solid #938c8c;
+        }
+        
+        
+        /*story buttons*/
+        
+       
+            
+            .drag-card button {
+            outline: 0;
+            border: 0;
+            -webkit-appearence: none;
+            background-color: white;
+            color: black;
+            border-radius: 4px;
+            transition: 0.3s;
+            cursor: pointer;
+            font-weight: 400;
+            font-size: 0.8rem;
+            padding: 8px 13px;
+            }
+            
+            .drag-card button:hover {
+            opacity: 0.8;
+            }
+            
+            .drag-card button:active {
+            transform: translateY(5px);
+            }
+            
+            .drag-card .drag-area {
+            width: 100%;
+            height: 150px;
+            border-radius: 5px;
+            border: 2px dashed #d5d5e1;
+            color: #c8c9dd;
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            -webkit-user-select: none;
+            margin-top: 10px;
+            }
+            
+            .drag-card .drag-area .visible {
+            font-size: 18px;
+            }
+            
+            .drag-card .select {
+            color: #5256ad;
+            margin-left: 5px;
+            cursor: pointer;
+            transition: 0.4s;
+            }
+            
+            .drag-card .select:hover {
+            opacity: 0.6;
+            }
+            
+            .drag-card .container-img {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            }
+            
+            .drag-card .container-img .image {
+            max-width: 100px;
+            width: 100%;
+            margin-top: 30px;
+            margin-right: 30px;
+            height: 100px;
+            position: relative;
+            }
+            
+            .drag-card .container-img .image img {
+            width: 100%;
+            height: 100%;
+            border-radius: 1px;
+            }
+            
+            .drag-card .container-img .image span {
+            position: absolute;
+            top: -2px;
+            right: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            }
+            
+            /*dragover class will used in drag and drop system */
+            .drag-card .drag-area.dragover {
+            background: rgba(0, 0, 0, 0.4);
+            }
+            
+            .drag-card .drag-area.dragover .on-drop {
+            display: inline;
+            font-size: 28px;
+            }
+            
+            .drag-card input,
+            .drag-card .drag-area .on-drop,
+            .drag-card .drag-area.dragover .visible {
+            display: none;
+            }

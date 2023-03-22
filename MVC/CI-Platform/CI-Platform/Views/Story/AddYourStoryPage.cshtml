@@ -1,0 +1,102 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+ViewData["Title"] = "Add Your Story Page";
+Layout = "~/Views/Shared/_StoryHeader.cshtml";
+}
+
+
+<div class="container">
+    <h1 class="sharestoryheader mb-4">Share your story</h1> 
+    <form method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <label   class="form-label">Select Mission</label>
+                <select   class="form-select mb-3" aria-label="Default select example">
+                  
+                  <option selected>Select your mission</option>
+                  
+
+                </select>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="mb-3">
+                  <label   class="form-label">My story title</label>
+                  <input   type="text" class="form-control mb-3" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter story title"> 
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="mb-3">
+                  <label   class="form-label">Date</label>
+                  <input   type="date" class="form-control mb-3" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+            </div>
+            
+
+        </div>
+        <div class="row mb-4">
+            <label   class="form-label">My Story</label>
+            <div id="textEditor">
+                <div id="icons">
+                    <button type="button" id="boldbtn" title="Bold"><b>B</b></button>
+                    <button id="italicbtn" type="button" title="Italic"><em>I</em></button>
+                    <button id="strikebtn" type="button" title="Strike" style="border-right : 1px solid #938c8c"><strike>S</strike></button>
+                    <button id="subscriptbtn" type="button" title="Subscript">X<sub>2</sub></button>
+                    <button id="superscriptbtn" type="button" title="Superscript">X<sup>2</sup></button>
+                </div>
+
+                <div>
+                    <div id="mystory" contenteditable="true" onmouseup = "getSelectedtext()"></div>
+                </div>
+                <textarea   id="storydesc" hidden></textarea>
+                <div id="areabottom">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col">
+
+                <label   class="form-label">Enter video url</label>
+                <input   type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your url"> 
+
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col">
+
+                <label  for="files" class="form-label">Upload your photos</label>
+                
+               
+                <div class="card drag-card" style="border: none;">
+                    <div class="drag-area">
+                    <span class="visible">
+                    <span class="select" role="button"><img src="~/images/drag-and-drop.png"></span>
+                    </span>
+                    <span class="on-drop">Drop images here</span>
+                    <input name="files" type="file" class="file" multiple />
+                    </div>
+
+
+                    <!-- IMAGE PREVIEW CONTAINER -->
+                    <div class="container-img mt-3"></div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row gap-1 justify-content-between">
+            <div>
+                <button type="button" class="px-4 py-1 px-md-5  text-center  rounded-pill bg-white border-2 border-secondary ">Cancel</button>
+            </div>
+            <div>
+                <button type="submit" class="px-4 py-1 px-md-5 orage_color rounded-pill bg-white border-2 " onclick="textareaval()" asp-route-data="save">Save</button>
+                <button type="submit" class="px-4 py-1 px-md-5  orage_color rounded-pill bg-white border-2 " onclick="textareaval()" asp-route-data="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+    <script src="~/js/addMyStory.js" asp-append-version="true"></script>

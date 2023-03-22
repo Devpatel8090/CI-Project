@@ -46,7 +46,7 @@
                 <div class="dropdown text-end start-0 d-sm-none " id="img_user">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="~/images/user-img.png" alt="user image" width="40" height="40" class="rounded-circle">
+                        <img src="@Model.user.Avatar" alt="user image" width="40" height="40" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
                         <li><a class="dropdown-item" href="#">New project...</a></li>
@@ -89,7 +89,7 @@
                         <div class="dropdown text-end ">
                             <a href="#" class="d-inline d-sm-block link-dark text-decoration-none dropdown-toggle"
                                 id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="~/images/user-img.png" alt="user image" width="40" height="40"
+                                <img src="@Model.user.Avatar" alt="user image" width="40" height="40"
                                     class="rounded-circle">
                                 <span class=""> @Model.user.FirstName   @Model.user.LastName</span>
                             </a>
@@ -273,7 +273,7 @@
                  <ul id="country" class="dropdown-menu" id="countryDropdown" aria-labelledby="dropdownMenuLink">
                             @foreach (var item in Model.Country)
                             {
-                                 <li value="@item.CountryId"><a class="dropdown-item" href="#">@item.Name</a></li>
+                                  <li value="@item.CountryId @item.Name"><a class="dropdown-item countryList" asp-controller="Mission" asp-action="LandingPage" asp-route-countryId=@item.CountryId>@item.Name</a></li>
                             }        
                  </ul>
             </a>
@@ -287,7 +287,7 @@
                         <ul id="cities" class="dropdown-menu ps-4 scrollbar" aria-labelledby="navbarDropdownMenuLink">
                             @foreach (var item in Model.City)
                             {
-                               <div class="form-check ">
+                              <div class="form-check ">
                                      <input class="form-check-input cityNames" type="checkbox" value="@item.Name" id="defaultCheck1">
                                          <label class="form-check-label" for="defaultCheck1">
                                             @item.Name
@@ -330,7 +330,7 @@
                         
                              @foreach (var item in Model.skills)
                             {
-                               <div class="form-check  ">
+                                 <div class="form-check  ">
                                      <input class="form-check-input skillNames" type="checkbox" value="@item.SkillName" id="defaultCheck1">
                                          <label class="form-check-label" for="defaultCheck1">
                                             @item.SkillName

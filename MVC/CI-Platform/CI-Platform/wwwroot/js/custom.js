@@ -347,8 +347,9 @@ function sendInfo() {
             else {
                 notfound.classList.add('hide')
             }
-          
-           
+
+            
+            
             $('#GridCardContainer').html(data);
         },
         error: function (err) {

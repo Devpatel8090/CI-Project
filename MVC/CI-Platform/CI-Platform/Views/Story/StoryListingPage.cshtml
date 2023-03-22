@@ -2,28 +2,17 @@
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
 @{
-    Layout = null;
+ViewData["Title"] = "Story Listing Page";
+Layout = "~/Views/Shared/_StoryHeader.cshtml";
 }
 
+
 @model StoryVM
-@*<partial name ="_MissionHeader" />*@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Story Listing Page</title>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/css/storyListingPage.css" rel="stylesheet" />
-    <link href="~/css/landingpage.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
-</head>
 
-<body>
 
 @*
     <div class="container">*@
@@ -377,6 +366,7 @@
 *@
 
         <div class=" container-fluid " >
+         
             <div>
                 <div class="story__header">
                     <div class="container text-center">
@@ -561,9 +551,7 @@
     
 
 
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+  
     
    
-</body>
 
-</html>

@@ -28,5 +28,7 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         public IEnumerable<City> City { get; set; }
 
         public IEnumerable<User> User { get; set; }
+
+        public User user { get; set; }
     }
 }
