@@ -1,3 +1,5 @@
+
+
 let files = [],
 dragArea = document.querySelector('.drag-area'),
 input = document.querySelector('.drag-area input'),
@@ -72,11 +74,51 @@ showImages();
 });
 
 function textareaval() {
-$('#storydesc').val(mystory.innerHTML);
+
 const dt = new DataTransfer();
 for (let i = 0; i < files.length; i++) {
     dt.items.add(files[i]);
 }
 
 input.files = dt.files;
+}
+
+
+// Adding  Story To db
+
+
+/*$('#StorySaveButton').on('click',*/
+function StorySave() {
+    textareaval();
+    var missionId = $('.MissionIdFromTitle').val();
+    var storytitle = $('#storyTitle').val();
+    var storydate = $('#StoryDate').val();
+    var storyDetails = CKEDITOR.instances['Content'].getData();
+    var storyurl = $('#storyVideoUrl').val();
+    
+
+    let addStoryObj = {
+        MissionId: missionId,
+        StoryTitle: storytitle,
+        StoryDetails: storyDetails,
+        storyImages: input.files
+
+    };
+
+    var url = "/Story/saveStory";
+
+    $.ajax({
+        url: url,
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        data: addStoryObj,
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (error) {
+            consol.log(data);
+        }
+    })
+
+
 }

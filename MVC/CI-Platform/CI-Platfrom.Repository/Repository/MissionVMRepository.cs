@@ -79,6 +79,7 @@ namespace CI_Platfrom.Repository.Repository
 
             if (CountryId == 0)
             {
+                
                 IEnumerable<City> citydetails = _unitOfWork.City.GetCityDetails();
                 missionVM.Mission = missionVM.Mission;
                 missionVM.City = citydetails;

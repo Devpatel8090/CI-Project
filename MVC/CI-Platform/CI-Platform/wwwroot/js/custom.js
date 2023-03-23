@@ -1,6 +1,4 @@
 ﻿
-var cname = document.getElementById('Countryname').value;
-console.log('dev patel: ', cname);
 
 
 let totalMissions = document.getElementsByClassName("total__mission");

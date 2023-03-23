@@ -17,6 +17,8 @@ namespace CI_Platfrom.Repository.Interface
 
         public List<Mission> getRelatedMissions(long missionId);
 
+        
+
         //public List<Mission> GetBySort(string sort);
 
 

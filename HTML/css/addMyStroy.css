@@ -1,4 +1,4 @@
-    
+
         .drag-card {
             width: 100%;
             height: auto;
@@ -18,44 +18,11 @@
             color : white;
         }
         
-        .sharestoryheader {
-            margin-top: 10px;
-            font-size: 40px;
-            color: #414141;
-            font-weight : 300
-        }
+        
         
         .orage_color{
             border: 2px solid #F88634;
             color:#F88634;
-        }
-        /*textarea*/
-        
-        
-        #icons {
-            background-color: #75757514;
-            border: 1px solid #938c8c;
-        }
-        
-        #icons button {
-            background: none;
-            border: none;
-        }
-        
-        #mystory {
-            width: 100%;
-            height: 130px;
-            margin: 0px !important;
-            border-left: 1px solid #938c8c;
-            border-right: 1px solid #938c8c;
-            overflow-y : scroll;
-        }
-        
-        #areabottom {
-            width: 100%;
-            background-color: #75757514;
-            height: 30px;
-            border: 1px solid #938c8c;
         }
         
         

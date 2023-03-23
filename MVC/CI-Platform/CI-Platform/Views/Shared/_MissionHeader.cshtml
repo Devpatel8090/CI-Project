@@ -126,7 +126,7 @@
                 </div>
                 <div class="col-auto col-sm-2 mt-2 border-end ">
                     <div class="dropdown">
-                        <a class="btn bg-white  " data-toggle="dropdown" href="#" role="button" id="countryDropdown"
+                        <a class="btn bg-white  " data-toggle="dropdown" href="#" role="button" id="country"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Country
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -137,10 +137,12 @@
                         </a>
 
                         <ul class="dropdown-menu" id="country" aria-labelledby="dropdownMenuLink">
+                             <li value="0 All" ><a class="dropdown-item countryList" asp-controller="Mission" asp-action="LandingPage"  asp-route-countryId=0>All Countries</a></li>
+                               
                             @foreach (var item in Model.Country)
                             {
-                                 <li value="@item.CountryId @item.Name"><a class="dropdown-item countryList" asp-controller="Mission" asp-action="LandingPage" asp-route-countryId=@item.CountryId>@item.Name</a></li>
-                               
+                                 <li  value="@item.CountryId @item.Name"><a class="dropdown-item countryList" asp-controller="Mission" asp-action="LandingPage" asp-route-countryId=@item.CountryId>@item.Name</a></li>
+                                    
                             }
                            
                            
@@ -153,7 +155,7 @@
                 </div>
                 <div class="col-auto col-sm-2 mt-2 border-end">
                     <div class="dropdown">
-                        <a class="btn bg-white  " data-toggle="dropdown" href="#" role="button" id="country"
+                        <a class="btn bg-white  " data-toggle="dropdown" href="#" role="button" 
                             data-bs-toggle="dropdown" aria-expanded="false">
                             City
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

@@ -1,6 +1,7 @@
 ﻿using CI_Platfrom.Entities.Data;
 using CI_Platfrom.Entities.Models;
 using CI_Platfrom.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,12 @@ namespace CI_Platfrom.Repository.Repository
         {
             List<MissionApplication> missionApplication = _db.MissionApplications.Where(e => e.MissionId == missionId).ToList();
             return missionApplication;
+        }
+
+        public List<MissionApplication> getUserMissions(long userId)
+        {
+            List<MissionApplication> missionDetails = _db.MissionApplications.Include(e=> e.Mission).Include(e => e.User).Where(e => e.UserId == userId).ToList();
+            return missionDetails;
         }
     }
 }

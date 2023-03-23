@@ -7,19 +7,16 @@
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/addMyStroy.css" rel="stylesheet" >
     
-    
-    
+        
     <title>Document</title>
-    <style>
-    
-    </style>
+   
 </head>
 <body>
     
 <div class="container">
-    <h1 class="sharestoryheader mb-4">Share your story</h1> 
-    <form method="post" enctype="multipart/form-data">
+    
         <div class="row">
+            
             <div class="col-md-4 col-sm-6">
                 <label asp-for="" class="form-label">Select Mission</label>
                 <select asp-for="" asp-items="@Model.shareStory.missions" class="form-select mb-3" aria-label="Default select example">
@@ -44,26 +41,12 @@
             
 
         </div>
-        <div class="row mb-4">
-            <label asp-for="" class="form-label">My Story</label>
-            <div id="textEditor">
-                <div id="icons">
-                    <button type="button" id="boldbtn" title="Bold"><b>B</b></button>
-                    <button id="italicbtn" type="button" title="Italic"><em>I</em></button>
-                    <button id="strikebtn" type="button" title="Strike" style="border-right : 1px solid #938c8c"><strike>S</strike></button>
-                    <button id="subscriptbtn" type="button" title="Subscript">X<sub>2</sub></button>
-                    <button id="superscriptbtn" type="button" title="Superscript">X<sup>2</sup></button>
-                </div>
-
-                <div>
-                    <div id="mystory" contenteditable="true" onmouseup = "getSelectedtext()"></div>
-                </div>
-                <textarea asp-for="" id="storydesc" hidden></textarea>
-                <div id="areabottom">
-                    
-                </div>
-            </div>
-        </div>
+        <div class="col-auto mb-4">
+            <label class="form-label mb-4">Story</label> 
+            <form method="post" enctype="multipart/form-data">
+                <textarea cols="30" rows="10" name="content" class="ckeditor"></textarea>
+            </form>
+       </div>
         <div class="row mb-4">
             <div class="col">
 
@@ -109,6 +92,7 @@
 
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="./js/addMyStory.js" ></script>
+<script src="./js/ckeditor/ckeditor.js"></script>
 
 </body>
 </html>

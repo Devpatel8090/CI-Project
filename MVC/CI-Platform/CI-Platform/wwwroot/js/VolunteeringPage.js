@@ -190,7 +190,7 @@ let prev_vol = document.getElementById("prev-vol");
 let next_vol = document.getElementById("next-vol");
 let page = 1;
 let pageSize = 9;
-let maxpages = recent_vol.length / 9;
+let maxpages = Math.ceil(recent_vol.length / 9);
 let recentvolpagenumber = document.getElementById("recentvolpagenumber");
 
 
@@ -220,6 +220,6 @@ function recentpagination() {
             recent_vol[i].classList.add("d-none");
         }
     }
-    recentvolpagenumber.innerHTML = `<a class="page-link"  href="#" style="color:black">${((page - 1)*  9) + 1
+    recentvolpagenumber.innerHTML = `<a class="page-link"   style="color:black">${((page - 1)*  9) + 1
 } - ${ (page) * 9 < recent_vol.length ? (page) * 9 : recent_vol.length} of ${ recent_vol.length } Recent Volunteers</a > `
 }
