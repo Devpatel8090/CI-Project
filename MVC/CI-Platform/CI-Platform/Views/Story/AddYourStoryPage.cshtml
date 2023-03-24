@@ -15,17 +15,20 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
 
 <div class="container">
     <h1 class="sharestoryheader mb-4">Share your story</h1> 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" asp-controller="Story" asp-action="AddYourStoryPage">
         <div class="row">
             <div class="col-md-4 col-sm-6">
                 <label  class="form-label">Select Mission</label>
-                <select   class="form-select mb-3" aria-label="Default select example">
+                <select asp-for="@Model.particularStory.MissionId" class="form-select mb-3" aria-label="Default select example">
                   
-                  <option selected>Select your mission</option>
+                  <option  selected>Select your mission</option>
                     @{
-                        foreach (var item in @Model.LogingUserMissions)
+                        
                         {
-                            <option value="@item.Mission.MissionId" class="MissionIdFromTitle" > @item.Mission.Title</option>
+                            foreach (var item in @Model.LogingUserMissions)
+                            {
+                                <option value="@item.Mission.MissionId" class="MissionIdFromTitle"  > @item.Mission.Title</option>
+                            }
                         }
                     }
                   
@@ -34,14 +37,14 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
             </div>
             <div class="col-md-4 col-sm-6">
                 <div class="mb-3">
-                  <label   class="form-label">My story title</label>
-                  <input   type="text" class="form-control mb-3 " id="storyTitle" aria-describedby="emailHelp" placeholder="Enter story title"> 
+                  <label asp-for="@Model.particularStory.Title"  class="form-label">My story title</label>
+                  <input asp-for="@Model.particularStory.Title"   type="text" class="form-control mb-3 " id="storyTitle" aria-describedby="emailHelp" placeholder="Enter story title"> 
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
                 <div class="mb-3">
-                  <label   class="form-label">Date</label>
-                  <input   type="date" class="form-control mb-3" id="StoryDate" aria-describedby="emailHelp">
+                  <label asp-for="@Model.particularStory.PublishedAt"   class="form-label">Date</label>
+                  <input asp-for="@Model.particularStory.PublishedAt"  type="date" class="form-control mb-3" id="StoryDate" aria-describedby="emailHelp">
                 </div>
             </div>
             
@@ -49,17 +52,17 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
         </div>
 
          <div class="col-auto mb-4">
-             <label class="sharestoryheader mb-4">Story</label> 
-             <form method="post" enctype="multipart/form-data">
-                 <textarea cols="30"  rows="10" name="content" id="Content" class="ckeditor"></textarea>
-             </form>
+             <label asp-for="@Model.particularStory.Description" class="sharestoryheader mb-4">Story</label> 
+            
+                 <textarea asp-for="@Model.particularStory.Description" cols="30"  rows="10" id="Content" class="ckeditor"></textarea>
+           
         </div>
 
         <div class="row mb-4">
             <div class="col">
 
-                <label   class="form-label">Enter video url</label>
-                <input   type="text" class="form-control" id="storyVideoUrl" aria-describedby="emailHelp" placeholder="Enter your url"> 
+                <label  asp-for="@Model.particularStoryVideo.Path" class="form-label">Enter video url</label>
+                <input  asp-for="@Model.particularStoryVideo.Path"  type="text" class="form-control" id="storyVideoUrl" aria-describedby="emailHelp" placeholder="Enter your url"> 
 
             </div>
         </div>
@@ -89,11 +92,12 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
                 <button type="button" class="px-4 py-1 px-md-5  text-center  rounded-pill bg-white border-2 border-secondary">Cancel</button>
             </div>
             <div>
-                <button type="submit" class="px-4 py-1 px-md-5 orage_color rounded-pill bg-white border-2 " onclick="StorySave()"  >Save</button>
-                <button type="submit" class="px-4 py-1 px-md-5  orage_color rounded-pill bg-white border-2 "  id="StorySubmitButton">Submit</button>
+                   <button type="button" class="px-4 py-1 px-md-5 orage_color rounded-pill bg-white border-2 " onclick="StorySave()"   >Save</button>
+                <button type="submit" class="px-4 py-1 px-md-5  orage_color rounded-pill bg-white border-2 " onclick=" textareaval()"   id="StorySubmitButton"  >Submit</button>
             </div>
         </div>
     </form>
+ 
 
 </div>
 

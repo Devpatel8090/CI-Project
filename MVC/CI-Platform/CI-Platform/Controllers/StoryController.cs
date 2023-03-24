@@ -42,8 +42,65 @@ namespace CI_Platform.Controllers
             return View(GetStories);
         }
 
+
+
         [HttpPost]
-        public void saveStory(Story addStoryObj)
+       public async Task<IActionResult> AddYourStoryPage(StoryVM story,List<IFormFile> files)
+        {
+            var emailFromSession = HttpContext.Session.GetString("userEmail");
+            var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
+            var filePaths = new List<string>();
+            foreach (var formFile in files)
+            {
+                StoryMedium mediaobj = new StoryMedium();
+                if (formFile.Length > 0)
+                {
+                    // full path to file in temp location
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/StoryImages", formFile.FileName); //we are using Temp file name just for the example. Add your own file path.
+                    filePaths.Add(filePath);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await formFile.CopyToAsync(stream);
+                    }
+                }
+                mediaobj.Path = "/images/StoryImages/" + formFile.FileName;
+                mediaobj.Type = "PNG";
+                story.particularStory.StoryMedia.Add(mediaobj);
+            }
+
+            //Story story1 = new Story();
+            StoryMedium videoMedia = new StoryMedium();
+            
+
+            var status= _unitOfWork.Story.GetFirstOrDefault(e => e.UserId == user.UserId && e.MissionId == story.particularStory.MissionId && e.Status == "DRAFT");
+            if(status != null)
+            {
+                status.Status = "PENDING";
+                status.Title = story.particularStory.Title; 
+                status.Description = story.particularStory.Description;
+
+                _unitOfWork.Story.updateStory(status);
+                
+                
+            }
+            else { 
+            story.particularStory.UserId = user.UserId;
+            story.particularStory.Status = "PENDING";
+            _unitOfWork.Story.Add(story.particularStory);
+            _unitOfWork.save();
+            }
+
+
+
+
+            return RedirectToAction("StoryListingPage");
+        }
+
+
+      
+
+        [HttpPost]
+        public void saveStory(long MissionId,string StoryTitle,string StoryDetails)
         {
             var sessionValue = HttpContext.Session.GetString("userEmail");
             var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == sessionValue);
@@ -51,34 +108,38 @@ namespace CI_Platform.Controllers
             //var missionId = parseObj.Value<long>("MissionId");
             //var storyTitle = parseObj.Value<string>("StoryTitle");
             //var storyDetails = parseObj.Value<string>("StoryDetails");
+            //var StoryImage = parseObj.Values<IFormFile>("storyImages");
 
-            //var StoryObjcet = new Story()
-            //{
-            //    MissionId = missionId,
-            //    UserId = user.UserId,
-            //    Status = "DRAFT",
-            //    Title = storyTitle,
-            //    Description = storyDetails,
+            var StoryObjcet = new Story()
+            {
+                MissionId = MissionId,
+                UserId = user.UserId,
+                Status = "DRAFT",
+                Title = StoryTitle,
+                Description = StoryDetails,
 
-            //};
+            };
 
-            //var alreadyStoryUploaded = _unitOfWork.Story.GetFirstOrDefault(e => e.UserId == user.UserId && e.MissionId == missionId);
+            var alreadyStoryUploaded = _unitOfWork.Story.GetFirstOrDefault(e => e.UserId == user.UserId && e.MissionId == MissionId);
 
-            //if(alreadyStoryUploaded == null)
-            //{
-            //    _unitOfWork.Story.Add(StoryObjcet);
-            //    _unitOfWork.save();
-            //}
-            //else
-            //{   alreadyStoryUploaded.Title = storyTitle;
-            //    alreadyStoryUploaded.Description = storyDetails;
-            //    alreadyStoryUploaded.UpdatedAt = DateTime.Now;
-            //    _unitOfWork.Story.Update(alreadyStoryUploaded);
-            //    _unitOfWork.save();
-            //}
+            if (alreadyStoryUploaded == null)
+            {
+                _unitOfWork.Story.Add(StoryObjcet);
+                _unitOfWork.save();
+            }
+            else
+            {
+                alreadyStoryUploaded.Title = StoryTitle;
+                alreadyStoryUploaded.Description = StoryDetails;
+                alreadyStoryUploaded.UpdatedAt = DateTime.Now;
+                _unitOfWork.Story.Update(alreadyStoryUploaded);
+                _unitOfWork.save();
+            }
 
-       
+
         }
+
+
 
     }
 }

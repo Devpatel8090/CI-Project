@@ -388,7 +388,7 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
                     @foreach (var item in Model.Story)
                     {
                         <div class="col  mb-3">
-                            <div class="card" style="max-width: 26rem;">
+                            <div class="card" style="max-width: 500px; overflow-y:hidden;">
                         <div style="position: relative;" class="image__container">
                             
                            @{
@@ -417,7 +417,7 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
                         <div class="card-body">
                             <h3 class="card-title text-start mt-2">@item.Title
                             </h3>
-                            <p class="card-text text-start">@item.Description.</p>
+                            <p class="card-text text-start">@Html.Raw(item.Description)</p>
                           
                           <div class="col d-flex flex-row align-items-center gap-2 ">
 

@@ -16,13 +16,13 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
         public IEnumerable<MissionApplication> LogingUserMissions { get; set; }
 
-      
-
 
         public IEnumerable<User> User { get; set; }
 
         public User user { get; set; }
 
         public Story particularStory { get; set; }
+
+        public StoryMedium particularStoryVideo { get; set; }
     }
 }

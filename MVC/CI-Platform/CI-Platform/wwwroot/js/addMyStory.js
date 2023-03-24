@@ -89,10 +89,11 @@ input.files = dt.files;
 
 /*$('#StorySaveButton').on('click',*/
 function StorySave() {
-    textareaval();
+   
     var missionId = $('.MissionIdFromTitle').val();
     var storytitle = $('#storyTitle').val();
     var storydate = $('#StoryDate').val();
+  /*  var storyDetails = CKEDITOR.instances['Content'].getData();*/
     var storyDetails = CKEDITOR.instances['Content'].getData();
     var storyurl = $('#storyVideoUrl').val();
     
@@ -101,17 +102,14 @@ function StorySave() {
         MissionId: missionId,
         StoryTitle: storytitle,
         StoryDetails: storyDetails,
-        storyImages: input.files
-
     };
 
     var url = "/Story/saveStory";
 
     $.ajax({
         url: url,
-        type: "POST",
-        contentType: "application/json; charset=utf-8",
         data: addStoryObj,
+        type: 'POST',
         success: function (data) {
             console.log(data);
         },

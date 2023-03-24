@@ -28,8 +28,15 @@ namespace CI_Platfrom.Repository.Repository
 
         public List<Story> getUserMissions(long userId,long missionId)
         {
-            List<Story> storyDetails = _db.Stories.Include(e => e.Mission).Include(e => e.User).Where(e => e.UserId == userId && e.MissionId== missionId && e.Status == "DRAFT").ToList();
+            List<Story> storyDetails = _db.Stories.Include(e => e.Mission).Include(e => e.User).Include(e => e.StoryMedia).Where(e => e.UserId == userId && e.MissionId== missionId && e.Status == "DRAFT").ToList();
             return storyDetails;
+        }
+
+        public void updateStory(Story story)
+        {
+            var model = _db.Entry(story);
+            model.State = EntityState.Modified;
+            _db.SaveChanges();
         }
 
 
