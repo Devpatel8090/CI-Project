@@ -23,6 +23,8 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
         public Story particularStory { get; set; }
 
+        public IEnumerable<Story> storyById { get; set; }
+
         public StoryMedium particularStoryVideo { get; set; }
     }
 }

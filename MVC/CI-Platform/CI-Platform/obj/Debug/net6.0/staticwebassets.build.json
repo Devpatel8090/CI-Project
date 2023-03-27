@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "+guw+B4Vl+JE+qIP3MDdZRrQBPrMw7lkQFLmNz5xB30=",
+  "Hash": "VD2eX5TH7WvkFyVkSBM955+1kb2mwTqvA7M/9J5TOfA=",
   "Source": "CI-Platform",
   "BasePath": "_content/CI-Platform",
   "Mode": "Default",
@@ -10130,6 +10130,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\js\\storyDetailPage.js",
+      "SourceId": "CI-Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\",
+      "BasePath": "_content/CI-Platform",
+      "RelativePath": "js/storyDetailPage.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\storyDetailPage.js"
     },
     {
       "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\js\\VolunteeringPage.js",

@@ -35,7 +35,7 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
                     <li><a class="dropdown-item" href="#">Canada</a></li>
                     <li><a class="dropdown-item" href="#">USA</a></li>
                 </ul>
-            </a>
+-moz-text-decoration-color      </a>
 
             <a href="#">
                 <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
@@ -93,6 +93,7 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
                     <li><a class="dropdown-item" href="#">Education</a></li>
                 </ul>
             </a>
+
             <a href="#">
                 <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -105,6 +106,7 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
                     <li><a class="dropdown-item" href="#">Computer</a></li>
                 </ul>
             </a>
+
             <a href="#">
                 <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -406,9 +408,9 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
                                       }
                                             @theme.Title</p>
                             </div>
-                            <div style="position: absolute;top: 30%;width: 100%;" class="view__detail__button">
-                                <button class="m-0 bg-transparent text-white border rounded-pill text-center w-50 p-2 "
-                                    style="transform: translate(50%, 50%) ;" asp-controller="Mission" asp-action="LandingPage">View Details 
+                            <div style="position: absolute;top: 30%;width: 100%;" class="view__detail__button" >
+                                <button  class="m-0 bg-transparent text-white border rounded-pill text-center w-50 p-2 "
+                                    style="transform: translate(50%, 50%) ;" ><a asp-action="storyDetailPage" asp-controller="Story" asp-route-storyId="@item.StoryId" style="text-decoration:none;color:white">View Details </a>
                                     <i class="bi bi-arrow-right icon-white text-center ms-2 " style="pointer-events:none"></i>
                                 </button>
                             </div>
@@ -549,7 +551,8 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
         </div>
         </div>
     
-
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
   
     

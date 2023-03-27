@@ -104,11 +104,7 @@ namespace CI_Platform.Controllers
         {
             var sessionValue = HttpContext.Session.GetString("userEmail");
             var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == sessionValue);
-            //var parseObj = JObject.Parse(addStoryObj);
-            //var missionId = parseObj.Value<long>("MissionId");
-            //var storyTitle = parseObj.Value<string>("StoryTitle");
-            //var storyDetails = parseObj.Value<string>("StoryDetails");
-            //var StoryImage = parseObj.Values<IFormFile>("storyImages");
+          
 
             var StoryObjcet = new Story()
             {
@@ -139,6 +135,15 @@ namespace CI_Platform.Controllers
 
         }
 
+        public IActionResult storyDetailPage(long storyId)
+        {
+            StoryVM story = new StoryVM();
+            var emailFromSession = HttpContext.Session.GetString("userEmail");
+            story.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
+            story.User = _unitOfWork.User.GetUserDetails().Where(e => e.Email != emailFromSession).ToList();
+            story.storyById = _unitOfWork.Story.getStoryById(storyId);
+            return View(story);
+        }
 
 
     }
