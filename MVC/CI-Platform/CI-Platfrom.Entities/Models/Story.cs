@@ -15,6 +15,8 @@ public partial class Story
 
     public string? Description { get; set; }
 
+    public long? StoryViews { get; set; }
+
     public string Status { get; set; } = null!;
 
     public DateTime? PublishedAt { get; set; }

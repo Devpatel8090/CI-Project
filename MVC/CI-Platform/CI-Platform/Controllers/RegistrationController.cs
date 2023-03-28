@@ -19,14 +19,14 @@ namespace CI_Platform.Controllers
             //_db = db;
             _unitOfWork = unitOfWork;
         }
+
         public IActionResult Register()
         {
             return View();
         }
 
+
         [HttpPost]
-    
-       
         public IActionResult Register(ConfirmPasswordVM obj)
         
         {
@@ -53,6 +53,18 @@ namespace CI_Platform.Controllers
                 }
             }
             return View();
+        }
+
+
+        public IActionResult UserProfile()
+        {
+            ProfileVM profileDetails = new ProfileVM();
+            var emailFromSession = HttpContext.Session.GetString("userEmail");
+            profileDetails.user= _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
+            profileDetails.users = _unitOfWork.User.GetUserDetails().ToList();
+            profileDetails.City = _unitOfWork.City.GetCityDetails();
+            profileDetails.Country = _unitOfWork.Country.GetAll();
+            return View(profileDetails);
         }
     }
 }

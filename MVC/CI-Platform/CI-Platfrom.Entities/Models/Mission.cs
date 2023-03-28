@@ -23,6 +23,8 @@ public partial class Mission
 
     public DateTime? EndDate { get; set; }
 
+    public long? TotalSeats { get; set; }
+
     public string MissionType { get; set; } = null!;
 
     public int Status { get; set; }

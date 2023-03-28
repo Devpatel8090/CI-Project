@@ -92,7 +92,7 @@ namespace CI_Platform.Controllers
         public IActionResult logout()
         {
             HttpContext.Session.Remove("userEmail");
-            TempData["success"] = "log out Successfully ";
+            TempData["success"] = "Logged out Successfully ";
             return RedirectToAction("login", "Authentication");
         }
 

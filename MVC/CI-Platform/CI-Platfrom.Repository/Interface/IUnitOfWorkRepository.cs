@@ -31,6 +31,7 @@ namespace CI_Platfrom.Repository.Interface
         public IMissionApplicationRepository MissionApplication { get; }
 
         public IStoryRepository Story { get; }
+        public IStoryInviteRepository StoryInvite { get; }
         public void save();
 
     }

@@ -158,6 +158,7 @@ namespace CI_Platform.Controllers
             vm.missionRatings = _unitOfWork.MissionRating.GetAll().Where(m => m.MissionId == id);
             vm.RelatedMission = _unitOfWork.Mission.getRelatedMissions(id);
             vm.RecentVolunteers = _unitOfWork.MissionApplication.GetUsersByMissionId(id);
+            vm.missionApplications = _unitOfWork.MissionApplication.GetAll();
             
 
             int sum = 0;
@@ -225,7 +226,7 @@ namespace CI_Platform.Controllers
                 
             };
 
-            var inviteLink = Url.Action("LandingPage", "Mission", new { id = 1 }, Request.Scheme);
+            var inviteLink = Url.Action("LandingPage", "Mission", new { id = missionId }, Request.Scheme);
             TempData["link"] = inviteLink;
 
             UserEmailOptions userEmailOptions = new UserEmailOptions()

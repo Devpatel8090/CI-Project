@@ -68,6 +68,9 @@ namespace CI_Platfrom.Repository.Repository
             IEnumerable<MissionRating> missionRatings = _unitOfWork.MissionRating.GetAll();
             missionVM.missionRatings = missionRatings;
 
+            IEnumerable<MissionApplication> missionApplications = _unitOfWork.MissionApplication.GetAll();
+            missionVM.missionApplications = missionApplications;
+
             //IEnumerable<GoalMission> goalmissionDetails = _unitOfWork.
   
 

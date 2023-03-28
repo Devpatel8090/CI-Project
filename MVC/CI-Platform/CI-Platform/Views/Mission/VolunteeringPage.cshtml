@@ -321,7 +321,14 @@
                         <div class="d-flex flex-row gap-1 gap-sm-3 align-items-center justify-content-center col-auto">
                             <img src="~/images/Seats-left.png" width="30px" height="30px">
                             <div class="d-flex flex-column ">
-                                <h5 class="mb-0">10</h5>
+                                <h5 class="mb-0">
+                                    @{
+                                        var totalseats = @Model.particularMission.TotalSeats;
+                                        var enrolledseats = @Model.particularMission.MissionApplications.Count(e => e.MissionId == @Model.particularMission.MissionId);
+                                        var seatsLeft = totalseats - enrolledseats;    
+                                    }
+                                    @seatsLeft
+                                </h5>
                                 <span>Seats left</span>
                             </div>
                         </div>

@@ -51,11 +51,11 @@
                     <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
                         <li><a class="dropdown-item" href="#">New project...</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" asp-action="UserProfile" asp-controller="Registration">Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="/Authentication/login">Sign out</a></li>
+                        <li><a class="dropdown-item" asp-action="logout" asp-controller="Authentication">Sign out</a></li>
                     </ul>
                 </div>
             </div>
@@ -96,11 +96,11 @@
                             <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
                                 <li><a class="dropdown-item" href="#">New project...</a></li>
                                 <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" asp-action="UserProfile" asp-controller="Registration">Profile</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="/Authentication/login">Sign out</a></li>
+                                <li><a class="dropdown-item" asp-action="logout" asp-controller="Authentication">Sign out</a></li>
                             </ul>
                         </div>
                     </div>

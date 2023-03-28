@@ -169,26 +169,29 @@
                     
                 </div>
 
-        @{
+       @* @{
             var storyfromId = @Model.storyById.FirstOrDefault();
-        }
+        }*@
       <div class="col-md-6 col-sm-12 mb-2">
         <div class="mt-3 mt-sm-0">
           <div>
-            <img src="@storyfromId.User.Avatar" class="rounded-circle" height="" alt="">
+            <img src="@Model.storyById.User.Avatar" class="rounded-circle" height="" alt="">
             <div class="d-flex justify-content-between align-items-center text-center">
-              <span class="p-2">@storyfromId.User.FirstName @storyfromId.User.LastName</span>
+              <span class="p-2">@Model.storyById.User.FirstName @Model.storyById.User.LastName</span>
               <div class="border border-1 rounded-pill pe-3 py-2">
                 <img src="~/images/eye.png" class="ps-3" alt="">
                 <span class="p-2">
-                  12,000 views
+                 @* @Model.ParticularStoryViewers views*@
+                 @Model.storyById.StoryViews
                 </span>
               </div>
             </div>
           </div>
 
           <p class="mt-4">
-            @Html.Raw(@storyfromId.Description)
+           @* @Html.Raw(@storyfromId.Description)*@
+           @Model.user.WhyIVolunteer
+           
           </p>
 
           <div class="row flex-row justify-content-between align-items-center mt-4">
@@ -202,7 +205,7 @@
             <div class="col">
               <div class="align-items-center justify-content-center">
                 <div class="mt-2  w-100 text-center ">
-                  <a href="#" class="btn orage_color rounded-pill text-center btn_nos py-3 px-5">Open Mission<img src="~/images/right-arrow.png" class="ms-4"></a>
+                  <a asp-action="VolunteeringPage" asp-controller="Mission" asp-route-id="@Model.storyById.MissionId" class="btn orage_color rounded-pill text-center btn_nos py-3 px-5">Open Mission<img src="~/images/right-arrow.png" class="ms-4"></a>
                 </div>
               </div>
             </div>
@@ -217,10 +220,10 @@
 
 
  <div>
-     <h1>@storyfromId.Title</h1>
+     <h1>@Model.storyById.Title</h1>
      <hr/>
      <div>
-         @Html.Raw(@storyfromId.Description)
+         @Html.Raw(@Model.storyById.Description)
      </div>
 
 
@@ -241,7 +244,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                              @foreach (var item in Model.User)
+                      @{var users = @Model.User.Where(e => e.UserId != @Model.user.UserId).ToList();
+                              foreach (var item in users)
                               
                                 {
                                     <div class="d-flex flex-row justify-content-between mt-1">
@@ -250,10 +254,11 @@
                                             <span>@item.FirstName  @item.LastName</span>
                                         </div>
                                         <div id="RecommendationDiv">
-                                            <button type="button"  onclick="recomendtoyourfriend()" class="btn btn-primary ">Recommend </button>
+                                            <button type="button" value="@Model.storyById.StoryId @Model.user.UserId @item.UserId @item.Email"  onclick="recomendtoyourfriend()" class="btn btn-primary ">Recommend </button>
                                         </div>
                                     </div>
                        
+                                }
                                 }
                             </div>
                   <div class="modal-footer">

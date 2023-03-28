@@ -29,6 +29,7 @@ namespace CI_Platfrom.Repository.Repository
             Comment = new CommentRepository(_db);
             MissionApplication = new MissionApplicationRepository(_db);
             Story = new StoryRepository(_db);
+            StoryInvite = new StoryInviteRepository(_db);
         }
 
         public IMissionRepository Mission { get; private set; }
@@ -54,6 +55,8 @@ namespace CI_Platfrom.Repository.Repository
         public IMissionApplicationRepository MissionApplication { get; private set; }
 
         public IStoryRepository Story { get; private set; }
+
+        public IStoryInviteRepository StoryInvite { get; private set; }
         public void save()
         {
             _db.SaveChanges();

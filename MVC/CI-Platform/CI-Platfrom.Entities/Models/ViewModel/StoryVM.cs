@@ -21,10 +21,18 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
         public User user { get; set; }
 
+        /// <summary>
+        ///  for adding new story 
+        /// </summary>
         public Story particularStory { get; set; }
 
-        public IEnumerable<Story> storyById { get; set; }
+        /// <summary>
+        /// for taking the story in storyListing page
+        /// </summary>
+        public Story storyById { get; set; }
 
         public StoryMedium particularStoryVideo { get; set; }
+
+      
     }
 }

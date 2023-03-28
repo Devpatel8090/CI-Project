@@ -1,7 +1,11 @@
-﻿using CI_Platfrom.Entities.Models;
+﻿using CI_Platform.Model;
+using CI_Platfrom.Entities.Models;
 using CI_Platfrom.Entities.Models.ViewModel;
 using CI_Platfrom.Repository.Interface;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using MimeKit;
 using Newtonsoft.Json.Linq;
 
 namespace CI_Platform.Controllers
@@ -9,9 +13,13 @@ namespace CI_Platform.Controllers
     public class StoryController : Controller
     {
         private readonly IUnitOfWorkRepository _unitOfWork;
-        public StoryController(IUnitOfWorkRepository unitOfWork)
+        private IConfiguration _configuration;
+        private readonly SMTPConfigModel _smtpconfig;
+        public StoryController(IUnitOfWorkRepository unitOfWork, IOptions<SMTPConfigModel> smtpConfig, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
+            _smtpconfig = smtpConfig.Value;
 
         }
         public IActionResult StoryListingPage()
@@ -39,6 +47,7 @@ namespace CI_Platform.Controllers
         public IActionResult AddYourStoryPage()
         {
             StoryVM GetStories = getAllStory();
+          
             return View(GetStories);
         }
 
@@ -92,7 +101,7 @@ namespace CI_Platform.Controllers
 
 
 
-
+            TempData["success"] = "Hurray! Story added for review";
             return RedirectToAction("StoryListingPage");
         }
 
@@ -134,16 +143,87 @@ namespace CI_Platform.Controllers
 
 
         }
-
+        
         public IActionResult storyDetailPage(long storyId)
         {
             StoryVM story = new StoryVM();
             var emailFromSession = HttpContext.Session.GetString("userEmail");
             story.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
-            story.User = _unitOfWork.User.GetUserDetails().Where(e => e.Email != emailFromSession).ToList();
+            story.User = _unitOfWork.User.GetUserDetails().ToList();
             story.storyById = _unitOfWork.Story.getStoryById(storyId);
+            story.storyById.StoryViews = story.storyById.StoryViews + 1;
+            _unitOfWork.Story.updateStory(story.storyById);
+            _unitOfWork.save();
+
+
+
+
             return View(story);
         }
+
+
+        public void Recommendation(string inviteObj)
+        {
+            var parseObj = JObject.Parse(inviteObj);
+            var storyId = parseObj.Value<long>("storyId");
+            var userId = parseObj.Value<long>("userId");
+            var toUserId = parseObj.Value<long>("toUserId");
+            var mailTo = parseObj.Value<string>("toUserMail");
+
+
+            var recObj = new StoryInvite()
+            {
+                StoryId = storyId,
+                FromUserId = userId,
+                ToUserId = toUserId,
+
+            };
+
+            var inviteLink = Url.Action("storyDetailPage", "Story", new { storyId = storyId }, Request.Scheme);
+            TempData["link"] = inviteLink;
+
+            UserEmailOptions userEmailOptions = new UserEmailOptions()
+            {
+                Subject = "He is invinting you to read this Story ",
+                Body = "<a href=" + inviteLink + ">" + inviteLink + "</a>"
+            };
+
+            _unitOfWork.StoryInvite.Add(recObj);
+            _unitOfWork.save();
+            SendEmail(mailTo, userEmailOptions);
+
+            //}
+
+
+
+        }
+
+
+        public void SendEmail(string toEmail, UserEmailOptions userEmailOptions)
+        {
+            var email = new MimeMessage();
+
+            email.From.Add(new MailboxAddress(_smtpconfig.SenderDisplayName, _smtpconfig.SenderAddress));
+            email.To.Add(new MailboxAddress("Jay", toEmail));
+
+            email.Subject = userEmailOptions.Subject;
+            var bodyBuilder = new BodyBuilder();
+
+            bodyBuilder.HtmlBody = userEmailOptions.Body;
+            email.Body = bodyBuilder.ToMessageBody();
+
+            using (var smtp = new SmtpClient())
+            {
+                smtp.Connect("smtp.gmail.com", 465, true);
+
+                smtp.Authenticate(_smtpconfig.UserName, _smtpconfig.Password);
+
+                smtp.Send(email);
+
+                smtp.Disconnect(true);
+            }
+        }
+
 
 
     }

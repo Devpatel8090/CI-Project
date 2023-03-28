@@ -144,16 +144,24 @@
 
 
                         <div class="row mt-3 ms-2 mb-3">
+
+                         @if (@item.MissionType == "TIME")
+                                {
                             <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
                                 <img src="~/images/Seats-left.png" class="" width="30px" height="30px">
                                 <div class="d-flex flex-column ">
-                                    <h5 class="mb-0">10</h5>
+                                     <h5 class="mb-0">  @{
+                                            var totalseats = @item.TotalSeats;
+                                            
+                                            var enrolledseats = @Model.missionApplications.Where(e => e.MissionId == @item.MissionId).Count();
+                                            var seatsLeft = totalseats - enrolledseats;    
+                                    }
+                                    @seatsLeft</h5> 
                                     <span>Seats left</span>
                                 </div>
                             </div>
 
-                                @if (@item.MissionType == "TIME")
-                                {
+                               
                                     <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
                                         <img src="~/images/deadline.png" width="40px" height="40px">
                                         <div class="d-flex flex-column">

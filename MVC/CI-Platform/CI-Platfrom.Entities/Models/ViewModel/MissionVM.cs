@@ -20,6 +20,7 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
 
         //public IEnumerable<MissionRating> MissionRating { get; set; }
+        public IEnumerable<MissionApplication> missionApplications { get; set; }
 
         public IEnumerable<MissionTheme> MissionTheme { get; set; }
 

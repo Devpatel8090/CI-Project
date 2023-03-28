@@ -373,6 +373,7 @@ public partial class CiPlatformContext : DbContext
                 .HasMaxLength(128)
                 .IsUnicode(false)
                 .HasColumnName("title");
+            entity.Property(e => e.TotalSeats).HasColumnName("total_seats");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
@@ -401,6 +402,7 @@ public partial class CiPlatformContext : DbContext
 
             entity.Property(e => e.MissionApplicationId).HasColumnName("mission_application_id");
             entity.Property(e => e.AppliedAt)
+                .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("applied_at");
             entity.Property(e => e.ApprovalStatus)
@@ -706,6 +708,9 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValueSql("('DRAFT')")
                 .HasColumnName("status");
+            entity.Property(e => e.StoryViews)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("story_views");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .IsUnicode(false)

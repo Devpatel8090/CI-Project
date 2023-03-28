@@ -78,11 +78,30 @@
                                             <div class="col d-flex flex-row align-items-center justify-content-start">
                                                 <span class="">@item.OrganizationName</span>
                                                 <div class="star__container ms-3 ">
-                                                    <img src="~/images/selected-star.png">
-                                                    <img src="~/images/selected-star.png">
-                                                    <img src="~/images/selected-star.png">
-                                                    <img src="~/images/selected-star.png">
-                                                    <img src="~/images/star.png">
+                                                @{
+                                                    int sum = 0;
+                                                    var averageRating = 0;
+                                                    foreach (MissionRating rating in item.MissionRatings)
+                                                            {
+                                                                sum += rating.Rating;
+                                                            }
+                                                            if (sum > 0)
+                                                            {
+                                                                 averageRating = sum / item.MissionRatings.Count();
+                                                            }
+                                                            else
+                                                            {
+                                                                averageRating = 0;
+                                                            }
+                                                        for(var i =0 ; i <  averageRating; i++)
+                                                        {
+                                                            <img src="~/images/selected-star.png" width="26px" height="26px" />
+                                                        }
+                                                        for(var i=  averageRating ;i< 5 ;i++  )
+                                                        {
+                                                            <img src="~/images/star-empty.png" /> 
+                                                        }
+                                             }
                                                 </div>
                                             </div>
 
@@ -107,19 +126,26 @@
 
                               
                                                 <div class="row  mb-3">
-
-
+                                                 @{
+                                                if (@item.MissionType == "TIME")
+                                                   {
                                                   <div class="d-flex flex-row gap-1 align-items-center justify-content-center col">
+
                                                         <img src="~/images/Seats-left.png" class="" width="30px" height="30px">
                                                         <div class="d-flex flex-column ">
-                                                            <h5 class="mb-0">10</h5>
+                                                             <h5 class="mb-0">
+                                                             @{
+                                                                var totalseats = @item.TotalSeats;
+                                                                var enrolledseats = @Model.missionApplications.Where(e => e.MissionId == @item.MissionId).Count();
+                                                                var seatsLeft = totalseats - enrolledseats;    
+                                                                }
+                                                                @seatsLeft</h5>
                                                             <span>Seats left</span>
                                                         </div>
                                                    </div>
-                                                   @{
+                                                   
                                     
-                                                  if (@item.MissionType == "TIME")
-                                                   {
+                                                  
                                                     <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
                                                            <img src="~/images/deadline.png" width="40px" height="40px">
                                                            <div class="d-flex flex-column">
@@ -128,6 +154,7 @@
                                                            </div>
                                                     </div>
                                                     }
+                                                    
                                                     else
                                                     {
                                                        <div class="d-flex flex-row gap-1 align-items-center justify-content-center col">
@@ -139,6 +166,7 @@
                                                        </div>
                                                     }
                                                     }
+                                                    
                                                 </div>
 
 

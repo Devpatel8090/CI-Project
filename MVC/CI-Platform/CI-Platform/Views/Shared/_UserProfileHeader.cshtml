@@ -1,7 +1,12 @@
-﻿@using CI_Platfrom.Entities.Models.ViewModel
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using CI_Platfrom.Entities.Models.ViewModel
 
 
-@model StoryVM
+@model ProfileVM
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,13 +14,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] </title>
-    <link rel="stylesheet" href="~/css/volunteeringMissionPage.css"/>
+    
      <link rel="icon" type="image/x-icon" href="~/images/logo.png">
      <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="~/css/storyListingPage.css" rel="stylesheet" />
-    <link href="~/css/landingpage.css" rel="stylesheet" />
+  
     
-     <link rel="stylesheet" href="~/css/addMyStroy.css" />
+   
      
 
     
@@ -63,7 +67,7 @@
                             <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
                                 <li><a class="dropdown-item" href="#">New project...</a></li>
                                 <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><>a class="dropdown-item" asp-action="UserProfile" asp-controller="Registration"></a></li>
+                                <li><a class="dropdown-item" asp-action="UserProfile" asp-controller="Registration">Profile</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

@@ -1,0 +1,270 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using CI_Platfrom.Entities.Models.ViewModel
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_UserProfileHeader.cshtml";
+}
+
+@model ProfileVM
+
+<div class="container">
+    <div class="row">
+        <div class="col-3 d-none d-md-block">
+            <div class="border border-1 border-dark ">
+                <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+                    <img @*src=@Model.user.Avatar *@class="rounded-circle" width="120px" height="120px" alt="">
+                    <span>@*@Model.user.FirstName @Model.user.LastName*@</span>
+                    <div class="d-flex flex-row flex-wrap">
+                        <img src="~/images/facebook.png" height="25px" width="25px" class="p-1 m-2 border rounded-circle border-dark" alt="">
+                        <img src="~/images/twitter.png" height="25px" width="25px" class="p-1 m-2 border border-1 rounded-circle border-dark" alt="">
+                        <img src="~/images/linkedin.png" height="25px" width="25px" class="p-1 m-2 border border-1 rounded-circle border-dark" alt="">
+                    </div>
+                    <a href="" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ChangePassword">Change Password</a>
+                </div>
+
+                <div class="container mt-3">
+                    <label for="Language">Language</label>
+                    <select class="form-select mt-1 mb-4" name="Language" aria-label="Default select example">
+                        <option selected>English : USA</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+
+                    <label for="Time Zone">Time Zone</label>
+                    <select class="form-select mt-1 mb-3" name="Time Zone" aria-label="Default select example">
+                        <option selected>GMT-4</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9 col-sm-12">
+            <h5>Basic Information</h5>
+            <hr>
+            <form method="post">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <label for="exampleFormControlInput1" class="form-label">Name</label>
+                            <input asp-for="@Model.user.FirstName" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter your name" /> @*value="@Model.user.FirstName">*@
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <label for="exampleFormControlInput1" class="form-label mt-3 mt-md-0">Surname</label>
+                            <input asp-for="@Model.user.LastName" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter your Surname" />@*value="@Model.user.LastName"*@ 
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12 col-md-6">
+                            <label for="exampleFormControlInput1" class="form-label">Employee Id</label>
+                            <input asp-for="@Model.user.EmployeeId" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter your Employee Id">
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <label for="exampleFormControlInput1" class="form-label mt-3 mt-md-0">Manager</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter your Manager Details">
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12 col-md-6">
+                            <label for="exampleFormControlInput1" class="form-label">Title </label>
+                            <input asp-for="@Model.user.Title" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter your Title">
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <label for="exampleFormControlInput1" class="form-label mt-3 mt-md-0">Department</label>
+                            <input asp-for="@Model.user.Department" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter your Department">
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">My Profile</label>
+                            <textarea asp-for="@Model.user.ProfileText" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter your comments"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Why I Volunteer ?</label>
+                            <textarea asp-for="@Model.user.WhyIVolunteer" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter your comments"></textarea>
+                        </div>
+                    </div>
+
+                    <h5 class="mt-3">Address Information</h5>
+                    <hr>
+
+                    @*<div class="row mt-3">
+                        <div class="col-sm-12 col-md-6">
+                           
+                            <label for="CountryList">Country</label>
+                            <select class="form-select mt-1 mb-3" id="CountryId" name="CountryList" aria-label="Default select example">
+                                @{
+                                    var userCountryName = @Model.Country.FirstOrDefault(e => e.CountryId == @Model.user.CountryId);
+                                   
+                                    <option selected >@userCountryName.Name</option>
+                                    @foreach (var item in Model.Country.Where(e => e.CountryId != userCountryName.CountryId))
+                                    {
+                                        <option value="@item.CountryId">@item.Name</option>
+                                    }
+
+
+                                }
+
+                            </select>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                         
+
+                            <label for="CityList">City</label>
+                            <select class="form-select mt-1 mb-3" name="CityList"  id="CityList" aria-label="Default select example">
+                               @{
+                                    var userCityName = @Model.City.FirstOrDefault(e => e.CityId == @Model.user.CityId);
+                                   
+                                    <option selected >@userCityName.Name</option>
+                                    @foreach (var item in Model.City)
+                                    {
+                                        <option value="@item.CityId">@item.Name</option>
+                                    }
+
+
+                                }
+                              
+                            </select>
+                        </div>
+                    </div>*@
+
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12 col-md-6">
+                            <label for="CountryList">Country</label>
+                            <select id="CountrySelect" asp-for="user.CountryId" class="form-select mt-1 mb-3" name="CountryList" aria-label="Default select example">
+                                @{
+                                    var selectedCountry = Model.Country.FirstOrDefault(m => m.CountryId == (Model.user.CountryId));
+                                }
+                                <option value="@selectedCountry.CountryId" selected>@selectedCountry.Name</option>
+
+                                @foreach (var countries in Model.Country.Where(m => m.CountryId != (Model.user.CountryId)))
+                                {
+                                    <option value="@countries.CountryId">@countries.Name</option>
+
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <label for="CityList">City</label>
+                            <select asp-for="user.CityId" id="Citylistings" class="form-select mt-1 mb-3" name="CityList" aria-label="Default select example">
+                                @{
+                                    var selectedCity = Model.City.FirstOrDefault(m => m.CityId == (Model.user.CityId));
+                                }
+                                <option value="@selectedCity.CityId" selected>@selectedCity.Name</option>
+
+                                @foreach (var cities in Model.City.Where(m => m.CityId != (Model.user.CityId)))
+                                {
+                                    <option class="CitySelect" value="@cities.CityId">@cities.Name</option>
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <h5 class="mt-4">Professional Information</h5>
+                    <hr>
+
+                    <div class="row mt-3 mb-4">
+                        <div class="col-sm-12 col-md-6">
+                            <label for="exampleFormControlInput1" class="form-label">Availability</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Select your Availability">
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <label for="exampleFormControlInput1" class="form-label mt-3 mt-md-0">LinkedIn </label>
+                            <input @*asp-for="@Model.user.LinkedInUrl"*@ type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter LinkedIn URL">
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <h5 class="mt-3">Add Skills</h5>
+                        <hr>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="" readonly></textarea>
+
+                    </div>
+
+                    <button type="button" class="px-4 py-1 px-md-5 text-center rounded-pill bg-white mt-4" data-bs-toggle="modal" data-bs-target="#SkillAdd">Add Skills</button>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="px-4 py-1 px-md-5 orage_color rounded-pill bg-white border-2">Submit</button>
+                    </div>
+
+                </div>
+            </form>
+            
+
+        </div>
+    </div>
+</div>
+
+<!-- bootstrap Modal for Add Skill -->
+<div class="modal fade" id="SkillAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Skills</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-row justify-content-between align-items-start">
+                    <div class="col-6 border border-1 border-dark">
+                        ddvd
+                    </div>
+
+                    <!-- <div class="col-1 d-flex flex-column justify-content-center">
+                          <img src="~/images/arrow.png" height="10px" width="10px" alt="">
+                          <img src="~/images/left.png" height="10px" width="10px" alt="">
+                    </div> -->
+
+                    <div class="col-5 border border-1 border-dark">
+                        dddc
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- bootstrap Modal for Change Password -->
+<div class="modal fade" id="ChangePassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src=~/js/userProfile.js></script>

@@ -32,9 +32,9 @@ namespace CI_Platfrom.Repository.Repository
             return storyDetails;
         }
 
-        public List<Story> getStoryById(long storyId)
+        public Story getStoryById(long storyId)
         {
-            List<Story> storyDetails = _db.Stories.Include(e => e.Mission).Include(e => e.User).Include(e => e.StoryMedia).Where(e => e.StoryId == storyId).ToList();
+            Story storyDetails = _db.Stories.Include(e => e.Mission).Include(e => e.User).Include(e => e.StoryMedia).FirstOrDefault(e => e.StoryId == storyId);
             return storyDetails;
         }
 
