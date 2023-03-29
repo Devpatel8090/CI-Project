@@ -120,3 +120,34 @@ function StorySave() {
 
 
 }
+
+$('#selectMission').on('change', function () {
+
+    var missionId = $('#selectMission').find(':selected').val();
+    var url = "/Story/storyByMissionID"
+    $.ajax({
+        url: url,
+        data: {
+            missionID: missionId
+        },
+        type: 'POST',
+        success: function (data) {
+            console.log(data);
+            if (data != "EmptyStory") {
+                $('#storyTitle').val(data.title);
+                CKEDITOR.instances['Content'].setData(data.description);
+                $('#StoryDate').val(data.createAt);
+            }
+            else {
+                $('#storyTitle').val('');
+                CKEDITOR.instances['Content'].setData();
+
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+
+
+    });
+})

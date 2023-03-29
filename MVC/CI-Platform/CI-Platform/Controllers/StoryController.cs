@@ -47,6 +47,7 @@ namespace CI_Platform.Controllers
         public IActionResult AddYourStoryPage()
         {
             StoryVM GetStories = getAllStory();
+
           
             return View(GetStories);
         }
@@ -79,6 +80,7 @@ namespace CI_Platform.Controllers
 
             //Story story1 = new Story();
             StoryMedium videoMedia = new StoryMedium();
+            
             
 
             var status= _unitOfWork.Story.GetFirstOrDefault(e => e.UserId == user.UserId && e.MissionId == story.particularStory.MissionId && e.Status == "DRAFT");
@@ -224,6 +226,33 @@ namespace CI_Platform.Controllers
             }
         }
 
+
+        [HttpPost]
+        public JsonResult storyByMissionID(long missionID)
+        {
+            StoryVM storyModel = new StoryVM();
+            var sessionValue = HttpContext.Session.GetString("userEmail");
+            var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == sessionValue).UserId;
+
+            storyModel.particularStory = _unitOfWork.Story.getUserMissions(user,missionID).FirstOrDefault(e => e.Status == "DRAFT");
+            var draftedStory = storyModel.particularStory;
+            
+            if (draftedStory == null)
+            {
+                return new JsonResult("EmptyStory");
+            }
+            else
+            {
+                var storyObj = new JsonResult(new
+                {
+                   draftedStory.Title,
+                   draftedStory.Description,
+                   draftedStory.CreateAt
+
+                });
+                return storyObj;
+            }
+        }
 
 
     }

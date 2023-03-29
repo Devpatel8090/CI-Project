@@ -66,5 +66,45 @@ namespace CI_Platform.Controllers
             profileDetails.Country = _unitOfWork.Country.GetAll();
             return View(profileDetails);
         }
+
+        [HttpPost]
+        public IActionResult  UserProfile(ProfileVM userProfile, long CountryNiId, long CityNiId)
+        {
+            var emailFromSession = HttpContext.Session.GetString("userEmail");
+            var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
+
+            if (user != null)
+            {
+                user.FirstName = userProfile.user.FirstName;
+                user.LastName = userProfile.user.LastName;
+                user.EmployeeId = userProfile.user.EmployeeId;
+                user.Title = userProfile.user.Title;
+                user.Department = userProfile.user.Department;
+                user.ProfileText = userProfile.user.ProfileText;
+                user.WhyIVolunteer = userProfile.user.WhyIVolunteer;
+                user.CountryId = CountryNiId;
+                user.CityId = CityNiId;
+                user.LinkedInUrl = userProfile.user.LinkedInUrl;
+                user.UpdatedAt = DateTime.Now;
+
+                _unitOfWork.User.Update(user);
+                _unitOfWork.save();
+                TempData["success"] = "yey!! Data has been updated Successfully";
+
+
+            }
+            else
+            {
+                _unitOfWork.User.Add(user);
+                _unitOfWork.save();
+                TempData["success"] = "yey! Data has been added Successfully";
+            }
+
+
+
+
+            return RedirectToAction("UserProfile", "Registration");
+        }
+       
     }
 }

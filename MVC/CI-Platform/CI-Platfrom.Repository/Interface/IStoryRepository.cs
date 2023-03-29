@@ -11,6 +11,8 @@ namespace CI_Platfrom.Repository.Interface
     {
         public List<Story> GetStoryDetails();
 
+        public List<Story> getStoryByMissionId(long missionId);
+
         public List<Story> getUserMissions(long userId, long missionId);
         public Story getStoryById(long storyId);
 

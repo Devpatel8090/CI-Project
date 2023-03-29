@@ -15,8 +15,8 @@
         <div class="col-3 d-none d-md-block">
             <div class="border border-1 border-dark ">
                 <div class="d-flex flex-column align-items-center justify-content-center mt-3">
-                    <img @*src=@Model.user.Avatar *@class="rounded-circle" width="120px" height="120px" alt="">
-                    <span>@*@Model.user.FirstName @Model.user.LastName*@</span>
+                    <img src=@Model.user.Avatar class="rounded-circle" width="120px" height="120px" alt="">
+                    <span>@Model.user.FirstName @Model.user.LastName</span>
                     <div class="d-flex flex-row flex-wrap">
                         <img src="~/images/facebook.png" height="25px" width="25px" class="p-1 m-2 border rounded-circle border-dark" alt="">
                         <img src="~/images/twitter.png" height="25px" width="25px" class="p-1 m-2 border border-1 rounded-circle border-dark" alt="">
@@ -53,12 +53,12 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <label for="exampleFormControlInput1" class="form-label">Name</label>
-                            <input asp-for="@Model.user.FirstName" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter your name" /> @*value="@Model.user.FirstName">*@
+                            <input asp-for="@Model.user.FirstName" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter your name" value="@Model.user.FirstName" /> 
                         </div>
 
                         <div class="col-sm-12 col-md-6">
                             <label for="exampleFormControlInput1" class="form-label mt-3 mt-md-0">Surname</label>
-                            <input asp-for="@Model.user.LastName" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter your Surname" />@*value="@Model.user.LastName"*@ 
+                            <input asp-for="@Model.user.LastName" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter your Surname" value="@Model.user.LastName" /> 
                         </div>
                     </div>
 
@@ -148,7 +148,7 @@
                     <div class="row mt-3">
                         <div class="col-sm-12 col-md-6">
                             <label for="CountryList">Country</label>
-                            <select id="CountrySelect" asp-for="user.CountryId" class="form-select mt-1 mb-3" name="CountryList" aria-label="Default select example">
+                            <select id="CountrySelect" asp-for="user.CountryId" class="form-select mt-1 mb-3" name="CountryNiId" aria-label="Default select example">
                                 @{
                                     var selectedCountry = Model.Country.FirstOrDefault(m => m.CountryId == (Model.user.CountryId));
                                 }
@@ -164,7 +164,7 @@
 
                         <div class="col-sm-12 col-md-6">
                             <label for="CityList">City</label>
-                            <select asp-for="user.CityId" id="Citylistings" class="form-select mt-1 mb-3" name="CityList" aria-label="Default select example">
+                            <select asp-for="user.CityId" id="Citylistings" class="form-select mt-1 mb-3" name="CityNiId" aria-label="Default select example">
                                 @{
                                     var selectedCity = Model.City.FirstOrDefault(m => m.CityId == (Model.user.CityId));
                                 }
@@ -185,12 +185,18 @@
                     <div class="row mt-3 mb-4">
                         <div class="col-sm-12 col-md-6">
                             <label for="exampleFormControlInput1" class="form-label">Availability</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Select your Availability">
+                            <select class="form-select mt-1 mb-3" aria-label="Default select example">
+                                <option selected>Select Availability</option>
+                                <option value="1">Daily</option>
+                                <option value="1">Weekly</option>
+                                <option value="2">Weekend</option>
+                                <option value="3">Monthly</option>
+                            </select>
                         </div>
 
                         <div class="col-sm-12 col-md-6">
                             <label for="exampleFormControlInput1" class="form-label mt-3 mt-md-0">LinkedIn </label>
-                            <input @*asp-for="@Model.user.LinkedInUrl"*@ type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter LinkedIn URL">
+                            <input asp-for="@Model.user.LinkedInUrl" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter LinkedIn URL">
                         </div>
                     </div>
 
