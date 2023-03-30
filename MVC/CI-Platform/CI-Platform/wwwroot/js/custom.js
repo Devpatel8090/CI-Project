@@ -339,12 +339,7 @@ function sendInfo() {
     $.ajax({
         url: url,
         success: function (data) {
-            if (data.length == 0) {
-                notfound.classList.remove('hide');
-            }
-            else {
-                notfound.classList.add('hide')
-            }
+           
 
             
             

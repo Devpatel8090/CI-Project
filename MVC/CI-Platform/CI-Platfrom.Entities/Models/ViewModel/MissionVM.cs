@@ -46,6 +46,8 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
         public int TotalCount { get; set; }
 
+        public long totalMissions { get; set; }
+
         public int AverageRating { get; set; }
     }
 }

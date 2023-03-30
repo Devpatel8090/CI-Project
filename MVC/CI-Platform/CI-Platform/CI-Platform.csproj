@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Document\" />
+    <Folder Include="wwwroot\images\UserAvtarImages\" />
     <Folder Include="wwwroot\images\StoryImages\" />
   </ItemGroup>
 

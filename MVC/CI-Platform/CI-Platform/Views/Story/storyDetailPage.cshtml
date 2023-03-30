@@ -190,7 +190,7 @@
 
           <p class="mt-4">
            @* @Html.Raw(@storyfromId.Description)*@
-           @Model.user.WhyIVolunteer
+           @Model.storyById.User.WhyIVolunteer
            
           </p>
 
@@ -237,7 +237,7 @@
         
                 <!-- Recommendation Modal -->
             <div class="modal fade " id="RecomendModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Recommendation to co-worker</h5>

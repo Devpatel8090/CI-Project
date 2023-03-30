@@ -105,6 +105,41 @@ namespace CI_Platform.Controllers
 
             return RedirectToAction("UserProfile", "Registration");
         }
-       
+
+
+        [HttpPost]
+        public IActionResult saveUserProfilePhoto(IFormFile files)
+        {
+
+            var emailFromSession = HttpContext.Session.GetString("userEmail");
+            var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
+            if(files != null) { 
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/UserAvtarImages", files.FileName); //we are using Temp file name just for the example. Add your own file path.
+            
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                 files.CopyTo(stream);
+            }
+
+            if(user.Avatar != null)
+            {
+                user.Avatar = "/images/UserAvtarImages/" + files.FileName;
+                _unitOfWork.User.Update(user);
+                _unitOfWork.save();
+            }
+            else
+            {
+                user.Avatar = "/images/UserAvtarImages/" + files.FileName;
+                _unitOfWork.User.Add(user);
+                _unitOfWork.save();
+            }
+            }
+            return RedirectToAction("UserProfile", "Registration");
+
+
+
+        }
+
     }
 }

@@ -96,7 +96,7 @@ namespace CI_Platfrom.Repository.Repository
                 missionVM.Mission = missionVM.Mission.Where(m => m.CountryId == CountryId);
             }
 
-
+            missionVM.totalMissions = missionVM.Mission.Count();
 
             return missionVM;
         }
@@ -232,7 +232,7 @@ namespace CI_Platfrom.Repository.Repository
                     filterMissions = filterMissions.OrderBy(m => m.StartDate).ToList();
                 }
 
-                
+                missionObj.totalMissions = filterMissions.Count();
                 filterMissions = filterMissions.Skip((page - 1) * 9).Take(9);
                 missionObj.Mission = filterMissions;
                 missionObj.TotalCount = missionObj.Mission.Count();
@@ -256,10 +256,12 @@ namespace CI_Platfrom.Repository.Repository
             {
                 missions = missions.OrderBy(m => m.StartDate).ToList();
             }
-           
+
+            missionObj.totalMissions = missionObj.Mission.Count();
             missions = missions.Skip((page -1) * 9).Take(9);
             missionObj.Mission = missions;
             missionObj.TotalCount = missionObj.Mission.Count();
+            
             return missionObj;
         }
     }

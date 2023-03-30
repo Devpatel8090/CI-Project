@@ -3,8 +3,39 @@
 
 @model MissionVM
 
+@{ if(Model.totalMissions > 0) {
 
+ <div class="row mt-2 " id="grid__list__buttons__row">
+                <div class="col-sm-6 col-auto">
+                    <span style="font-size: 25px;">Explore <h2 class="d-inline text-center " id="totalCountedMissions"> @Model.totalMissions </h2> Missions</span>
+                </div>
+                <div class="col-sm-3 col-auto  d-none d-sm-block">
+                    <div class="dropdown text-end">
+                        <a class="btn bg-white  border " data-toggle="dropdown" href="#" role="button" id="dropdownMenuLink"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Sort By
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-chevron-down ms-lg-5" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </a>
 
+                        <ul class="dropdown-menu" id="SortBy" aria-labelledby="dropdownMenuLink">
+                            <li id="Date"><button class="dropdown-item sortByInput" onclick="sortByMethod()" value="Oldest" >Oldest</button></li>
+                            <li><button class="dropdown-item sortByInput" onclick="sortByMethod()" value="Newest">Newest</button></li>
+                            <li><button class="dropdown-item sortByInput" onclick="sortByMethod()" value="Mission Type" >Mission Type</button></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-auto col-sm-3 d-flex justify-content-end align-items-center gap-3">
+                    <button class="border-0 bg-white d-none d-sm-inline"> <img src="~/images/grid.png" id="grid__view__button"
+                            onclick="gridView()"></button>
+                    <button class="border-0 bg-white d-none d-lg-inline"> <img src="~/images/list.png" id="list__view__button"
+                            onclick="listView()"></button>
+            
+                </div>
+            </div>
 
 
      <div id="grid__view__container">
@@ -197,7 +228,49 @@
             }
         </div>
 
+
+        </div>
+             <div >
+                                <nav aria-label="Page navigation example" id="Pagination">
+                                    <ul class="pagination d-flex justify-content-center mt-3">
+                                        <li class="page-item">
+                                            <a class="page-link curser-pointer" aria-label="Previous" onclick = "PrevPointer()">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        @for (var i = 0; i <= (Model.TotalCount / 9); i++)
+                                        {
+                                            <li class="page-item"><a class="page-link pagination curser-pointer" onclick = "AddPagination()">@(i+1)</a></li>
+                                        }
+            
+
+                                        <li class="page-item">
+                                            <a class="page-link curser-pointer" aria-label="Next" onclick = "NextPointer()">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                            </nav>
+
             </div>
+
+    }
+    else
+    {   
+         <div id="noMission__page" class=" mt-5">
+                <h3 class="text-center ">NO mission Found</h3>
+                <div class="d-flex align-items-center justify-content-center">
+                    <div class="mt-2  w-75 text-center ">
+                        <a href="#" class="btn rounded-pill   text-center submit__mission__text">Submit new mission <img
+                                src="~/images/right-arrow.png" class="ms-2"></a>
+
+                    </div>
+                </div>
+            </div>
+    }
+
+
+            }
 
      @*   <div class="col  mb-3">
             <div class="card" style="max-width: 26rem;">
