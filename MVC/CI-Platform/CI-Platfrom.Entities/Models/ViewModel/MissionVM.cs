@@ -19,12 +19,11 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         public IEnumerable<Skill> skills { get; set; }
 
 
-        //public IEnumerable<MissionRating> MissionRating { get; set; }
         public IEnumerable<MissionApplication> missionApplications { get; set; }
 
         public IEnumerable<MissionTheme> MissionTheme { get; set; }
 
-        //public IEnumerable<MissionMedium> MissionMedium { get; set; }
+        public IEnumerable<MissionMedium> MissionMedium { get; set; }
         public IEnumerable<Mission> RelatedMission { get; set; }
 
         public IEnumerable<City> City { get; set; }

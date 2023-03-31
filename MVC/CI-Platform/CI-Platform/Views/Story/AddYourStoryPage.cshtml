@@ -83,7 +83,18 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
 
 
                     <!-- IMAGE PREVIEW CONTAINER -->
-                    <div class="container-img mt-3 justify-content-center"></div>
+                    <div class="container-img mt-3 justify-content-center">
+                    @if (Model.particularStory != null)
+                        {
+                            var medias = Model.particularStory.StoryMedia.Where(s => s.Type != "Video");
+                            for(var i=0;i<medias.Count();i++)
+                            {
+                                <div class="image">
+                                    <span onclick="delImage(@i)">&times;</span>
+                                    <img src="@medias.ElementAt(i).Path" class="oldImgs"/>
+                                </div>                                
+                            }
+                        }</div>
                 </div>
             </div>
         </div>
@@ -92,7 +103,7 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
                 <button type="button" class="px-4 py-1 px-md-5  text-center  rounded-pill bg-white border-2 border-secondary">Cancel</button>
             </div>
             <div>
-                   <button type="button" class="px-4 py-1 px-md-5 orage_color rounded-pill bg-white border-2 " onclick="StorySave()"   >Save</button>
+                   <button type="button" class="px-4 py-1 px-md-5 orage_color rounded-pill bg-white border-2 " onclick="StorySave()">Save</button>
                 <button type="submit" class="px-4 py-1 px-md-5  orage_color rounded-pill bg-white border-2 " onclick=" textareaval()"   id="StorySubmitButton"  >Submit</button>
             </div>
         </div>

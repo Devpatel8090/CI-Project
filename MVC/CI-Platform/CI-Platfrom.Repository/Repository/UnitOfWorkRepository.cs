@@ -26,10 +26,12 @@ namespace CI_Platfrom.Repository.Repository
             FavoriteMission = new FavoriteMissionRepository(_db);
             MissionInvite = new MissionInviteRepository(_db);
             MissionRating = new MissionRatingRepository(_db);
+            MissionMedia = new MissionMediaRepository(_db);
             Comment = new CommentRepository(_db);
             MissionApplication = new MissionApplicationRepository(_db);
             Story = new StoryRepository(_db);
             StoryInvite = new StoryInviteRepository(_db);
+            StoryMedia = new StoryMediaRepository(_db);
         }
 
         public IMissionRepository Mission { get; private set; }
@@ -46,6 +48,8 @@ namespace CI_Platfrom.Repository.Repository
 
         public IFavoriteMissionRepository FavoriteMission { get; private set;}
 
+        public IMissionMediaRepository MissionMedia { get; private set; }
+
         public IMissionInviteRepository MissionInvite { get; private set; } 
 
         public IMissionRatingRepository MissionRating { get; private set; }
@@ -57,6 +61,8 @@ namespace CI_Platfrom.Repository.Repository
         public IStoryRepository Story { get; private set; }
 
         public IStoryInviteRepository StoryInvite { get; private set; }
+
+        public IStoryMediaRepository StoryMedia { get; private set; }
         public void save()
         {
             _db.SaveChanges();

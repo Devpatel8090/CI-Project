@@ -340,7 +340,10 @@ function sendInfo() {
         url: url,
         success: function (data) {
            
-
+           /* if (document.getElementById('grid__view__button').clicked == true) {*/
+                document.getElementById("list__view__container").classList.add("hide");
+           /* }*/
+            
             
             
             $('#GridCardContainer').html(data);

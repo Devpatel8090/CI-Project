@@ -22,6 +22,8 @@ namespace CI_Platfrom.Repository.Interface
 
         public IFavoriteMissionRepository FavoriteMission { get; }
 
+        public IMissionMediaRepository MissionMedia { get; }
+
         public IMissionInviteRepository MissionInvite { get; }
 
         public IMissionRatingRepository MissionRating { get; }  
@@ -32,6 +34,8 @@ namespace CI_Platfrom.Repository.Interface
 
         public IStoryRepository Story { get; }
         public IStoryInviteRepository StoryInvite { get; }
+
+        public IStoryMediaRepository StoryMedia { get; }
         public void save();
 
     }

@@ -57,6 +57,9 @@ namespace CI_Platfrom.Repository.Repository
             IEnumerable<MissionTheme> themeDetails = _unitOfWork.Theme.GetThemeDetails();
             missionVM.MissionTheme = themeDetails;
 
+            IEnumerable<MissionMedium> missionMediumDetails = _unitOfWork.MissionMedia.GetAllMissionMedia();
+            missionVM.MissionMedium = missionMediumDetails;
+
             
 
             IEnumerable<User> userDetails = _unitOfWork.User.GetUserDetails();

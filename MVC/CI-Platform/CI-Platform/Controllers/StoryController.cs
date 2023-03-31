@@ -47,6 +47,7 @@ namespace CI_Platform.Controllers
         public IActionResult AddYourStoryPage()
         {
             StoryVM GetStories = getAllStory();
+            GetStories.particularStory = _unitOfWork.Story.GetFirstOrDefault(e => e.UserId == GetStories.user.UserId && e.Status == "DRAFT");
 
           
             return View(GetStories);
@@ -66,7 +67,7 @@ namespace CI_Platform.Controllers
                 if (formFile.Length > 0)
                 {
                     // full path to file in temp location
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/StoryImages", formFile.FileName); //we are using Temp file name just for the example. Add your own file path.
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/StoryImages", formFile.FileName);
                     filePaths.Add(filePath);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
@@ -111,41 +112,120 @@ namespace CI_Platform.Controllers
       
 
         [HttpPost]
-        public void saveStory(long MissionId,string StoryTitle,string StoryDetails)
+        public void saveStory(IFormFileCollection totalfiles, string addStoryObj)
         {
             var sessionValue = HttpContext.Session.GetString("userEmail");
             var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == sessionValue);
-          
+
+     
+
+
+            //var StoryObjcet = new Story()
+            //{
+            //    MissionId = MissionId,
+            //    UserId = user.UserId,
+            //    Status = "DRAFT",
+            //    Title = StoryTitle,
+            //    Description = StoryDetails,
+
+            //};
+
+            //var alreadyStoryUploaded = _unitOfWork.Story.GetFirstOrDefault(e => e.UserId == user.UserId && e.MissionId == MissionId);
+
+            //if (alreadyStoryUploaded == null)
+            //{
+            //    _unitOfWork.Story.Add(StoryObjcet);
+            //    _unitOfWork.save();
+            //}
+            //else
+            //{
+            //    alreadyStoryUploaded.Title = StoryTitle;
+            //    alreadyStoryUploaded.Description = StoryDetails;
+            //    alreadyStoryUploaded.UpdatedAt = DateTime.Now;
+            //    _unitOfWork.Story.Update(alreadyStoryUploaded);
+            //    _unitOfWork.save();
+            //}
+
+            var parseObj = JObject.Parse(addStoryObj);
+            var missionId = parseObj.Value<long>("MissionId");
+            var storyTitle = parseObj.Value<string>("StoryTitle");
+            var storyDetails = parseObj.Value<string>("StoryDetails");
 
             var StoryObjcet = new Story()
             {
-                MissionId = MissionId,
+                MissionId = missionId,
                 UserId = user.UserId,
                 Status = "DRAFT",
-                Title = StoryTitle,
-                Description = StoryDetails,
+                Title = storyTitle,
+                Description = storyDetails,
 
             };
 
-            var alreadyStoryUploaded = _unitOfWork.Story.GetFirstOrDefault(e => e.UserId == user.UserId && e.MissionId == MissionId);
+            var alreadyStoryUploaded = _unitOfWork.Story.GetFirstOrDefault(e => e.UserId == user.UserId && e.MissionId == missionId && e.Status == "DRAFT");
+            /*
+                        if(alreadyStoryUploaded != null)
+                        {*/
+            var alreadyimageuploaded = _unitOfWork.StoryMedia.GetAll().Where(e => e.StoryId == alreadyStoryUploaded.StoryId).ToList();
 
-            if (alreadyStoryUploaded == null)
+            if (alreadyStoryUploaded != null)
             {
-                _unitOfWork.Story.Add(StoryObjcet);
+                _unitOfWork.Story.Update(StoryObjcet);
                 _unitOfWork.save();
             }
             else
             {
-                alreadyStoryUploaded.Title = StoryTitle;
-                alreadyStoryUploaded.Description = StoryDetails;
-                alreadyStoryUploaded.UpdatedAt = DateTime.Now;
-                _unitOfWork.Story.Update(alreadyStoryUploaded);
+                _unitOfWork.Story.Add(StoryObjcet);
                 _unitOfWork.save();
             }
 
+            if (alreadyimageuploaded != null)
+            {
+                foreach(var image in alreadyimageuploaded)
+                {
+                    image.DeletedAt = DateTime.Now;
+                    _unitOfWork.StoryMedia.Update(image);
+                }
+                _unitOfWork.save();
+                
+             }
 
-        }
+            foreach (var formFile in totalfiles)
+                {
+                    StoryMedium mediaobj = new StoryMedium();
+                    if (formFile.Length > 0)
+                    {
+                        // full path to file in temp location
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/StoryImages", formFile.FileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            formFile.CopyTo(stream);
+                        }
+                    }
+                    mediaobj.Path = "/images/StoryImages/" + formFile.FileName;
+                    mediaobj.Type = "PNG";
+
+                    if (alreadyStoryUploaded != null)
+                    {                       
+                        mediaobj.StoryId = alreadyStoryUploaded.StoryId;                     
+                    }
+
+                    else
+                    { 
+                        mediaobj.StoryId = (_unitOfWork.Story.GetAll().OrderByDescending(e => e.StoryId).FirstOrDefault().StoryId);
+                    }
+                        _unitOfWork.StoryMedia.Add(mediaobj);
+                        _unitOfWork.save();
+
+
+                }
+
+
+
         
+    }
+            
+
         public IActionResult storyDetailPage(long storyId)
         {
             StoryVM story = new StoryVM();
@@ -227,6 +307,11 @@ namespace CI_Platform.Controllers
         }
 
 
+        /// <summary>
+        /// for getting the drafted story details in json formate in view
+        /// </summary>
+        /// <param name="missionID"></param>
+        /// <returns></returns>
         [HttpPost]
         public JsonResult storyByMissionID(long missionID)
         {

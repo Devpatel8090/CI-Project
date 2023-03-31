@@ -5,7 +5,8 @@ dragArea = document.querySelector('.drag-area'),
 input = document.querySelector('.drag-area input'),
 button = document.querySelector('.drag-card button'),
 select = document.querySelector('.drag-area .select'),
-container = document.querySelector('.container-img');
+    container = document.querySelector('.container-img');
+oldImgs = document.getElementsByClassName('.oldImgs');
 
 /* CLICK LISTENER */
 select.addEventListener('click', () => input.click());
@@ -57,31 +58,35 @@ e.preventDefault()
 dragArea.classList.remove('dragover')
 });
 
-/* DROP EVENT */
-dragArea.addEventListener('drop', e => {
-e.preventDefault()
-dragArea.classList.remove('dragover');
+    /* DROP EVENT */
+    dragArea.addEventListener('drop', e => {
+    e.preventDefault()
+    dragArea.classList.remove('dragover');
 
-let file = e.dataTransfer.files;
-input.files = e.dataTransfer.files;
-for (let i = 0; i < file.length; i++) {
-/* Check selected file is image */
-if (file[i].type.split("/")[0] != 'image') continue;
+    let file = e.dataTransfer.files;
+    input.files = e.dataTransfer.files;
+    for (let i = 0; i < file.length; i++) {
+    /* Check selected file is image */
 
-if (!files.some(e => e.name == file[i].name)) files.push(file[i])
-}
-showImages();
-});
+        if (file[i].type.split("/")[0] != 'image') continue;
 
-function textareaval() {
+        if (!files.some(e => e.name == file[i].name)) files.push(file[i])
+        }
+        showImages();
+        });
 
-const dt = new DataTransfer();
-for (let i = 0; i < files.length; i++) {
-    dt.items.add(files[i]);
-}
+        function textareaval() {
 
-input.files = dt.files;
-}
+                const dt = new DataTransfer();
+                for (let i = 0; i < files.length; i++) {
+                    dt.items.add(files[i]);
+                }
+
+                input.files = dt.files;
+        }
+
+
+
 
 
 // Adding  Story To db
@@ -96,20 +101,34 @@ function StorySave() {
   /*  var storyDetails = CKEDITOR.instances['Content'].getData();*/
     var storyDetails = CKEDITOR.instances['Content'].getData();
     var storyurl = $('#storyVideoUrl').val();
-    
+
+    var formphotos = new FormData();
+
+    var uploadedfiles = /*$('#filesName')[0].files*/ files;
+
+    for (var i = 0, j = 0; i < uploadedfiles.length && j < 20; i++) {
+        var filesfromdata = uploadedfiles[i];
+        formphotos.append('totalfiles', filesfromdata);
+    }
+
 
     let addStoryObj = {
         MissionId: missionId,
         StoryTitle: storytitle,
         StoryDetails: storyDetails,
+
     };
+
+    formphotos.append('addStoryObj', JSON.stringify(addStoryObj));
 
     var url = "/Story/saveStory";
 
     $.ajax({
         url: url,
-        data: addStoryObj,
+        data: formphotos,
         type: 'POST',
+        contentType: false,
+        processData: false,
         success: function (data) {
             console.log(data);
         },
@@ -143,6 +162,7 @@ $('#selectMission').on('change', function () {
                 CKEDITOR.instances['Content'].setData();
 
             }
+            window.location.reload();
         },
         error: function (error) {
             console.log(error);
@@ -151,3 +171,23 @@ $('#selectMission').on('change', function () {
 
     });
 })
+
+
+
+        window.addEventListener('load', () => {
+    console.log(oldImgs);
+    
+    for (let i = 0; i < oldImgs.length; i++) {
+            img = oldImgs[i];
+            fetch(img.src)
+            .then(res => res.blob())
+            .then(blob => {
+            const file = new File([blob], 'dot.png', blob)
+            console.log(file)
+            files.push(file)
+            showImages();
+        })
+    
+    }
+    console.log(files);
+    })

@@ -3,7 +3,8 @@
 
 @model MissionVM
 
-@{ if(Model.totalMissions > 0) {
+@{ 
+    if(Model.totalMissions > 0) {
 
  <div class="row mt-2 " id="grid__list__buttons__row">
                 <div class="col-sm-6 col-auto">
@@ -230,6 +231,7 @@
 
 
         </div>
+        <partial name="_ListCards"  model=@Model/>
              <div >
                                 <nav aria-label="Page navigation example" id="Pagination">
                                     <ul class="pagination d-flex justify-content-center mt-3">
@@ -253,6 +255,7 @@
                             </nav>
 
             </div>
+            
 
     }
     else
