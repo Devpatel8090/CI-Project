@@ -16,5 +16,16 @@ namespace CI_Platfrom.Repository.Repository
         {
             _db = db;
         }
+
+        public List<StoryMedium> GetStoryPhotoesByStoryID(long storyId)
+        {
+            var storyMediaDetails = _db.StoryMedia.Where(e => e.StoryId == storyId && e.Type == "PNG" ).ToList();
+            return storyMediaDetails;
+        }
+        public List<StoryMedium> GetStoryVideosByStoryID(long storyId)
+        {
+            var storyMediaDetails = _db.StoryMedia.Where(e => e.StoryId == storyId && e.Type == "URL").ToList();
+            return storyMediaDetails;
+        }
     }
 }

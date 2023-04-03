@@ -83,18 +83,11 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
 
 
                     <!-- IMAGE PREVIEW CONTAINER -->
-                    <div class="container-img mt-3 justify-content-center">
-                    @if (Model.particularStory != null)
-                        {
-                            var medias = Model.particularStory.StoryMedia.Where(s => s.Type != "Video");
-                            for(var i=0;i<medias.Count();i++)
-                            {
-                                <div class="image">
-                                    <span onclick="delImage(@i)">&times;</span>
-                                    <img src="@medias.ElementAt(i).Path" class="oldImgs"/>
-                                </div>                                
-                            }
-                        }</div>
+                    <div class="container-img mt-3 justify-content-center" >
+                    
+                 
+                    </div>
+                    <div id="oldImages" class="mt-3 justify-content-cente"> </div>
                 </div>
             </div>
         </div>

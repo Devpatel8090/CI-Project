@@ -9,5 +9,9 @@ namespace CI_Platfrom.Repository.Interface
 {
     public interface IStoryMediaRepository : IRepository<StoryMedium>
     {
+        public List<StoryMedium> GetStoryPhotoesByStoryID(long storyId);
+
+        public List<StoryMedium> GetStoryVideosByStoryID(long storyId);
+
     }
 }
