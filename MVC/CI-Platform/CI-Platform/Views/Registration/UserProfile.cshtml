@@ -10,6 +10,23 @@
 
 @model ProfileVM
 
+<style>
+       .dual-list .list-group {
+            margin-top: 8px;
+        }
+
+        .list-left li, .list-right li {
+            cursor: pointer;
+        }
+
+        .list-arrows {
+            padding-top: 100px;
+        }
+
+            .list-arrows button {
+                margin-bottom: 20px;
+            }
+</style>
 <div class="container">
     <div class="row">
         <div class="col-3 d-none d-md-block">
@@ -225,24 +242,103 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Skills</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Skills</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="d-flex flex-row justify-content-between align-items-start">
-                    <div class="col-6 border border-1 border-dark">
-                        ddvd
+              @*  <div class="d-flex flex-row justify-content-between align-items-start">
+                    <div class="col-6 border d-flex flex-column align-items-center justify-content-center border-1 border-dark">
+                        @{
+                            var allskills = @Model.skill.ToList();
+                            if(allskills != null)
+                            {
+                                <input type="hidden" multiple>
+                                foreach (var item in allskills)
+                                {
+                                    <button class="border mt-1 mb-1 border-secondary border-1 rounded-pill px-2"  onclick="addSkillsIdIntoArray(this)" value="@item.SkillId">@item.SkillName </button>
+                                }
+                                
+                            }
+                        }
                     </div>
 
-                    <!-- <div class="col-1 d-flex flex-column justify-content-center">
+                    <div class="col-1 d-flex flex-column justify-content-center align-items-center">
                           <img src="~/images/arrow.png" height="10px" width="10px" alt="">
                           <img src="~/images/left.png" height="10px" width="10px" alt="">
-                    </div> -->
+                    </div> 
 
                     <div class="col-5 border border-1 border-dark">
                         dddc
                     </div>
+                </div>*@
+       
+
+<div class="container">
+    <br />
+	<div class="row">
+
+        <div class="dual-list list-left col-md-5">
+            <div class="well text-right">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="btn-group">
+                            <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                        </div>
+                    </div>
                 </div>
+                <ul class="list-group">
+                    <li class="list-group-item">bootstrap-duallist <a href="https://github.com/bbilginn/bootstrap-duallist" target="_blank">github</a></li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="list-arrows col-md-1 text-center">
+            <button class="btn btn-default btn-sm move-left">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
+
+            <button class="btn btn-default btn-sm move-right">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
+        </div>
+
+        <div class="dual-list list-right col-md-5">
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="btn-group">
+                            <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
+                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+            </div>
+        </div>
+
+	</div>
+</div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -258,16 +354,36 @@
 <div class="modal fade" id="ChangePassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
+            <form method="post" asp-action="ChangePassword" asp-controller="Registration">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                
+                    <div class="form-group mt-1">
+                        <label for="exampleInputPassword1">Current Password</label>
+                        <input asp-for="OldPassword" type="password" class="form-control" id="exampleInputPassword1" placeholder="Please Enter Current Password">
+                    </div>
+
+                   <div class="form-group mt-3">
+                        <label for="exampleInputPassword1">New Password</label>
+                        <input asp-for="NewPassword" type="password" class="form-control" id="exampleInputPassword1" placeholder="Please Enter New Password">
+                        <span class="text-danger" asp-validation-for="NewPassword"></span>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="exampleInputPassword1">Confirm Password</label>
+                        <input asp-for="ConfirmPassword" type="password" class="form-control" id="exampleInputPassword1" placeholder="Please Enter Confirm Password">
+                        <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                    </div>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -313,14 +429,21 @@
     </div>
   </div>
 </div>
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
- <script>
+@* <script>
             $('#file').change(function() {
                
           var i = $(this).prev('label').clone();
           var file = $('#file')[0].files[0].name;
           $(this).prev('label').text(file);
         });
-    </script>
+    </script>*@
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
 <script src=~/js/userProfile.js></script>

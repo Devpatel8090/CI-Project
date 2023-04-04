@@ -64,6 +64,7 @@ namespace CI_Platform.Controllers
             profileDetails.users = _unitOfWork.User.GetUserDetails().ToList();
             profileDetails.City = _unitOfWork.City.GetCityDetails();
             profileDetails.Country = _unitOfWork.Country.GetAll();
+            profileDetails.skill = _unitOfWork.Skill.GetAll();
             return View(profileDetails);
         }
 
@@ -138,6 +139,39 @@ namespace CI_Platform.Controllers
             return RedirectToAction("UserProfile", "Registration");
 
 
+
+        }
+
+        [HttpPost]
+        public IActionResult ChangePassword(ProfileVM profile)
+        {
+            
+                var emailFromSession = HttpContext.Session.GetString("userEmail");
+                var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
+                if (profile.OldPassword == user.Password && user != null)
+                {
+                    if(profile.ConfirmPassword == profile.NewPassword)
+                    {
+                        user.Password = profile.ConfirmPassword;
+                        user.UpdatedAt = DateTime.Now;
+                        _unitOfWork.User.Update(user);
+                        _unitOfWork.save();
+                        TempData["success"] = "Yey! Password has been added Successfully";
+                }
+                    else
+                    {
+                    TempData["error"] = "New Password and Cofirm Password Doesn't match";
+                }
+
+               
+               
+                }
+                else
+                {
+                TempData["error"] = "Please Enter Correct Current Password";
+                
+                }
+            return RedirectToAction("UserProfile", "Registration");
 
         }
 

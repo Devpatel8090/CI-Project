@@ -32,7 +32,8 @@
         <!-- photo container and detais of the mission -->
         <div class="row">
 
-            <div class="col-md-6 col-12">
+            @*
+                <div class="col-md-6 col-12">
 
                <div class="mySlides h-75 d-none">
                     <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" class="mission-img">
@@ -167,8 +168,88 @@
                     
                     </div>
                     
-                </div>
+                </div>*@
 
+                 <script>
+                        function display(item) {
+                        let image = document.getElementById("image-area");
+                        image.src = item.src;
+                        }
+                  </script>
+    
+                <div class="col-md-6 col-12 d-none d-sm-block">
+           
+                <img src="@Model.storyById.StoryMedia.FirstOrDefault(m => m.Type == "PNG").Path"  id="image-area" class="w-100 ImageCarousel"/>
+            <div id="carousel-bottom" class="carousel slide">
+                <div class="carousel-inner">
+
+
+                    @{
+                        var StoryImgMedia = Model.storyById.StoryMedia.ToList();
+                        var ImgMediaCount = StoryImgMedia.Count();
+                        int numCarousels = (int)Math.Ceiling((double)ImgMediaCount / 4);
+                    }
+                                      
+                    @for (var j = 0; j < numCarousels; j++)
+                    {
+                        <div class="carousel-item @((j == 0) ? "active" : "")">
+                            <div class="row d-flex">
+                                @foreach (var media in StoryImgMedia.Skip(j * 4).Take(4))
+                                {
+                                    <div class="col-3 p-1">
+                                        <img src="@media.Path"
+                                     class="bd-placeholder-img bd-placeholder-img-lg d-block1 w-100"
+                                     width="100%"
+                                     height="100%"
+                                     role="img"
+                                     onclick="display(this)">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <button class="carousel-control-prev w-auto ps-2 pe-2 bg-black bg-opacity-50 mt-2 mb-2"
+                        type="button" data-bs-target="#carousel-bottom" data-bs-slide="prev">
+                    <img src="~/images/left1.png" aria-hidden="true" />
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next w-auto ps-2 pe-2 bg-black bg-opacity-50  mt-2 mb-2"
+                        type="button" data-bs-target="#carousel-bottom" data-bs-slide="next">
+                    <img src="~/images/right-arrow2.png" aria-hidden="true" />
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="d-sm-none mt-3">
+
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="@Model.storyById.StoryMedia.FirstOrDefault().Path" height="230px" class="d-block w-100" alt="...">                                
+                            </div> 
+
+                            @foreach (var item in @Model.storyById.StoryMedia)
+                            {
+                                <div class="carousel-item">
+                                    <img src="@item.Path" class="d-block w-100" height="230px" alt="...">
+                                </div>                                
+                            }
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    
+        </div>
        @* @{
             var storyfromId = @Model.storyById.FirstOrDefault();
         }*@
@@ -360,6 +441,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     
     <script src="~/js/storyDetailPage.js" ></script>
+
+   
 
  
    

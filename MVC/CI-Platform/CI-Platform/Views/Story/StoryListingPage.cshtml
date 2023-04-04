@@ -40,7 +40,7 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
             <a href="#">
                 <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    City
+height               City
                 </a>
                 <ul class="dropdown-menu ps-4" aria-labelledby="navbarDropdownMenuLink">
                     <div class="form-check">
@@ -389,15 +389,15 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
 
                     @foreach (var item in Model.Story)
                     {
-                        <div class="col  mb-3">
-                            <div class="card" style="max-width: 500px; overflow-y:hidden;">
+                        <div class="col  mb-3" style="max-height:600px;overflow-y:hidden">
+                            <div class="card" >
                         <div style="position: relative;" class="image__container">
                             
                            @{
                                var image = @item.StoryMedia.FirstOrDefault(e => e.StoryId == @item.StoryId);
                             <img class="card-img-top Blur__image"
                                 src="@image.Path"
-                                alt="Card image cap">
+                                alt="Card image cap" height="200px" width="284px">
                            }
                             <div style="position: absolute;bottom: 0;width: 100%;">
                                 <p class="m-0 bg-white border rounded-pill text-center w-50"
@@ -416,7 +416,7 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
                             </div>
                            
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="max-height: 500px; overflow-y:hidden;">
                             <h3 class="card-title text-start mt-2">@item.Title
                             </h3>
                             <p class="card-text text-start">@Html.Raw(item.Description)</p>
