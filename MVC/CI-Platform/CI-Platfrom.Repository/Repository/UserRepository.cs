@@ -1,6 +1,7 @@
 ﻿using CI_Platfrom.Entities.Data;
 using CI_Platfrom.Entities.Models;
 using CI_Platfrom.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace CI_Platfrom.Repository.Repository
 
         public List<User> GetUserDetails()
         {
-            List<User> usersDetails = _db.Users.ToList();
+            List<User> usersDetails = _db.Users.Include(e => e.UserSkills).ToList();
             return usersDetails;
         }
 

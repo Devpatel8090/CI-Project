@@ -18,6 +18,8 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
         public IEnumerable<Skill> skill { get; set; }
 
+        public IEnumerable<UserSkill> userSkill { get; set; }
+
         public string imageName { get; set; }
 
         [Required(ErrorMessage = "New Password is required")]

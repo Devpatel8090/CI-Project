@@ -67,26 +67,63 @@ var element = {};
     console.log(skillIds);*//*
 */
 /*}*/
+const points = new Array();
+const skillids = new Array();
+/*const skillidsrightside = new Array();*/
 
 $(function () {
 
     $('body').on('click', '.list-group .list-group-item', function () {
         $(this).toggleClass('active');
     });
+    points.length = 0;
+    skillids.length = 0;
     $('.list-arrows button').click(function () {
+        
         var $button = $(this), actives = '';
         if ($button.hasClass('move-left')) {
             actives = $('.list-right ul li.active');
             actives.clone().appendTo('.list-left ul');
+            
+            
+            for (var i = 0; i < actives.length; i++) {
+                var OldArrayIndex = skillids.indexOf(actives[i].attributes[0].value);
+                skillids.splice(OldArrayIndex, 1);
+            }
+            console.log(points);
+            console.log(skillids);
             actives.remove();
-        } else if ($button.hasClass('move-right')) {
+        }
+                
+        else if ($button.hasClass('move-right')) {
+           
             actives = $('.list-left ul li.active');
             actives.clone().appendTo('.list-right ul');
+          
+            
+           
+            for (var i = 0; i < actives.length; i++) {
+                let elementExistsright = skillids.includes(actives[i].attributes[0].value);
+                if (!elementExistsright) {
+                    points.push(actives[i].innerText);
+                    skillids.push(actives[i].attributes[0].value);
+                }
+            }
+           /* console.log(actives[0].innerHTML);
+            console.log(actives[0].attributes[0].value);*/
+            console.log(points);
+            console.log(skillids);
+            
+           
+           /* console.log(actives[0].outerHTML.val);
+            console.log(actives[0].innerHTML.value);
+            console.log(actives.html);
+            console.log(actives.value);*/
             actives.remove();
         }
     });
-    $('.dual-list .selector').click(function () {
-        var $checkBox = $(this);
+  /*  $('.dual-list .selector').click(function () {
+        var $checkBox = $(this);s
         if (!$checkBox.hasClass('selected')) {
             $checkBox.addClass('selected').closest('.well').find('ul li:not(.active)').addClass('active');
             $checkBox.children('i').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
@@ -94,7 +131,7 @@ $(function () {
             $checkBox.removeClass('selected').closest('.well').find('ul li.active').removeClass('active');
             $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
         }
-    });
+    });*/
     $('[name="SearchDualList"]').keyup(function (e) {
         var code = e.keyCode || e.which;
         if (code == '9') return;
@@ -108,3 +145,36 @@ $(function () {
     });
 
 });
+
+$('#AddSkillButtonModal').on('click', function () {
+
+    var url = "/Registration/AddSkills";
+
+    $.ajax({
+
+        url: url,
+        type: 'POST',
+        data: {
+            SkillIDs :skillids
+        },
+        traditional: true,
+        success: function (data) {
+            console.log(data);
+            items =""
+            $(data).each(function (i, item) {
+                items += ` <li> ` + item + `<li>  `;
+            });
+
+            
+            $('#SkillsTextArea').html(items);
+            $('#closeBtnOfModal').click();
+        },
+        error: function (error) {
+            console.log(error);
+        }
+
+    })
+})
+
+
+

@@ -112,7 +112,7 @@ namespace CI_Platform.Controllers
       
 
         [HttpPost]
-        public void saveStory(IFormFileCollection totalfiles, string addStoryObj)
+        public long saveStory(IFormFileCollection totalfiles, string addStoryObj)
         {
             var sessionValue = HttpContext.Session.GetString("userEmail");
             var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == sessionValue);
@@ -153,10 +153,10 @@ namespace CI_Platform.Controllers
             var videourl = parseObj.Value<string>("StoryVideoUrl");
             JArray previousPhotoesArray = (JArray)parseObj["storyImages"];
 
-            for (int i = 0; i < previousPhotoesArray.Count; i++)
+          /*  for (int i = 0; i < previousPhotoesArray.Count; i++)
             {
                 Console.WriteLine(previousPhotoesArray[i]);
-            }
+            }*/
 
             var StoryObjcet = new Story()
             {
@@ -202,6 +202,7 @@ namespace CI_Platform.Controllers
                 alreadyStoryUploaded.UpdatedAt = DateTime.Now;
                 _unitOfWork.Story.Update(alreadyStoryUploaded);
                 _unitOfWork.save();
+                return alreadyStoryUploaded.StoryId;
                 
                 
             }
@@ -209,6 +210,7 @@ namespace CI_Platform.Controllers
             {
                 _unitOfWork.Story.Add(StoryObjcet);
                 _unitOfWork.save();
+                return StoryObjcet.StoryId;
             }
 /*
             if (alreadyimageuploaded != null)
@@ -277,7 +279,7 @@ namespace CI_Platform.Controllers
 
                     }
 
-
+                    
 
         }
             
@@ -412,7 +414,15 @@ namespace CI_Platform.Controllers
             }
         }
 
-      
+        /*[HttpPost]
+        public IActionResult PreviewStory(long storyID)
+        {
+
+            return storyDetailPage(storyID); ;
+        }*/
+
+
+
 
 
     }

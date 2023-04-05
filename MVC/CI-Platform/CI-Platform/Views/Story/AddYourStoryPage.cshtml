@@ -87,7 +87,7 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
                     
                  
                     </div>
-                    <div id="oldImages" class="mt-3 justify-content-cente"> </div>
+                    <div id="oldImages" class="mt-3 justify-content-center"> </div>
                 </div>
             </div>
         </div>
@@ -96,8 +96,9 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
                 <button type="button" class="px-4 py-1 px-md-5  text-center  rounded-pill bg-white border-2 border-secondary">Cancel</button>
             </div>
             <div>
+                     <a disabled style="opacity:0.5;"   type="button" class="px-4 py-1 px-md-5  orage_color rounded-pill bg-white border-2" id="StoryPreviewButton" >Preview</a>
                    <button type="button" class="px-4 py-1 px-md-5 orage_color rounded-pill bg-white border-2 " onclick="StorySave()">Save</button>
-                <button type="submit" class="px-4 py-1 px-md-5  orage_color rounded-pill bg-white border-2 " onclick=" textareaval()"   id="StorySubmitButton"  >Submit</button>
+                <button disabled style="opacity:0.5;"  type="submit" class="px-4 py-1 px-md-5  orage_color rounded-pill bg-white border-2 " onclick=" textareaval()"   id="StorySubmitButton"  >Submit</button>
             </div>
         </div>
     </form>

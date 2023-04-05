@@ -36,6 +36,8 @@ namespace CI_Platfrom.Repository.Interface
         public IStoryInviteRepository StoryInvite { get; }
 
         public IStoryMediaRepository StoryMedia { get; }
+
+        public IUserSkillsRepository UserSkills { get; }
         public void save();
 
     }

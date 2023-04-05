@@ -1,3 +1,5 @@
+
+
 let files = [],
     dragArea = document.querySelector(".drag-area"),
     input = document.querySelector(".drag-area input"),
@@ -29,11 +31,11 @@ input.addEventListener("change", () => {
 function showImages() {
     container.innerHTML = files.reduce((prev, curr, index) => {
         return `${prev}
-<div class="image">
-<span onclick="delImage(${index})">&times;</span>
-<img src="${URL.createObjectURL(curr)}" />
-</div>`;
-    }, "");
+                <div class="image">
+                <span onclick="delImage(${index})">&times;</span>
+                <img src="${URL.createObjectURL(curr)}" />
+                </div>`;
+                    }, "");
     for (let i = 0; i < files.length; i++) {
         console.log(files[i].name);
     }
@@ -122,6 +124,12 @@ function StorySave() {
         contentType: false,
         processData: false,
         success: function (data) {
+            $('#StorySubmitButton').removeAttr("disabled");
+            $('#StorySubmitButton').removeAttr("style");
+            $('#StoryPreviewButton').removeAttr("disabled");
+            $('#StoryPreviewButton').removeAttr("style");
+            var link = "/Story/storyDetailPage?storyId=" + data;
+            $('#StoryPreviewButton').attr("href",link);
             console.log(data);
         },
         error: function (error) {
@@ -135,11 +143,25 @@ var PreviousImages = [];
 function delImageSelect(id) {
     var divId = id;
     PreviousImages.splice(id, 1);
-    $("#" + divId).css("display", "none");
+    DraftedImages();
     console.log("new images: ", PreviousImages);
 }
 
 console.log(PreviousImages);
+
+function showDraftedImgs() {
+    $('#oldImages').html(PreviousImages.reduce((prev, curr, index) => {
+        return `${prev}
+                <div class="imageDraft">
+                <span class="CloseSpan" onclick="delImageSelect(${index})">&times;</span>
+                <img class="ImgDraft" src="${curr}" />
+                </div>`
+    }, ''));
+    for (let i = 0; i < PreviousImages.length; i++) {
+        console.log(PreviousImages[i].name)
+    }
+}
+
 $("#selectMission").on("change", function () {
     var missionId = $("#selectMission").find(":selected").val();
     var url = "/Story/storyByMissionID";
@@ -180,3 +202,30 @@ $("#selectMission").on("change", function () {
         },
     });
 });
+
+
+
+/*
+$('#StoryPreviewButton').on('click', function ()
+{
+
+    var storyId = $('#StoryPreviewButton').val();
+
+    var url = "/Story/PreviewStory"
+
+    $.ajax({
+        url: url,
+        data: {
+            storyID: storyId
+        },
+        type: "POST",
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+
+    })
+
+});*/

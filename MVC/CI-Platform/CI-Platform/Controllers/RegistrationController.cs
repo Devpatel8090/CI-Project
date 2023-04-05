@@ -65,6 +65,7 @@ namespace CI_Platform.Controllers
             profileDetails.City = _unitOfWork.City.GetCityDetails();
             profileDetails.Country = _unitOfWork.Country.GetAll();
             profileDetails.skill = _unitOfWork.Skill.GetAll();
+            profileDetails.userSkill = _unitOfWork.UserSkills.GetUserSkillsByUserId(profileDetails.user.UserId);
             return View(profileDetails);
         }
 
@@ -173,6 +174,43 @@ namespace CI_Platform.Controllers
                 }
             return RedirectToAction("UserProfile", "Registration");
 
+        }
+
+        public string[] AddSkills(int[] SkillIDs)
+        {
+            string[] skills = {}; 
+            var emailFromSession = HttpContext.Session.GetString("userEmail");
+            var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
+
+            var alreadySkilledUser = _unitOfWork.UserSkills.GetUserSkillsByUserId(user.UserId);
+
+            if(alreadySkilledUser.Count > 0)
+            {
+                foreach(var skill in alreadySkilledUser)
+                {
+                   
+                    _unitOfWork.UserSkills.Remove(skill);
+                }
+                _unitOfWork.save();
+               
+            }
+         
+                for (var i = 0; i < SkillIDs.Length; i++)
+                {
+                    UserSkill userSkill = new UserSkill();
+                    userSkill.UserId = user.UserId;
+                    userSkill.SkillId = SkillIDs[i];
+                    _unitOfWork.UserSkills.Add(userSkill);
+                }
+                _unitOfWork.save();
+            
+               var userSkills = _unitOfWork.UserSkills.GetUserSkillsByUserId(user.UserId);
+               for(var i = 0; i< userSkills.Count; i++)
+               {
+                skills = skills.Append(userSkills[i].Skill.SkillName).ToArray();
+               }
+
+               return skills;
         }
 
     }

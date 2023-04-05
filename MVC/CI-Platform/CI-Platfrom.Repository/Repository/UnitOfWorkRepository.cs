@@ -32,6 +32,7 @@ namespace CI_Platfrom.Repository.Repository
             Story = new StoryRepository(_db);
             StoryInvite = new StoryInviteRepository(_db);
             StoryMedia = new StoryMediaRepository(_db);
+            UserSkills = new UserSkillsRepository(_db);
         }
 
         public IMissionRepository Mission { get; private set; }
@@ -63,6 +64,8 @@ namespace CI_Platfrom.Repository.Repository
         public IStoryInviteRepository StoryInvite { get; private set; }
 
         public IStoryMediaRepository StoryMedia { get; private set; }
+
+        public IUserSkillsRepository UserSkills { get; private set; }   
         public void save()
         {
             _db.SaveChanges();
