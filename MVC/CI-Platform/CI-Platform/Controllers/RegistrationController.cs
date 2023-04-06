@@ -59,13 +59,20 @@ namespace CI_Platform.Controllers
         public IActionResult UserProfile()
         {
             ProfileVM profileDetails = new ProfileVM();
+            List<int> UserSkillIds = new List<int>();
             var emailFromSession = HttpContext.Session.GetString("userEmail");
             profileDetails.user= _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
-            profileDetails.users = _unitOfWork.User.GetUserDetails().ToList();
+            profileDetails.Users = _unitOfWork.User.GetUserDetails().ToList();
             profileDetails.City = _unitOfWork.City.GetCityDetails();
             profileDetails.Country = _unitOfWork.Country.GetAll();
-            profileDetails.skill = _unitOfWork.Skill.GetAll();
+            
             profileDetails.userSkill = _unitOfWork.UserSkills.GetUserSkillsByUserId(profileDetails.user.UserId);
+            
+            foreach (var userskilllist in profileDetails.userSkill)
+            {
+                UserSkillIds.Add(userskilllist.SkillId);
+            }
+            profileDetails.skill = _unitOfWork.Skill.GetAll().Where(m => !UserSkillIds.Contains(m.SkillId));
             return View(profileDetails);
         }
 

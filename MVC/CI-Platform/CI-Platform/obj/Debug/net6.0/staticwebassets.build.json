@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GDoizubsHa73/cPS4nro3zTj82AcPoAc9RfKy1BxgK8=",
+  "Hash": "4qBatB6CTc1AV0eDoHeB+FBtSRP/lcFoRsUe3oeslGs=",
   "Source": "CI-Platform",
   "BasePath": "_content/CI-Platform",
   "Mode": "Default",
@@ -10538,6 +10538,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\storyDetailPage.js"
+    },
+    {
+      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\js\\Timesheet.js",
+      "SourceId": "CI-Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\",
+      "BasePath": "_content/CI-Platform",
+      "RelativePath": "js/Timesheet.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Timesheet.js"
     },
     {
       "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\js\\userProfile.js",

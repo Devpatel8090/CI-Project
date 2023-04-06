@@ -162,7 +162,7 @@ $('#AddSkillButtonModal').on('click', function () {
             console.log(data);
             items =""
             $(data).each(function (i, item) {
-                items += ` <li> ` + item + `<li>  `;
+                items += `<p class="m-0">${item}</p>`;
             });
 
             
@@ -175,6 +175,11 @@ $('#AddSkillButtonModal').on('click', function () {
 
     })
 })
+
+$(document).ready(function () {
+    $('.userSkillList').click();
+    $('#RightButton').click();
+});
 
 
 

@@ -13,7 +13,8 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
         public IEnumerable<Country> Country { get; set; } 
 
-        public IEnumerable<User> users { get; set; }
+        public IEnumerable<User> Users { get; set; }
+
         public User user { get; set; }
 
         public IEnumerable<Skill> skill { get; set; }
