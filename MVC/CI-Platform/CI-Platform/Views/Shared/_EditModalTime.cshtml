@@ -1,0 +1,63 @@
+﻿@using CI_Platfrom.Entities.Models.ViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model TimesheetVM
+
+  <!-- bootstrap Modal for TimeBaseTimeSheet editing -->
+
+  
+        <div class="modal-content">
+            <form method="post"  asp-action="AddTimeSheet" asp-controller="VolunteeringTimeSheet">
+            <div class="modal-header">
+                <input asp-for="@Model.particularTimesheet.TimesheetId"  hidden/>
+                <input asp-for="@Model.particularTimesheet.MissionId"  hidden/>
+                <h5 class="modal-title" id="exampleModalLabel">Please input below Volunteering Hours</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col">
+                    <label class="">Mission</label>
+                    <select class="form-select mt-2" id="SelectMissionTime" disabled readonly asp-for="@Model.particularTimesheet.MissionId" aria-label="Default select example">
+                    <option  selected>@{
+                            var title = @Model.particularTimesheet.Mission.Title;
+                            if(title != null)
+                            {
+                                @Model.particularTimesheet.Mission.Title
+                            }
+                        }</option>
+                            
+                      </select>
+                </div>
+                <div class="col">
+                    <label class="mt-2">Date Volunteered</label>
+                    <input type="date"   asp-for="@Model.particularTimesheet.DateVolunteered" max="" min="" class="form-control mt-2" id="DateTimeMission">
+                   
+                    
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                    <label class="mt-2">Hours</label>
+                    <input type="number" class="form-control mt-2" asp-for ="@Model.particularTimesheet.Time.Value.Hour" name="hour" id="HourWorkTime" max="24" min="0" aria-label="" placeholder="Enter Spent Hours">
+                    </div>
+                    <div class="col-6">
+                        <label class="mt-2">Minutes</label>
+                        <input type="number" class="form-control mt-2" name="minute" asp-for ="@Model.particularTimesheet.Time.Value.Minute" max="60" min="0" id="MinutesWorkTime" aria-label="" placeholder="Enter Spent Minutes">
+                    </div>
+                </div> 
+
+                <div class="col mt-2">
+                    <label class="mt-2">Message</label>
+                    <textarea class="form-control mt-2" asp-for="@Model.particularTimesheet.Notes" placeholder="Enter your message" id="MessageTime"></textarea>                    
+                </div>               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="px-3 py-1  text-center rounded-pill bg-white " data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="px-3 py-1  orange_color rounded-pill bg-white border-2">Submit</button>
+            </div>
+            </form>
+        </div>
+   

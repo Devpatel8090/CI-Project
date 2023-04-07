@@ -33,6 +33,7 @@ namespace CI_Platfrom.Repository.Repository
             StoryInvite = new StoryInviteRepository(_db);
             StoryMedia = new StoryMediaRepository(_db);
             UserSkills = new UserSkillsRepository(_db);
+            TimeSheet = new TimeSheetRepository(_db);
         }
 
         public IMissionRepository Mission { get; private set; }
@@ -66,6 +67,8 @@ namespace CI_Platfrom.Repository.Repository
         public IStoryMediaRepository StoryMedia { get; private set; }
 
         public IUserSkillsRepository UserSkills { get; private set; }   
+
+        public ITimeSheetRepository TimeSheet { get; private set; }
         public void save()
         {
             _db.SaveChanges();

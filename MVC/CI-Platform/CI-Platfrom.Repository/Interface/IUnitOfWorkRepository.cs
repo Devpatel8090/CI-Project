@@ -38,6 +38,8 @@ namespace CI_Platfrom.Repository.Interface
         public IStoryMediaRepository StoryMedia { get; }
 
         public IUserSkillsRepository UserSkills { get; }
+
+        public ITimeSheetRepository TimeSheet { get; }
         public void save();
 
     }
