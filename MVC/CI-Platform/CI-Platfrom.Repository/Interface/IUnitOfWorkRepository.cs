@@ -40,6 +40,8 @@ namespace CI_Platfrom.Repository.Interface
         public IUserSkillsRepository UserSkills { get; }
 
         public ITimeSheetRepository TimeSheet { get; }
+
+        public IContactUsRepository ContactUs { get; }
         public void save();
 
     }

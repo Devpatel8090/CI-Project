@@ -21,5 +21,6 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         public int hour { get; set; }
 
         public int minute { get; set; }
+        public ContactU ContactUs { get; set; }
     }
 }

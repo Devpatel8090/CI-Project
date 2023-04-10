@@ -26,6 +26,8 @@ public partial class CiPlatformContext : DbContext
 
     public virtual DbSet<Comment> Comments { get; set; }
 
+    public virtual DbSet<ContactU> ContactUs { get; set; }
+
     public virtual DbSet<Country> Countries { get; set; }
 
     public virtual DbSet<FavoriteMission> FavoriteMissions { get; set; }
@@ -234,6 +236,22 @@ public partial class CiPlatformContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__comment__user_id__546180BB");
+        });
+
+        modelBuilder.Entity<ContactU>(entity =>
+        {
+            entity.HasKey(e => e.ContactUsId);
+
+            entity.ToTable("contact_us");
+
+            entity.Property(e => e.ContactUsId).HasColumnName("ContactUs_id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.EmailAddress).HasMaxLength(255);
+            entity.Property(e => e.Message).HasColumnType("text");
+            entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.Subject).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Country>(entity =>
@@ -797,7 +815,9 @@ public partial class CiPlatformContext : DbContext
             entity.ToTable("timesheet");
 
             entity.Property(e => e.TimesheetId).HasColumnName("timesheet_id");
-            entity.Property(e => e.Action).HasColumnName("action");
+            entity.Property(e => e.Action)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("action");
             entity.Property(e => e.CreateAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")

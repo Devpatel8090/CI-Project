@@ -33,6 +33,8 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
         public StoryMedium particularStoryVideo { get; set; }
 
-      
+        public ContactU ContactUs { get; set; }
+
+
     }
 }

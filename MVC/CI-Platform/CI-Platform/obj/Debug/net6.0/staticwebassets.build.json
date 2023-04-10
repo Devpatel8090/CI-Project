@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4qBatB6CTc1AV0eDoHeB+FBtSRP/lcFoRsUe3oeslGs=",
+  "Hash": "ZWmpuhIbxjTCUAwMoFFI6YBcuBAIj68hvMLTv83mLHg=",
   "Source": "CI-Platform",
   "BasePath": "_content/CI-Platform",
   "Mode": "Default",
@@ -10470,6 +10470,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\ckeditor\\vendor\\promise.js"
+    },
+    {
+      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\js\\ContactUs.js",
+      "SourceId": "CI-Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\",
+      "BasePath": "_content/CI-Platform",
+      "RelativePath": "js/ContactUs.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\ContactUs.js"
     },
     {
       "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\js\\custom.js",

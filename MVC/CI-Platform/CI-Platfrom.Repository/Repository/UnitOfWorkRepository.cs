@@ -34,6 +34,7 @@ namespace CI_Platfrom.Repository.Repository
             StoryMedia = new StoryMediaRepository(_db);
             UserSkills = new UserSkillsRepository(_db);
             TimeSheet = new TimeSheetRepository(_db);
+            ContactUs = new ContactUsRepository(_db);
         }
 
         public IMissionRepository Mission { get; private set; }
@@ -69,6 +70,8 @@ namespace CI_Platfrom.Repository.Repository
         public IUserSkillsRepository UserSkills { get; private set; }   
 
         public ITimeSheetRepository TimeSheet { get; private set; }
+
+        public IContactUsRepository ContactUs { get; private set; }
         public void save()
         {
             _db.SaveChanges();

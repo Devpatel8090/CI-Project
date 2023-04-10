@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using CI_Platfrom.Entities.Models.ViewModel
+
+@model MissionVM
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,13 +35,30 @@
       @RenderBody()
 
 
+    @await RenderSectionAsync("Scripts", required: false)
+
+     <footer class="border-top mt-3 footer text-muted">
+        <div class="container d-flex align-items-center justify-content-start gap-3" >
+            &copy; 2023 - CI-Platform 
+           
+            <button type="button" class="btn" style="color:#F88634;" data-bs-toggle="modal" data-bs-target="#ContactUSModal">
+              Contact Us
+            </button>
+ 
+        </div>
+    </footer>
+    <div class="modal fade"  tabindex="-1" aria-labelledby="exampleModalLabel" id="ContactUSModal"  aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" id="ContactUsModalShow"  >
+                        <partial name ="_ContactUs" model="@(Model.ContactUs,Model.user)"/>
+                    </div>
+   </div>
+
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-<script src="~/js/custom.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/custom.js" asp-append-version="true"></script>
+    <script src="~/js/ContactUs.js" ></script>
 
-
-    
 </body>
 </html>

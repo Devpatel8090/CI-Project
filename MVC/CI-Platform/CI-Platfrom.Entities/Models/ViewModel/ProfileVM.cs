@@ -26,6 +26,8 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         [Required(ErrorMessage = "New Password is required")]
         public string OldPassword { get; set; }
 
+        public ContactU ContactUs { get; set; }
+
 
         [Required(ErrorMessage = "New Password is required")]
        /* [Compare("OldPassword", ErrorMessage = "Current Password and New password must be different")]*/

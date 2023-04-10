@@ -43,6 +43,8 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
         public IEnumerable<MissionApplication> RecentVolunteers { get; set; }
 
+        public ContactU ContactUs { get; set; }
+
         public int TotalCount { get; set; }
 
         public long totalMissions { get; set; }

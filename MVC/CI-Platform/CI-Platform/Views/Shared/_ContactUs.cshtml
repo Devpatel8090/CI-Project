@@ -1,0 +1,61 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model (ContactU, User) 
+
+ <style>
+       .orange_color{
+          border: 2px solid #F88634;
+          color:#F88634;
+          }
+  </style>
+
+<!-- Modal -->
+    <div class="modal-content">
+     <form method="post"  >
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Contact Us</h5>
+            <button type="button" class="btn-close" id="closeButtonContactUs" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+      
+                  <div class="mb-3">
+                        <label for="UserName" class="form-label">Name</label>
+                        <input readonly type="text"  value="@Model.Item2.FirstName @Model.Item2.LastName" class="form-control" id="UserName" aria-describedby="emailHelp">
+                
+                  </div>
+
+                   <div class="mb-3">
+                        <label for="UserEmailId" class="form-label">Email address</label>
+                        <input readonly type="email"  value="@Model.Item2.Email" class="form-control" id="UserEmailId" aria-describedby="emailHelp">
+                
+                  </div>
+
+                      <label >Subject</label>
+                      <input type="text" class="form-control"  placeholder="Leave a comment here" id="ContactusSubject">
+              
+                      <div class="mt-3">
+                      <label >Message</label>
+                      <textarea class="form-control"  placeholder="Leave a comment here" id="ContactUsMessage"></textarea>
+                      </div>
+
+
+
+          </div>
+          <div class="modal-footer">
+                        <button type="button" class="px-3 py-1  text-center rounded-pill bg-white"  data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="px-3 py-1  orange_color rounded-pill bg-white border-2" id="ContactUsSubmit">Submit</button>
+          </div>
+       </form>
+
+    </div>
+
+
+  
