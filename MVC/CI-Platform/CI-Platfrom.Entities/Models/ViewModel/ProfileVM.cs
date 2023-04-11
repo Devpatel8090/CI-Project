@@ -27,6 +27,7 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         public string OldPassword { get; set; }
 
         public ContactU ContactUs { get; set; }
+        public IEnumerable<CmsPage> CmsPages { get; set; }
 
 
         [Required(ErrorMessage = "New Password is required")]

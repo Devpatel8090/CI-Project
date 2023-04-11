@@ -39,9 +39,11 @@ namespace CI_Platform.Controllers
             story.LogingUserMissions = _unitOfWork.MissionApplication.getUserMissions(story.user.UserId);
             story.User = _unitOfWork.User.GetUserDetails().ToList();
             story.MissionTheme = _unitOfWork.Theme.GetThemeDetails().ToList();
-           
+            story.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
 
-                return story;
+
+
+            return story;
         }
 
         public IActionResult AddYourStoryPage()
@@ -291,6 +293,7 @@ namespace CI_Platform.Controllers
             story.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
             story.User = _unitOfWork.User.GetUserDetails().ToList();
             story.storyById = _unitOfWork.Story.getStoryById(storyId);
+            story.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
             story.storyById.StoryViews = story.storyById.StoryViews + 1;
             _unitOfWork.Story.updateStory(story.storyById);
             _unitOfWork.save();

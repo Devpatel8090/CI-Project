@@ -35,6 +35,7 @@ namespace CI_Platfrom.Repository.Repository
             UserSkills = new UserSkillsRepository(_db);
             TimeSheet = new TimeSheetRepository(_db);
             ContactUs = new ContactUsRepository(_db);
+            CMSPage = new CMSRepository(db);
         }
 
         public IMissionRepository Mission { get; private set; }
@@ -72,6 +73,8 @@ namespace CI_Platfrom.Repository.Repository
         public ITimeSheetRepository TimeSheet { get; private set; }
 
         public IContactUsRepository ContactUs { get; private set; }
+
+        public ICMSRepository CMSPage { get; private set; }
         public void save()
         {
             _db.SaveChanges();

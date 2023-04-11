@@ -21,3 +21,15 @@
 img {
     max-height: 100vh;
 }
+
+@media (min-width:1440px) {
+    img {
+        min-height: 100vh;
+    }
+}
+
+@media (max-width:1439px) and (min-width:1024px){
+    img{
+        min-height:100vh;
+    }
+}

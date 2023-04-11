@@ -69,8 +69,9 @@ namespace CI_Platform.Controllers
 
                 var emailFromSession = HttpContext.Session.GetString("userEmail");
                 MissionVM missionObj = _missionvm.GetAllMissions(emailFromSession, countryId);
+                missionObj.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
 
-             
+
 
                 //var user = userDetails.FirstOrDefault(e => e.Email == emailFromSession);
                 //ViewBag.LoginUser = user;
@@ -139,6 +140,7 @@ namespace CI_Platform.Controllers
         {
             var sessionValue = HttpContext.Session.GetString("userEmail");
             MissionVM missionpage = getmissionPage(id, sessionValue);
+            missionpage.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
             return View(missionpage);
         }
 
@@ -159,7 +161,8 @@ namespace CI_Platform.Controllers
             vm.RelatedMission = _unitOfWork.Mission.getRelatedMissions(id);
             vm.RecentVolunteers = _unitOfWork.MissionApplication.GetUsersByMissionId(id);
             vm.missionApplications = _unitOfWork.MissionApplication.GetAll();
-            
+            vm.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
+
 
             int sum = 0;
             foreach (MissionRating rating in vm.missionRatings)

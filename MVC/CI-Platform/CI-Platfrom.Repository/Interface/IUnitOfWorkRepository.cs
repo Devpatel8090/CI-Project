@@ -42,6 +42,8 @@ namespace CI_Platfrom.Repository.Interface
         public ITimeSheetRepository TimeSheet { get; }
 
         public IContactUsRepository ContactUs { get; }
+
+        public ICMSRepository CMSPage { get; }
         public void save();
 
     }

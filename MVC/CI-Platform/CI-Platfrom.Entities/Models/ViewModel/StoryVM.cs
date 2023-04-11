@@ -35,6 +35,8 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
         public ContactU ContactUs { get; set; }
 
+        public IEnumerable<CmsPage> CmsPages { get; set; }
+
 
     }
 }

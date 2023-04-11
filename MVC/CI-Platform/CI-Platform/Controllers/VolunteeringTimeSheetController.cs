@@ -24,7 +24,7 @@ namespace CI_Platform.Controllers
             timesheetDetails.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
             timesheetDetails.timesheets = _unitOfWork.TimeSheet.GetTimesheetDetails();
             timesheetDetails.LogingUserMissions = _unitOfWork.MissionApplication.getUserMissions(timesheetDetails.user.UserId);
-
+            timesheetDetails.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
             return View(timesheetDetails);
         }
 

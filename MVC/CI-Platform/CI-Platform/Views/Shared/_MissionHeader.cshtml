@@ -44,7 +44,7 @@
                 </button>
                 <p>&nbsp</p>
                 <div class="dropdown text-end start-0 d-sm-none " id="img_user">
-                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle mt-1" id="dropdownUser1"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="@Model.user.Avatar" alt="user image" width="40" height="40" class="rounded-circle">
                     </a>
@@ -64,9 +64,9 @@
         <!-- fileter and profile pic for small screen -->
 
 
-        <div class="container">
+        <div class="container d-none d-sm-block">
             <header class="p-3 mb-3 ">
-                <div class="container d-none d-sm-block ">
+                <div class="container  ">
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start ">
 
 
@@ -78,9 +78,16 @@
                                     Policies
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                   @{
+                                    var cmsdata = @Model.CmsPages.ToList();
+                                    if(cmsdata != null)
+                                    {   @foreach (var item in cmsdata)
+                                        {
+                                            <li><a class="dropdown-item" asp-action="@item.Slug" asp-controller="PrivacyPolicy">@item.Slug</a></li>
+                                        }
+                                     
+                                    }                                   
+                                }
                                 </ul>
                             </li>
 
@@ -348,9 +355,16 @@
                     Stories
                 </a>
                 <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Somethi</a></li>
+                    @{
+                       var cmsdataof = @Model.CmsPages.ToList();
+                        if(cmsdataof != null)
+                        {   @foreach (var item in cmsdataof)
+                            {
+                                <li><a class="dropdown-item" asp-action="@item.Slug" asp-controller="PrivacyPolicy">@item.Slug</a></li>
+                            }
+                         
+                        }                                   
+                     }
                 </ul>
 
             </a>

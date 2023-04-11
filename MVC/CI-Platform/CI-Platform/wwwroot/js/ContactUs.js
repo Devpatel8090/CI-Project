@@ -1,7 +1,71 @@
 ﻿
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"></script>
 
-$('#ContactUsSubmit').on('click', function () {
+
+/*$('#ContactUsSubmit').on('click',*/
+function ContactUsSubmit() {
+    
+    var subject = $('#ContactusSubject').val();
+    var message = $('#ContactUsMessage').val();
+
+    var flag = true;
+
+    if (subject == "") {
+        $('#subjectValidation').removeClass('hide');
+        flag = false;
+    }
+
+    if (message == "") {
+        $('#messageValidation').removeClass('hide');
+        flag = false;
+    }
+    if (subject != "") {
+        $('#subjectValidation').addClass('hide');
+        flag = false;
+    }
+
+
+    if (message != "") {
+        $('#messageValidation').addClass('hide');
+        flag = false;
+    }
+
+    if (flag == true) {
+        ContactUsAjaxCalling();
+    }
+    if (flag == false) {
+        return flag;
+    }
+}
+
+function ContactUsRemoveValidation(){
+
+    var subject = $('#ContactusSubject').val();
+    var message = $('#ContactUsMessage').val();
+
+    var flag = true;
+
+    if (subject == "") {
+        $('#subjectValidation').removeClass('hide');
+        flag = false;
+    }
+
+    if (message == "") {
+        $('#messageValidation').removeClass('hide');
+        flag = false;
+    }
+    if (subject != "") {
+        $('#subjectValidation').addClass('hide');
+        flag = false;
+    }
+
+
+    if (message != "") {
+        $('#messageValidation').addClass('hide');
+        flag = false;
+    }
+}
+
+function ContactUsAjaxCalling() {
     var userName = $('#UserName').val();
     var Email = $('#UserEmailId').val();
     var subject = $('#ContactusSubject').val();
@@ -28,4 +92,8 @@ $('#ContactUsSubmit').on('click', function () {
             console.log(error);
         }
     });
-});
+}
+
+
+
+

@@ -182,4 +182,35 @@ $(document).ready(function () {
 });
 
 
+function removeValidation() {
+    $('#FirstNamevalidation').addClass("hide");
+    $('#LastNamevalidation').addClass("hide");
+    $('#ProfileTextvalidation').addClass("hide");
+    CheckValidation();
+}
+
+function CheckValidation() {
+    var firstName = $('#FirstName').val();
+    var LastName = $('#LastName').val();
+    var ProfileText = $('#ProfileText').val();
+
+    var flag = true;
+
+    if (firstName == "") {
+        $('#FirstNamevalidation').removeClass("hide");
+        flag = false;
+    }
+    if (LastName == "") {
+        $('#LastNamevalidation').removeClass("hide");
+        flag = false;
+    }
+    if (ProfileText == "") {
+        $('#ProfileTextvalidation').removeClass("hide");
+        flag = false;
+    }
+
+    return flag;
+}
+
+
 

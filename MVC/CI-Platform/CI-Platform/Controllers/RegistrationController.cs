@@ -65,6 +65,7 @@ namespace CI_Platform.Controllers
             profileDetails.Users = _unitOfWork.User.GetUserDetails().ToList();
             profileDetails.City = _unitOfWork.City.GetCityDetails();
             profileDetails.Country = _unitOfWork.Country.GetAll();
+            profileDetails.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
             
             profileDetails.userSkill = _unitOfWork.UserSkills.GetUserSkillsByUserId(profileDetails.user.UserId);
             
