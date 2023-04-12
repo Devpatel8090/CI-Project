@@ -349,8 +349,20 @@
                                 <div class="d-flex flex-row gap-1 gap-sm-3 align-items-center justify-content-center col-auto">
                                         <img src="~/images/mission.png" width="30px" height="30px">
                                         <div class="d-flex flex-column">
-                                            <div class="Progress__bar"><progress max="10000" value="8000"></progress></div>
-                                            <span>8000 Achived</span>
+
+                                        @{
+                                                                  var targetValue = @Model.particularMission.GoalMissions.FirstOrDefault().GoalValue;
+                                                                  var totalTimesheet = @Model.particularMission.Timesheets;
+                                                                  int? achievedValue = 0;
+                                                              
+                                                                   foreach (var action in totalTimesheet)
+                                                                    {
+                                                                        achievedValue +=  @action.Action ;
+                                                                    }
+                                            <div class="Progress__bar"><progress max="@targetValue" value="@achievedValue"></progress></div>
+                                            <span>@achievedValue Achived</span>
+
+                                            }
                                         </div>
                                  </div>
                             }

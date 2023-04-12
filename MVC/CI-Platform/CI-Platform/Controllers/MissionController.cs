@@ -162,6 +162,7 @@ namespace CI_Platform.Controllers
             vm.RecentVolunteers = _unitOfWork.MissionApplication.GetUsersByMissionId(id);
             vm.missionApplications = _unitOfWork.MissionApplication.GetAll();
             vm.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
+            
 
 
             int sum = 0;
