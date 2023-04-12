@@ -44,6 +44,8 @@ namespace CI_Platfrom.Repository.Interface
         public IContactUsRepository ContactUs { get; }
 
         public ICMSRepository CMSPage { get; }
+
+        public IAdminRepository Admin { get; }
         public void save();
 
     }

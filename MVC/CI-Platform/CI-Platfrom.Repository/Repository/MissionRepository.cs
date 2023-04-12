@@ -26,7 +26,7 @@ namespace CI_Platfrom.Repository.Repository
         /// <returns></returns>
         public List<Mission> GetMissionDetails()
         {
-            List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionMedia).Include(m=> m.MissionRatings).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m => m.GoalMissions).ToList();
+            List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.Timesheets).Include(m => m.MissionMedia).Include(m=> m.MissionRatings).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m => m.GoalMissions).ToList();
             return missionDetails;
         }
 

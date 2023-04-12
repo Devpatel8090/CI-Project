@@ -60,6 +60,9 @@ namespace CI_Platfrom.Repository.Repository
             IEnumerable<MissionMedium> missionMediumDetails = _unitOfWork.MissionMedia.GetAllMissionMedia();
             missionVM.MissionMedium = missionMediumDetails;
 
+            IEnumerable<Timesheet> timesheets = _unitOfWork.TimeSheet.GetTimesheetDetails();
+            missionVM.timesheets = timesheets;
+
             
 
             IEnumerable<User> userDetails = _unitOfWork.User.GetUserDetails();

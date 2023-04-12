@@ -160,8 +160,19 @@
                                                        <div class="d-flex flex-row gap-1 align-items-center justify-content-center col">
                                                               <img src="~/images/mission.png" width="30px" height="30px">
                                                               <div class="d-flex flex-column">
-                                                                  <div class="Progress__bar"><progress max="10000" value="8000"></progress></div>
-                                                                  <span>8000 Achived</span>
+                                                              @{
+                                                                  var targetValue = @item.GoalMissions.FirstOrDefault().GoalValue;
+                                                                  var totalTimesheet = @item.Timesheets;
+                                                                  int? achievedValue = 0;
+                                                              
+                                                                   foreach (var action in totalTimesheet)
+                                                                    {
+                                                                        achievedValue +=  @action.Action ;
+                                                                    }
+                                                                  <div class="Progress__bar"><progress max="@targetValue" value="@achievedValue"></progress></div>
+                                                                  <span>@achievedValue Achived</span>
+                                                              
+                                                              }
                                                               </div>
                                                        </div>
                                                     }

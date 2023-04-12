@@ -15,6 +15,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\pca39\Desktop\CI platform\MVC\CI-Platform\CI-Platform
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Admin/AdminLandingPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWRtaW5MYW5kaW5nUGFnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Admin/AdminLoginPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWRtaW5Mb2dpblBhZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Authentication/forgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25cZm9yZ290UGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

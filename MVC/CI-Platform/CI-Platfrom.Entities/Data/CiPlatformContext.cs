@@ -78,9 +78,7 @@ public partial class CiPlatformContext : DbContext
 
             entity.ToTable("admin");
 
-            entity.Property(e => e.AdminId)
-                .ValueGeneratedNever()
-                .HasColumnName("admin_id");
+            entity.Property(e => e.AdminId).HasColumnName("admin_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");

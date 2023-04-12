@@ -52,5 +52,7 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         public long totalMissions { get; set; }
 
         public int AverageRating { get; set; }
+
+        public IEnumerable<Timesheet> timesheets { get; set; }
     }
 }
