@@ -1,4 +1,5 @@
 ﻿using CI_Platfrom.Entities.Models;
+using CI_Platfrom.Entities.Models.ViewModel;
 using CI_Platfrom.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,20 @@ namespace CI_Platform.Controllers
         }
         public IActionResult AdminLandingPage()
         {
-            return View();
+            var emailFromSession = HttpContext.Session.GetString("userEmail");
+            AdminVM adminDetails = new AdminVM()
+            {
+                Users = _unitOfWork.User.GetAll(),
+                user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession),
+                missionApplication = _unitOfWork.MissionApplication.GetMissionApplications(),
+                stories = _unitOfWork.Story.GetStoryDetails()/*.Where(e => e.Status == "PENDING")*/,
+                missions = _unitOfWork.Mission.GetMissionDetails(),
+            };
+
+
+            /* adminDetails.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
+             adminDetails.missionApplication = _unitOfWork.MissionApplication.GetMissionApplications();*/
+            return View(adminDetails);
         }
 
         public IActionResult AdminLoginPage()

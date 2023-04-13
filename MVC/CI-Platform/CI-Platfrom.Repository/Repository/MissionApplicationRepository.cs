@@ -18,6 +18,11 @@ namespace CI_Platfrom.Repository.Repository
         {
             _db = db;
         }
+        public List<MissionApplication> GetMissionApplications()
+        {
+            List<MissionApplication> missionApplication = _db.MissionApplications.Include(m=> m.Mission).Include(m => m.User).ToList();
+            return missionApplication;
+        }
         public List<MissionApplication> GetUsersByMissionId(long missionId)
         {
             List<MissionApplication> missionApplication = _db.MissionApplications.Where(e => e.MissionId == missionId).ToList();

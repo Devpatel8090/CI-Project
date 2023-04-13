@@ -10,6 +10,7 @@ namespace CI_Platfrom.Repository.Interface
     public  interface IStoryRepository: IRepository<Story>
     {
         public List<Story> GetStoryDetails();
+        public List<Story> GetPublishedStoryDetails();
 
         public List<Story> getStoryByMissionId(long missionId);
 

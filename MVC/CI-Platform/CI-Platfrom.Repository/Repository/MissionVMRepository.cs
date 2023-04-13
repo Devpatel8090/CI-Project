@@ -39,7 +39,12 @@ namespace CI_Platfrom.Repository.Repository
 
         }
 
-
+        /// <summary>
+        /// By default providing all mission and if country is selected then show the only cities and missions of that country
+        /// </summary>
+        /// <param name="emailFromSession"></param>
+        /// <param name="CountryId"></param>
+        /// <returns></returns>
         public MissionVM GetAllMissions(string emailFromSession,long CountryId)
         {
 
@@ -111,6 +116,7 @@ namespace CI_Platfrom.Repository.Repository
         {
             MissionVM missionObj = GetAllMissions(sessionValue, id);
             IEnumerable<Mission> missions = missionObj.Mission;
+            long userid = _unitOfWork.User.GetFirstOrDefault(e => e.Email == sessionValue).UserId;
             IEnumerable<Mission> filterMissions;
             if (filter != null)
             {
@@ -229,13 +235,25 @@ namespace CI_Platfrom.Repository.Repository
                 {
                     filterMissions = filterMissions.OrderByDescending(m => m.EndDate).ToList();
                 }
-                else if (sort == "Mission Type")
+                else if (sort == "Highest Available Seats")
                 {
-                    filterMissions = filterMissions.OrderBy(m => m.Title).ToList();
+                    filterMissions = filterMissions.OrderByDescending(m => m.TotalSeats - m.MissionApplications.Count()).ToList();
+                }
+                else if (sort == "Lowest Available Seats")
+                {
+                    filterMissions = filterMissions.OrderBy(m => m.TotalSeats - m.MissionApplications.Count()).ToList();
+                }
+                else if (sort == "My Favourites")
+                {
+                    filterMissions = filterMissions.OrderByDescending(m => m.FavoriteMissions.Where(d => d.UserId == userid).Count()).ToList();
+                }
+                else if (sort == "Deadline")
+                {
+                    filterMissions = filterMissions.OrderBy(m => m.EndDate).ToList();
                 }
                 else
                 {
-                    filterMissions = filterMissions.OrderBy(m => m.StartDate).ToList();
+                    filterMissions = filterMissions.OrderBy(m => m.MissionType).ToList();
                 }
 
                 missionObj.totalMissions = filterMissions.Count();
@@ -254,13 +272,25 @@ namespace CI_Platfrom.Repository.Repository
             {
                 missions = missions.OrderByDescending(m => m.EndDate).ToList();
             }
-            else if (sort == "Mission Type")
+            else if (sort == "Highest Available Seats")
             {
-                missions = missions.OrderBy(m => m.Title).ToList();
+                missions = missions.OrderByDescending(m => m.TotalSeats - m.MissionApplications.Count()).ToList();
+            }
+            else if (sort == "Lowest Available Seats")
+            {
+                missions = missions.OrderBy(m => m.TotalSeats - m.MissionApplications.Count()).ToList();
+            }
+            else if (sort == "My Favourites")
+            {
+                missions = missions.OrderByDescending(m => m.FavoriteMissions.Where(d => d.UserId == userid).Count()).ToList();
+            }
+            else if (sort == "Deadline")
+            {
+                missions = missions.OrderBy(m => m.EndDate).ToList();
             }
             else
             {
-                missions = missions.OrderBy(m => m.StartDate).ToList();
+                missions = missions.OrderBy(m => m.MissionType).ToList();
             }
 
             missionObj.totalMissions = missionObj.Mission.Count();

@@ -19,8 +19,12 @@ namespace CI_Platfrom.Repository.Repository
         {
             _db = db;
         }
-
         public List<Story> GetStoryDetails()
+        {
+            List<Story> storyList = _db.Stories.Include(e => e.Mission).Include(e => e.StoryInvites).Include(e => e.User).Include(e => e.StoryMedia).ToList();
+            return storyList;
+        }
+        public List<Story> GetPublishedStoryDetails()
         {
             List<Story> storyList = _db.Stories.Where(e => e.Status == "PUBLISHED").Include(e => e.StoryMedia).ToList();
             return storyList;

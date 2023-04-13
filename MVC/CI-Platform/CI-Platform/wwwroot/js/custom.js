@@ -277,6 +277,7 @@ function addthemeFilterTag(text) {
 
 
 function sendInfo() {
+    // for getting total cities , themes, skills in string from previous list
     filtercitystr = "";
     filterthemestr = "";
     filterSkillstr = "";

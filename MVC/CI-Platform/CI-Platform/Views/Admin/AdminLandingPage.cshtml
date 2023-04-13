@@ -1,4 +1,6 @@
-﻿@*
+﻿@using CI_Platfrom.Entities.Models.ViewModel
+@using System.Globalization
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -6,7 +8,7 @@
 }
 
 
-
+@model AdminVM
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,12 +27,16 @@
                 
                 
             }
+            .dataTables_filter{
+                margin-bottom:12px;
+            }
             .nav-pills .nav-link{
                 color:white;
             }
             .orange__color {
                 color:#F88634;
                 background-color: #F88634;
+                border-color:#F88634;
             }
     </style>
 </head>
@@ -75,14 +81,194 @@
           
         </div>
         <div class="tab-content col-10" id="v-pills-tabContent">
-          <div class="tab-pane fade show active" id="v-pills-User" role="tabpanel" aria-labelledby="v-pills-User-tab">A</div>
-          <div class="tab-pane fade" id="v-pills-CMSPage" role="tabpanel" aria-labelledby="v-pills-CMSPage-tab">B</div>
-          <div class="tab-pane fade" id="v-pills-Mission" role="tabpanel" aria-labelledby="v-pills-Mission-tab">.c.</div>
-          <div class="tab-pane fade" id="v-pills-MissionTheme" role="tabpanel" aria-labelledby="v-pills-MissionTheme-tab">MissionTheme</div>
-          <div class="tab-pane fade" id="v-pills-MissionSkills" role="tabpanel" aria-labelledby="v-pills-MissionSkills-tab">.MissionSkills.</div>
-          <div class="tab-pane fade" id="v-pills-MissionApplication" role="tabpanel" aria-labelledby="v-pills-MissionApplication-tab">
+
+            @*HEADER OF ADMIN PAGE*@
+            <div class="row bg-transperent border mb-4">
+                <div class="col-12 d-flex flex-row align-items-center mb-2 mt-2 justify-content-between">
+
+                  <div>@DateTime.Now.DayOfWeek.ToString(), @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@DateTime.Now.Month) @DateTime.Now.Day, @DateTime.Now.Year, @DateTime.Now.Hour:@DateTime.Now.Minute </div>
+                
+                  <div class="dropdown text-end me-sm-5">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="~/images/user-img.png" alt="user image" width="40" height="40" class="rounded-circle" data-bs-toggle="modal" data-bs-target="#ImageModal">
+                        <span class="d-none d-sm-inline">Dev Patel</span>
+                    </a>
+                    <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" asp-controller="VolunteeringTimeSheet" asp-action="VolunteeringTimeSheet">Volunteering Timesheet</a></li>
+                        <li><a class="dropdown-item" asp-controller="Registration" asp-action="Profile">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" asp-controller="Authentication" asp-action="logout">Sign out</a></li>
+                    </ul>
+                  </div>
+
+                </div>
+            </div>
+
+            @* USER PAGE*@
+
+          <div class="tab-pane fade show active" id="v-pills-User" role="tabpanel" aria-labelledby="v-pills-User-tab">
+            <div class="d-flex align-items-center justify-content-between flex-row mb-2">
+                <h3 class="border-bottom border-4 border-dark">User</h3>
+                <button class="orange__color rounded-pill  bg-white me-2">
+                    <span class="me-2"><i class="bi bi-plus-circle"></i></span>Add
+                </button>
+            </div>
             <div class="table-responsive">
-              <table class="table border" id="DataTablesId">
+              <table class="table border DataTablesId">
+                <thead style="background-color: #f9f9f9;">
+                  <tr>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Employee Id</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @{
+                       foreach (var item in Model.Users)
+                       {                     
+                          <tr>
+                            <td scope="col">@item.FirstName</td>
+                            <td scope="col">@item.LastName</td>
+                            <td scope="col">@item.Email</td>
+                            <td scope="col">@item.EmployeeId</td>
+                            <td scope="col">@item.Department</td>
+                            
+                            @if(@item.Status == 1)
+                            {
+                                <td scope="col" class="text-success">Active </td>
+                            }
+                            else
+                            {
+                                <td scope="col" class="text-danger">In Active</td>
+                            }
+                            
+                            <td>
+                              <button class="border-0 bg-white">
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                     class="bi bi-pencil-square" style="color: #F88634;pointer-events:none" viewBox="0 0 16 16"  >
+                                     <path
+                                         d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                     <path fill-rule="evenodd"
+                                         d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                 </svg>
+                              </button>
+
+                              <button class="border-0 bg-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                    class="bi bi-trash3" viewBox="0 0 16 16" style="pointer-events:none">
+                                    <path
+                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                </svg>
+                              </button>                          
+
+                      
+                            </td>
+                          </tr>
+                        }
+                    }
+                 
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+         
+            @* CMS PAGE*@
+
+          <div class="tab-pane fade" id="v-pills-CMSPage" role="tabpanel" aria-labelledby="v-pills-CMSPage-tab">B</div>
+          
+             @* MISSION  PAGE*@
+
+          <div class="tab-pane fade" id="v-pills-Mission" role="tabpanel" aria-labelledby="v-pills-Mission-tab">
+
+             <div class="d-flex align-items-center justify-content-between flex-row mb-2">
+                <h3 class="border-bottom border-4 border-dark">Mission</h3>
+                <button class="orange__color rounded-pill  bg-white me-2">
+                    <span class="me-2"><i class="bi bi-plus-circle"></i></span>Add
+                </button>
+             </div>
+
+             <div class="table-responsive">
+                <table class="table border DataTablesId">
+                  <thead style="background-color: #f9f9f9;">
+                    <tr>
+                      <th scope="col">Mission Title</th>
+                      <th scope="col">Mission type</th>
+                      <th scope="col">Start Date</th>
+                      <th scope="col">End Date</th>                      
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      @{
+                         foreach (var item in Model.missions)
+                         {                     
+                            <tr>
+                              <td scope="col">@item.Title</td>
+                              <td scope="col">@item.MissionType</td>
+                              <td scope="col">@item.StartDate.Value.ToShortDateString()</td>
+                              <td scope="col">@item.EndDate.Value.ToShortDateString()</td>                             
+                              <td>
+                                <button class="border-0 bg-white">
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                       class="bi bi-pencil-square" style="color: #F88634;pointer-events:none" viewBox="0 0 16 16"  >
+                                       <path
+                                           d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                       <path fill-rule="evenodd"
+                                           d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                   </svg>
+                                </button>
+
+                                <button class="border-0 bg-white">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                      class="bi bi-trash3" viewBox="0 0 16 16" style="pointer-events:none">
+                                      <path
+                                          d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                  </svg>
+                                </button>                          
+
+                        
+                              </td>
+                            </tr>
+                          }
+                      }
+                   
+                    
+                  </tbody>
+                 </table>
+             </div>
+          </div>
+          
+             @* MISSION THEME PAGE*@
+
+          <div class="tab-pane fade" id="v-pills-MissionTheme" role="tabpanel" aria-labelledby="v-pills-MissionTheme-tab">MissionTheme</div>
+         
+            @* MISSION SKILLS PAGE*@
+
+          <div class="tab-pane fade" id="v-pills-MissionSkills" role="tabpanel" aria-labelledby="v-pills-MissionSkills-tab">.MissionSkills.</div>
+         
+            @* MISSION APPLICATION PAGE*@
+
+          <div class="tab-pane fade" id="v-pills-MissionApplication" role="tabpanel" aria-labelledby="v-pills-MissionApplication-tab">
+           
+            <div class="d-flex align-items-center justify-content-between flex-row mb-2">
+                <h3 class="border-bottom border-4 border-dark">Mission Application</h3>
+                <button class="orange__color rounded-pill  bg-white me-2">
+                    <span class="me-2"><i class="bi bi-plus-circle"></i></span>Add
+                </button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table border DataTablesId">
                 <thead style="background-color: #f9f9f9;">
                   <tr>
                     <th scope="col">Mission Title</th>
@@ -94,63 +280,111 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td scope="row">Grow Trees</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>Dev Patel</td>
-                    <td>10-04-2023</td>
-                    <td>
-                      <button class="border-0 bg-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="text-success bi bi-check-circle" viewBox="0 0 16 16">
-                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                          <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-                        </svg>
-                      </button>
+                    @{
+                       foreach (var item in Model.missionApplication)
+                       {                     
+                          <tr>
+                            <td scope="row">@item.Mission.Title</td>
+                            <td>@item.MissionId</td>
+                            <td>@item.UserId</td>
+                            <td>@item.User.FirstName @item.User.LastName</td>
+                            <td>@item.AppliedAt</td>
+                            <td>
+                              <button class="border-0 bg-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="text-success bi bi-check-circle" viewBox="0 0 16 16">
+                                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                  <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                </svg>
+                              </button>
 
-                      <button class="border-0 bg-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="text-danger bi bi-x-circle" viewBox="0 0 16 16">
-                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                      </button>                          
-
-                      
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td scope="row">Plant Trees</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>Bhavik Parmar</td>
-                    <td>15-05-2020</td>
-                    <td>
-                      
-                      <button class="border-0 bg-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="text-success bi bi-check-circle" viewBox="0 0 16 16">
-                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                          <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-                        </svg>
-                      </button>
-
-                      <button class="border-0 bg-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="text-danger bi bi-x-circle" viewBox="0 0 16 16">
-                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                      </button>                          
+                              <button class="border-0 bg-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="text-danger bi bi-x-circle" viewBox="0 0 16 16">
+                                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                              </button>                          
 
                       
-                    </td>
-                  </tr>
+                            </td>
+                          </tr>
+                        }
+                    }
+                 
                   
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="tab-pane fade" id="v-pills-Story" role="tabpanel" aria-labelledby="v-pills-Story-tab">.story.</div>
+
+            @* STORY PAGE*@
+
+          <div class="tab-pane fade" id="v-pills-Story" role="tabpanel" aria-labelledby="v-pills-Story-tab">
+            
+            <div class="d-flex align-items-center justify-content-between flex-row mb-2">
+                <h3 class="border-bottom border-4 border-dark">Story</h3>
+                <button class="orange__color rounded-pill  bg-white me-2">
+                    <span class="me-2"><i class="bi bi-plus-circle"></i></span>Add
+                </button>
+            </div>
+            <div class="table-responsive">
+              <table class="table border DataTablesId">
+                <thead style="background-color: #f9f9f9;">
+                  <tr>
+                    <th scope="col">Story Title</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Mission Title</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @{
+                       foreach (var item in Model.stories)
+                       {                     
+                          <tr>
+                            <td scope="col">@item.Title</td>
+                            <td scope="col">@item.User.FirstName @item.User.LastName</td>
+                            <td scope="col">@item.Mission.Title</td>
+                            <td>
+                              <button class="border-1 orange__color  rounded-pill bg-white" style="border-color:#F88634">
+                                <span>view</span>
+                              </button>
+
+                              <button class="border-0 bg-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="text-success bi bi-check-circle" viewBox="0 0 16 16">
+                                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                  <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                </svg>
+                              </button>
+
+                              <button class="border-0 bg-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="text-danger bi bi-x-circle" viewBox="0 0 16 16">
+                                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                              </button> 
+                              
+                              <button class="border-0 bg-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                    class="bi bi-trash3" viewBox="0 0 16 16" style="pointer-events:none">
+                                    <path
+                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                </svg>
+                              </button>
+                      
+                            </td>
+                          </tr>
+                        }
+                    }
+                 
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+            @* BANNER MANAGEMENT PAGE*@
           <div class="tab-pane fade" id="v-pills-BannerManagement" role="tabpanel" aria-labelledby="v-pills-BannerManagement-tab">BannerManagement</div>
+        
         </div>
       </div>
 
@@ -162,10 +396,10 @@
       
       <script>
         $(document).ready(function(){
-          $('#DataTablesId').DataTable({
+          $('.DataTablesId').DataTable({
             info:false,
             lengthChange:false,
-            dom: '<"float-start"f><"#DataTablesId"t>i<"#paginatorId"lp>',
+            dom: '<"float-start"f><".DataTablesId"t>i<"#paginatorId"lp>',
             
             
           });
