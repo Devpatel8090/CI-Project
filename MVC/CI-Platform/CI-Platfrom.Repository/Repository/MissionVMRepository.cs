@@ -112,6 +112,15 @@ namespace CI_Platfrom.Repository.Repository
             return missionVM;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sort"></param>
+        /// <param name="filter"></param>
+        /// <param name="id"></param>
+        /// <param name="sessionValue"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public MissionVM ApplyFilter(string sort,string filter, long id, string sessionValue,int page= 1)
         {
             MissionVM missionObj = GetAllMissions(sessionValue, id);

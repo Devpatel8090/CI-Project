@@ -360,6 +360,7 @@ function sendInfo() {
 }
 
 //pagination function
+// pageNo global variable 
 var pageNo = 1;
 function AddPagination() {
     pageNo = event.target.innerHTML;
@@ -368,7 +369,8 @@ function AddPagination() {
 }
 
 
-//nextpointer
+//nextpointer 
+// convert the number into int and add one to it and send for filter
 
 function NextPointer() {
     pageNo = Number.parseInt(pageNo);

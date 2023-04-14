@@ -13,6 +13,8 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         public User user { get; set; }
         public IEnumerable<Mission> missions { get; set; }
 
+        public IEnumerable<CmsPage> CmsPages { get; set; }
+
         public IEnumerable<MissionApplication> missionApplication { get; set; }
 
         public IEnumerable<Story> stories { get; set; }

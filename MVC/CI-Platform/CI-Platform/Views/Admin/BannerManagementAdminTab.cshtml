@@ -1,0 +1,23 @@
+﻿@using CI_Platfrom.Entities.Models.ViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+     ViewData["Title"] = "BannerManagementAdminTab";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model AdminVM
+
+            @* BANNER MANAGEMENT PAGE*@
+          <div class="tab-pane fade" id="v-pills-BannerManagement" role="tabpanel" aria-labelledby="v-pills-BannerManagement-tab">BannerManagement</div>
+        
+          <script src="~/lib/jquery/dist/jquery.min.js"></script>
+          <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+          <script>
+                $(document).ready(function() {
+                    var activeTabId = $("#AllAdminTabsList").find("a.active").attr('id');
+                    $('#' + activeTabId).removeClass("active");
+                    $('#BannerManagementTab').addClass("active");
+                });
+            </script>
