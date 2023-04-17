@@ -10,10 +10,16 @@ namespace CI_Platfrom.Entities.Models.ViewModel
     {
         public IEnumerable<User> Users { get; set; }
 
-        public User user { get; set; }
+        public User particularUser { get; set; }
         public IEnumerable<Mission> missions { get; set; }
 
         public IEnumerable<CmsPage> CmsPages { get; set; }
+
+        public CmsPage ParticularCMSPage { get; set; }
+
+        public IEnumerable<Skill> skills { get; set; }
+
+        public IEnumerable<MissionTheme> missionThemes { get; set; }
 
         public IEnumerable<MissionApplication> missionApplication { get; set; }
 

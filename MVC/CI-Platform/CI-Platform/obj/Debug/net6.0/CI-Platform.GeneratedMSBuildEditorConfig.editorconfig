@@ -95,6 +95,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Shared/_CMSPageAddAndEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DTVNQYWdlQWRkQW5kRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Shared/_Comments.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Db21tZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -133,6 +137,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Shared/_TimesheetHeader.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9UaW1lc2hlZXRIZWFkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Shared/_UserAddAndEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Vc2VyQWRkQW5kRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Shared/_UserProfileHeader.cshtml]

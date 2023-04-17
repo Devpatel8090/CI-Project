@@ -11,12 +11,12 @@
 @model AdminVM
 
 @* CMS PAGE*@
-
-           <div class="tab-pane fade show active" id="UserTab" role="tabpanel" aria-labelledby="v-pills-User-tab">
+            
+           <div  id="CMSPageRightPart">
             <div class="d-flex align-items-center justify-content-between flex-row mb-2">
-                <h3 class="border-bottom border-4 border-dark">User</h3>
+                <h3 class="border-bottom border-4 border-dark">CMSPage</h3>
                 
-                <button class="orange__color rounded-pill  bg-white me-2">
+                <button class="orange__color rounded-pill  bg-white me-2" id="AddCMSPageButton">
                     <span class="me-2"><i class="bi bi-plus-circle"></i></span>Add
                 </button>
             </div>
@@ -47,8 +47,8 @@
                             
                             <td>
                                 
-                                      <button class="border-0 bg-white">
-                                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                      <button class="border-0 bg-white cmsPage" value="@item.CmsPageId">
+                                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" value="@item.CmsPageId"
                                                  class="bi bi-pencil-square" style="color: #F88634;pointer-events:none" viewBox="0 0 16 16"  >
                                                  <path
                                                      d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
@@ -124,4 +124,5 @@
                     $('#CMSPageTab').addClass("active");
                 });
             </script>
+            <script src="~/js/Admin.js"></script>
           

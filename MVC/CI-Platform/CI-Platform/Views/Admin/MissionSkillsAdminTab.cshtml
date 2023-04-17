@@ -11,7 +11,115 @@
 
  @* MISSION SKILLS PAGE*@
 
-          <div>.MissionSkills.</div>
+          <div>
+               <div class="d-flex align-items-center justify-content-between flex-row mb-2">
+                <h3 class="border-bottom border-4 border-dark">Story</h3>
+                <button class="orange__color rounded-pill  bg-white me-2" data-bs-toggle="modal" data-bs-target="#AddSkillButtonModal">
+                    <span class="me-2"><i class="bi bi-plus-circle"></i></span>Add
+                </button>
+            </div>
+            <div class="table-responsive">
+              <table class="table border DataTablesId">
+                <thead style="background-color: #f9f9f9;">
+                  <tr>
+                    <th scope="col">Skill Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @{
+                       foreach (var item in Model.skills)
+                       {                     
+                          <tr>
+                            <td scope="col">@item.SkillName</td>
+                            @if(@item.Status == true)
+                            {
+                                <td scope="col" class="text-success">@item.Status</td>
+                            }
+                            else
+                            {
+                                <td scope="col" class="text-danger">@item.Status</td>
+                            }
+
+                            <td>
+                             
+                                @if(@item.Status == true)
+                                {
+                                    <a class="border-0 bg-white text-decoration-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="text-success bi bi-check-circle opacity-25" viewBox="0 0 16 16">
+                                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                          <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                        </svg>
+                                    </a>
+
+                                    <a  asp-action="Disapprove" asp-controller="Admin" asp-route-skillId="@item.SkillId" class="border-0 bg-white text-decoration-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="text-danger bi bi-x-circle" viewBox="0 0 16 16">
+                                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                        </svg>
+                                    </a>
+
+                                }
+                                else
+                                {
+                                    
+                                    <a asp-action="Approve" asp-controller="Admin" asp-route-skillId="@item.SkillId" class="border-0 bg-white text-decoration-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="text-success bi bi-check-circle " viewBox="0 0 16 16">
+                                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                          <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                        </svg>
+                                    </a>
+
+                                    <a   class="border-0 bg-white text-decoration-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="text-danger bi bi-x-circle opacity-25" viewBox="0 0 16 16">
+                                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                        </svg>
+                                   </a>
+                                    
+                                
+                                }
+
+                              
+                            </td>
+                          </tr>
+                        }
+                    }
+                 
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          
+
+
+
+          <!-- Add Skills  modal -->
+
+        <div class="modal fade" id="AddSkillButtonModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+               <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="skillName" placeholder="SkillName">
+                  <label for="skillName">SkillName</label>
+               </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" id="AddSkillButton" class="btn btn-success">Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
            <script src="~/lib/jquery/dist/jquery.min.js"></script>
            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
            <script>
@@ -21,3 +129,4 @@
                     $('#MissionSkillsTab').addClass("active");
                 });
             </script>
+            <script src="~/js/Admin.js" ></script>

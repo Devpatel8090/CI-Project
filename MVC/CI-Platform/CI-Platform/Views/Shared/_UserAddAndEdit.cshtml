@@ -1,0 +1,81 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+
+@using CI_Platfrom.Entities.Models.ViewModel
+
+@model AdminVM
+<div class="addformbody">
+    <div>
+        <h3 class="addformheader">Add User</h3>
+        </div>
+        <div class="addformdata">
+            <form method="post">
+               @* <input asp-for="@Model.loggeduser.Email" id="adminEmail" hidden>
+                <input asp-for="@Model.User.UserId" id="userid" hidden>*@
+                <div class="row mb-3">
+                    <div class="col">
+                        <label  class="form-label">First Name :</label>
+                        <input asp-for="@Model.particularUser.FirstName" type="text" class="form-control" id="firstname">
+                        <span id="firstnamespan" class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label  class="form-label">Last Name :</label>
+                        <input asp-for="@Model.particularUser.LastName" type="text" class="form-control" id="lastname">
+                        <span id="lastnamespan" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class=col>
+                        <label  class="form-label">Email :</label>
+                        <input asp-for="@Model.particularUser.Email" type="email"  class="form-control" id="email">
+                        <span id="emailspan" class="text-danger"></span>
+                    </div>
+                    <div class=col>
+                        <label  class="form-label">Phone Number :</label>
+                        <input asp-for="@Model.particularUser.PhoneNumber" type="text"  class="form-control" id="phone">
+                        <span id="phonespan" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label  class="form-label">EmployeeId :</label>
+                        <input asp-for="@Model.particularUser.EmployeeId" type="text" class="form-control" id="EmployeeId">
+                        <span id="employeespan" class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label  class="form-label">Department Name :</label>
+                        <input asp-for="@Model.particularUser.Department" type="text" class="form-control" id="department">
+                        <span id="departmentspan" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label  class="form-label">Country :</label>
+                        <select asp-for="@Model.particularUser.CountryId" class="form-select"  id="country" aria-label="Default select example" >
+                          <option value="" selected>Select Country</option>
+                        </select>
+                        <span id="countryspan" class="text-danger"></span>
+                    </div>
+                   @* <div class="col" id="adminCityList">
+                        <partial name="_AdminCityList"/>
+                    </div>*@
+                    <div class="col">
+                        <label  class="form-label">Status :</label>
+                        <select asp-for="@Model.particularUser.Status" id="status" class="form-select" aria-label="Default select example">
+                          <option value="1" selected>Active</option>
+                          <option value="0">InActive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="text-end">
+                     <button type="button" class="btn border-secondary px-3 py-1 text-secondary  text-center rounded-pill bg-white">Cancel</button>
+                    <button type="submit"  class="btn px-3 text-success py-1 border-success text-center rounded-pill bg-white">Save</button>
+                </div>
+            </form>
+        </div>
+    
+</div>

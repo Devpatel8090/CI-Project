@@ -70,7 +70,7 @@ namespace CI_Platform.Controllers
         public IActionResult UserAdminTab()
         {
             AdminVM modal = new AdminVM();
-            var userDetails = _unitOfWork.User.GetUserDetails().ToList();
+            var userDetails = _unitOfWork.User.GetUserDetails().Where(user => user.DeletedAt == null);
             modal.Users = userDetails;
             return View(modal);
         }
@@ -78,7 +78,7 @@ namespace CI_Platform.Controllers
         public IActionResult CMSPageAdminTab()
         {
             AdminVM modal = new AdminVM();
-            var CMSPageDetails = _unitOfWork.CMSPage.GetAllCMSPageDetails().ToList();
+            var CMSPageDetails = _unitOfWork.CMSPage.GetAllCMSPageDetails().Where(cms => cms.DeletedAt == null);
             modal.CmsPages = CMSPageDetails;
             return View(modal);
         }
@@ -86,7 +86,7 @@ namespace CI_Platform.Controllers
         public IActionResult MissionAdminTab()
         {
             AdminVM modal = new AdminVM();
-            var missions = _unitOfWork.Mission.GetMissionDetails();
+            var missions = _unitOfWork.Mission.GetMissionDetails().Where(mission => mission.DeletedAt == null);
             modal.missions = missions;
             return View(modal);
         }
@@ -94,15 +94,15 @@ namespace CI_Platform.Controllers
         public IActionResult MissionThemeAdminTab()
         {
             AdminVM modal = new AdminVM();
-            var missions = _unitOfWork.Mission.GetMissionDetails();
-            modal.missions = missions;
+            var missionThemeDetails = _unitOfWork.Theme.GetThemeDetails();
+            modal.missionThemes = missionThemeDetails;
             return View(modal);
         }
         public IActionResult MissionSkillsAdminTab()
         {
             AdminVM modal = new AdminVM();
-            var missions = _unitOfWork.Mission.GetMissionDetails();
-            modal.missions = missions;
+            var skills = _unitOfWork.Skill.GetSkillDetails();
+            modal.skills = skills;
             return View(modal);
         }
 
@@ -117,7 +117,7 @@ namespace CI_Platform.Controllers
         public IActionResult StoryAdminTab()
         {
             AdminVM modal = new AdminVM();
-            var storiesDetails = _unitOfWork.Story.GetStoryDetails();
+            var storiesDetails = _unitOfWork.Story.GetStoryDetails().Where(story => story.DeletedAt == null);
             modal.stories = storiesDetails;
             return View(modal);
 
@@ -160,6 +160,7 @@ namespace CI_Platform.Controllers
 
                 return RedirectToAction("MissionAdminTab");
             }
+          
 
             return RedirectToAction("UserAdminTab");
 
@@ -167,7 +168,7 @@ namespace CI_Platform.Controllers
         }
 
 
-        public IActionResult Approve(long missionAppId = 0)
+        public IActionResult Approve(long missionAppId = 0, long skillId = 0, long missionThemeId = 0)
         {
             if (missionAppId != 0)
             {
@@ -176,11 +177,32 @@ namespace CI_Platform.Controllers
                 missionApplicationDetail.UpdatedAt = DateTime.Now;
                 _unitOfWork.MissionApplication.Update(missionApplicationDetail);
                 _unitOfWork.save();
+                return RedirectToAction("MissionApplicationAdminTab", "Admin");
+            }
+            if (skillId != 0)
+            {
+                var skillDetail = _unitOfWork.Skill.GetFirstOrDefault(skill => skill.SkillId == skillId);
+                skillDetail.Status = true;
+                skillDetail.UpdatedAt = DateTime.Now;
+                _unitOfWork.Skill.Update(skillDetail);
+                _unitOfWork.save();
+                return RedirectToAction("MissionSkillsAdminTab", "Admin");
+            }
+
+            if (missionThemeId != 0)
+            {
+                var missionThemeDetails = _unitOfWork.Theme.GetFirstOrDefault(missiontheme => missiontheme.MissionThemeId == missionThemeId);
+                missionThemeDetails.Status = true;
+                missionThemeDetails.UpdatedAt = DateTime.Now;
+                _unitOfWork.Theme.Update(missionThemeDetails);
+                _unitOfWork.save();
+                return RedirectToAction("MissionThemeAdminTab");
+
             }
             return RedirectToAction("MissionApplicationAdminTab", "Admin");
 
         }
-        public IActionResult DisApprove(long missionAppId = 0)
+        public IActionResult DisApprove(long missionAppId = 0,long skillId=0, long missionThemeId = 0)
         {
             if (missionAppId != 0)
             {
@@ -189,9 +211,97 @@ namespace CI_Platform.Controllers
                 missionApplicationDetail.UpdatedAt = DateTime.Now;
                 _unitOfWork.MissionApplication.Update(missionApplicationDetail);
                 _unitOfWork.save();
+                return RedirectToAction("MissionApplicationAdminTab", "Admin");
+
+            }
+            if(skillId != 0)
+            {
+                var skillDetail = _unitOfWork.Skill.GetFirstOrDefault(skill => skill.SkillId == skillId);
+                skillDetail.Status = false;
+                skillDetail.UpdatedAt = DateTime.Now;
+                _unitOfWork.Skill.Update(skillDetail);
+                _unitOfWork.save();
+                return RedirectToAction("MissionSkillsAdminTab", "Admin");
+            }
+            if (missionThemeId != 0)
+            {
+                var missionThemeDetails = _unitOfWork.Theme.GetFirstOrDefault(missiontheme => missiontheme.MissionThemeId == missionThemeId);
+                missionThemeDetails.Status = false;
+                missionThemeDetails.UpdatedAt = DateTime.Now;
+                _unitOfWork.Theme.Update(missionThemeDetails);
+                _unitOfWork.save();
+
+                return RedirectToAction("MissionThemeAdminTab");
 
             }
             return RedirectToAction("MissionApplicationAdminTab", "Admin");
         }
+
+        public void AddSkill(string skillName)
+        {
+            var skill = new Skill();
+            skill.SkillName = skillName;
+             
+            _unitOfWork.Skill.Add(skill);
+            _unitOfWork.save();
+
+            
+        }
+
+        public void AddMissionThemeName(string MissionThemeName)
+        {
+            var missionTheme  = new MissionTheme();
+            missionTheme.Title = MissionThemeName;
+
+            _unitOfWork.Theme.Add(missionTheme);
+            _unitOfWork.save();
+
+            
+
+        }
+
+        public IActionResult AddCMSPage()
+        {
+            return PartialView("_CMSPageAddAndEdit");
+        }
+
+        public IActionResult EditCMSPage(long cmspageID)
+        {
+            AdminVM admin = new AdminVM();
+            admin.ParticularCMSPage = _unitOfWork.CMSPage.GetFirstOrDefault(cms => cms.CmsPageId == cmspageID);
+
+            return PartialView("_CMSPageAddAndEdit", admin);
+        }
+        [HttpPost]
+        public IActionResult EditCMSPage(AdminVM modal)
+        {
+            AdminVM admin = new AdminVM();
+            if(modal.ParticularCMSPage.CmsPageId != 0)
+            {
+                var AlreadyExistedCMSPage = _unitOfWork.CMSPage.GetFirstOrDefault(cms => cms.CmsPageId == modal.ParticularCMSPage.CmsPageId);
+                AlreadyExistedCMSPage.Description = modal.ParticularCMSPage.Description;
+                AlreadyExistedCMSPage.Slug = modal.ParticularCMSPage.Slug;
+                AlreadyExistedCMSPage.Title = modal.ParticularCMSPage.Title;
+                AlreadyExistedCMSPage.Status = modal.ParticularCMSPage.Status;
+
+                _unitOfWork.CMSPage.Update(AlreadyExistedCMSPage);
+                _unitOfWork.save();
+            }
+            else
+            {
+                _unitOfWork.CMSPage.Add(modal.ParticularCMSPage);
+                _unitOfWork.save();
+            }
+
+
+            return RedirectToAction("CMSPageAdminTab","Admin");
+        }
+
+
+        public IActionResult AddUser()
+        {
+            return PartialView("_UserAddAndEdit");
+        }
+
     }
 }
