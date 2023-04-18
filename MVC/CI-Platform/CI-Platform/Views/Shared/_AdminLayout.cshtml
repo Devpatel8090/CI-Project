@@ -29,12 +29,22 @@
                 background-color: #F88634;
                 border-color:#F88634;
             }
+           /* .paginate_button{
+               color:#F88634;
+                background-color: #F88634;
+                border-color:#F88634;
+            }
+             .current{
+               color:#F88634;
+                background-color: #F88634;
+                border-color:#F88634;
+            }*/
     </style>
 </head>
 <body class="container-fluid">
     <div class="d-flex align-items-start row">
         
-        <div class="orange__color col-2 nav flex-column nav-pills min-vh-100" id="AllAdminTabsList" role="tablist" aria-orientation="vertical">
+        <div class="orange__color col-2 nav flex-column nav-pills min-vh-100 position-sticky top-0" id="AllAdminTabsList" role="tablist" aria-orientation="vertical">
          
             <span class="text-white ms-4 mt-5 pt-5  mb-2">Navigation</span>
             <a class="nav-link text-start activeBtn ms-2 me-2 mb-2" id="UserTab" asp-controller="Admin" asp-action="UserAdminTab" type="button" role="tab" aria-controls="v-pills-home" >

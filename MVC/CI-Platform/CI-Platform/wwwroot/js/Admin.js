@@ -107,4 +107,58 @@ $('#AddUserButton').on('click', function () {
             console.log(error);
         }
     })
+});
+
+$('.EditUserButton').on('click', function (event) {
+    // To Stop Bubbling and prevent to create the multiple click & stop the clicks to other parents and children elements
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    var userid = event.target.getAttribute("value");
+    var username = userid;
+    $.ajax({
+        url: "/Admin/EditUser?UserId=" + userid,
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+            $('#UserTabAdd').html(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+
+    })
+});
+
+
+$('#AddMissionButton').on('click', function () {
+    $.ajax({
+        url: "/Admin/AddMission",
+        success: function (data) {
+            console.log(data);
+            $('#MissionTabAdd').html(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    })
+});
+
+$('.missionEdit').on('click', function (event) {
+    // To Stop Bubbling and prevent to create the multiple click & stop the clicks to other parents and children elements
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    var missionId = event.target.getAttribute("value");
+
+    $.ajax({
+        url: "/Admin/EditMission?MissionId=" + missionId,
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+            $('#MissionTabAdd').html(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+
+    })
 })

@@ -11,11 +11,11 @@
  @model AdminVM
              @* MISSION  PAGE*@
 
-          <div >
+          <div id="MissionTabAdd">
 
              <div class="d-flex align-items-center justify-content-between flex-row mb-2">
                 <h3 class="border-bottom border-4 border-dark">Mission</h3>
-                <button class="orange__color rounded-pill  bg-white me-2">
+                <button id="AddMissionButton" class="orange__color rounded-pill  bg-white me-2">
                     <span class="me-2"><i class="bi bi-plus-circle"></i></span>Add
                 </button>
              </div>
@@ -41,7 +41,7 @@
                               <td scope="col">@item.StartDate.Value.ToShortDateString()</td>
                               <td scope="col">@item.EndDate.Value.ToShortDateString()</td>                             
                               <td>
-                                  <button class="border-0 bg-white">
+                                  <button class="missionEdit border-0 bg-white" value="@item.MissionId">
                                              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
                                                  class="bi bi-pencil-square" style="color: #F88634;pointer-events:none" viewBox="0 0 16 16"  >
                                                  <path
@@ -114,3 +114,4 @@
                     $('#MissionTab').addClass("active");
                 });
             </script>
+            <script src="~/js/Admin.js"></script>

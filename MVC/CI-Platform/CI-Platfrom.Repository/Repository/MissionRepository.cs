@@ -48,7 +48,7 @@ namespace CI_Platfrom.Repository.Repository
         /// <returns></returns>
         public Mission GetMissionByMissionId(long missionId)
         {
-            var particularMission = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m=> m.MissionRatings).Include(m => m.Comments).Include(m=> m.MissionDocuments).Include( e=> e.GoalMissions).FirstOrDefault(m => m.MissionId == missionId);
+            var particularMission = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionMedia).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m=> m.MissionRatings).Include(m => m.Comments).Include(m=> m.MissionDocuments).Include( e=> e.GoalMissions).FirstOrDefault(m => m.MissionId == missionId);
             return particularMission;
         }
 

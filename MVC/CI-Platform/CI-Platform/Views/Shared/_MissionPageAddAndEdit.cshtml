@@ -1,0 +1,295 @@
+﻿@using CI_Platfrom.Entities.Models.ViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+
+@model AdminVM
+<div class="addformbody">
+    <div>
+        <h3 class="addformheader"> Mission</h3>
+    </div>
+    <form asp-controller="Admin" asp-action="AddAdminMission" method="post" enctype="multipart/form-data">
+        <div class="addformdata">
+               @* <input asp-for="@Model.loggeduser.Email" id="adminEmail" hidden>*@
+                <input asp-for="@Model.particularMission.MissionId" id="cmsid" hidden>
+                <div class="row">
+                    <div class="mb-3 col-6">
+                        <label class="form-label">Title :</label>
+                        <input asp-for="@Model.particularMission.Title" onchange="removeadduservalidation()" class="form-control" id="particularMissiontitle">
+                        <span class="text-danger" id="particularMissiontitlespan"></span>
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label  class="form-label">Short Description :</label>
+                        <input asp-for="@Model.particularMission.ShortDescription" onchange="removeadduservalidation()" class="form-control" id="particularMissionshortdesc">
+                        <span class="text-danger" id="particularMissionshortdescspan"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label  class="form-label">Description :</label>
+                    <textarea id="particularMissionDescription" asp-for="@Model.particularMission.Description"></textarea>
+                    <span class="text-danger" id="particularMissionDescriptionspan"></span>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label  class="form-label">Country :</label>
+                        <select asp-for="@Model.particularMission.CountryId" class="form-select" data="particularMission"  id="country" aria-label="Default select example" asp-items="@Model.countries" >
+                          <option value="" selected>Select Country</option>
+                        </select>
+                        
+                    </div>
+                     <div class="col">
+                        <label  class="form-label">City :</label>
+                        <select asp-for="@Model.particularMission.CityId" class="form-select" data="particularMission" id="city"  aria-label="Default select example" asp-items="@Model.cities" >
+                          <option value="" selected>Select Country</option>
+                        </select>
+                       
+                    </div>
+
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Organization Name :</label>
+                    <input asp-for="@Model.particularMission.OrganizationName"  class="form-control" id="particularMissionorgname">
+                    <span class="text-danger" id="particularMissionorgnamespan"></span>
+                </div>
+                <div class="mb-3">
+                    <label  class="form-label">Organization Details :</label>
+                    <textarea id="particularMissionorgdetails" asp-for="@Model.particularMission.OrganizationDetails"></textarea>
+                    <span class="text-danger" id="particularMissionorgdetailsspan"></span>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label">Start Date :</label>
+                            @if(Model.particularMission == null)
+                            {
+                                <input asp-for="@Model.particularMission.StartDate"  type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" id="particularMissionstartdate">
+                            }
+                            else
+                            {
+                                <input asp-for="@Model.particularMission.StartDate"  type="date" class="form-control" min="@Model.particularMission.StartDate.Value.ToString("yyyy-MM-dd")" id="particularMissionstartdate">
+                            }
+
+                        <span class="text-danger" id="particularMissionstartdatespan"></span>
+                    </div>
+                    <div class="col">
+                        <label  class="form-label">End Date :</label>
+                        <input asp-for="@Model.particularMission.EndDate"  type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" id="particularMissionenddate">
+                        <span class="text-danger" id="particularMissionenddatespan"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label  class="form-label">Mission Type :</label>
+                        <select asp-for="@Model.particularMission.MissionType" id="particularMissiontype"  class="form-select">
+                          <option value="GOAL" selected>GOAL</option>
+                          <option value="TIME">TIME</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <div id="totalseats" class="d-none">
+                            <label  class="form-label">Total Seats :</label>
+                            <input asp-for="@Model.particularMission.TotalSeats"  type="text" class="form-control" id="missionseats">
+                            <span class="text-danger" id="particularMissionseatsspan"></span>
+                        </div>
+                        
+                        <div id="goaltext" class="">
+                            <label  class="form-label">Goal Text :</label>
+                            <input  onchange="removeadduservalidation()" type="text" class="form-control" id="missiongoaltext">
+                            <span class="text-danger" id="missiongoaltextspan"></span>
+                        </div>
+                        
+
+                    </div>
+                    <div class="col">
+                        <div id="deadline" class="d-none">
+                            <label  class="form-label">Deadline :</label>
+                            <input asp-for="@Model.particularMission."  min="@DateTime.Now.ToString("yyyy-MM-dd")" type="date" class="form-control" id="missiondeadline">
+                            <span class="text-danger" id="missiondeadlinespan"></span>
+                        </div>
+                        <div id="goalnumber" class="">
+                            <label  class="form-label">Mission Goal :</label>
+                            <input   type="text" class="form-control" id="missiongoal">
+                            <span class="text-danger" id="missiongoalspan"></span>
+                        </div>
+                    </div>
+                        
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="col">
+                            <label  class="form-label">Mission Availability :</label>
+                            <select asp-for="@Model.particularMission.Availability" class="form-select" aria-label="Default select example">
+                                <option value="weekly" selected>Weekly</option>
+                                <option value="daily">Daily</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="col">
+                            <label  class="form-label">Mission Status :</label>
+                            <select asp-for="@Model.particularMission.Status" class="form-select" aria-label="Default select example">
+                                <option value="1" selected>Active</option>
+                                <option value="0">InActive</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label  class="form-label">Theme :</label>
+                        <select asp-for="@Model.particularMission.ThemeId"  class="form-select" id="theme" aria-label="Default select example" asp-items="@Model.themes"  >
+                          <option value="" selected>Select Theme</option>
+                        </select>
+                        <span class="text-danger" id="themespan"></span>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Skills :</label>
+                        <div class="form-select">
+                            <select class="nav-link dropdown" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Select Skill
+                            </select>
+                           <ul class="dropdown-menu ps-2 scrollable-menu" aria-labelledby="navbarDropdown" style="width : 600px">
+                               @foreach (var item in Model.skills)
+                                {
+                                    if(Model.particularMission != null) {
+                                    if(Model.particularMission.MissionSkills.Any(i=>i.SkillId == item.SkillId))
+                                    {
+                                        <li>
+                                            <input class="form-check-input particularMission-skills" type="checkbox" name="skills" value="@item.SkillId" id="@item.SkillName" checked>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                    @item.SkillName
+                                            </label>
+                                        </li>
+                                    }
+                                    else{
+                                        <li>
+                                            <input class="form-check-input particularMission-skills" type="checkbox" name="skills" value="@item.SkillId" id="@item.SkillName">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                    @item.SkillName
+                                            </label>
+                                        </li>
+                                    }
+                                    }
+                                    else{
+                                        <li>
+                                            <input class="form-check-input particularMission-skills" type="checkbox" name="skills" value="@item.SkillId" id="@item.SkillName">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                    @item.SkillName
+                                            </label>
+                                        </li>
+                                    }
+                                    
+                                }                   
+                               
+
+                                
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div>
+                    <div class="mb-3">
+                      <label for="formFileMultiple" class="form-label">Mission Images : </label>
+                      <input class="form-control" type="file" class="file" name="files" onchange="displaymissionimg()" id="img" multiple>
+                    </div>
+                    <div id="image-container" class="d-flex">
+                        @if (Model.particularMission != null)
+                        {
+                            var medias = Model.particularMission.MissionMedia.Where(s => s.MediaType != "Video");
+                            for(var i=0;i<medias.Count();i++)
+                            {
+                                <div class="image">
+                                    <span onclick="delImage(@i)">&times;</span>
+                                    <img src="@medias.ElementAt(i).MediaPath" class="oldImgs"/>
+                                </div>                                
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="mb-3">
+                    
+                      <label for="formFileMultiple" class="form-label">Upload Documents : </label>
+                      <input class="form-control" type="file" onchange="verifydocuments()" name="documents" id="doc" multiple>
+                      <div id="documents-container" class="d-flex mt-3">
+                          @if(Model.particularMission != null){
+                              var documents = Model.particularMission.MissionDocuments;
+                              for(var i=0;i<documents.Count();i++)
+                              {
+                                   <div class="doc">
+                                       <a target="_blank" href="@documents.ElementAt(i).DocumentPath" class="docpill mx-1 oldDocs">@documents.ElementAt(i).DocumentName<button class="mx-2 pillbtn" type="button" onclick="delDocument(@i)">X</button></a>
+                                   </div>                                
+                              }
+                          }
+                      </div>
+                </div>
+                <div class="mb-3">
+                    <label for="formFileMultiple" class="form-label">Video Url : </label>
+                    <input class="form-control" name="videourl" type="text" id="url">
+                </div>
+
+                
+        </div>
+        <div class="text-end">
+                    <button type="submit" onclick="return validateparticularMissionPagedata()" class="submitbtn">Save</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
+                </div>
+    </form>
+    
+</div>
+    
+     
+    
+<script>
+    $(document).ready(function() {
+      $('#particularMissionDescription').summernote({
+          height: 200,
+      });
+      $('#particularMissionorgdetails').summernote({
+          height: 200,
+      });
+    });
+
+
+</script>
+<script>
+    $("#country").on('change',function() {
+        let countryId =   $("#country").find(":selected").val();
+        $.ajax({
+            url: "/Mission/GetCityByCountry?CountryId="+countryId,
+            type:"GET",
+            success: function (data) {
+                console.log(data);
+                var items= "";
+                for(let i=0 ; i< data.length; i++ ) {
+                    items += `<option value="${data[i].cityId}" selected>${data[i].name}</option>`
+                }
+                $('#city').html(items);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    })
+</script>
+<script>
+    $('#particularMissiontype').on('change',function() {
+        var value = $('#particularMissiontype').find(':selected').val();
+        if(value == "GOAL") {
+            $('#goaltext').removeClass('d-none');
+            $('#goalnumber').removeClass('d-none');
+            $('#totalseats').addClass('d-none');
+            $('#deadline').addClass('d-none');
+        }
+        else{
+            $('#goaltext').addClass('d-none');
+            $('#goalnumber').addClass('d-none');
+            $('#totalseats').removeClass('d-none');
+            $('#deadline').removeClass('d-none');
+        }
+    })
+     
+</script>

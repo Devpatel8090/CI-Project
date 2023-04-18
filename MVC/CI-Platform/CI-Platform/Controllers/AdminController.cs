@@ -2,6 +2,7 @@
 using CI_Platfrom.Entities.Models.ViewModel;
 using CI_Platfrom.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CI_Platform.Controllers
 {
@@ -160,7 +161,7 @@ namespace CI_Platform.Controllers
 
                 return RedirectToAction("MissionAdminTab");
             }
-          
+
 
             return RedirectToAction("UserAdminTab");
 
@@ -202,7 +203,7 @@ namespace CI_Platform.Controllers
             return RedirectToAction("MissionApplicationAdminTab", "Admin");
 
         }
-        public IActionResult DisApprove(long missionAppId = 0,long skillId=0, long missionThemeId = 0)
+        public IActionResult DisApprove(long missionAppId = 0, long skillId = 0, long missionThemeId = 0)
         {
             if (missionAppId != 0)
             {
@@ -214,7 +215,7 @@ namespace CI_Platform.Controllers
                 return RedirectToAction("MissionApplicationAdminTab", "Admin");
 
             }
-            if(skillId != 0)
+            if (skillId != 0)
             {
                 var skillDetail = _unitOfWork.Skill.GetFirstOrDefault(skill => skill.SkillId == skillId);
                 skillDetail.Status = false;
@@ -241,22 +242,22 @@ namespace CI_Platform.Controllers
         {
             var skill = new Skill();
             skill.SkillName = skillName;
-             
+
             _unitOfWork.Skill.Add(skill);
             _unitOfWork.save();
 
-            
+
         }
 
         public void AddMissionThemeName(string MissionThemeName)
         {
-            var missionTheme  = new MissionTheme();
+            var missionTheme = new MissionTheme();
             missionTheme.Title = MissionThemeName;
 
             _unitOfWork.Theme.Add(missionTheme);
             _unitOfWork.save();
 
-            
+
 
         }
 
@@ -276,7 +277,7 @@ namespace CI_Platform.Controllers
         public IActionResult EditCMSPage(AdminVM modal)
         {
             AdminVM admin = new AdminVM();
-            if(modal.ParticularCMSPage.CmsPageId != 0)
+            if (modal.ParticularCMSPage.CmsPageId != 0)
             {
                 var AlreadyExistedCMSPage = _unitOfWork.CMSPage.GetFirstOrDefault(cms => cms.CmsPageId == modal.ParticularCMSPage.CmsPageId);
                 AlreadyExistedCMSPage.Description = modal.ParticularCMSPage.Description;
@@ -294,13 +295,125 @@ namespace CI_Platform.Controllers
             }
 
 
-            return RedirectToAction("CMSPageAdminTab","Admin");
+            return RedirectToAction("CMSPageAdminTab", "Admin");
         }
 
 
         public IActionResult AddUser()
         {
-            return PartialView("_UserAddAndEdit");
+            AdminVM adduser = new AdminVM();
+            adduser.cities = _unitOfWork.City.GetAll().Select(city => new SelectListItem
+            {
+                Text = city.Name,
+                Value = city.CityId.ToString(),
+            });
+            adduser.countries = _unitOfWork.Country.GetCountriesDetails().Select(country => new SelectListItem
+            {
+                Text = country.Name,
+                Value = country.CountryId.ToString()
+,
+            });
+            return PartialView("_UserAddAndEdit", adduser);
+        }
+
+
+        [HttpPost]
+        public IActionResult AddUser(AdminVM model)
+        {
+            if (model != null)
+            {
+                if (model.particularUser.UserId != 0)
+                {
+                    var editUser = _unitOfWork.User.GetFirstOrDefault(user => user.UserId == model.particularUser.UserId);
+                    editUser.FirstName = model.particularUser.FirstName;
+                    editUser.LastName = model.particularUser.LastName;
+                    editUser.Email = model.particularUser.Email;
+                    editUser.PhoneNumber = model.particularUser.PhoneNumber;
+                    editUser.EmployeeId = model.particularUser.EmployeeId;
+                    editUser.Department = model.particularUser.Department;
+                    editUser.CityId = model.particularUser.CityId;
+                    editUser.CountryId = model.particularUser.CountryId;
+                    editUser.Status = model.particularUser.Status;
+                    editUser.UpdatedAt = DateTime.Now;
+                    _unitOfWork.User.Update(editUser);
+
+                }
+                else
+                {
+                    model.particularUser.Password = @model.particularUser.FirstName + "@CI123";
+                    _unitOfWork.User.Add(model.particularUser);
+
+                }
+                _unitOfWork.save();
+            }
+            return RedirectToAction("UserAdminTab", "Admin");
+        }
+
+        public IActionResult EditUser(long UserId)
+        {
+            var AlreadyUser = _unitOfWork.User.GetFirstOrDefault(user => user.UserId == UserId);
+            AdminVM user = new AdminVM();
+            user.cities = _unitOfWork.City.GetAll().Select(city => new SelectListItem
+            {
+                Text = city.Name,
+                Value = city.CityId.ToString(),
+            });
+            user.countries = _unitOfWork.Country.GetCountriesDetails().Select(country => new SelectListItem
+            {
+                Text = country.Name,
+                Value = country.CountryId.ToString()
+,
+            });
+            user.particularUser = AlreadyUser;
+
+            return PartialView("_UserAddAndEdit", user);
+        }
+
+        public IActionResult AddMission()
+        {
+            AdminVM mission = new AdminVM();
+            mission.cities = _unitOfWork.City.GetAll().Select(city => new SelectListItem
+            {
+                Text = city.Name,
+                Value = city.CityId.ToString(),
+            });
+            mission.countries = _unitOfWork.Country.GetCountriesDetails().Select(country => new SelectListItem
+            {
+                Text = country.Name,
+                Value = country.CountryId.ToString()
+,
+            });
+            mission.themes = _unitOfWork.Theme.GetThemeDetails().Select(theme => new SelectListItem
+            {
+                Text = theme.Title,
+                Value = theme.MissionThemeId.ToString()
+            });
+            mission.skills = _unitOfWork.Skill.GetAll();
+            return PartialView("_MissionPageAddAndEdit", mission);
+        }
+
+        public IActionResult EditMission(long MissionId)
+        {
+            AdminVM mission = new AdminVM();
+            mission.particularMission = _unitOfWork.Mission.GetMissionByMissionId(MissionId);
+            mission.skills = _unitOfWork.Skill.GetAll();
+            mission.cities = _unitOfWork.City.GetAll().Select(city => new SelectListItem
+            {
+                Text = city.Name,
+                Value = city.CityId.ToString(),
+            });
+            mission.countries = _unitOfWork.Country.GetCountriesDetails().Select(country => new SelectListItem
+            {
+                Text = country.Name,
+                Value = country.CountryId.ToString()
+,
+            });
+            mission.themes = _unitOfWork.Theme.GetThemeDetails().Select(theme => new SelectListItem
+            {
+                Text = theme.Title,
+                Value = theme.MissionThemeId.ToString()
+            });
+            return PartialView("_MissionPageAddAndEdit", mission);
         }
 
     }

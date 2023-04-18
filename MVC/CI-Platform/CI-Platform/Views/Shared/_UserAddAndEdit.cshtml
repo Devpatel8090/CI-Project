@@ -1,4 +1,5 @@
 ﻿
+
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -10,12 +11,12 @@
 @model AdminVM
 <div class="addformbody">
     <div>
-        <h3 class="addformheader">Add User</h3>
+        <h3 class="addformheader">User</h3>
         </div>
         <div class="addformdata">
-            <form method="post">
-               @* <input asp-for="@Model.loggeduser.Email" id="adminEmail" hidden>
-                <input asp-for="@Model.User.UserId" id="userid" hidden>*@
+            <form method="post" asp-action="AddUser" asp-controller="Admin">
+@*                <input asp-for="@Model.loggeduser.Email" id="adminEmail" hidden>*@
+                <input asp-for="@Model.particularUser.UserId" id="userid" hidden>
                 <div class="row mb-3">
                     <div class="col">
                         <label  class="form-label">First Name :</label>
@@ -55,14 +56,18 @@
                 <div class="row mb-3">
                     <div class="col">
                         <label  class="form-label">Country :</label>
-                        <select asp-for="@Model.particularUser.CountryId" class="form-select"  id="country" aria-label="Default select example" >
+                        <select asp-for="@Model.particularUser.CountryId" class="form-select" asp-items="@Model.countries"  id="country" aria-label="Default select example" >
                           <option value="" selected>Select Country</option>
                         </select>
                         <span id="countryspan" class="text-danger"></span>
                     </div>
-                   @* <div class="col" id="adminCityList">
-                        <partial name="_AdminCityList"/>
-                    </div>*@
+                    <div class="col" id="adminCityList">
+                         <label  class="form-label">City :</label>
+                        <select asp-for="@Model.particularUser.CityId" class="form-select" asp-items="@Model.cities"  id="city" aria-label="Default select example" >
+                          <option value="" selected>Select Country</option>
+                        </select>
+                        <span id="countryspan" class="text-danger"></span>
+                    </div>
                     <div class="col">
                         <label  class="form-label">Status :</label>
                         <select asp-for="@Model.particularUser.Status" id="status" class="form-select" aria-label="Default select example">
@@ -70,6 +75,13 @@
                           <option value="0">InActive</option>
                         </select>
                     </div>
+                   @* <div class="col">
+                        <label  class="form-label">Role :</label>
+                        <select asp-for="@Model.particularUser.ro" id="status" class="form-select" aria-label="Default select example">
+                          <option value="1" selected>Active</option>
+                          <option value="0">InActive</option>
+                        </select>
+                    </div>*@
                 </div>
                 <div class="text-end">
                      <button type="button" class="btn border-secondary px-3 py-1 text-secondary  text-center rounded-pill bg-white">Cancel</button>
@@ -79,3 +91,24 @@
         </div>
     
 </div>
+
+<script>
+    $("#country").on('change',function() {
+        let countryId =   $("#country").find(":selected").val();
+        $.ajax({
+            url: "/Mission/GetCityByCountry?CountryId="+countryId,
+            type:"GET",
+            success: function (data) {
+                console.log(data);
+                var items= "";
+                for(let i=0 ; i< data.length; i++ ) {
+                    items += `<option value="${data[i].cityId}" selected>${data[i].name}</option>`
+                }
+                $('#city').html(items);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    })
+</script>
