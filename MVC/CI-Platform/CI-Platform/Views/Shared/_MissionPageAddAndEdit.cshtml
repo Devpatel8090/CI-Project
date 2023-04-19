@@ -18,12 +18,12 @@
                 <div class="row">
                     <div class="mb-3 col-6">
                         <label class="form-label">Title :</label>
-                        <input asp-for="@Model.particularMission.Title" onchange="removeadduservalidation()" class="form-control" id="particularMissiontitle">
+                        <input asp-for="@Model.particularMission.Title"  class="form-control" id="particularMissiontitle">
                         <span class="text-danger" id="particularMissiontitlespan"></span>
                     </div>
                     <div class="mb-3 col-6">
                         <label  class="form-label">Short Description :</label>
-                        <input asp-for="@Model.particularMission.ShortDescription" onchange="removeadduservalidation()" class="form-control" id="particularMissionshortdesc">
+                        <input asp-for="@Model.particularMission.ShortDescription"  class="form-control" id="particularMissionshortdesc">
                         <span class="text-danger" id="particularMissionshortdescspan"></span>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                         
                         <div id="goaltext" class="">
                             <label  class="form-label">Goal Text :</label>
-                            <input  onchange="removeadduservalidation()" type="text" class="form-control" id="missiongoaltext">
+                            <input   type="text" class="form-control" id="missiongoaltext">
                             <span class="text-danger" id="missiongoaltextspan"></span>
                         </div>
                         
@@ -147,10 +147,9 @@
                     <div class="col">
                         <label class="form-label">Skills :</label>
                         <div class="form-select">
-                            <select class="nav-link dropdown" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                            <a class="nav-link dropdown p-0"  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Select Skill
-                            </select>
+                            </a>
                            <ul class="dropdown-menu ps-2 scrollable-menu" aria-labelledby="navbarDropdown" style="width : 600px">
                                @foreach (var item in Model.skills)
                                 {
@@ -194,7 +193,7 @@
                 <div>
                     <div class="mb-3">
                       <label for="formFileMultiple" class="form-label">Mission Images : </label>
-                      <input class="form-control" type="file" class="file" name="files" onchange="displaymissionimg()" id="img" multiple>
+                      <input class="form-control" onchange="displayImages()" type="file" class="file" name="files"  id="img" multiple>
                     </div>
                     <div id="image-container" class="d-flex">
                         @if (Model.particularMission != null)
@@ -204,7 +203,7 @@
                             {
                                 <div class="image">
                                     <span onclick="delImage(@i)">&times;</span>
-                                    <img src="@medias.ElementAt(i).MediaPath" class="oldImgs"/>
+                                    <img width="20" height="20" src="@medias.ElementAt(i).MediaPath" class="oldImgs" />
                                 </div>                                
                             }
                         }
@@ -213,7 +212,7 @@
                 <div class="mb-3">
                     
                       <label for="formFileMultiple" class="form-label">Upload Documents : </label>
-                      <input class="form-control" type="file" onchange="verifydocuments()" name="documents" id="doc" multiple>
+                      <input class="form-control" onchange="displayDocuments()" type="file"  name="documents" id="document"  multiple>
                       <div id="documents-container" class="d-flex mt-3">
                           @if(Model.particularMission != null){
                               var documents = Model.particularMission.MissionDocuments;
@@ -234,9 +233,9 @@
                 
         </div>
         <div class="text-end">
-                    <button type="submit" onclick="return validateparticularMissionPagedata()" class="submitbtn">Save</button>
-                    <button type="button" class="cancel-btn">Cancel</button>
-                </div>
+            <button type="button" class="btn border-secondary px-3 py-1 text-secondary  text-center rounded-pill bg-white">Cancel</button>
+            <button type="submit"  class="btn px-3 text-success py-1 border-success text-center rounded-pill bg-white">Save</button>           
+        </div>
     </form>
     
 </div>

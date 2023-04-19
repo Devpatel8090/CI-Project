@@ -65,9 +65,19 @@ namespace CI_Platform.Controllers
                 
                 else if (userDetails.Password == user.Password)
                 {
-                        TempData["success"] = "Hurray! Login Successfully";
+                        
                         HttpContext.Session.SetString("userEmail",userDetails.Email);
+                     if(userDetails.Role == "ADMIN")
+                    {
+                        TempData["success"] = "Hurray! Admin Logged in Successfully";
+                        return RedirectToAction("UserAdminTab", "Admin");
+                    }
+                    else
+                    {
+                        TempData["success"] = "Hurray! User Logged in Successfully";
                         return RedirectToAction("LandingPage", "Mission");
+                    }
+                        
                 }
                 else
                 {

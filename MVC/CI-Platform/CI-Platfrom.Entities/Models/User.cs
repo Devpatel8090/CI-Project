@@ -36,6 +36,8 @@ public partial class User
 
     public string? Title { get; set; }
 
+    public string? Role { get; set; }
+
     public int Status { get; set; }
 
     public DateTime CreateAt { get; set; }

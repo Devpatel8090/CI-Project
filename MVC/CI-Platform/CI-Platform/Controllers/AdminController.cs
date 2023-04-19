@@ -70,66 +70,84 @@ namespace CI_Platform.Controllers
 
         public IActionResult UserAdminTab()
         {
-            AdminVM modal = new AdminVM();
+            AdminVM model = new AdminVM();
             var userDetails = _unitOfWork.User.GetUserDetails().Where(user => user.DeletedAt == null);
-            modal.Users = userDetails;
-            return View(modal);
+            var userEmail = HttpContext.Session.GetString("userEmail");
+            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            model.Users = userDetails;
+            return View(model);
         }
 
         public IActionResult CMSPageAdminTab()
         {
-            AdminVM modal = new AdminVM();
+            AdminVM model = new AdminVM();
             var CMSPageDetails = _unitOfWork.CMSPage.GetAllCMSPageDetails().Where(cms => cms.DeletedAt == null);
-            modal.CmsPages = CMSPageDetails;
-            return View(modal);
+            var userEmail = HttpContext.Session.GetString("userEmail");
+            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            model.CmsPages = CMSPageDetails;
+            return View(model);
         }
 
         public IActionResult MissionAdminTab()
         {
-            AdminVM modal = new AdminVM();
+            AdminVM model = new AdminVM();
             var missions = _unitOfWork.Mission.GetMissionDetails().Where(mission => mission.DeletedAt == null);
-            modal.missions = missions;
-            return View(modal);
+            var userEmail = HttpContext.Session.GetString("userEmail");
+            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            model.missions = missions;
+            return View(model);
         }
 
         public IActionResult MissionThemeAdminTab()
         {
-            AdminVM modal = new AdminVM();
+            AdminVM model = new AdminVM();
             var missionThemeDetails = _unitOfWork.Theme.GetThemeDetails();
-            modal.missionThemes = missionThemeDetails;
-            return View(modal);
+            var userEmail = HttpContext.Session.GetString("userEmail");
+            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            model.missionThemes = missionThemeDetails;
+            return View(model);
         }
         public IActionResult MissionSkillsAdminTab()
         {
-            AdminVM modal = new AdminVM();
+            AdminVM model = new AdminVM();
             var skills = _unitOfWork.Skill.GetSkillDetails();
-            modal.skills = skills;
-            return View(modal);
+            var userEmail = HttpContext.Session.GetString("userEmail");
+            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            model.skills = skills;
+            return View(model);
         }
 
         public IActionResult MissionApplicationAdminTab()
         {
-            AdminVM modal = new AdminVM();
+            AdminVM model = new AdminVM();
             var missionApplicationsDetails = _unitOfWork.MissionApplication.GetMissionApplications();
-            modal.missionApplication = missionApplicationsDetails;
-            return View(modal);
+            var userEmail = HttpContext.Session.GetString("userEmail");
+            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            model.missionApplication = missionApplicationsDetails;
+            return View(model);
         }
 
         public IActionResult StoryAdminTab()
         {
-            AdminVM modal = new AdminVM();
+            AdminVM model = new AdminVM();
             var storiesDetails = _unitOfWork.Story.GetStoryDetails().Where(story => story.DeletedAt == null);
-            modal.stories = storiesDetails;
-            return View(modal);
+            var userEmail = HttpContext.Session.GetString("userEmail");
+            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            model.stories = storiesDetails;
+            return View(model);
 
         }
 
         public IActionResult BannerManagementAdminTab()
         {
-            return View();
+            AdminVM model = new AdminVM();
+            var userEmail = HttpContext.Session.GetString("userEmail");
+            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            model.banner = _unitOfWork.Banner.GetAll().Where(story => story.DeletedAt == null);
+            return View(model);
         }
 
-        public IActionResult DeleteRecord(long userId = 0, long CmsPageId = 0, long missionId = 0)
+        public IActionResult DeleteRecord(long userId = 0, long CmsPageId = 0, long missionId = 0,long storyId = 0, long bannerId=0)
         {
             if (userId != 0)
             {
@@ -161,6 +179,24 @@ namespace CI_Platform.Controllers
 
                 return RedirectToAction("MissionAdminTab");
             }
+            if(storyId != 0)
+            {
+                var storyDetails = _unitOfWork.Story.GetFirstOrDefault(story => story.StoryId == storyId);
+                storyDetails.Status = "DECLINED";
+                storyDetails.DeletedAt = DateTime.Now;
+                _unitOfWork.Story.Update(storyDetails);
+                _unitOfWork.save();
+                return RedirectToAction("StoryAdminTab");
+            }
+            if (bannerId != 0)
+            {
+                var bannerDetails = _unitOfWork.Banner.GetFirstOrDefault(banner => banner.BannerId == bannerId);              
+                bannerDetails.DeletedAt = DateTime.Now;
+                _unitOfWork.Banner.Update(bannerDetails);
+                _unitOfWork.save();
+                return RedirectToAction("BannerManagementAdminTab");
+            }
+
 
 
             return RedirectToAction("UserAdminTab");
@@ -169,7 +205,7 @@ namespace CI_Platform.Controllers
         }
 
 
-        public IActionResult Approve(long missionAppId = 0, long skillId = 0, long missionThemeId = 0)
+        public IActionResult Approve(long missionAppId = 0, long skillId = 0, long missionThemeId = 0,long storyId = 0, long bannerId = 0)
         {
             if (missionAppId != 0)
             {
@@ -200,10 +236,19 @@ namespace CI_Platform.Controllers
                 return RedirectToAction("MissionThemeAdminTab");
 
             }
+            if (storyId != 0)
+            {
+                var storyDetails = _unitOfWork.Story.GetFirstOrDefault(story => story.StoryId == storyId);
+                storyDetails.Status = "PUBLISHED";
+                storyDetails.UpdatedAt = DateTime.Now;
+                _unitOfWork.Story.Update(storyDetails);
+                _unitOfWork.save();
+                return RedirectToAction("StoryAdminTab");
+            }
             return RedirectToAction("MissionApplicationAdminTab", "Admin");
 
         }
-        public IActionResult DisApprove(long missionAppId = 0, long skillId = 0, long missionThemeId = 0)
+        public IActionResult DisApprove(long missionAppId = 0, long skillId = 0, long missionThemeId = 0, long storyId=0)
         {
             if (missionAppId != 0)
             {
@@ -234,6 +279,15 @@ namespace CI_Platform.Controllers
 
                 return RedirectToAction("MissionThemeAdminTab");
 
+            }
+            if(storyId != 0)
+            {
+                var storyDetails = _unitOfWork.Story.GetFirstOrDefault(story => story.StoryId== storyId);
+                storyDetails.Status = "DECLINED";
+                storyDetails.UpdatedAt = DateTime.Now;
+                _unitOfWork.Story.Update(storyDetails);
+                _unitOfWork.save();
+                return RedirectToAction("StoryAdminTab");
             }
             return RedirectToAction("MissionApplicationAdminTab", "Admin");
         }
@@ -274,23 +328,23 @@ namespace CI_Platform.Controllers
             return PartialView("_CMSPageAddAndEdit", admin);
         }
         [HttpPost]
-        public IActionResult EditCMSPage(AdminVM modal)
+        public IActionResult EditCMSPage(AdminVM model)
         {
             AdminVM admin = new AdminVM();
-            if (modal.ParticularCMSPage.CmsPageId != 0)
+            if (model.ParticularCMSPage.CmsPageId != 0)
             {
-                var AlreadyExistedCMSPage = _unitOfWork.CMSPage.GetFirstOrDefault(cms => cms.CmsPageId == modal.ParticularCMSPage.CmsPageId);
-                AlreadyExistedCMSPage.Description = modal.ParticularCMSPage.Description;
-                AlreadyExistedCMSPage.Slug = modal.ParticularCMSPage.Slug;
-                AlreadyExistedCMSPage.Title = modal.ParticularCMSPage.Title;
-                AlreadyExistedCMSPage.Status = modal.ParticularCMSPage.Status;
+                var AlreadyExistedCMSPage = _unitOfWork.CMSPage.GetFirstOrDefault(cms => cms.CmsPageId == model.ParticularCMSPage.CmsPageId);
+                AlreadyExistedCMSPage.Description = model.ParticularCMSPage.Description;
+                AlreadyExistedCMSPage.Slug = model.ParticularCMSPage.Slug;
+                AlreadyExistedCMSPage.Title = model.ParticularCMSPage.Title;
+                AlreadyExistedCMSPage.Status = model.ParticularCMSPage.Status;
 
                 _unitOfWork.CMSPage.Update(AlreadyExistedCMSPage);
                 _unitOfWork.save();
             }
             else
             {
-                _unitOfWork.CMSPage.Add(modal.ParticularCMSPage);
+                _unitOfWork.CMSPage.Add(model.ParticularCMSPage);
                 _unitOfWork.save();
             }
 
@@ -415,6 +469,64 @@ namespace CI_Platform.Controllers
             });
             return PartialView("_MissionPageAddAndEdit", mission);
         }
+
+        public IActionResult AddBanner()
+        {
+            return PartialView("_BannerManagementAddAndEdit");
+        }
+        public IActionResult EditBanner(long BannerId)
+        {
+            AdminVM model = new AdminVM();
+            var BannerDetail = _unitOfWork.Banner.GetFirstOrDefault(banner => banner.BannerId == BannerId);
+            model.particularBanner = BannerDetail;
+            return PartialView("_BannerManagementAddAndEdit",model);
+        }
+
+
+        [HttpPost]
+        public IActionResult AddBanner(AdminVM banner,IFormFile files)
+        {
+            if(banner != null)
+            {
+                if(files != null) { 
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/BannerImages", files.FileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        files.CopyTo(stream);
+                    }
+                        if (banner.particularBanner.BannerId != 0)
+                        {
+                            var bannerdetail = _unitOfWork.Banner.GetFirstOrDefault(banner => banner.BannerId == banner.BannerId);
+                            bannerdetail.Text = banner.particularBanner.Text;
+                            bannerdetail.SortOrder = banner.particularBanner.SortOrder;
+                            bannerdetail.Image = "/images/BannerImages/" + files.FileName;
+                            bannerdetail.UpdatedAt = DateTime.Now;
+                            _unitOfWork.Banner.Update(bannerdetail);
+
+                        }
+                        else
+                        {
+                            banner.particularBanner.Image = "/images/BannerImages/" + files.FileName;
+                            _unitOfWork.Banner.Add(banner.particularBanner);
+
+                        }
+                }
+                else
+                {
+                        var bannerdetail = _unitOfWork.Banner.GetFirstOrDefault(banner => banner.BannerId == banner.BannerId);
+                        bannerdetail.Text = banner.particularBanner.Text;
+                        bannerdetail.SortOrder = banner.particularBanner.SortOrder;
+                        bannerdetail.UpdatedAt = DateTime.Now;
+                        _unitOfWork.Banner.Update(bannerdetail);
+                }
+               
+                _unitOfWork.save();
+                
+            }
+
+            return RedirectToAction("BannerManagementAdminTab", "Admin");
+        }
+       
 
     }
 }

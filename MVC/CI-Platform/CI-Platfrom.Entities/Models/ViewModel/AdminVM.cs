@@ -11,6 +11,7 @@ namespace CI_Platfrom.Entities.Models.ViewModel
     {
         public IEnumerable<User> Users { get; set; }
 
+        public User LoggedInUser { get; set; }
         public User particularUser { get; set; }
         public IEnumerable<Mission> missions { get; set; }
         public Mission particularMission { get; set; }
@@ -31,6 +32,10 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         public IEnumerable<MissionApplication> missionApplication { get; set; }
 
         public IEnumerable<Story> stories { get; set; }
+
+        public IEnumerable<Banner> banner { get; set; }
+
+        public Banner particularBanner { get; set; }
 
     }
 }

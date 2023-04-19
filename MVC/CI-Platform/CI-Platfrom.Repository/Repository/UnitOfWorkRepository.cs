@@ -37,6 +37,7 @@ namespace CI_Platfrom.Repository.Repository
             ContactUs = new ContactUsRepository(_db);
             CMSPage = new CMSRepository(_db);
             Admin = new AdminRepository(_db);
+            Banner = new BannerRepository(_db);
         }
 
         public IMissionRepository Mission { get; private set; }
@@ -78,6 +79,7 @@ namespace CI_Platfrom.Repository.Repository
         public ICMSRepository CMSPage { get; private set; }
 
         public IAdminRepository Admin { get; private set; }
+        public IBannerRepository Banner { get; private set; }
         public void save()
         {
             _db.SaveChanges();

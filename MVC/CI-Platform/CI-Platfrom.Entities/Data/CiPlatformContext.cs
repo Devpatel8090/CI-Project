@@ -80,6 +80,7 @@ public partial class CiPlatformContext : DbContext
 
             entity.Property(e => e.AdminId).HasColumnName("admin_id");
             entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
             entity.Property(e => e.DeletedAt)
@@ -906,6 +907,10 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.ProfileText)
                 .HasColumnType("text")
                 .HasColumnName("profile_text");
+            entity.Property(e => e.Role)
+                .HasMaxLength(50)
+                .HasDefaultValueSql("(user_name())")
+                .HasColumnName("role");
             entity.Property(e => e.Status)
                 .HasDefaultValueSql("((1))")
                 .HasColumnName("status");

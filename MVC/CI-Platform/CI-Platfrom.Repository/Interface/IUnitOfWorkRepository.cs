@@ -46,6 +46,8 @@ namespace CI_Platfrom.Repository.Interface
         public ICMSRepository CMSPage { get; }
 
         public IAdminRepository Admin { get; }
+
+        public IBannerRepository Banner { get; }
         public void save();
 
     }
