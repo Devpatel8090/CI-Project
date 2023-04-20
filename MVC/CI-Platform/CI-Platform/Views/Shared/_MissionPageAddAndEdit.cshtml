@@ -11,10 +11,10 @@
     <div>
         <h3 class="addformheader"> Mission</h3>
     </div>
-    <form asp-controller="Admin" asp-action="AddAdminMission" method="post" enctype="multipart/form-data">
+    <form asp-controller="Admin" onsubmit="return isValidMissionAdmin()" asp-action="AddMission" method="post" enctype="multipart/form-data">
         <div class="addformdata">
                @* <input asp-for="@Model.loggeduser.Email" id="adminEmail" hidden>*@
-                <input asp-for="@Model.particularMission.MissionId" id="cmsid" hidden>
+                <input asp-for="@Model.particularMission.MissionId" id="missionId" hidden>
                 <div class="row">
                     <div class="mb-3 col-6">
                         <label class="form-label">Title :</label>
@@ -82,9 +82,13 @@
                 <div class="row mb-3">
                     <div class="col">
                         <label  class="form-label">Mission Type :</label>
-                        <select asp-for="@Model.particularMission.MissionType" id="particularMissiontype"  class="form-select">
-                          <option value="GOAL" selected>GOAL</option>
-                          <option value="TIME">TIME</option>
+                        <select asp-for="@Model.particularMission.MissionType" id="particularMissiontype" onchange="GoalToTime()"  class="form-select">
+                           
+                                <option value="GOAL" selected>GOAL</option>
+                                <option value="TIME">TIME</option>
+                        
+                        
+
                         </select>
                     </div>
                     <div class="col">
@@ -95,8 +99,8 @@
                         </div>
                         
                         <div id="goaltext" class="">
-                            <label  class="form-label">Goal Text :</label>
-                            <input   type="text" class="form-control" id="missiongoaltext">
+                            <label  class="form-label">Goal Objective Text :</label>
+                            <input   asp-for="@Model.GoalMission.GoalObjectiveText" type="text" class="form-control" id="missiongoaltext">
                             <span class="text-danger" id="missiongoaltextspan"></span>
                         </div>
                         
@@ -109,8 +113,8 @@
                             <span class="text-danger" id="missiondeadlinespan"></span>
                         </div>
                         <div id="goalnumber" class="">
-                            <label  class="form-label">Mission Goal :</label>
-                            <input   type="text" class="form-control" id="missiongoal">
+                            <label  class="form-label">Goal Value :</label>
+                            <input  asp-for="@Model.GoalMission.GoalValue" type="text" class="form-control" id="missiongoal">
                             <span class="text-danger" id="missiongoalspan"></span>
                         </div>
                     </div>
@@ -139,7 +143,7 @@
                 <div class="row mb-3">
                     <div class="col">
                         <label  class="form-label">Theme :</label>
-                        <select asp-for="@Model.particularMission.ThemeId"  class="form-select" id="theme" aria-label="Default select example" asp-items="@Model.themes"  >
+                        <select asp-for="particularMission.ThemeId"  class="form-select" id="theme" aria-label="Default select example" asp-items="@Model.themes"  >
                           <option value="" selected>Select Theme</option>
                         </select>
                         <span class="text-danger" id="themespan"></span>
@@ -147,7 +151,7 @@
                     <div class="col">
                         <label class="form-label">Skills :</label>
                         <div class="form-select">
-                            <a class="nav-link dropdown p-0"  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown p-0 text-decoration-none"   id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Select Skill
                             </a>
                            <ul class="dropdown-menu ps-2 scrollable-menu" aria-labelledby="navbarDropdown" style="width : 600px">
@@ -157,7 +161,7 @@
                                     if(Model.particularMission.MissionSkills.Any(i=>i.SkillId == item.SkillId))
                                     {
                                         <li>
-                                            <input class="form-check-input particularMission-skills" type="checkbox" name="skills" value="@item.SkillId" id="@item.SkillName" checked>
+                                            <input  class="form-check-input particularMission-skills" type="checkbox" name="skills" value="@item.SkillId" id="@item.SkillName" checked>
                                             <label class="form-check-label" for="flexCheckDefault">
                                                     @item.SkillName
                                             </label>
@@ -193,7 +197,7 @@
                 <div>
                     <div class="mb-3">
                       <label for="formFileMultiple" class="form-label">Mission Images : </label>
-                      <input class="form-control" onchange="displayImages()" type="file" class="file" name="files"  id="img" multiple>
+                      <input class="form-control file" onchange="displayImages()" type="file"  name="files"  id="img" multiple>
                     </div>
                     <div id="image-container" class="d-flex">
                         @if (Model.particularMission != null)
@@ -203,7 +207,7 @@
                             {
                                 <div class="image">
                                     <span onclick="delImage(@i)">&times;</span>
-                                    <img width="20" height="20" src="@medias.ElementAt(i).MediaPath" class="oldImgs" />
+                                    <img width="100" height="100" src="@medias.ElementAt(i).MediaPath" class="oldImgs" />
                                 </div>                                
                             }
                         }
@@ -219,7 +223,8 @@
                               for(var i=0;i<documents.Count();i++)
                               {
                                    <div class="doc">
-                                       <a target="_blank" href="@documents.ElementAt(i).DocumentPath" class="docpill mx-1 oldDocs">@documents.ElementAt(i).DocumentName<button class="mx-2 pillbtn" type="button" onclick="delDocument(@i)">X</button></a>
+                                       <a target="_blank" href="@documents.ElementAt(i).DocumentPath" class="docpill mx-1 oldDocs">@documents.ElementAt(i).DocumentName</a>
+                                       <button class="mx-2 pillbtn" type="button" onclick="delDocument(@i)">X</button>
                                    </div>                                
                               }
                           }
@@ -227,7 +232,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="formFileMultiple" class="form-label">Video Url : </label>
-                    <input class="form-control" name="videourl" type="text" id="url">
+                    <input class="form-control" name="videourls" type="text" id="youtubeurl">
                 </div>
 
                 
@@ -275,7 +280,7 @@
     })
 </script>
 <script>
-    $('#particularMissiontype').on('change',function() {
+    /*$('#particularMissiontype').on('change',*/function GoalToTime()  {
         var value = $('#particularMissiontype').find(':selected').val();
         if(value == "GOAL") {
             $('#goaltext').removeClass('d-none');
@@ -289,6 +294,6 @@
             $('#totalseats').removeClass('d-none');
             $('#deadline').removeClass('d-none');
         }
-    })
+    }/*)*/
      
 </script>

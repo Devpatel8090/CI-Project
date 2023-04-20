@@ -1,0 +1,74 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using CI_Platfrom.Entities.Models.ViewModel
+
+@model AdminVM
+<div class="addformbody">
+    <div>
+        <h3 class="addformheader">Story Details</h3>
+        </div>
+        <div class="addformdata">
+            <form>
+              
+                <input asp-for="particularStory.StoryId" id="storyid" hidden>
+                <div class="mb-3">
+                    <label  class="form-label">Story Title :</label>
+                    <input asp-for="particularStory.Title" class="form-control" id="storytitle" readonly>
+                    <span class="text-danger" id="storytitlespan"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mission Title :</label>
+                    <input asp-for="particularStory" class="form-control" id="storymisisontitle" readonly>
+                    <span class="text-danger" id="storymisisontitlespan"></span>
+                </div>
+                <div class="mb-3">
+                    <label  class="form-label">Description :</label>
+                    <div style="border: 1px solid #dee2e6;
+                              padding: 6px;
+                              border-radius: 6px;">@Html.Raw(Model.particularStory.Description)</div>
+                    <span class="text-danger" id="storydesc"></span>
+                </div>
+                @if (Model.particularStory.StoryMedia.Count() > 0)
+                {
+                    <div class="mb-3">
+                        <label lass="form-label">Story Images :</label>
+                        <div class="StoryImgContianer d-flex mt-2">
+
+                            @foreach (var storyimg in Model.particularStory.StoryMedia.Where(s=>s.Type != "Video"))
+                            {
+                                <div class="ms-2">
+                                    <img class="StoryImg" src="@storyimg.Path" />
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label lass="form-label">Story Videos :</label>
+                        <div class="StoryVideoContianer d-flex mt-2">
+                             @foreach (var storyvid in Model.particularStory.StoryMedia.Where(s=>s.Type == "Video"))
+                            {
+                                @*var videoUrl = @storyvid.Path.Replace("watch?v=", "embed/");*@
+                                <div class="ms-2">
+                                    <iframe width="300" height="250" src="@storyvid.Path.Replace("watch?v=", "embed/")">
+                                    </iframe>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                <div class="text-end">
+                    <a asp-controller="AdminStory" asp-action="ApproveStory" asp-route-data="Publish" asp-route-storyId="@Model.particularStory.StoryId" class="submitbtn">Publish</a>
+                    <a asp-controller="AdminStory" asp-action="ApproveStory" asp-route-data="Decline" asp-route-storyId="@Model.particularStory.StoryId" class="cancel-btn">Decline</a>
+                    <a asp-controller="AdminStory" asp-action="ApproveStory" asp-route-data="Delete" asp-route-storyId="@Model.particularStory.StoryId" class="cancel-btn">Delete</a>
+                </div>
+            </form>
+        </div>
+    
+</div>
+    
+     

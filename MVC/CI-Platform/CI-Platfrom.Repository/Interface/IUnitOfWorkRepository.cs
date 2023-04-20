@@ -16,6 +16,8 @@ namespace CI_Platfrom.Repository.Interface
         
         public  IThemeRepository Theme { get; }
 
+        public IMissionDocumentRepository MissionDocument { get; }
+
         public  IUserRepository User { get; }
 
         public IPasswordResetRepository PasswordReset { get; }
@@ -48,6 +50,8 @@ namespace CI_Platfrom.Repository.Interface
         public IAdminRepository Admin { get; }
 
         public IBannerRepository Banner { get; }
+
+        public IMissionSkillRepository MissionSkill { get; }
         public void save();
 
     }

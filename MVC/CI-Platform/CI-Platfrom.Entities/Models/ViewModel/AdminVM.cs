@@ -17,6 +17,7 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         public Mission particularMission { get; set; }
 
         public IEnumerable<CmsPage> CmsPages { get; set; }
+        public Story particularStory { get; set; }
 
         public CmsPage ParticularCMSPage { get; set; }
 
@@ -36,6 +37,8 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         public IEnumerable<Banner> banner { get; set; }
 
         public Banner particularBanner { get; set; }
+
+        public GoalMission GoalMission { get; set; }
 
     }
 }

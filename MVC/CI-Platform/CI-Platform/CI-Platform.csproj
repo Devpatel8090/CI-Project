@@ -31,6 +31,8 @@
   <ItemGroup>
     <Folder Include="wwwroot\Document\" />
     <Folder Include="wwwroot\images\BannerImages\" />
+    <Folder Include="wwwroot\images\MissionImages\" />
+    <Folder Include="wwwroot\images\MissionDocuments\" />
     <Folder Include="wwwroot\images\UserAvtarImages\" />
     <Folder Include="wwwroot\images\StoryImages\" />
   </ItemGroup>

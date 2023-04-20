@@ -10,10 +10,10 @@ namespace CI_Platform.Controllers
     {
 
         private readonly IUnitOfWorkRepository _unitOfWork;
-
-        public AdminController(IUnitOfWorkRepository unitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public AdminController(IUnitOfWorkRepository unitOfWork , IWebHostEnvironment webHostEnvironment)
         {
-
+            _webHostEnvironment = webHostEnvironment;
             _unitOfWork = unitOfWork;
         }
         /* public IActionResult AdminLandingPage()
@@ -405,6 +405,8 @@ namespace CI_Platform.Controllers
 
         public IActionResult EditUser(long UserId)
         {
+            
+
             var AlreadyUser = _unitOfWork.User.GetFirstOrDefault(user => user.UserId == UserId);
             AdminVM user = new AdminVM();
             user.cities = _unitOfWork.City.GetAll().Select(city => new SelectListItem
@@ -446,8 +448,11 @@ namespace CI_Platform.Controllers
             return PartialView("_MissionPageAddAndEdit", mission);
         }
 
+
         public IActionResult EditMission(long MissionId)
         {
+            
+
             AdminVM mission = new AdminVM();
             mission.particularMission = _unitOfWork.Mission.GetMissionByMissionId(MissionId);
             mission.skills = _unitOfWork.Skill.GetAll();
@@ -468,6 +473,209 @@ namespace CI_Platform.Controllers
                 Value = theme.MissionThemeId.ToString()
             });
             return PartialView("_MissionPageAddAndEdit", mission);
+        }
+
+
+
+
+        [HttpPost]
+        public IActionResult AddMission(AdminVM model, List<string> skills, string videourls, List<IFormFile> files, List<IFormFile> documents)
+        {
+            var rootpath = _webHostEnvironment.WebRootPath;
+            var imagefilePaths = new List<string>();
+            var documentfilePaths = new List<string>();
+            
+
+
+            var images = _unitOfWork.MissionMedia.GetAll();
+          
+
+            foreach (var formFile in files)
+            {
+                var imagename = formFile.FileName;
+                MissionMedium mediaobj = new MissionMedium();
+                if (!images.Any(image => image.MediaPath.Contains(imagename)))
+                {
+                    // full path to file in temp location
+                    var newName = "MissionMedia -" + DateTime.Now.ToString("ddMMyyyyffffff") + "." + formFile.ContentType.Split("/")[1];
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/MissionImages", newName);
+                    imagefilePaths.Add(filePath);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        formFile.CopyTo(stream);
+                    }
+                
+                mediaobj.MediaPath = "/images/MissionImages/" + newName;
+                mediaobj.MediaType = "PNG";
+                mediaobj.MediaName = newName;
+                /*mediaobj.MissionId = model.particularMission.MissionId;*/
+                /*story.particularStory.StoryMedia.Add(mediaobj);*/
+                model.particularMission.MissionMedia.Add(mediaobj);
+                }
+            }
+            var docs = _unitOfWork.MissionDocument.GetAll();
+
+            foreach (var documentfiles in documents)
+            {
+                var docfile = documentfiles.FileName;
+                MissionDocument documentObj = new MissionDocument();
+                if (!docs.Any(document => document.DocumentPath.Contains(docfile)))
+                {
+                    var newName = "MissionDocument -" + DateTime.Now.ToString("ddMMyyyyffffff") + "." + documentfiles.ContentType.Split("/")[1];
+                    // full path to file in temp location
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/MissionDocuments", newName);
+                    documentfilePaths.Add(filePath);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        documentfiles.CopyTo(stream);
+                    }
+               
+                documentObj.DocumentPath = "/images/MissionDocuments/" + newName;
+                documentObj.DocumentType = documentfiles.ContentType.Split("/")[1];
+                documentObj.DocumentName = newName;
+                /*mediaobj.MissionId = model.particularMission.MissionId;*/
+                /*story.particularStory.StoryMedia.Add(mediaobj);*/
+
+                model.particularMission.MissionDocuments.Add(documentObj);
+                }
+            }
+
+            foreach (var skill in skills)
+            {
+                MissionSkill missionSkill = new MissionSkill();
+                var skillId = int.Parse(skill);
+                missionSkill.SkillId = skillId;
+
+                if (model.particularMission.MissionId > 0)
+                {
+                    var missionSkills = _unitOfWork.MissionSkill.GetAll().Where(m => m.MissionId == model.particularMission.MissionId);
+                    if (!missionSkills.Any(s => s.SkillId.ToString().Contains(skill)))
+                    {
+                        model.particularMission.MissionSkills.Add(missionSkill);
+                    }
+                }
+                else
+                {
+                    model.particularMission.MissionSkills.Add(missionSkill);
+                }
+            }
+
+            if(model.particularMission.MissionId > 0)
+            {
+                var missionSkills = _unitOfWork.MissionSkill.GetAll().Where(m => m.MissionId == model.particularMission.MissionId);
+                foreach (var skill in missionSkills)
+                {
+                    if (!skills.Contains(skill.SkillId.ToString()))
+                    {
+                        _unitOfWork.MissionSkill.Remove(skill);
+                    }
+                }
+            
+
+            /*if (model.particularMission.MissionId > 0)
+            {*/
+                foreach (var image in images.Where(i => i.MissionId == model.particularMission.MissionId && i.MediaType != "VIDEO"))
+                {
+                   /* if (!documents.Any(i => image.MediaPath.Contains(i.FileName)))*/
+                        if (!documents.Any(i => i.FileName.Contains(image.MediaPath)))
+                        {
+                        var filepath = rootpath + image.MediaPath;
+                        FileInfo fileInfo = new FileInfo(filepath);
+                        fileInfo.Delete();
+                        _unitOfWork.MissionMedia.Remove(image);
+                    }
+
+                }
+            /*}
+*/
+
+            /*if (model.particularMission.MissionId > 0)
+            {*/
+                    foreach (var doc in docs.Where(i => i.MissionId == model.particularMission.MissionId))
+                    {
+                        if (!documents.Any(i => doc.DocumentPath.Contains(i.FileName)))
+                        {
+                            var filepath = rootpath + doc.DocumentPath;
+                            FileInfo fileInfo = new FileInfo(filepath);
+                            fileInfo.Delete();
+                            _unitOfWork.MissionDocument.Remove(doc);
+                        }
+
+                    }
+                /*}*/
+            }
+
+
+
+            string[] arr;
+            if (videourls != null)
+            {
+                if (videourls.Contains(" "))
+                {
+                    arr = videourls.Split(" ");
+                }
+                else if (videourls.Contains(","))
+                {
+                    arr = videourls.Split(",");
+                }
+                else
+                {
+                    arr = videourls.Split("\n");
+                }
+                foreach (var video in arr)
+                {
+                    MissionMedium missionvideos = new MissionMedium
+                    {
+                        MediaPath = video,
+                        MediaType = "VIDEO",
+                        MediaName = "YoutubeVideo"
+                    };
+                    model.particularMission.MissionMedia.Add(missionvideos);
+                }
+            }
+
+
+            if (model.particularMission.MissionId != 0)
+            {
+                
+                
+                var alreadyMission = _unitOfWork.Mission.GetMissionByMissionId(model.particularMission.MissionId);
+                alreadyMission.ThemeId = model.particularMission.ThemeId;
+                alreadyMission.CityId = model.particularMission.CityId;
+                alreadyMission.CountryId = model.particularMission.CountryId;
+                alreadyMission.Title = model.particularMission.Title;
+                alreadyMission.ShortDescription = model.particularMission.ShortDescription;
+                alreadyMission.Description = model.particularMission.Description;
+                alreadyMission.StartDate = model.particularMission.StartDate;
+                alreadyMission.EndDate = model.particularMission.EndDate;
+                alreadyMission.TotalSeats = model.particularMission.TotalSeats;
+                alreadyMission.MissionType = model.particularMission.MissionType;
+                alreadyMission.Status = model.particularMission.Status;
+                alreadyMission.OrganizationName = model.particularMission.OrganizationName;
+                alreadyMission.OrganizationDetails = model.particularMission.OrganizationDetails;
+                alreadyMission.Availability = model.particularMission.Availability;
+                
+                foreach(var image in model.particularMission.MissionMedia)
+                {
+                    alreadyMission.MissionMedia.Add(image);
+                }
+
+                foreach(var document in model.particularMission.MissionDocuments)
+                {
+                    alreadyMission.MissionDocuments.Add(document);
+                }
+                foreach(var skill in model.particularMission.MissionSkills)
+                {
+                    alreadyMission.MissionSkills.Add(skill);
+                }
+                _unitOfWork.Mission.Update(alreadyMission);
+            }
+            else
+            {                 
+                _unitOfWork.Mission.Add(model.particularMission);
+            }
+            _unitOfWork.save();
+            return RedirectToAction("MissionAdminTab", "Admin");
         }
 
         public IActionResult AddBanner()

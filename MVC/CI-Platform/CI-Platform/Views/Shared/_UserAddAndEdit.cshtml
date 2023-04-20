@@ -14,59 +14,59 @@
         <h3 class="addformheader">User</h3>
         </div>
         <div class="addformdata">
-            <form method="post" asp-action="AddUser" asp-controller="Admin">
+            <form method="post" asp-action="AddUser" onsubmit="return isValidUserAdmin()" asp-controller="Admin">
 @*                <input asp-for="@Model.loggeduser.Email" id="adminEmail" hidden>*@
                 <input asp-for="@Model.particularUser.UserId" id="userid" hidden>
                 <div class="row mb-3">
                     <div class="col">
                         <label  class="form-label">First Name :</label>
-                        <input asp-for="@Model.particularUser.FirstName" type="text" class="form-control" id="firstname">
-                        <span id="firstnamespan" class="text-danger"></span>
+                        <input asp-for="@Model.particularUser.FirstName" type="text" class="form-control" id="FirstName">
+                        <span id="FirstNameValidation" class="text-danger"></span>
                     </div>
                     <div class="col">
                         <label  class="form-label">Last Name :</label>
-                        <input asp-for="@Model.particularUser.LastName" type="text" class="form-control" id="lastname">
-                        <span id="lastnamespan" class="text-danger"></span>
+                        <input asp-for="@Model.particularUser.LastName" type="text" class="form-control" id="LastName">
+                        <span id="LastNameValidation" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class=col>
                         <label  class="form-label">Email :</label>
-                        <input asp-for="@Model.particularUser.Email" type="email"  class="form-control" id="email">
-                        <span id="emailspan" class="text-danger"></span>
+                        <input asp-for="@Model.particularUser.Email" type="email"  class="form-control" id="Email">
+                        <span id="EmailValidation" class="text-danger"></span>
                     </div>
                     <div class=col>
                         <label  class="form-label">Phone Number :</label>
-                        <input asp-for="@Model.particularUser.PhoneNumber" type="text"  class="form-control" id="phone">
-                        <span id="phonespan" class="text-danger"></span>
+                        <input asp-for="@Model.particularUser.PhoneNumber" type="text"  class="form-control" id="PhoneNumber">
+                        <span id="PhoneNumberValidation" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col">
                         <label  class="form-label">EmployeeId :</label>
                         <input asp-for="@Model.particularUser.EmployeeId" type="text" class="form-control" id="EmployeeId">
-                        <span id="employeespan" class="text-danger"></span>
+                        <span id="EmployeeIdValidation" class="text-danger"></span>
                     </div>
                     <div class="col">
                         <label  class="form-label">Department Name :</label>
-                        <input asp-for="@Model.particularUser.Department" type="text" class="form-control" id="department">
-                        <span id="departmentspan" class="text-danger"></span>
+                        <input asp-for="@Model.particularUser.Department" type="text" class="form-control" id="DepartmentName">
+                        <span id="DepartmentNameValidation" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col">
                         <label  class="form-label">Country :</label>
-                        <select asp-for="@Model.particularUser.CountryId" class="form-select" asp-items="@Model.countries"  id="country" aria-label="Default select example" >
+                        <select asp-for="@Model.particularUser.CountryId" class="form-select" asp-items="@Model.countries"  id="CountryId" aria-label="Default select example" >
                           <option value="" selected>Select Country</option>
                         </select>
-                        <span id="countryspan" class="text-danger"></span>
+                        <span id="CountryIdValidation" class="text-danger"></span>
                     </div>
                     <div class="col" id="adminCityList">
                          <label  class="form-label">City :</label>
                         <select asp-for="@Model.particularUser.CityId" class="form-select" asp-items="@Model.cities"  id="city" aria-label="Default select example" >
-                          <option value="" selected>Select Country</option>
+                          <option value="" selected>Select City</option>
                         </select>
-                        <span id="countryspan" class="text-danger"></span>
+                        <span id="CityIdValidation" class="text-danger"></span>
                     </div>
                     <div class="col">
                         <label  class="form-label">Status :</label>

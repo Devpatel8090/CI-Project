@@ -38,6 +38,8 @@ namespace CI_Platfrom.Repository.Repository
             CMSPage = new CMSRepository(_db);
             Admin = new AdminRepository(_db);
             Banner = new BannerRepository(_db);
+            MissionDocument = new MissionDocumentRepository(_db);
+            MissionSkill = new MissionSkillRepository(_db);
         }
 
         public IMissionRepository Mission { get; private set; }
@@ -80,6 +82,9 @@ namespace CI_Platfrom.Repository.Repository
 
         public IAdminRepository Admin { get; private set; }
         public IBannerRepository Banner { get; private set; }
+        public IMissionDocumentRepository MissionDocument { get; private set; } 
+
+        public IMissionSkillRepository MissionSkill { get; private set; }
         public void save()
         {
             _db.SaveChanges();

@@ -163,6 +163,33 @@ $('.missionEdit').on('click', function (event) {
         success: function (data) {
             console.log(data);
             $('#MissionTabAdd').html(data);
+            for (let i = 0; i < oldImgs.length; i++) {
+                img = oldImgs[i];
+                let path = img.src.substr(img.src.lastIndexOf("/") + 1)
+                fetch(img.src)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const file = new File([blob], path, blob)
+                        console.log(file)
+                        missionfiles.push(file)
+                        showImages();
+                    })
+
+            }
+
+            for (let i = 0; i < oldDocs.length; i++) {
+                doc = oldDocs[i];
+                let path = doc.getAttribute('href').substr(doc.getAttribute('href').lastIndexOf("/") + 1)
+                fetch(doc.getAttribute('href'))
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const file = new File([blob], path, blob)
+                        console.log(file)
+                        documentfiles.push(file)
+                        showDocuments();
+                    })
+
+            }
         },
         error: function (error) {
             console.log(error);
@@ -170,6 +197,8 @@ $('.missionEdit').on('click', function (event) {
 
     });
 });
+
+
 
 $('#AddBannerManagementPageButton').on('click', function () {
     $.ajax({
@@ -251,7 +280,7 @@ function showImages() {
         return `${prev}
                 <div class="image">
                 <span onclick="delImage(${index})">&times;</span>
-                <img src="${URL.createObjectURL(curr)}" />
+                <img width="100" height="100" src="${URL.createObjectURL(curr)}" />
                 </div>`;
     }, "");
     for (let i = 0; i < missionfiles.length; i++) {
@@ -280,13 +309,17 @@ function showMissionImgcount() {
 function displayDocuments() {
     let file = event.target.files;
 
-    // if user select no image
+    // if user select no Document
     if (file.length == 0) return;
 
     for (let i = 0; i < file.length; i++) {
-        if (file[i].type.split("/")[0] != "doc" || file[i].type.split("/")[0] != "docx") continue;
-        if (!documentfiles.some((e) => e.name == file[i].name))
-            documentfiles.push(file[i]);
+        if (file[i].type.split("/")[1] == "doc" || file[i].type.split("/")[1] == "docx" || file[i].type.split("/")[1] == "pdf" || file[i].type.split("/")[1] == "xlsx") {
+            if (!documentfiles.some((e) => e.name == file[i].name))
+                documentfiles.push(file[i]);
+        }
+        else {
+            continue;
+        }
     }
 
     showDocuments();
@@ -298,9 +331,12 @@ function showDocuments() {
     containerDoc.innerHTML = documentfiles.reduce((prev, curr, index) => {
         return `${prev}
                 <div class="image">
-                <span onclick="delImage(${index})">&times;</span>
-                <img src="${URL.createObjectURL(curr)}" />
+                 <a target = "_blank" href = "${URL.createObjectURL(curr)}" class="docpill mx-1 oldDocs" > ${curr.name}</a >
+                <button class="mx-2 pillbtn" type="button" onclick="delDocument(${index})">X</button>
                 </div>`;
+     
+
+       
     }, "");
     for (let i = 0; i < documentfiles.length; i++) {
         console.log(documentfiles[i].name);
@@ -319,7 +355,156 @@ function showMissionDocumentcount() {
 
 /* DELETE Documents */
 function delDocument(index) {
-    missionfiles.splice(index, 1);
+    documentfiles.splice(index, 1);
     showDocuments();
     showMissionDocumentcount();
 }
+
+function isValidUserAdmin() {
+    flag = 1;
+    var FirstName = $('#FirstName').val();
+    var LastName = $('#LastName').val();
+    var Email = $('#Email').val();
+    var PhoneNumber = $('#PhoneNumber').val();
+    var EmployeeId = $('#EmployeeId').val();
+    var Department = $('#DepartmentName').val();
+    var Country = $('#SelectedContry').find(":selected").val();
+    var City = $('#city').val();
+    var EmailRegex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var PhoneRegex = /^[0-9]{10}$/;
+
+  
+    if (FirstName == "") {
+        $('#FirstNameValidation').text("FirstName is Required");
+        flag = 0;
+    }
+    if (LastName == "") {
+        $('#LastNameValidation').text("LastName is Required");
+        flag = 0;
+    }
+    if (Email == "") {
+        $('#EmailValidation').text("Email is Required");
+        flag = 0;
+    }
+    if (PhoneNumber == "") {
+        $('#PhoneNumberValidation').text("PhoneNumber is Required");
+        flag = 0;
+    }
+    if (EmployeeId == "") {
+        $('#EmployeeIdValidation').text("EmployeedId is Required");
+        flag = 0;
+    }
+    if (Department == "") {
+        $('#DepartmentNameValidation').text("Department is Required");
+        flag = 0;
+    }
+    if (Country != -1) {
+
+        $('#CountryIdValidation').text("Select The Country Please");
+        flag = 0;
+    }
+    if (City == -1) {
+
+        $('#CityIdValidation').text("Select the City Please");
+        flag = 0;
+    }
+
+    if (FirstName.length <= 5 || FirstName.length >= 25) {
+        $('#FirstNameValidation').text("Length of First Name must between 5 to 25 characters");
+       
+        flag = 0;
+    }
+
+    if (LastName.length <= 5 || LastName.length >= 25) {
+        $('#LastNameValidation').text("Length of First Name must between 5 to 25 characters");
+       
+        flag = 0;
+    }
+
+    if (!Email.match(EmailRegex)) {
+        $('#EmailValidation').text("Please Enter Correct Email Id ");
+     
+        flag = 0;
+    }
+
+    if (!PhoneNumber.match(PhoneRegex)) {
+        
+        $('#PhoneNumberValidation').text("Phone number must be of 10 digits.");
+        flag = 0;
+    }
+
+    if (flag == 0) {
+        return false;
+    }
+
+}
+function isValidCMSPageAdmin() {
+    flag = 1;
+    var CMSTitle = $('#cmsTitle').val();
+    var CMSDescription = $('#CMSText').val();
+    var CMSSlug = $('#cmsSlug').val();
+
+    if (CMSTitle == "") {
+        $('#cmstitlespan').text("Title is required");
+        flag = 0;
+    }
+    if (CMSDescription == "") {
+        $('#summernotespan').text("Description is required");
+        flag = 0;
+    }
+    if (CMSSlug == "") {
+        $('#cmsslugspan').text("slug is required");
+        flag = 0;
+    }
+
+    if (flag == 0) {
+        return false;
+    }
+}
+function isValidBannerAdmin() {
+
+}
+
+
+
+function isValidMissionAdmin() {
+
+ var regex = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/gm;
+ var flag = 0;
+var data = $('#youtubeurl').val();
+    if (data != "")
+    {
+        if (data.includes(" ")) {
+            var arr = data.split(" ");
+        }
+        else if (data.includes(",")) {
+            var arr = data.split(",")
+        }
+        else {
+            var arr = data.split("\n");
+        }
+        if (arr.length > 20) {
+            toastr.error('maximum 20 urls are allowed')
+            return false;
+        }
+        for (var url of arr) {
+
+            if (url.match(regex) == null) {
+                toastr.error('Only Youtube URLs are allowed')
+                flag = 1;
+            }
+        }
+
+    }
+    var missionTitle = $('#particularMissiontitle').val();
+    if (missionTitle == "") {
+        $('#particularMissiontitlespan').text("Title is required");
+        flag = 1;
+    }
+    
+
+    if (flag == 1) {
+        return false;
+    }
+}
+
