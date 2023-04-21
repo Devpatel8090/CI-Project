@@ -12,25 +12,26 @@
         </div>
 
         <div class="AddCMSPagedata">
-            <form method="post" enctype="multipart/form-data" asp-action="AddBanner" asp-controller="Admin" >
+            <form method="post" onsubmit="return isValidBannerAdmin()" enctype="multipart/form-data" asp-action="AddBanner" asp-controller="Admin" >
                 <input asp-for="@Model.particularBanner.BannerId"   hidden>
                 <input asp-for="@Model.particularBanner.Image"   hidden id="ShowImageInEdit">
 
                 <div class="mb-3">
                     <label  class="form-label">Text</label>
-                    <input asp-for="@Model.particularBanner.Text"   class="form-control" >
+                    <input asp-for="@Model.particularBanner.Text" id="BannerText" oninput="RemoveValidationBannerAdmin()"  class="form-control" >
+                    <span class="text-danger" id="BannerTextValidation"></span>
                     
                 </div>
 
                 <div class="mb-3">
                     <label  class="form-label">Sort Order Value</label>
-                    <input type="number" asp-for="@Model.particularBanner.SortOrder"   class="form-control" >
-              
+                    <input type="number" asp-for="@Model.particularBanner.SortOrder" id="BannerSortOrder" oninput="RemoveValidationBannerAdmin()"  class="form-control" >
+                    <span class="text-danger" id="BannerSortOrderValidation"></span>
                 </div>
 
                 <div class="row mb-4">
                     <div class="col">
-                        <label for="files" class="form-label">Upload Banner Images</label>
+                        <label for="files" id="" class="form-label">Upload Banner Images</label>
 
                         <div class="card drag-card" style="border: none;">
                             <div class="drag-area">
@@ -38,7 +39,7 @@
                                     <span class="select" onclick="chooseImageBanner()" role="button"><img src="~/images/drag-and-drop.png"></span>
                                 </span>
                                 <span class="on-drop">Drop images here</span>
-                                <input name="files" id="UploadFiles" type="file" class="file"/>
+                                <input name="files" oninput="RemoveValidationBannerAdmin()" id="UploadFiles" type="file" class="file"/>
                             </div>
 
                             <div id="PreviewImages" class="mt-3 justify-content-center"></div>
@@ -50,6 +51,7 @@
                                 </figure>
                             </div>                           
                         </div>
+                        <span class="text-danger" id="BannerTextValidation"></span>
                     </div>
                 </div>
 
@@ -57,7 +59,7 @@
              
 
                 <div class="text-end">
-                    <button type="button" class="btn border-secondary px-3 py-1 text-secondary  text-center rounded-pill bg-white">Cancel</button>
+                    <a asp-action="BannerManagementAdminTab" asp-controller="Admin" type="button" class="btn border-secondary px-3 py-1 text-secondary  text-center rounded-pill bg-white">Cancel</a>
                     <button type="submit"  class="btn px-3 text-success py-1 border-success text-center rounded-pill bg-white">Save</button>
                     
                 </div>

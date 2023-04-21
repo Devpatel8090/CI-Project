@@ -393,11 +393,17 @@ height               City
                             <div class="card" >
                         <div style="position: relative;" class="image__container">
                             
-                           @{
-                               var image = @item.StoryMedia.FirstOrDefault(e => e.StoryId == @item.StoryId);
-                            <img class="card-img-top Blur__image"
-                                src="@image.Path"
-                                alt="Card image cap" height="200px" width="284px">
+                                @{
+                                    var image = @item.StoryMedia.FirstOrDefault(e => e.StoryId == @item.StoryId);
+                                    if(image != null)
+                                    {
+                                        <img class="card-img-top Blur__image" src="@image.Path" alt="Card image cap" height="250" width="250" >
+                                    }
+                                    else
+                                    {
+                                        <img class="card-img-top Blur__image" src="~/images/NoImage.png" alt="Card image cap" height="250" width="250" >
+                                    }
+
                            }
                             <div style="position: absolute;bottom: 0;width: 100%;">
                                 <p class="m-0 bg-white border rounded-pill text-center w-50"

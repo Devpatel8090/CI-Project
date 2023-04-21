@@ -425,6 +425,7 @@ namespace CI_Platform.Controllers
             return PartialView("_UserAddAndEdit", user);
         }
 
+        [HttpGet]
         public IActionResult AddMission()
         {
             AdminVM mission = new AdminVM();
@@ -632,6 +633,7 @@ namespace CI_Platform.Controllers
                     };
                     model.particularMission.MissionMedia.Add(missionvideos);
                 }
+              
             }
 
 
@@ -654,7 +656,15 @@ namespace CI_Platform.Controllers
                 alreadyMission.OrganizationName = model.particularMission.OrganizationName;
                 alreadyMission.OrganizationDetails = model.particularMission.OrganizationDetails;
                 alreadyMission.Availability = model.particularMission.Availability;
+                alreadyMission.UpdatedAt = DateTime.Now;
+
+                var goalmission = _unitOfWork.GoalMission.GetFirstOrDefault(mission => mission.MissionId == model.particularMission.MissionId);
                 
+                goalmission.GoalObjectiveText =model.GoalMission.GoalObjectiveText;
+                goalmission.GoalValue =  model.GoalMission.GoalValue;
+                goalmission.UpdatedAt = DateTime.Now;
+
+                alreadyMission.GoalMissions.Add(goalmission);
                 foreach(var image in model.particularMission.MissionMedia)
                 {
                     alreadyMission.MissionMedia.Add(image);
@@ -671,7 +681,13 @@ namespace CI_Platform.Controllers
                 _unitOfWork.Mission.Update(alreadyMission);
             }
             else
-            {                 
+            {
+                GoalMission goalmission = new GoalMission
+                {
+                    GoalObjectiveText = model.GoalMission.GoalObjectiveText,
+                    GoalValue = model.GoalMission.GoalValue
+                };
+                model.particularMission.GoalMissions.Add(goalmission);
                 _unitOfWork.Mission.Add(model.particularMission);
             }
             _unitOfWork.save();
@@ -733,6 +749,18 @@ namespace CI_Platform.Controllers
             }
 
             return RedirectToAction("BannerManagementAdminTab", "Admin");
+        }
+
+
+        public IActionResult ViewStoryAdmin(long StoryId)
+        {
+            /* return PartialView("_")*/
+            var storyDetail = _unitOfWork.Story.getStoryById(StoryId);
+
+            AdminVM story = new AdminVM();
+            story.particularStory = storyDetail;
+            return PartialView("_StoryViewAdminPage", story);
+        /*    return RedirectToAction("BannerManagementAdminTab", "Admin");*/
         }
        
 

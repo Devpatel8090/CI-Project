@@ -33,12 +33,12 @@
                 </thead>
                 <tbody>
                     @{
-                       foreach (var item in Model.banner)
+                       foreach (var item in @Model.banner)
                        {                     
                           <tr>
                             <td scope="col">@item.BannerId</td>                            
                             <td scope="col" >@item.Text </td>
-                            <td scope="col" > <a href="@item.Image" target="_blank" class="text-decoration-none">Preview Image</a></td>                       
+                            <td scope="col" > <a href="@item.Image"  target="_blank" class="text-decoration-none bg-white orange__color ">Preview Image</a></td>                       
                             <td>
                                 
                                       <button class="border-0 bg-white bannerEditButton" value="@item.BannerId" >

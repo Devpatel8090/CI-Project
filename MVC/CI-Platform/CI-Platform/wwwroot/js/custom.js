@@ -276,7 +276,8 @@ function addthemeFilterTag(text) {
 
 
 
-function sendInfo() {
+function sendInfo()
+{
     // for getting total cities , themes, skills in string from previous list
     filtercitystr = "";
     filterthemestr = "";
@@ -286,7 +287,7 @@ function sendInfo() {
 
 
 
-    if (sort == null && cityNameList.size == 0 && skillNameList.size == 0 && themeNameList.size == 0 && pageNo == 0) {
+    if (sort == null && cityNameList.size == 0 && skillNameList.size == 0 && themeNameList.size == 0 && pageNo == 1) {
 
         var url = "/Mission/LandingPage/";
         window.location.reload();
@@ -343,10 +344,8 @@ function sendInfo() {
            
            /* if (document.getElementById('grid__view__button').clicked == true) {*/
                 document.getElementById("list__view__container").classList.add("hide");
-           /* }*/
             
-            
-            
+ 
             $('#GridCardContainer').html(data);
         },
         error: function (err) {
@@ -362,6 +361,7 @@ function sendInfo() {
 //pagination function
 // pageNo global variable 
 var pageNo = 1;
+var totalmissionPagination = $('#TotalMissionCountForPagination').val();
 function AddPagination() {
     pageNo = event.target.innerHTML;
     pageNo = Number.parseInt(pageNo);
@@ -371,10 +371,16 @@ function AddPagination() {
 
 //nextpointer 
 // convert the number into int and add one to it and send for filter
-
+var totalpage = Math.ceil(totalmissionPagination);
 function NextPointer() {
     pageNo = Number.parseInt(pageNo);
-    pageNo = pageNo + 1;
+    if (pageNo < totalpage) {
+        pageNo = pageNo + 1;
+    }
+    else {
+        return;
+    }
+    
     sendInfo();
 }
 
@@ -382,7 +388,13 @@ function NextPointer() {
 
 function PrevPointer() {
     pageNo = Number.parseInt(pageNo);
-    pageNo = pageNo - 1;
+    if (pageNo > 1) {
+        pageNo = pageNo - 1;
+    }
+    else {
+        return;
+    }
+    
     sendInfo();
 }
 

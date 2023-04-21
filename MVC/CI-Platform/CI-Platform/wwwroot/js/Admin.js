@@ -151,18 +151,20 @@ $('#AddMissionButton').on('click', function () {
     })
 });
 
+
 $('.missionEdit').on('click', function (event) {
     // To Stop Bubbling and prevent to create the multiple click & stop the clicks to other parents and children elements
     event.stopPropagation();
     event.stopImmediatePropagation();
     var missionId = event.target.getAttribute("value");
-
+    
     $.ajax({
         url: "/Admin/EditMission?MissionId=" + missionId,
         type: "GET",
         success: function (data) {
             console.log(data);
             $('#MissionTabAdd').html(data);
+            var oldImgs = document.getElementsByClassName('oldImgs');
             for (let i = 0; i < oldImgs.length; i++) {
                 img = oldImgs[i];
                 let path = img.src.substr(img.src.lastIndexOf("/") + 1)
@@ -173,12 +175,13 @@ $('.missionEdit').on('click', function (event) {
                         console.log(file)
                         missionfiles.push(file)
                         showImages();
+                        showMissionImgcount();
                     })
 
             }
-
-            for (let i = 0; i < oldDocs.length; i++) {
-                doc = oldDocs[i];
+            var oldDocument = document.getElementsByClassName('oldDocs');
+            for (let i = 0; i < oldDocument.length; i++) {
+                doc = oldDocument[i];
                 let path = doc.getAttribute('href').substr(doc.getAttribute('href').lastIndexOf("/") + 1)
                 fetch(doc.getAttribute('href'))
                     .then(res => res.blob())
@@ -187,6 +190,7 @@ $('.missionEdit').on('click', function (event) {
                         console.log(file)
                         documentfiles.push(file)
                         showDocuments();
+                        showMissionDocumentcount();
                     })
 
             }
@@ -313,7 +317,7 @@ function displayDocuments() {
     if (file.length == 0) return;
 
     for (let i = 0; i < file.length; i++) {
-        if (file[i].type.split("/")[1] == "doc" || file[i].type.split("/")[1] == "docx" || file[i].type.split("/")[1] == "pdf" || file[i].type.split("/")[1] == "xlsx") {
+        if (file[i].type.split("/")[1] == "docx" || file[i].type.split("/")[1] == "pdf" || file[i].type.split("/")[1] == "xlsx" || file[i].type.split("/")[0] == "application" || file[i].type.split("/")[0] == "text") {
             if (!documentfiles.some((e) => e.name == file[i].name))
                 documentfiles.push(file[i]);
         }
@@ -360,6 +364,8 @@ function delDocument(index) {
     showMissionDocumentcount();
 }
 
+
+
 function isValidUserAdmin() {
     flag = 1;
     var FirstName = $('#FirstName').val();
@@ -377,6 +383,9 @@ function isValidUserAdmin() {
     if (FirstName == "") {
         $('#FirstNameValidation').text("FirstName is Required");
         flag = 0;
+    }
+    else {
+        $('#FirstNameValidation').text("");
     }
     if (LastName == "") {
         $('#LastNameValidation').text("LastName is Required");
@@ -437,23 +446,34 @@ function isValidUserAdmin() {
         return false;
     }
 
+
+
+
 }
+
+function removeUserValidation() {
+     
+        var data = event.target.getAttribute("id");
+        $('#' + data + "Validation").html('');
+    
+}
+
 function isValidCMSPageAdmin() {
     flag = 1;
-    var CMSTitle = $('#cmsTitle').val();
+    var CMSTitle = $('#CMSTitle').val();
     var CMSDescription = $('#CMSText').val();
-    var CMSSlug = $('#cmsSlug').val();
+    var CMSSlug = $('#CMSSlug').val();
 
     if (CMSTitle == "") {
-        $('#cmstitlespan').text("Title is required");
+        $('#CMSTitleValidation').text("Title is required");
         flag = 0;
     }
     if (CMSDescription == "") {
-        $('#summernotespan').text("Description is required");
+        $('#CMSTextValidation').text("Description is required");
         flag = 0;
     }
     if (CMSSlug == "") {
-        $('#cmsslugspan').text("slug is required");
+        $('#CMSSlugValidation').text("slug is required");
         flag = 0;
     }
 
@@ -461,8 +481,39 @@ function isValidCMSPageAdmin() {
         return false;
     }
 }
-function isValidBannerAdmin() {
 
+function RemoveCmsPageValidation() {
+    var input = event.target.getAttribute("id");
+    $('#' + input + "Validation").html('');
+
+}
+
+function isValidBannerAdmin() {
+    flag = 1;
+    var BannerTitle = $('#BannerText').val();
+    var BannerSortOrder = $('#BannerSortOrder').val();
+    
+
+    if (BannerTitle == "") {
+        $('#BannerTextValidation').text("Title is required so kindly enter it");
+        flag = 0;
+    }
+    if (BannerSortOrder == "") {
+        $('#BannerSortOrderValidation').text("Please Enter SortValue and Accept only Number");
+        flag = 0;
+    }
+    if (files == 0) {
+        $('#BannerImagesValidaion').text("Please Add Image");
+        flag = 0;
+    }
+    if (flag == 0) {
+        return false;
+    }
+}
+
+function RemoveValidationBannerAdmin() {
+    var input = event.target.getAttribute("id");
+    $('#' + input + "Validation").html('');
 }
 
 
@@ -507,4 +558,21 @@ var data = $('#youtubeurl').val();
         return false;
     }
 }
+
+
+$('.ViewStoryButton').on('click', function () {
+    var storyId = $(this).val();
+
+    $.ajax({
+        url: "/Admin/ViewStoryAdmin?StoryId=" + storyId,
+        success: function (data) {
+            console.log(data);
+            $('#StoryRightSide').html(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
+});
 

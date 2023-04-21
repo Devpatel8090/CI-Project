@@ -20,57 +20,57 @@
                 <div class="row mb-3">
                     <div class="col">
                         <label  class="form-label">First Name :</label>
-                        <input asp-for="@Model.particularUser.FirstName" type="text" class="form-control" id="FirstName">
+                        <input asp-for="@Model.particularUser.FirstName" oninput="removeUserValidation()" type="text" class="form-control" id="FirstName">
                         <span id="FirstNameValidation" class="text-danger"></span>
                     </div>
                     <div class="col">
                         <label  class="form-label">Last Name :</label>
-                        <input asp-for="@Model.particularUser.LastName" type="text" class="form-control" id="LastName">
+                        <input asp-for="@Model.particularUser.LastName" oninput="removeUserValidation()" type="text" class="form-control" id="LastName">
                         <span id="LastNameValidation" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class=col>
                         <label  class="form-label">Email :</label>
-                        <input asp-for="@Model.particularUser.Email" type="email"  class="form-control" id="Email">
+                        <input asp-for="@Model.particularUser.Email" type="email" oninput="removeUserValidation()"  class="form-control" id="Email">
                         <span id="EmailValidation" class="text-danger"></span>
                     </div>
                     <div class=col>
                         <label  class="form-label">Phone Number :</label>
-                        <input asp-for="@Model.particularUser.PhoneNumber" type="text"  class="form-control" id="PhoneNumber">
+                        <input asp-for="@Model.particularUser.PhoneNumber" type="text" oninput="removeUserValidation()"  class="form-control" id="PhoneNumber">
                         <span id="PhoneNumberValidation" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col">
                         <label  class="form-label">EmployeeId :</label>
-                        <input asp-for="@Model.particularUser.EmployeeId" type="text" class="form-control" id="EmployeeId">
+                        <input asp-for="@Model.particularUser.EmployeeId" type="text" oninput="removeUserValidation()" class="form-control" id="EmployeeId">
                         <span id="EmployeeIdValidation" class="text-danger"></span>
                     </div>
                     <div class="col">
                         <label  class="form-label">Department Name :</label>
-                        <input asp-for="@Model.particularUser.Department" type="text" class="form-control" id="DepartmentName">
+                        <input asp-for="@Model.particularUser.Department" type="text" oninput="removeUserValidation()" class="form-control" id="DepartmentName">
                         <span id="DepartmentNameValidation" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col">
                         <label  class="form-label">Country :</label>
-                        <select asp-for="@Model.particularUser.CountryId" class="form-select" asp-items="@Model.countries"  id="CountryId" aria-label="Default select example" >
+                        <select asp-for="@Model.particularUser.CountryId" class="form-select" onchange="removeUserValidation()" asp-items="@Model.countries"  id="CountryId" aria-label="Default select example" >
                           <option value="" selected>Select Country</option>
                         </select>
                         <span id="CountryIdValidation" class="text-danger"></span>
                     </div>
                     <div class="col" id="adminCityList">
                          <label  class="form-label">City :</label>
-                        <select asp-for="@Model.particularUser.CityId" class="form-select" asp-items="@Model.cities"  id="city" aria-label="Default select example" >
+                        <select asp-for="@Model.particularUser.CityId" class="form-select" onchange="removeUserValidation()" asp-items="@Model.cities"  id="CityId" aria-label="Default select example" >
                           <option value="" selected>Select City</option>
                         </select>
                         <span id="CityIdValidation" class="text-danger"></span>
                     </div>
                     <div class="col">
                         <label  class="form-label">Status :</label>
-                        <select asp-for="@Model.particularUser.Status" id="status" class="form-select" aria-label="Default select example">
+                        <select asp-for="@Model.particularUser.Status" id="status"  class="form-select" aria-label="Default select example">
                           <option value="1" selected>Active</option>
                           <option value="0">InActive</option>
                         </select>
@@ -84,7 +84,7 @@
                     </div>*@
                 </div>
                 <div class="text-end">
-                     <button type="button" class="btn border-secondary px-3 py-1 text-secondary  text-center rounded-pill bg-white">Cancel</button>
+                     <a asp-action="UserAdminTab" asp-controller="Admin" type="button" class="btn border-secondary px-3 py-1 text-secondary  text-center rounded-pill bg-white">Cancel</a>
                     <button type="submit"  class="btn px-3 text-success py-1 border-success text-center rounded-pill bg-white">Save</button>
                 </div>
             </form>

@@ -232,7 +232,12 @@ namespace CI_Platfrom.Repository.Repository
                     filterMissions = missions;
                 }
                 filterMissions = filterMissions.Distinct();
+                
+               /* if(searchValue != null)
+                {
+                    filterMissions = filterMissions.Where(mission => mission.Title.Contains(searchValue) || mission.ShortDescription.Contains(searchValue));
 
+                }*/
 
                 
 
@@ -270,6 +275,14 @@ namespace CI_Platfrom.Repository.Repository
                 missionObj.Mission = filterMissions;
                 missionObj.TotalCount = missionObj.Mission.Count();
                 return missionObj;
+            }
+
+
+            var searchValue = "dev";
+            if (searchValue != null && missions != null)
+            {
+                missions = missions.Where(mission => mission.Title.Contains(searchValue) || (mission.ShortDescription==null)?"".Contains(searchValue):mission.ShortDescription.Contains(searchValue));
+
             }
 
 

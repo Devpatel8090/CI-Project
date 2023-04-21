@@ -9,12 +9,12 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 {
     public class AdminVM
     {
-        public IEnumerable<User> Users { get; set; }
+        public IEnumerable<User> Users { get; set; } = Enumerable.Empty<User>();
 
-        public User LoggedInUser { get; set; }
-        public User particularUser { get; set; }
-        public IEnumerable<Mission> missions { get; set; }
-        public Mission particularMission { get; set; }
+        public User LoggedInUser { get; set; } = new User();
+        public User particularUser { get; set; } = new User();
+        public IEnumerable<Mission> missions { get; set; } = Enumerable.Empty <Mission>();
+        public Mission? particularMission { get; set; }
 
         public IEnumerable<CmsPage> CmsPages { get; set; }
         public Story particularStory { get; set; }

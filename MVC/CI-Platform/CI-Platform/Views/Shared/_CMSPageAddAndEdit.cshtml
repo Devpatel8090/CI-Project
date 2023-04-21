@@ -16,22 +16,22 @@
         </div>
         <div class="AddCMSPagedata">
             <form method="post" onsubmit="return isValidCMSPageAdmin()" asp-action="EditCMSPage" asp-controller="Admin">
-                @*<input asp-for="@Model.loggeduser.Email" id="adminEmail" hidden>*@
+               
                 <input asp-for="@Model.ParticularCMSPage.CmsPageId" id="cmsid" hidden>
                 <div class="mb-3">
                     <label  class="form-label">Title :</label>
-                    <input asp-for="@Model.ParticularCMSPage.Title"  class="form-control" id="cmsTitle">
-                    <span class="text-danger" id="cmstitlespan"></span>
+                    <input asp-for="@Model.ParticularCMSPage.Title" oninput="RemoveCmsPageValidation()"  class="form-control" id="CMSTitle">
+                    <span class="text-danger" id="CMSTitleValidation"></span>
                 </div>
                 <div class="mb-3">
                     <label  class="form-label">Description :</label>
-                    <textarea id="CMSText"  asp-for="@Model.ParticularCMSPage.Description"></textarea>
-                    <span class="text-danger" id="summernotespan"></span>
+                    <textarea id="CMSText" onkeyup="RemoveCmsPageValidation()"   asp-for="@Model.ParticularCMSPage.Description"></textarea>
+                    <span class="text-danger" id="CMSTextValidation"></span>
                 </div>
                 <div class="mb-3">
                     <label  class="form-label">Slug :</label>
-                    <input asp-for="@Model.ParticularCMSPage.Slug"  class="form-control" id="cmsSlug">
-                    <span class="text-danger" id="cmsslugspan"></span>
+                    <input asp-for="@Model.ParticularCMSPage.Slug" oninput="RemoveCmsPageValidation()"   class="form-control" id="CMSSlug">
+                    <span class="text-danger" id="CMSSlugValidation"></span>
                 </div>
                 
                 <div class="mb-3">
@@ -42,7 +42,7 @@
                     </select>
                 </div>
                 <div class="text-end">
-                    <button type="button" class="btn border-secondary px-3 py-1 text-secondary  text-center rounded-pill bg-white">Cancel</button>
+                    <a asp-action="CMSPageAdminTab" asp-controller="Admin" type="button" class="btn border-secondary px-3 py-1 text-secondary  text-center rounded-pill bg-white">Cancel</a>
                     <button type="submit"  class="btn px-3 text-success py-1 border-success text-center rounded-pill bg-white">Save</button>
                     
                 </div>

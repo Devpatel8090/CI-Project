@@ -52,6 +52,8 @@ namespace CI_Platfrom.Repository.Interface
         public IBannerRepository Banner { get; }
 
         public IMissionSkillRepository MissionSkill { get; }
+
+        public IGoalMissionRepository GoalMission { get; }
         public void save();
 
     }

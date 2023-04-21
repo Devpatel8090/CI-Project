@@ -40,6 +40,7 @@ namespace CI_Platfrom.Repository.Repository
             Banner = new BannerRepository(_db);
             MissionDocument = new MissionDocumentRepository(_db);
             MissionSkill = new MissionSkillRepository(_db);
+            GoalMission = new GoalMissionRepository(_db);
         }
 
         public IMissionRepository Mission { get; private set; }
@@ -85,6 +86,8 @@ namespace CI_Platfrom.Repository.Repository
         public IMissionDocumentRepository MissionDocument { get; private set; } 
 
         public IMissionSkillRepository MissionSkill { get; private set; }
+
+        public IGoalMissionRepository GoalMission { get; private set; }
         public void save()
         {
             _db.SaveChanges();
