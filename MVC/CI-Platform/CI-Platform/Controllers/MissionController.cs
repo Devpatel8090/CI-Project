@@ -36,7 +36,7 @@ namespace CI_Platform.Controllers
             //_mission = mission;
             //_db = db;
         }
-        public IActionResult LandingPage(string sort, string filter, long countryId = 0, int page = 0)
+        public IActionResult LandingPage(string sort, string filter, long countryId = 0, int page = 1,string search="")
         {
             //var country = _unitOfWork.Country.GetAllCountries(countryId);
             //ViewBag.countryname = country;
@@ -75,12 +75,13 @@ namespace CI_Platform.Controllers
 
                 //var user = userDetails.FirstOrDefault(e => e.Email == emailFromSession);
                 //ViewBag.LoginUser = user;
-                if (filter != null || sort != null || page>0)
+                if (filter != null || sort != null || page > 1 || search != "")
                 {
                     
-                    return RedirectToAction("GetAllMissions", new { sort, filter, countryId,page });
+                    return RedirectToAction("GetAllMissions", new { sort, filter, countryId,page,search });
+
                 }
-               
+                missionObj.Mission = missionObj.Mission.Skip((page - 1) * 9).Take(9);
                 return View(missionObj);
             }
         }
@@ -91,11 +92,11 @@ namespace CI_Platform.Controllers
         /// <param name="filter"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IActionResult GetAllMissions(string sort, string filter, long id = 0,int page=0)
+        public IActionResult GetAllMissions(string sort, string filter, long id = 0,int page=1,string search = "")
         {
             var sessionValue = HttpContext.Session.GetString("userEmail");
 
-            MissionVM allmissions = _missionvm.ApplyFilter(sort, filter, id, sessionValue,page);
+            MissionVM allmissions = _missionvm.ApplyFilter(sort, filter, id, sessionValue,page,search);
 
             return PartialView("_GridCards",allmissions);
             //JsonResult[] missions = new JsonResult[allmissions.Mission.ToList().Count];
@@ -138,10 +139,19 @@ namespace CI_Platform.Controllers
 
         public IActionResult VolunteeringPage(long id)
         {
-            var sessionValue = HttpContext.Session.GetString("userEmail");
-            MissionVM missionpage = getmissionPage(id, sessionValue);
-            missionpage.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
-            return View(missionpage);
+            var ses = HttpContext.Session.GetString("userEmail");
+
+            if (ses == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else
+            {
+                var sessionValue = HttpContext.Session.GetString("userEmail");
+                MissionVM missionpage = getmissionPage(id, sessionValue);
+                missionpage.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
+                return View(missionpage);
+            }
         }
 
         public MissionVM getmissionPage(long id, string sessionValue)
@@ -205,10 +215,6 @@ namespace CI_Platform.Controllers
                 _unitOfWork.FavoriteMission.Add(obj);
                 _unitOfWork.save();
             }
-
-
-
-
         }
 
 

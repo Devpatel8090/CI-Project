@@ -11,7 +11,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class GoalMissionRepository : Repository<GoalMission>,IGoalMissionRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public GoalMissionRepository(CiPlatformContext db) : base(db)
         {

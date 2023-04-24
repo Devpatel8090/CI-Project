@@ -11,7 +11,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class ContactUsRepository: Repository<ContactU>, IContactUsRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public ContactUsRepository(CiPlatformContext db) : base(db)
         {

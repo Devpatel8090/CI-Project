@@ -11,7 +11,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class AdminRepository:Repository<Admin>,IAdminRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public AdminRepository(CiPlatformContext db) : base(db)
         {

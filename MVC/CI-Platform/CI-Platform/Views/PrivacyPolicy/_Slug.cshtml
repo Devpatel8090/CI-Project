@@ -1,0 +1,48 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using System.Globalization;
+@using CI_Platfrom.Entities.Models.ViewModel;
+
+@{
+    Layout = "~/Views/Shared/_UserProfileHeader.cshtml";
+}
+
+@model ProfileVM
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>@Model.CmsPage.Title</h3>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <div>
+                @Html.Raw(Model.CmsPage.Description)
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+@*<footer id="FooterId" class="border-top footer text-muted mt-3">
+    <div class="container mt-3 mb-2">
+        &copy; 2023 - CI_PLATFORM <a style="cursor: pointer;" class="text-decoration-none ms-4" data-bs-toggle="modal" data-bs-target="#ContactUs">Contact Us</a>
+    </div>
+</footer>
+
+
+
+
+
+<div class="modal fade" id="ContactUs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <partial name="_ContactUs" model="@Model.user" />
+    </div>
+</div>*@

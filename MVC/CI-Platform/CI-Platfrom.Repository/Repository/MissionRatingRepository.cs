@@ -11,7 +11,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class MissionRatingRepository: Repository<MissionRating>,IMissionRatingRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
         public MissionRatingRepository(CiPlatformContext db) : base(db)
         {
             _db = db;

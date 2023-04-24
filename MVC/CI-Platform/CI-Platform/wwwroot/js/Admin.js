@@ -164,6 +164,9 @@ $('.missionEdit').on('click', function (event) {
         success: function (data) {
             console.log(data);
             $('#MissionTabAdd').html(data);
+            $("#particularMissiontype").css('pointer-events', 'none');
+            $("#particularMissiontype").css('background-color', '#e9ecef');
+            GoalToTime();
             var oldImgs = document.getElementsByClassName('oldImgs');
             for (let i = 0; i < oldImgs.length; i++) {
                 img = oldImgs[i];

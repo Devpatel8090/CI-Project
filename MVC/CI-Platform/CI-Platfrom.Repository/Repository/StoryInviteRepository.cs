@@ -13,7 +13,7 @@ namespace CI_Platfrom.Repository.Repository
     {
 
 
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public StoryInviteRepository(CiPlatformContext db) : base(db)
         {

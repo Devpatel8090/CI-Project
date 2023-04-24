@@ -11,7 +11,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class MissionInviteRepository : Repository<MissionInvite>,IMissionInviteRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
         public MissionInviteRepository(CiPlatformContext db) : base(db)
         {
             _db = db;

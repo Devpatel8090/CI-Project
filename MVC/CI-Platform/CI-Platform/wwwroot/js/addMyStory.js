@@ -105,6 +105,21 @@ function StorySave() {
         formphotos.append("totalfiles", filesfromdata);
     }
 
+    if (missionId == -1) {
+        $('#selectMissionValidation').text("Please Select Mission");
+        return false;
+    }
+
+    if (storytitle == "") {
+        $('#storyTitleValidation').text("Please Enter  Story Tilte");
+        return false;
+    }
+
+    if (storytitle.trim().length < 5 || storytitle.trim().length > 255) {
+        $('#storyTitleValidation').text("Length of title must between 5 to 255 characters");
+        return false;
+    }
+
     let addStoryObj = {
         MissionId: missionId,
         StoryTitle: storytitle,
@@ -112,6 +127,8 @@ function StorySave() {
         StoryVideoUrl: storyurl,
         storyImages: PreviousImages,
     };
+
+  
 
     formphotos.append("addStoryObj", JSON.stringify(addStoryObj));
 
@@ -165,6 +182,7 @@ function showDraftedImgs() {
 $("#selectMission").on("change", function () {
     var missionId = $("#selectMission").find(":selected").val();
     var url = "/Story/storyByMissionID";
+
     $.ajax({
         url: url,
         data: {
@@ -202,6 +220,52 @@ $("#selectMission").on("change", function () {
         },
     });
 });
+
+
+function AddyourStoryValidation() {
+    var flag = 0;
+    var missionIds = $('#selectMission').find(":selected").val();
+    var tittle = $('#storyTitle').val();
+    var description = CKEDITOR.instances['content'].getData();
+    var youtubeurl = $('#storyVideoUrl').val();
+    var urlRegex = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+
+
+
+    if (missionIds == -1) {
+        $('#selectMissionValidation').text("Please Select Mission");
+        flag = 1;
+    }
+    if (tittle == "") {
+        $('#storyTitleValidation').text("Please Enter  Story Tilte");
+        flag = 1;
+    }
+
+    if (tittle.length <= 5 && tittle.length >= 255) {
+        $('#storyTitleValidation').text("Length of title must between 5 to 255 characters");
+        flag = 1;
+    }
+
+    if (description == "") {
+        $('#ContentValidation').text("Please Enter Discription");
+        flag = 1;
+    }
+
+    if (!youtubeurl.match(urlRegex) && !youtubeurl == "") {
+        $('#storyVideoUrlValidation').text("Please Enter Correct youtube Url");
+        flag = 1;
+    }
+
+    if (flag == 1) {
+        return false;
+    }
+  
+}
+
+function RemoveAddyourStoryValidation() {
+    var input = event.target.getAttribute("id");
+    $('#' + input + "Validation").html('');
+}
 
 
 

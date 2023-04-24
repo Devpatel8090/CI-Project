@@ -38,6 +38,7 @@ namespace CI_Platform.Controllers
         [HttpGet]
         public IActionResult login()
         {
+            ViewBag.Banners = _unitOfWork.Banner.GetAll().Where(banner => banner.DeletedAt == null);
             return View();
         }
 
@@ -106,9 +107,17 @@ namespace CI_Platform.Controllers
             return RedirectToAction("login", "Authentication");
         }
 
-        [HttpGet]
-        public IActionResult forgotPassword()
+        public IActionResult UnAuthorize()
         {
+            HttpContext.Session.Remove("userEmail");
+            TempData["error"] = "Sorry! You are not Authorized!";
+            return RedirectToAction("login", "Authentication");
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            ViewBag.Banners = _unitOfWork.Banner.GetAll().Where(banner => banner.DeletedAt == null);
             return View();
         }
 
@@ -117,7 +126,7 @@ namespace CI_Platform.Controllers
       
 
         [HttpPost]
-        public async Task<IActionResult> ForgotPassword(string email)
+        public  IActionResult ForgotPassword(string email)
         {
 
 
@@ -222,6 +231,7 @@ namespace CI_Platform.Controllers
        
         public IActionResult resetPassword(string token)
         {
+            ViewBag.Banners = _unitOfWork.Banner.GetAll().Where(banner => banner.DeletedAt == null);
             var findToken = _unitOfWork.PasswordReset.GetFirstOrDefault(x => x.Token == token);
             var tokenObject = new JwtSecurityTokenHandler().ReadJwtToken(token);
             var email = tokenObject.Payload.Claims.ToList()[0].Value;

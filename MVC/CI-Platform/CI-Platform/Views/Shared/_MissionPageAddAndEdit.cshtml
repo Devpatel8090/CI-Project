@@ -82,7 +82,7 @@
                 <div class="row mb-3">
                     <div class="col">
                         <label  class="form-label">Mission Type :</label>
-                        <select asp-for="@Model.particularMission.MissionType" id="particularMissiontype" onchange="GoalToTime()"  class="form-select">
+                        <select asp-for="@Model.particularMission.MissionType" onchange="GoalToTime()" id="particularMissiontype" onchange="GoalToTime()"  class="form-select">
                            
                                 <option value="GOAL" selected>GOAL</option>
                                 <option value="TIME">TIME</option>
@@ -109,12 +109,12 @@
                     <div class="col">
                         <div id="deadline" class="d-none">
                             <label  class="form-label">Deadline :</label>
-                            <input asp-for="@Model.particularMission."  min="@DateTime.Now.ToString("yyyy-MM-dd")" type="date" class="form-control" id="missiondeadline">
+                            <input  min="@DateTime.Now.ToString("yyyy-MM-dd")" type="date" class="form-control" id="missiondeadline">
                             <span class="text-danger" id="missiondeadlinespan"></span>
                         </div>
                         <div id="goalnumber" class="">
                             <label  class="form-label">Goal Value :</label>
-                            <input  asp-for="@Model.GoalMission.GoalValue" type="text" class="form-control" id="missiongoal">
+                            <input  asp-for="@Model.GoalMission.GoalValue" type="number" class="form-control" id="missiongoal">
                             <span class="text-danger" id="missiongoalspan"></span>
                         </div>
                     </div>
@@ -202,7 +202,7 @@
                     <div id="image-container" class="d-flex">
                         @if (Model.particularMission != null)
                         {
-                            var medias = Model.particularMission.MissionMedia.Where(s => s.MediaType != "Video");
+                            var medias = Model.particularMission.MissionMedia.Where(s => s.MediaType != "URL");
                             for(var i=0;i<medias.Count();i++)
                             {
                                 <div class="image">
@@ -232,7 +232,20 @@
                 </div>
                 <div class="mb-3">
                     <label for="formFileMultiple" class="form-label">Video Url : </label>
-                    <input class="form-control" name="videourls" type="text" id="youtubeurl">
+                    <input class="form-control" name="videourls" type="text"
+                    id="youtubeurl">
+                       <div id="video-container" class="d-flex mt-3">
+                          @if(Model.particularMission != null){
+                              var videoUrl = Model.particularMission.MissionMedia.Where(mission => mission.MediaType == "URL");
+                              for(var i=0;i<videoUrl.Count();i++)
+                              {
+                                   <div class="URLs">
+                                       <a target="_blank" href="@videoUrl.ElementAt(i).MediaPath" class="docpill mx-1 oldDocs">@videoUrl.ElementAt(i).MediaPath</a>
+                                        <button class="mx-2 pillbtn" type="button" onclick="delURL(@i)">X</button>
+                                   </div>                                
+                              }
+                          }
+                      </div>
                 </div>
 
                 
@@ -280,7 +293,8 @@
     })
 </script>
 <script>
-    /*$('#particularMissiontype').on('change',*/function GoalToTime()  {
+    function GoalToTime()  {
+       
         var value = $('#particularMissiontype').find(':selected').val();
         if(value == "GOAL") {
             $('#goaltext').removeClass('d-none');
@@ -294,6 +308,5 @@
             $('#totalseats').removeClass('d-none');
             $('#deadline').removeClass('d-none');
         }
-    }/*)*/
-     
+    }
 </script>

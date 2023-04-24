@@ -13,7 +13,7 @@ namespace CI_Platfrom.Repository.Repository
     public class MissionApplicationRepository: Repository<MissionApplication>,IMissionApplicationRepository
     {
 
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
         public MissionApplicationRepository(CiPlatformContext db) : base(db)
         {
             _db = db;

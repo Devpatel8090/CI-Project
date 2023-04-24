@@ -49,7 +49,9 @@
                                     if(cmsdata != null)
                                     {   @foreach (var item in cmsdata)
                                         {
-                                            <li><a class="dropdown-item" asp-action="@item.Slug" asp-controller="PrivacyPolicy">@item.Slug</a></li>
+                            
+                                <li><a class="dropdown-item" asp-controller="PrivacyPokciy" asp-action="Slug" asp-route-SlugId="@item.CmsPageId">@item.Title</a></li>
+                            
                                         }
                                      
                                     }                                   

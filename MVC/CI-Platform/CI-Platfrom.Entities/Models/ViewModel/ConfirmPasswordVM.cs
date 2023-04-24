@@ -10,10 +10,10 @@ namespace CI_Platfrom.Entities.Models.ViewModel
     public class ConfirmPasswordVM
     {
 
-        public User User { get; set; }
+        public User User { get; set; } = new User();
 
         [Required]
-        public string ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; set; } = string.Empty;
     }
 
    

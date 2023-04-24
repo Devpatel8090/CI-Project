@@ -16,29 +16,29 @@ namespace CI_Platfrom.Entities.Models.ViewModel
         public IEnumerable<Mission> missions { get; set; } = Enumerable.Empty <Mission>();
         public Mission? particularMission { get; set; }
 
-        public IEnumerable<CmsPage> CmsPages { get; set; }
-        public Story particularStory { get; set; }
+        public IEnumerable<CmsPage> CmsPages { get; set; } = Enumerable.Empty<CmsPage>();
+        public Story particularStory { get; set; } = new Story();
 
-        public CmsPage ParticularCMSPage { get; set; }
+        public CmsPage ParticularCMSPage { get; set; } = new CmsPage();
 
-        public IEnumerable<SelectListItem> countries { get; set; }
-        public IEnumerable<SelectListItem> cities { get; set; }
+        public IEnumerable<SelectListItem> countries { get; set; } = Enumerable.Empty<SelectListItem>();
+        public IEnumerable<SelectListItem> cities { get; set; } = Enumerable.Empty<SelectListItem>();
 
-        public IEnumerable<SelectListItem> themes { get; set;}
+        public IEnumerable<SelectListItem> themes { get; set;} = Enumerable.Empty<SelectListItem>();
 
-        public IEnumerable<Skill> skills { get; set; }
+        public IEnumerable<Skill> skills { get; set; } = Enumerable.Empty<Skill>();
 
-        public IEnumerable<MissionTheme> missionThemes { get; set; }
+        public IEnumerable<MissionTheme> missionThemes { get; set; } = Enumerable.Empty<MissionTheme>();
 
-        public IEnumerable<MissionApplication> missionApplication { get; set; }
+        public IEnumerable<MissionApplication> missionApplication { get; set; } = Enumerable.Empty<MissionApplication>();
 
-        public IEnumerable<Story> stories { get; set; }
+        public IEnumerable<Story> stories { get; set; } = Enumerable.Empty<Story>();
 
-        public IEnumerable<Banner> banner { get; set; }
+        public IEnumerable<Banner> banner { get; set; } = Enumerable.Empty<Banner>();
 
-        public Banner particularBanner { get; set; }
+        public Banner particularBanner { get; set; } = new Banner();
 
-        public GoalMission GoalMission { get; set; }
+        public GoalMission ?GoalMission { get; set; }
 
     }
 }

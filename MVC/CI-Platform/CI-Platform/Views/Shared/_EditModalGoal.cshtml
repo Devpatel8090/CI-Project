@@ -9,7 +9,7 @@
 
 
         <div class="modal-content">
-            <form method="post" asp-action="AddTimeSheet" asp-controller="VolunteeringTimeSheet">
+            <form method="post" asp-action="AddTimeSheet" onsubmit="return IsValideGoalsheetEdit()" asp-controller="VolunteeringTimeSheet">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Please input below Volunteering Goal</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -26,13 +26,14 @@
                 </div>
                 <div class="col">
                     <label class="mt-2">Please input below Volunteering Goal</label>
-                    <input type="text" asp-for="@Model.particularTimesheet.Action" placeholder="Enter Actions" class="form-control mt-2" >
-                   
+                    <input type="text" oninput="removeIsValideTimesheet()" id="GoalAction" asp-for="@Model.particularTimesheet.Action" placeholder="Enter Actions" class="form-control mt-2" >
+                   <span class="text-danger" id="GoalActionValidation"></span>
                     
                 </div>
                 <div class="col">
                     <label class="mt-2">Date Volunteered</label>
-                    <input type="text" asp-for="@Model.particularTimesheet.DateVolunteered" placeholder="04-11-2019" class="form-control mt-2" >
+                    <input type="text" oninput="removeIsValideTimesheet()" id="GoalDate" asp-for="@Model.particularTimesheet.DateVolunteered" placeholder="04-11-2019" class="form-control mt-2" >
+                     <span class="text-danger" id="GoalDateValidation'"></span>
                 </div> 
 
                 <div class="col mt-2">

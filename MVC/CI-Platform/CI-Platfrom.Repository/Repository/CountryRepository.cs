@@ -12,7 +12,7 @@ namespace CI_Platfrom.Repository.Repository
     
     public  class CountryRepository : Repository<Country>,ICountryRepository
     {
-        private readonly CiPlatformContext _db; 
+        private new readonly CiPlatformContext _db; 
 
         public CountryRepository(CiPlatformContext db): base(db)
         {

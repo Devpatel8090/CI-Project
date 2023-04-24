@@ -115,3 +115,141 @@ $('.deletebutton').on('click', function () {
         }
     })
 });
+
+function IsValideTimesheetAdd() {
+
+var missionIds = $('#SelectMissionTime').find(":selected").val();
+var DateVolunteered = $('#DateTimeMission').val();
+var TotalHours = $('#HourWorkTime').val();
+var TotalMinutes = $('#MinutesWorkTime').val();
+
+    var flag = 0;
+    
+
+if (missionIds == -1) {
+    $('#SelectMissionTimeValidation').text("Please Select Mission");
+    flag = 1;
+}
+
+if (DateVolunteered == "") {
+    $('#DateTimeMissionValidation').text("Please Select Date You Volunteer");
+    flag = 1;
+}
+
+if (TotalHours == 0) {
+    $('#HourWorkTimeValidation').text("Please Select Hour between 1 to 24");
+    flag = 1;
+}
+
+if (parseInt(TotalHours) <= -1 || parseInt(TotalHours) > 24) {    
+    $('#HourWorkTimeValidation').text("Hours Must between 0 to 24");
+    flag = 1;
+}
+
+if (TotalMinutes == 0) {
+    $('#MinutesWorkTimeValidation').text("Please Select Minute between 0 to 60");
+    flag = 1;
+}
+
+if (parseInt(TotalMinutes) < -1 || parseInt(TotalMinutes) > 60) {   
+    $('#AddTimeMinutesValidation').text("Minutes Must between 0 to 60");
+    flag = 1;
+}
+
+    if (flag == 1) {
+        return false;
+    }
+}
+
+function IsValideGoalsheetAdd() {
+    var flag = 0;
+    var GoalmissionIds = $('#GoalMissionId').find(":selected").val();
+    var GoalDateVolunteered = $('#GoalDate').val();
+    var TotalAction = $('#GoalAction').val();
+
+    if (GoalmissionIds == -1) {
+        $('#GoalMissionIdValidation').text("Please Select the goal");
+        var flag = 1;
+    }
+
+    if (GoalDateVolunteered == "") {
+        $('#GoalDateValidation').text("Please Select the Date");
+        var flag = 1;
+    }
+
+    if (TotalAction == "") {
+        $('#GoalActionValidation').text("Please insert Action and it should be in Postive numbers only");
+        var flag = 1;
+    }
+    if (TotalAction < 0) {
+        $('#GoalActionValidation').text("Please insert Action and it should be in Postive numbers only");
+        var flag = 1;
+    }
+
+    
+    if (flag == 1) {
+        return false;
+    }
+}
+
+function IsValideTimesheetEdit() {
+    var DateVolunteered = $('#DateTimeMission').val();
+    var TotalHours = $('#HourWorkTime').val();
+    var TotalMinutes = $('#MinutesWorkTime').val();
+
+    flag = 0;
+
+    if (DateVolunteered == "") {
+        $('#DateTimeMissionValidation').removeClass("hide");
+        flag = 1;
+    }
+
+    if (TotalHours == "") {
+        $('#HourWorkTimeValidation').removeClass("hide");
+        flag = 1;
+    }
+
+    if (parseInt(TotalHours) <= -1 || parseInt(TotalHours) > 24) {        
+        $('#HourWorkTimeValidation').text("Hours Must between 0 to 24");
+        flag = 1;
+    }
+
+    if (TotalMinutes == "") {
+        $('#MinutesWorkTimeValidation').removeClass("hide");
+        flag = 1;
+    }
+    if (flag == 1) {
+        return false;
+    }
+
+}
+function IsValideGoalsheetEdit() {
+    flag = 0;
+    var GoalDateVolunteered = $('#GoalDate').val();
+    var TotalAction = $('#GoalAction').val();
+
+    if (GoalDateVolunteered == "") {
+        $('#GoalDateValidation').text("Please Select the Date");
+        var flag = 1;
+    }
+
+    if (TotalAction == "") {
+        $('#GoalActionValidation').text("Please insert Action and it should be in Postive numbers only");
+        var flag = 1;
+    }
+    if (TotalAction < 0) {
+        $('#GoalActionValidation').text("Please insert Action and it should be in Postive numbers only");
+        var flag = 1;
+    }
+
+    if (flag == 1) {
+        return false;
+    }
+}
+
+function removeIsValideTimesheet() {
+    var input = event.target.getAttribute("id");
+    $('#' + input + "Validation").html('');
+}
+
+

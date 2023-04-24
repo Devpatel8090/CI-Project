@@ -13,7 +13,7 @@ namespace CI_Platfrom.Repository.Repository
     public class StoryRepository : Repository<Story>, IStoryRepository
     {
 
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public StoryRepository(CiPlatformContext db) : base(db)
         {
@@ -44,8 +44,8 @@ namespace CI_Platfrom.Repository.Repository
 
         public Story getStoryById(long storyId)
         {
-            Story storyDetails = _db.Stories.Include(e => e.Mission).Include(e => e.User).Include(e => e.StoryMedia).FirstOrDefault(e => e.StoryId == storyId  );
-            return storyDetails;
+            Story ?storyDetails = _db.Stories.Include(e => e.Mission).Include(e => e.User).Include(e => e.StoryMedia).FirstOrDefault(e => e.StoryId == storyId  );
+            return storyDetails?? new();
         }
 
         public void updateStory(Story story)

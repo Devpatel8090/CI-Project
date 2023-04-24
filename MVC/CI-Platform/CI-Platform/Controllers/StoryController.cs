@@ -24,8 +24,17 @@ namespace CI_Platform.Controllers
         }
         public IActionResult StoryListingPage()
         {
-            StoryVM GetStories = getAllStory();
-            return View(GetStories);
+            var ses = HttpContext.Session.GetString("userEmail");
+
+            if (ses == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else
+            {
+                StoryVM GetStories = getAllStory();
+                return View(GetStories);
+            }
         }
 
 
@@ -48,11 +57,18 @@ namespace CI_Platform.Controllers
 
         public IActionResult AddYourStoryPage()
         {
-            StoryVM GetStories = getAllStory();
-         /*   GetStories.particularStory = _unitOfWork.Story.GetFirstOrDefault(e => e.UserId == GetStories.user.UserId && e.Status == "DRAFT");*/
+            var ses = HttpContext.Session.GetString("userEmail");
 
-          
-            return View(GetStories);
+            if (ses == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else
+            {
+                StoryVM GetStories = getAllStory();
+                /*   GetStories.particularStory = _unitOfWork.Story.GetFirstOrDefault(e => e.UserId == GetStories.user.UserId && e.Status == "DRAFT");*/
+                return View(GetStories);
+            }
         }
 
 
@@ -288,20 +304,25 @@ namespace CI_Platform.Controllers
 
         public IActionResult storyDetailPage(long storyId)
         {
-            StoryVM story = new StoryVM();
-            var emailFromSession = HttpContext.Session.GetString("userEmail");
-            story.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
-            story.User = _unitOfWork.User.GetUserDetails().ToList();
-            story.storyById = _unitOfWork.Story.getStoryById(storyId);
-            story.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
-            story.storyById.StoryViews = story.storyById.StoryViews + 1;
-            _unitOfWork.Story.updateStory(story.storyById);
-            _unitOfWork.save();
+            var ses = HttpContext.Session.GetString("userEmail");
 
-
-
-
-            return View(story);
+            if (ses == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else
+            {
+                StoryVM story = new StoryVM();
+                var emailFromSession = HttpContext.Session.GetString("userEmail");
+                story.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
+                story.User = _unitOfWork.User.GetUserDetails().ToList();
+                story.storyById = _unitOfWork.Story.getStoryById(storyId);
+                story.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
+                story.storyById.StoryViews = story.storyById.StoryViews + 1;
+                _unitOfWork.Story.updateStory(story.storyById);
+                _unitOfWork.save();
+                return View(story);
+            }
         }
 
 

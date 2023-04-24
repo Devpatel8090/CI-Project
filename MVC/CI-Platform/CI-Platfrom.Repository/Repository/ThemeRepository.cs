@@ -12,7 +12,7 @@ namespace CI_Platfrom.Repository.Repository
 {
      public class ThemeRepository : Repository<MissionTheme>, IThemeRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
         public ThemeRepository(CiPlatformContext db) : base(db)
         {
             _db = db;

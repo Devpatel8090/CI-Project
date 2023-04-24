@@ -15,13 +15,13 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
 
 <div class="container">
     <h1 class="sharestoryheader mb-4">Share your story</h1> 
-    <form method="post" enctype="multipart/form-data" asp-controller="Story" asp-action="AddYourStoryPage">
+    <form method="post" onsubmit="return AddyourStoryValidation()" enctype="multipart/form-data" asp-controller="Story" asp-action="AddYourStoryPage">
         <div class="row">
             <div class="col-md-4 col-sm-6">
                 <label  class="form-label">Select Mission</label>
                 <select  id="selectMission" asp-for="@Model.particularStory.MissionId" class="form-select mb-3" aria-label="Default select example">
                   
-                  <option   selected>Select your mission</option>
+                  <option onchange="RemoveAddyourStoryValidation()"  selected value="-1">Select your mission</option>
                     @{
                         
                         {
@@ -34,17 +34,20 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
                   
 
                 </select>
+                <span class="text-danger" id="selectMissionValidation"></span>
             </div>
             <div class="col-md-4 col-sm-6">
                 <div class="mb-3">
                   <label asp-for="@Model.particularStory.Title"  class="form-label">My story title</label>
-                  <input asp-for="@Model.particularStory.Title"   type="text" class="form-control mb-3 " id="storyTitle" aria-describedby="emailHelp" placeholder="Enter story title"> 
+                  <input asp-for="@Model.particularStory.Title" oniput="RemoveAddyourStoryValidation()"  type="text" class="form-control mb-3 " id="storyTitle" aria-describedby="emailHelp" placeholder="Enter story title"> 
+                  <span class="text-danger"  id="storyTitleValidation"></span>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
                 <div class="mb-3">
                   <label asp-for="@Model.particularStory.PublishedAt"   class="form-label">Date</label>
                   <input asp-for="@Model.particularStory.PublishedAt"  type="date" class="form-control mb-3" id="StoryDate" aria-describedby="emailHelp">
+                   <span class="text-danger" id="StoryDateValidation"></span>
                 </div>
             </div>
             
@@ -54,16 +57,16 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
          <div class="col-auto mb-4">
              <label asp-for="@Model.particularStory.Description" class="sharestoryheader mb-4">Story</label> 
             
-                 <textarea asp-for="@Model.particularStory.Description" cols="30"  rows="10" id="Content" class="ckeditor"></textarea>
-           
+                 <textarea asp-for="@Model.particularStory.Description" cols="30" onchange="RemoveAddyourStoryValidation()"  rows="10" id="Content" class="ckeditor"></textarea>
+                <span class="text-danger" id="ContentValidation"></span>
         </div>
 
         <div class="row mb-4">
             <div class="col">
 
                 <label  asp-for="@Model.particularStoryVideo.Path" class="form-label">Enter video url</label>
-                <input  asp-for="@Model.particularStoryVideo.Path"  type="text" class="form-control" id="storyVideoUrl" aria-describedby="emailHelp" placeholder="Enter your url"> 
-
+                <input  asp-for="@Model.particularStoryVideo.Path" onchange="RemoveAddyourStoryValidation()"  type="text" class="form-control" id="storyVideoUrl" aria-describedby="emailHelp" placeholder="Enter your url"> 
+                <span class="text-danger" id="storyVideoUrlValidation"></span>
             </div>
         </div>
         <div class="row mb-4">
@@ -97,7 +100,7 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
             </div>
             <div class="d-flex flex-row gap-1 justify-content-between flex-warp">
                      <button disabled style="opacity:0.5;"   type="button" class="px-4 py-1 px-md-5  orage_color rounded-pill bg-white border-2" id="StoryPreviewButton" >Preview</button>
-                   <button type="button" class="px-4 py-1 px-md-5 orage_color rounded-pill bg-white border-2 " onclick="StorySave()">Save</button>
+                   <button type="button" class="px-4 py-1 px-md-5 orage_color rounded-pill bg-white border-2 "  onclick="return StorySave()">Save</button>
                 <button disabled style="opacity:0.5;"  type="submit" class="px-4 py-1 px-md-5  orage_color rounded-pill bg-white border-2 " onclick=" textareaval()"   id="StorySubmitButton"  >Submit</button>
             </div>
         </div>

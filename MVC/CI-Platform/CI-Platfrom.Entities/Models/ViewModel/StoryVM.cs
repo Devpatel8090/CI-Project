@@ -8,34 +8,33 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 {
     public class StoryVM
     {
-        public IEnumerable<Mission> Mission { get; set; }
+        public IEnumerable<Mission> Mission { get; set; } = Enumerable.Empty<Mission>();
       
-        public IEnumerable<Story> Story { get; set; }
+        public IEnumerable<Story> Story { get; set; } = Enumerable.Empty<Story>();
+        public IEnumerable<MissionTheme> MissionTheme { get; set; } = Enumerable.Empty<MissionTheme>();
 
-        public IEnumerable<MissionTheme> MissionTheme { get; set; }
-
-        public IEnumerable<MissionApplication> LogingUserMissions { get; set; }
+        public IEnumerable<MissionApplication> LogingUserMissions { get; set; } = Enumerable.Empty<MissionApplication>();
 
 
-        public IEnumerable<User> User { get; set; }
+        public IEnumerable<User> User { get; set; } = Enumerable.Empty<User>();
 
-        public User user { get; set; }
+        public User user { get; set; } = new User();
 
         /// <summary>
         ///  for adding new story 
         /// </summary>
-        public Story particularStory { get; set; }
+        public Story particularStory { get; set; } = new Story();
 
         /// <summary>
         /// for taking the story in storyListing page
         /// </summary>
-        public Story storyById { get; set; }
+        public Story storyById { get; set; } = new Story();
 
-        public StoryMedium particularStoryVideo { get; set; }
+        public StoryMedium particularStoryVideo { get; set; } = new StoryMedium();
 
-        public ContactU ContactUs { get; set; }
-
-        public IEnumerable<CmsPage> CmsPages { get; set; }
+        public ContactU ContactUs { get; set; } = new ContactU();
+         
+        public IEnumerable<CmsPage> CmsPages { get; set; } = Enumerable.Empty<CmsPage>();
 
 
     }

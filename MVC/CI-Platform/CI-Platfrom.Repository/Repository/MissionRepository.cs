@@ -13,7 +13,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class MissionRepository : Repository<Mission>,IMissionRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public MissionRepository(CiPlatformContext db) : base(db)
         {
@@ -26,7 +26,7 @@ namespace CI_Platfrom.Repository.Repository
         /// <returns></returns>
         public List<Mission> GetMissionDetails()
         {
-            List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.Timesheets).Include(m => m.MissionMedia).Include(m=> m.MissionRatings).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m => m.GoalMissions).ToList();
+            List<Mission> missionDetails = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.Timesheets).Include(m => m.MissionMedia).Include(m=> m.MissionRatings).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m => m.GoalMissions).Where(m => m.DeletedAt == null).ToList();
             return missionDetails;
         }
 
@@ -48,8 +48,8 @@ namespace CI_Platfrom.Repository.Repository
         /// <returns></returns>
         public Mission GetMissionByMissionId(long missionId)
         {
-            var particularMission = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionMedia).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m=> m.MissionRatings).Include(m => m.Comments).Include(m=> m.MissionDocuments).Include( e=> e.GoalMissions).FirstOrDefault(m => m.MissionId == missionId);
-            return particularMission;
+            var particularMission = _db.Missions.Include(m => m.City).Include(m => m.Theme).Include(m => m.MissionMedia).Include(m => m.MissionSkills).Include(m => m.FavoriteMissions).Include(m => m.MissionRatings).Include(m => m.Comments).Include(m=> m.MissionDocuments).Include( m => m.GoalMissions).FirstOrDefault(m => m.MissionId == missionId && m.DeletedAt == null);
+            return particularMission?? new();
         }
 
 
@@ -58,15 +58,17 @@ namespace CI_Platfrom.Repository.Repository
         /// </summary>
         /// <param name="missionId"></param>
         /// <returns></returns>
-        public List<Mission> getRelatedMissions(long missionId)
+        public IEnumerable<Mission> getRelatedMissions(long missionId)
         {
+            var relatedMissionList = Enumerable.Empty<Mission>();
             var relatedmission = GetMissionDetails().FirstOrDefault( e => e.MissionId == missionId);
+            if(relatedmission != null) { 
             long countryId = relatedmission.CountryId;
             long cityId = relatedmission.CityId;
             long themeId = relatedmission.ThemeId;
 
             //var relatedMissionList = _db.Missions.Where(e => e.CityId == cityId).ToList();
-            var relatedMissionList = GetMissionDetails().Where(e => e.CityId == cityId && e.MissionId != missionId).ToList();
+             relatedMissionList = GetMissionDetails().Where(e => e.CityId == cityId && e.MissionId != missionId).ToList();
             if(relatedMissionList.Distinct().Count() < 3)
             {
                 //relatedMissionList += _db.Missions.Where(e => e.CountryId == countryId).ToList();   
@@ -79,12 +81,14 @@ namespace CI_Platfrom.Repository.Repository
                 }
 
             }
+
             //relatedMissionList = relatedMissionList.Distinct().ToList();
             relatedMissionList = relatedMissionList.Take(3).ToList();
-           
-            
 
+             
+            }
             return relatedMissionList;
+
         }
     }
 }

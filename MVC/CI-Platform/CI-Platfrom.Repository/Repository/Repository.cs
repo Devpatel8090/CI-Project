@@ -12,7 +12,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        public readonly CiPlatformContext _db;
+        public  readonly CiPlatformContext _db;
         internal DbSet<T> dbSet;
         public Repository(CiPlatformContext db)
         {

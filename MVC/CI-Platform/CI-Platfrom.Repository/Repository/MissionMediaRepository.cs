@@ -11,7 +11,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class MissionMediaRepository : Repository<MissionMedium>,IMissionMediaRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public MissionMediaRepository(CiPlatformContext db) : base(db)
         {

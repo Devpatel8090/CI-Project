@@ -12,7 +12,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class CommentRepository: Repository<Comment>,ICommentRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public CommentRepository(CiPlatformContext db) : base(db)
         {

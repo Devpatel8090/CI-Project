@@ -33,7 +33,7 @@ namespace CI_Platform.Controllers
               adminDetails.missionApplication = _unitOfWork.MissionApplication.GetMissionApplications();*//*
              return View(adminDetails);
          }*/
-
+/*
         public IActionResult AdminLoginPage()
         {
             return View();
@@ -66,26 +66,52 @@ namespace CI_Platform.Controllers
                 return View(obj);
             }
 
-        }
+        }*/
 
         public IActionResult UserAdminTab()
         {
             AdminVM model = new AdminVM();
             var userDetails = _unitOfWork.User.GetUserDetails().Where(user => user.DeletedAt == null);
             var userEmail = HttpContext.Session.GetString("userEmail");
-            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
-            model.Users = userDetails;
-            return View(model);
+            var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            if(userEmail == null)
+            {  
+                return RedirectToAction("login", "Authentication");
+            }
+            else if(loggedinUser.Role == "USER")
+            {
+                return RedirectToAction("UnAuthorize", "Authentication");
+            }
+            else
+            {
+                model.LoggedInUser = loggedinUser;
+                model.Users = userDetails;
+                return View(model);
+            }
+            
         }
 
         public IActionResult CMSPageAdminTab()
         {
-            AdminVM model = new AdminVM();
+            var model = new AdminVM();
             var CMSPageDetails = _unitOfWork.CMSPage.GetAllCMSPageDetails().Where(cms => cms.DeletedAt == null);
             var userEmail = HttpContext.Session.GetString("userEmail");
-            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
-            model.CmsPages = CMSPageDetails;
-            return View(model);
+            var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            if (userEmail == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else if (loggedinUser.Role == "USER")
+            {
+                return RedirectToAction("UnAuthorize", "Authentication");
+            }
+            else
+            {
+                model.LoggedInUser = loggedinUser;
+                model.CmsPages = CMSPageDetails;
+                return View(model);
+            }
+          
         }
 
         public IActionResult MissionAdminTab()
@@ -93,9 +119,22 @@ namespace CI_Platform.Controllers
             AdminVM model = new AdminVM();
             var missions = _unitOfWork.Mission.GetMissionDetails().Where(mission => mission.DeletedAt == null);
             var userEmail = HttpContext.Session.GetString("userEmail");
-            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
-            model.missions = missions;
-            return View(model);
+            var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            if (userEmail == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else if (loggedinUser.Role == "USER")
+            {
+                return RedirectToAction("UnAuthorize", "Authentication");
+            }
+            else
+            {
+                model.LoggedInUser = loggedinUser;
+                model.missions = missions;
+                return View(model);
+            }
+            
         }
 
         public IActionResult MissionThemeAdminTab()
@@ -103,18 +142,43 @@ namespace CI_Platform.Controllers
             AdminVM model = new AdminVM();
             var missionThemeDetails = _unitOfWork.Theme.GetThemeDetails();
             var userEmail = HttpContext.Session.GetString("userEmail");
-            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
-            model.missionThemes = missionThemeDetails;
-            return View(model);
+            var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            if (userEmail == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else if (loggedinUser.Role == "USER")
+            {
+                return RedirectToAction("UnAuthorize", "Authentication");
+            }
+            else
+            {
+                model.LoggedInUser = loggedinUser;
+                model.missionThemes = missionThemeDetails;
+                return View(model);
+            }
+           
         }
         public IActionResult MissionSkillsAdminTab()
         {
             AdminVM model = new AdminVM();
             var skills = _unitOfWork.Skill.GetSkillDetails();
             var userEmail = HttpContext.Session.GetString("userEmail");
-            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
-            model.skills = skills;
-            return View(model);
+            var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            if (userEmail == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else if (loggedinUser.Role == "USER")
+            {
+                return RedirectToAction("UnAuthorize", "Authentication");
+            }
+            else
+            {
+                model.LoggedInUser = loggedinUser;
+                model.skills = skills;
+                return View(model);
+            }
         }
 
         public IActionResult MissionApplicationAdminTab()
@@ -122,9 +186,21 @@ namespace CI_Platform.Controllers
             AdminVM model = new AdminVM();
             var missionApplicationsDetails = _unitOfWork.MissionApplication.GetMissionApplications();
             var userEmail = HttpContext.Session.GetString("userEmail");
-            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
-            model.missionApplication = missionApplicationsDetails;
-            return View(model);
+            var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            if (userEmail == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else if (loggedinUser.Role == "USER")
+            {
+                return RedirectToAction("UnAuthorize", "Authentication");
+            }
+            else
+            {
+                model.LoggedInUser = loggedinUser;
+                model.missionApplication = missionApplicationsDetails;
+                return View(model);
+            }
         }
 
         public IActionResult StoryAdminTab()
@@ -132,19 +208,42 @@ namespace CI_Platform.Controllers
             AdminVM model = new AdminVM();
             var storiesDetails = _unitOfWork.Story.GetStoryDetails().Where(story => story.DeletedAt == null);
             var userEmail = HttpContext.Session.GetString("userEmail");
-            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
-            model.stories = storiesDetails;
-            return View(model);
-
+            var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            if (userEmail == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else if (loggedinUser.Role == "USER")
+            {
+                return RedirectToAction("UnAuthorize", "Authentication");
+            }
+            else
+            {
+                model.LoggedInUser = loggedinUser;
+                model.stories = storiesDetails;
+                return View(model);
+            }
         }
 
         public IActionResult BannerManagementAdminTab()
         {
             AdminVM model = new AdminVM();
             var userEmail = HttpContext.Session.GetString("userEmail");
-            model.LoggedInUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
-            model.banner = _unitOfWork.Banner.GetAll().Where(story => story.DeletedAt == null);
-            return View(model);
+            var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            if (userEmail == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else if (loggedinUser.Role == "USER")
+            {
+                return RedirectToAction("UnAuthorize", "Authentication");
+            }
+            else
+            {
+                model.LoggedInUser = loggedinUser;
+                model.banner = _unitOfWork.Banner.GetAll().Where(story => story.DeletedAt == null);
+                return View(model);
+            }
         }
 
         public IActionResult DeleteRecord(long userId = 0, long CmsPageId = 0, long missionId = 0,long storyId = 0, long bannerId=0)
@@ -468,11 +567,13 @@ namespace CI_Platform.Controllers
                 Value = country.CountryId.ToString()
 ,
             });
+            mission.GoalMission = _unitOfWork.GoalMission.GetFirstOrDefault(goal => goal.MissionId == MissionId);
             mission.themes = _unitOfWork.Theme.GetThemeDetails().Select(theme => new SelectListItem
             {
                 Text = theme.Title,
                 Value = theme.MissionThemeId.ToString()
             });
+          
             return PartialView("_MissionPageAddAndEdit", mission);
         }
 
@@ -508,6 +609,7 @@ namespace CI_Platform.Controllers
                 
                 mediaobj.MediaPath = "/images/MissionImages/" + newName;
                 mediaobj.MediaType = "PNG";
+                mediaobj.DefaultMissionMedia = 1;
                 mediaobj.MediaName = newName;
                 /*mediaobj.MissionId = model.particularMission.MissionId;*/
                 /*story.particularStory.StoryMedia.Add(mediaobj);*/
@@ -575,7 +677,7 @@ namespace CI_Platform.Controllers
 
             /*if (model.particularMission.MissionId > 0)
             {*/
-                foreach (var image in images.Where(i => i.MissionId == model.particularMission.MissionId && i.MediaType != "VIDEO"))
+                foreach (var image in images.Where(i => i.MissionId == model.particularMission.MissionId && i.MediaType != "URL"))
                 {
                    /* if (!documents.Any(i => image.MediaPath.Contains(i.FileName)))*/
                         if (!documents.Any(i => i.FileName.Contains(image.MediaPath)))
@@ -628,7 +730,7 @@ namespace CI_Platform.Controllers
                     MissionMedium missionvideos = new MissionMedium
                     {
                         MediaPath = video,
-                        MediaType = "VIDEO",
+                        MediaType = "URL",
                         MediaName = "YoutubeVideo"
                     };
                     model.particularMission.MissionMedia.Add(missionvideos);
@@ -658,15 +760,18 @@ namespace CI_Platform.Controllers
                 alreadyMission.Availability = model.particularMission.Availability;
                 alreadyMission.UpdatedAt = DateTime.Now;
 
-                var goalmission = _unitOfWork.GoalMission.GetFirstOrDefault(mission => mission.MissionId == model.particularMission.MissionId);
                 
-                goalmission.GoalObjectiveText =model.GoalMission.GoalObjectiveText;
-                goalmission.GoalValue =  model.GoalMission.GoalValue;
-                goalmission.UpdatedAt = DateTime.Now;
-
-                alreadyMission.GoalMissions.Add(goalmission);
-                foreach(var image in model.particularMission.MissionMedia)
+                if(model.particularMission.MissionType =="GOAL")
                 {
+                    var goalmission = _unitOfWork.GoalMission.GetFirstOrDefault(mission => mission.MissionId == model.particularMission.MissionId);
+                    goalmission.GoalObjectiveText = model.GoalMission.GoalObjectiveText;
+                    goalmission.GoalValue = model.GoalMission.GoalValue;
+                    goalmission.UpdatedAt = DateTime.Now;
+                    alreadyMission.GoalMissions.Add(goalmission);
+                }
+                
+                foreach(var image in model.particularMission.MissionMedia)
+                {   
                     alreadyMission.MissionMedia.Add(image);
                 }
 

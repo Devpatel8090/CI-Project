@@ -56,24 +56,24 @@ namespace CI_Platfrom.Repository.Repository
             IEnumerable<Country> countryDetails = _unitOfWork.Country.GetCountriesDetails();
             missionVM.Country = countryDetails;
 
-            IEnumerable<Skill> skillDetails = _unitOfWork.Skill.GetSkillDetails();
+            IEnumerable<Skill> skillDetails = _unitOfWork.Skill.GetSkillDetails().Where(skill => skill.Status == true);
             missionVM.skills = skillDetails;
 
-            IEnumerable<MissionTheme> themeDetails = _unitOfWork.Theme.GetThemeDetails();
+            IEnumerable<MissionTheme> themeDetails = _unitOfWork.Theme.GetThemeDetails().Where(theme => theme.Status == true);
             missionVM.MissionTheme = themeDetails;
 
             IEnumerable<MissionMedium> missionMediumDetails = _unitOfWork.MissionMedia.GetAllMissionMedia();
             missionVM.MissionMedium = missionMediumDetails;
 
-            IEnumerable<Timesheet> timesheets = _unitOfWork.TimeSheet.GetTimesheetDetails();
+            IEnumerable<Timesheet> timesheets = _unitOfWork.TimeSheet.GetTimesheetDetails().Where(timesheet => timesheet.DeletedAt == null);
             missionVM.timesheets = timesheets;
 
             
 
-            IEnumerable<User> userDetails = _unitOfWork.User.GetUserDetails();
+            IEnumerable<User> userDetails = _unitOfWork.User.GetUserDetails().Where(user => user.Status == 1);
             missionVM.User = userDetails;
 
-            IEnumerable<Mission> missionDetails = _unitOfWork.Mission.GetMissionDetails();/*GetMissionByCountry(CountryId)*/;
+            IEnumerable<Mission> missionDetails = _unitOfWork.Mission.GetMissionDetails().Where(mission => mission.Status == 1 && mission.Theme.Status == true && mission.Theme.DeletedAt == null);/*GetMissionByCountry(CountryId)*/;
             missionVM.Mission = missionDetails;
 
             IEnumerable<MissionRating> missionRatings = _unitOfWork.MissionRating.GetAll();
@@ -88,7 +88,11 @@ namespace CI_Platfrom.Repository.Repository
 
 
             var user = userDetails.FirstOrDefault(e => e.Email == emailFromSession);
-            missionVM.user = user;
+            if(user != null)
+            {
+                missionVM.user = user;
+            }
+           
 
 
             if (CountryId == 0)
@@ -113,7 +117,7 @@ namespace CI_Platfrom.Repository.Repository
         }
 
         /// <summary>
-        /// 
+        /// give the filter mission if no filter is applied then gives all missions otherwise gives filtermissions
         /// </summary>
         /// <param name="sort"></param>
         /// <param name="filter"></param>
@@ -121,7 +125,7 @@ namespace CI_Platfrom.Repository.Repository
         /// <param name="sessionValue"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        public MissionVM ApplyFilter(string sort,string filter, long id, string sessionValue,int page= 1)
+        public MissionVM ApplyFilter(string sort,string filter, long id, string sessionValue,int page= 1,string search="")
         {
             MissionVM missionObj = GetAllMissions(sessionValue, id);
             IEnumerable<Mission> missions = missionObj.Mission;
@@ -269,6 +273,11 @@ namespace CI_Platfrom.Repository.Repository
                 {
                     filterMissions = filterMissions.OrderBy(m => m.MissionType).ToList();
                 }
+                if(search != "")
+                {
+                    
+                    filterMissions = filterMissions.Where(mission => mission.Title.ToLower().Contains(search.ToLower()) || mission.ShortDescription.ToLower().Contains(search.ToLower()));
+                }
 
                 missionObj.totalMissions = filterMissions.Count();
                 filterMissions = filterMissions.Skip((page - 1) * 9).Take(9);
@@ -278,12 +287,12 @@ namespace CI_Platfrom.Repository.Repository
             }
 
 
-            var searchValue = "dev";
+    /*        var searchValue = "dev";
             if (searchValue != null && missions != null)
             {
                 missions = missions.Where(mission => mission.Title.Contains(searchValue) || (mission.ShortDescription==null)?"".Contains(searchValue):mission.ShortDescription.Contains(searchValue));
 
-            }
+            }*/
 
 
             if (sort == "Oldest")
@@ -314,8 +323,14 @@ namespace CI_Platfrom.Repository.Repository
             {
                 missions = missions.OrderBy(m => m.MissionType).ToList();
             }
+            if (search != "")
+            {
 
-            missionObj.totalMissions = missionObj.Mission.Count();
+                missions = missions.Where(mission => mission.Title.ToLower().Contains(search.ToLower()) || mission.ShortDescription.ToLower().Contains(search.ToLower()));
+            }
+
+
+            missionObj.totalMissions = missions.Count();
             missions = missions.Skip((page -1) * 9).Take(9);
             missionObj.Mission = missions;
             missionObj.TotalCount = missionObj.Mission.Count();

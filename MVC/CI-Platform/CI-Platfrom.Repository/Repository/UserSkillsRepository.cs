@@ -12,7 +12,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class UserSkillsRepository:Repository<UserSkill>, IUserSkillsRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public UserSkillsRepository(CiPlatformContext db) : base(db)
         {

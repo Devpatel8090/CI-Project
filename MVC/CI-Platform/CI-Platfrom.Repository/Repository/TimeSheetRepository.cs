@@ -12,7 +12,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class TimeSheetRepository: Repository<Timesheet>, ITimeSheetRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public TimeSheetRepository(CiPlatformContext db) : base(db)
         {

@@ -11,7 +11,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class StoryMediaRepository: Repository<StoryMedium>,IStoryMediaRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
         public StoryMediaRepository(CiPlatformContext db) : base(db)
         {
             _db = db;

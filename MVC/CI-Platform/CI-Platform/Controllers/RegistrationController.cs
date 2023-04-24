@@ -22,6 +22,7 @@ namespace CI_Platform.Controllers
 
         public IActionResult Register()
         {
+            ViewBag.Banners = _unitOfWork.Banner.GetAll().Where(banner => banner.DeletedAt == null);
             return View();
         }
 
@@ -58,23 +59,33 @@ namespace CI_Platform.Controllers
 
         public IActionResult UserProfile()
         {
-            ProfileVM profileDetails = new ProfileVM();
-            List<int> UserSkillIds = new List<int>();
-            var emailFromSession = HttpContext.Session.GetString("userEmail");
-            profileDetails.user= _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
-            profileDetails.Users = _unitOfWork.User.GetUserDetails().ToList();
-            profileDetails.City = _unitOfWork.City.GetCityDetails();
-            profileDetails.Country = _unitOfWork.Country.GetAll();
-            profileDetails.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
-            
-            profileDetails.userSkill = _unitOfWork.UserSkills.GetUserSkillsByUserId(profileDetails.user.UserId);
-            
-            foreach (var userskilllist in profileDetails.userSkill)
+
+            var ses = HttpContext.Session.GetString("userEmail");
+
+            if (ses == null)
             {
-                UserSkillIds.Add(userskilllist.SkillId);
+                return RedirectToAction("login", "Authentication");
             }
-            profileDetails.skill = _unitOfWork.Skill.GetAll().Where(m => !UserSkillIds.Contains(m.SkillId));
-            return View(profileDetails);
+            else
+            {
+                ProfileVM profileDetails = new ProfileVM();
+                List<int> UserSkillIds = new List<int>();
+                var emailFromSession = HttpContext.Session.GetString("userEmail");
+                profileDetails.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
+                profileDetails.Users = _unitOfWork.User.GetUserDetails().ToList();
+                profileDetails.City = _unitOfWork.City.GetCityDetails();
+                profileDetails.Country = _unitOfWork.Country.GetAll();
+                profileDetails.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
+
+                profileDetails.userSkill = _unitOfWork.UserSkills.GetUserSkillsByUserId(profileDetails.user.UserId);
+
+                foreach (var userskilllist in profileDetails.userSkill)
+                {
+                    UserSkillIds.Add(userskilllist.SkillId);
+                }
+                profileDetails.skill = _unitOfWork.Skill.GetAll().Where(m => !UserSkillIds.Contains(m.SkillId));
+                return View(profileDetails);
+            }
         }
 
         [HttpPost]

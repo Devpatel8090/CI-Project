@@ -12,7 +12,7 @@ namespace CI_Platfrom.Repository.Repository
     public class CityRepository : Repository<City>, ICityRepository
     
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public CityRepository(CiPlatformContext db) : base(db)
         {

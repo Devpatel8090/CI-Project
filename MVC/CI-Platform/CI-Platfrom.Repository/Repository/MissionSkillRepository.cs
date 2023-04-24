@@ -11,7 +11,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class MissionSkillRepository:Repository<MissionSkill>, IMissionSkillRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public MissionSkillRepository(CiPlatformContext db) : base(db)
         {

@@ -26,25 +26,29 @@ let gridAndListButtonsRow = document.getElementById("grid__list__buttons__row");
 
 let notfound = document.getElementById("noMission__page");
 
+
+
+
 serchBarSm.addEventListener("input", search_mission);
 searchBar.addEventListener("input", search_mission);
 
 
 
 
-
+let input = "";
 
 
 function search_mission() {
     let count = 0;
-    let input = searchBar.value || serchBarSm.value;
+    input = searchBar.value || serchBarSm.value;
     input = input.toLowerCase();
+    sendInfo();
 
 
 
     /*check for the mission title and subtitle to serch */
 
-    for (i = 0; i < totalMissions.length; i++) {
+    /*for (i = 0; i < totalMissions.length; i++) {
         if (!cardTitle[i].innerHTML.toLowerCase().includes(input) && !cardSubtitle[i].innerHTML.toLowerCase().includes(input) ) {
             totalMissions[i].classList.add("hide");
 
@@ -54,12 +58,12 @@ function search_mission() {
             totalMissions[i].classList.remove("hide");
 
 
-        }
-    }
+        }*/
+    
 
 
     /*Check the total hidden missions*/
-
+/*
     for (i = 0; i < totalMissions.length; i++) {
         if (totalMissions[i].classList.contains("hide")) {
             count++;
@@ -67,11 +71,11 @@ function search_mission() {
         console.log(count);
 
 
-
+*/
 
       /*  if hidden mission are equalls to number of total mission then show nofound div*/
 
-        if (count == totalMissions.length) {
+       /* if (count == totalMissions.length) {
             notfound.classList.remove('hide')
             gridAndListButtonsRow.classList.add('hide');
             PaginationFooter.classList.add('hide');
@@ -81,10 +85,10 @@ function search_mission() {
             notfound.classList.add('hide');
             gridAndListButtonsRow.classList.remove('hide');
             PaginationFooter.classList.remove('hide');
-        }
+        }*/
 
 
-    }
+   /* }*/
 
 
 }
@@ -284,17 +288,18 @@ function sendInfo()
     filterSkillstr = "";
     let sort = sortByText;
     
+    
 
 
 
-    if (sort == null && cityNameList.size == 0 && skillNameList.size == 0 && themeNameList.size == 0 && pageNo == 1) {
+    if (sort == null && cityNameList.size == 0 && skillNameList.size == 0 && themeNameList.size == 0 && pageNo == 1 && input == "") {
 
         var url = "/Mission/LandingPage/";
         window.location.reload();
     }
 
     else if (cityNameList.size == 0 && themeNameList.size == 0 && skillNameList.size == 0 && sort == null) {
-        var url = "/Mission/LandingPage?page=" + pageNo;
+        var url = "/Mission/LandingPage?page=" + pageNo + "&search=" + input;
     }
 
 
@@ -303,7 +308,7 @@ function sendInfo()
 
     else if (cityNameList.size == 0 && skillNameList.size == 0 && themeNameList.size == 0) {
 
-        var url = "/Mission/LandingPage?sort=" + sort + "&page=" + pageNo;
+        var url = "/Mission/LandingPage?sort=" + sort + "&page=" + pageNo + "&search=" + input;
     }
 
     else if (sort == null) {
@@ -318,7 +323,7 @@ function sendInfo()
         }
         let obj = { city: filtercitystr, theme: filterthemestr, skill: filterSkillstr }
 
-        var url = "/Mission/LandingPage?filter=" + JSON.stringify(obj) + "&page=" + pageNo;
+        var url = "/Mission/LandingPage?filter=" + JSON.stringify(obj) + "&page=" + pageNo + "&search=" + input;
     }
     else {
         for (const item of cityNameList) {
@@ -332,7 +337,7 @@ function sendInfo()
         }
         let obj = { city: filtercitystr, theme: filterthemestr, skill: filterSkillstr }
 
-        var url = "/Mission/LandingPage?filter=" + JSON.stringify(obj) + "&sort=" + sort + "&page=" + pageNo;;
+        var url = "/Mission/LandingPage?filter=" + JSON.stringify(obj) + "&sort=" + sort + "&page=" + pageNo + "&search=" + input;
     }
 
 
@@ -343,10 +348,11 @@ function sendInfo()
         success: function (data) {
            
            /* if (document.getElementById('grid__view__button').clicked == true) {*/
-                document.getElementById("list__view__container").classList.add("hide");
+                
             
  
             $('#GridCardContainer').html(data);
+            document.getElementById("list__view__container").classList.add("hide");
         },
         error: function (err) {
             console.error(err);
@@ -371,7 +377,7 @@ function AddPagination() {
 
 //nextpointer 
 // convert the number into int and add one to it and send for filter
-var totalpage = Math.ceil(totalmissionPagination);
+var totalpage = Math.ceil(totalmissionPagination/9);
 function NextPointer() {
     pageNo = Number.parseInt(pageNo);
     if (pageNo < totalpage) {

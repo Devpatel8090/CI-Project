@@ -18,22 +18,30 @@ namespace CI_Platform.Controllers
 
         public IActionResult VolunteeringTimesheet()
         {
-            var emailFromSession = HttpContext.Session.GetString("userEmail");
-            
-            TimesheetVM timesheetDetails =  new TimesheetVM();
-            timesheetDetails.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
-            timesheetDetails.timesheets = _unitOfWork.TimeSheet.GetTimesheetDetails();
-            timesheetDetails.LogingUserMissions = _unitOfWork.MissionApplication.getUserMissions(timesheetDetails.user.UserId);
-            timesheetDetails.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
-            return View(timesheetDetails);
+            var ses = HttpContext.Session.GetString("userEmail");
+
+            if (ses == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else
+            {
+                var emailFromSession = HttpContext.Session.GetString("userEmail");
+                TimesheetVM timesheetDetails = new TimesheetVM();
+                timesheetDetails.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
+                timesheetDetails.timesheets = _unitOfWork.TimeSheet.GetTimesheetDetails();
+                timesheetDetails.LogingUserMissions = _unitOfWork.MissionApplication.getUserMissions(timesheetDetails.user.UserId);
+                timesheetDetails.CmsPages = _unitOfWork.CMSPage.GetAllCMSPageDetails();
+                return View(timesheetDetails);
+            }
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public JsonResult SavedReport(long missionId)
         {
 
             return null;
-        }
+        }*/
 
         [HttpPost]
         public IActionResult AddTimeSheet(TimesheetVM timesheet,int hour, int minute)

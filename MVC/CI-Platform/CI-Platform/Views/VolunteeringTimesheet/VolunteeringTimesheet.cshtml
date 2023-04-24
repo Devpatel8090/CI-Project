@@ -158,7 +158,7 @@
 <div class="modal fade" id="TimeBaseTimeSheet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <form method="post"  asp-action="AddTimeSheet" asp-controller="VolunteeringTimeSheet">
+            <form method="post" onsubmit="return IsValideTimesheetAdd()"  asp-action="AddTimeSheet" asp-controller="VolunteeringTimeSheet">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Please input below Volunteering Hours</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -166,8 +166,8 @@
             <div class="modal-body">
                 <div class="col">
                     <label class="">Mission</label>
-                    <select class="form-select mt-2" id="SelectMissionTime" asp-for="@Model.particularTimesheet.MissionId" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
+                    <select class="form-select mt-2" onchange="removeIsValideTimesheet()" id="SelectMissionTime" asp-for="@Model.particularTimesheet.MissionId" aria-label="Default select example">
+                        <option selected value="-1">Open this select menu</option>
                             @{ var timeBasedMission = @Model.LogingUserMissions.Where(e => e.Mission.MissionType == "TIME");
                                 if(timeBasedMission != null)
                                 {
@@ -179,21 +179,24 @@
                                 }
                             }
                       </select>
+                      <span class="text-danger" id="SelectMissionTimeValidation"></span>
                 </div>
                 <div class="col">
                     <label class="mt-2">Date Volunteered</label>
-                    <input type="date"  asp-for="@Model.particularTimesheet.DateVolunteered" max="" min="" class="form-control mt-2" id="DateTimeMission">
-                   
+                    <input type="date" onselect="removeIsValideTimeshee()"  asp-for="@Model.particularTimesheet.DateVolunteered" max="" min="" class="form-control mt-2" id="DateTimeMission">
+                   <span class="text-danger" id="DateTimeMissionValidation"></span>
                     
                 </div>
                 <div class="row">
                     <div class="col-6">
                     <label class="mt-2">Hours</label>
-                    <input type="number" class="form-control mt-2" asp-for ="@Model.hour" name="hour" id="HourWorkTime" max="24" min="0" aria-label="" placeholder="Enter Spent Hours">
+                    <input type="number" oninput="removeIsValideTimesheet()" class="form-control mt-2" asp-for ="@Model.hour" name="hour" id="HourWorkTime" max="24" min="0" aria-label="" placeholder="Enter Spent Hours">
+                    <span class="text-danger" id="HourWorkTimeValidation"></span>
                     </div>
                     <div class="col-6">
                         <label class="mt-2">Minutes</label>
-                        <input type="number" class="form-control mt-2" name="minute" asp-for ="@Model.minute" max="60" min="0" id="MinutesWorkTime" aria-label="" placeholder="Enter Spent Minutes">
+                        <input type="number" oninput="removeIsValideTimesheet()" class="form-control mt-2" name="minute" asp-for ="@Model.minute" max="60" min="0" id="MinutesWorkTime" aria-label="" placeholder="Enter Spent Minutes">
+                        <span class="text-danger" id="MinutesWorkTimeValidation"></span>
                     </div>
                 </div> 
 
@@ -217,7 +220,7 @@
 <div class="modal fade" id="GoalBaseTimeSheet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <form method="post" asp-action="AddTimeSheet" asp-controller="VolunteeringTimeSheet">
+            <form method="post" onsubmit="return IsValideGoalsheetAdd()" asp-action="AddTimeSheet" asp-controller="VolunteeringTimeSheet">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Please input below Volunteering Goal</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -225,8 +228,8 @@
             <div class="modal-body">
                 <div class="col">
                     <label class="">Mission</label>
-                    <select class="form-select mt-2" asp-for="@Model.particularTimesheet.MissionId" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
+                    <select class="form-select mt-2" onchange="removeIsValideTimesheet()"  asp-for="@Model.particularTimesheet.MissionId" id="GoalMissionId">
+                        <option selected value="-1">Open this select menu</option>
                           @{
                               var goalBasedMissions = @Model.LogingUserMissions.Where(e => e.Mission.MissionType == "GOAL");
                                 if(goalBasedMissions != null)
@@ -239,16 +242,18 @@
                                 }
                             }
                       </select>
+                       <span class="text-danger" id="GoalMissionIdValidation"></span>
                 </div>
                 <div class="col">
                     <label class="mt-2">Please input below Volunteering Goal</label>
-                    <input type="text" asp-for="@Model.particularTimesheet.Action" placeholder="Enter Actions" class="form-control mt-2" >
-                   
+                    <input type="text" oninput="removeIsValideTimesheet()"  asp-for="@Model.particularTimesheet.Action" placeholder="Enter Actions" id="GoalAction" class="form-control mt-2" >
+                   <span class="text-danger" id="GoalActionValidation"></span>
                     
                 </div>
                 <div class="col">
                     <label class="mt-2">Date Volunteered</label>
-                    <input type="text" asp-for="@Model.particularTimesheet.DateVolunteered" placeholder="04-11-2019" class="form-control mt-2" >
+                    <input type="text" oninput="removeIsValideTimesheet()"  asp-for="@Model.particularTimesheet.DateVolunteered" placeholder="04-11-2019" id="GoalDate" class="form-control mt-2" >
+                    <span class="text-danger"  id="GoalDateValidation"></span>
                 </div> 
 
                 <div class="col mt-2">
@@ -287,5 +292,3 @@
     }
 }
 
-
-<script src="~/js/Timesheet.js" ></script>

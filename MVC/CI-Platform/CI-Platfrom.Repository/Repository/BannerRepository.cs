@@ -11,7 +11,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class BannerRepository:Repository<Banner>,IBannerRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public BannerRepository(CiPlatformContext db):base(db)
         {

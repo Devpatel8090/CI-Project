@@ -11,7 +11,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class PasswordResetRepository: Repository<PasswordReset>, IPasswordResetRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
         public PasswordResetRepository(CiPlatformContext db) : base(db)
         {
             _db = db;

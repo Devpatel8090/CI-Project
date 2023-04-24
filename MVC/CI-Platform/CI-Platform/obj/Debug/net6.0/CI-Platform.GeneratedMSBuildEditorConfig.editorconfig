@@ -55,8 +55,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVXNlckFkbWluVGFiLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Authentication/forgotPassword.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25cZm9yZ290UGFzc3dvcmQuY3NodG1s
+[C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Authentication/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25cRm9yZ290UGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Authentication/login.cshtml]
@@ -87,6 +87,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJpdmFjeVBvbGljeVxQcml2YWN5UG9saWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/PrivacyPolicy/_Slug.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJpdmFjeVBvbGljeVxfU2x1Zy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Registration/register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVnaXN0cmF0aW9uXHJlZ2lzdGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -97,6 +101,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Shared/_AdminLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Shared/_Banner.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9CYW5uZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pca39/Desktop/CI platform/MVC/CI-Platform/CI-Platform/Views/Shared/_BannerManagementAddAndEdit.cshtml]

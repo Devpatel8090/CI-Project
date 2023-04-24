@@ -11,7 +11,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class MissionDocumentRepository: Repository<MissionDocument>,IMissionDocumentRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
         public MissionDocumentRepository(CiPlatformContext db) : base(db)
         {
             _db = db;

@@ -12,7 +12,7 @@ namespace CI_Platfrom.Repository.Repository
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        private readonly CiPlatformContext _db;
+        private new readonly CiPlatformContext _db;
 
         public UserRepository(CiPlatformContext db) : base(db)
         {

@@ -14,7 +14,7 @@ namespace CI_Platfrom.Repository.Interface
 
         
 
-        public MissionVM ApplyFilter(string sort,string filter, long id, string sessionValue,int page=1);
+        public MissionVM ApplyFilter(string sort,string filter, long id, string sessionValue,int page=1,string search="");
 
     }
 }

@@ -4,9 +4,9 @@
 @model MissionVM
 
 @{ 
-    if(Model.totalMissions > 0) {
-
- <div class="row mt-2 " id="grid__list__buttons__row">
+    if(Model.totalMissions > 0) 
+    {    
+        <div class="row mt-2 " id="grid__list__buttons__row">
                 <div class="col-sm-6 col-auto">
                     <span style="font-size: 25px;">Explore <h2 class="d-inline text-center " id="totalCountedMissions"> @Model.totalMissions </h2> Missions</span>
                 </div>
@@ -259,10 +259,11 @@
         </div>
 
 
-        </div>
+     </div>
+
         <partial name="_ListCards"  model=@Model/>
-        <input asp-for="@Model.TotalCount" id="TotalMissionCountForPagination"/>
-        @if(Model.TotalCount > 9)
+        <input asp-for="@Model.totalMissions" hidden id="TotalMissionCountForPagination"/>
+        @if(Model.totalMissions > 9)
         {
                             <div >
                                 <nav aria-label="Page navigation example" id="Pagination">
@@ -272,7 +273,7 @@
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
-                                        @for (var i = 0; i <= (Model.TotalCount / 9); i++)
+                                        @for (var i = 0; i <= (Model.totalMissions / 9); i++)
                                         {
                                             <li class="page-item"><a class="page-link pagination curser-pointer" onclick = "AddPagination()">@(i+1)</a></li>
                                         }
