@@ -33,6 +33,8 @@ public partial class Mission
 
     public string? OrganizationDetails { get; set; }
 
+    public DateTime? Deadline { get; set; }
+
     public string Availability { get; set; } = null!;
 
     public DateTime CreateAt { get; set; }

@@ -22,6 +22,9 @@ $('#SelectMissionTime').on('change', function () {
         type:'POST',
         success: function (data) {
             console.log(data);
+            $('#DateTimeMission').attr("max", data.maxDate);
+            $('#DateTimeMission').attr("min", data.minDate);
+
         },
         error: function (error) {
             console.log(error);
@@ -109,6 +112,7 @@ $('.deletebutton').on('click', function () {
         type: 'POST',
         success: function (data) {
             console.log(data);
+            window.location.reload();
         },
         error: function (error) {
             console.log(error);

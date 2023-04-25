@@ -60,10 +60,11 @@ namespace CI_Platform.Controllers
                 {
                     ModelState.AddModelError("email", "Email is Not Register");
                 }
-
-
-               
-                
+                else if (userDetails.Status == 0)
+                {
+                    TempData["error"] = "You Are Inactivated Please Contact Admin";
+                    return RedirectToAction("login");
+                }
                 else if (userDetails.Password == user.Password)
                 {
                         
@@ -82,22 +83,15 @@ namespace CI_Platform.Controllers
                 }
                 else
                 {
-                        TempData["Error"] = "Please Enter the correct Password Details";
+                        TempData["error"] = "Please Enter the correct Password Details";
                          ModelState.AddModelError("password", "Please Enter the correct Password Details");
                 }
             }
-                
-            
             else
             {
-                
-               
                 TempData["error"] = "Please Enter the Complete Details";
-                
-
-
             }
-            return View();
+            return RedirectToAction("login");
         }
 
         public IActionResult logout()

@@ -57,17 +57,18 @@
                     <div class="col">
                         <label  class="form-label">Country :</label>
                         <select asp-for="@Model.particularUser.CountryId" class="form-select" onchange="removeUserValidation()" asp-items="@Model.countries"  id="CountryId" aria-label="Default select example" >
-                          <option value="" selected>Select Country</option>
+                          <option value="-1" selected>Select Country</option>
                         </select>
                         <span id="CountryIdValidation" class="text-danger"></span>
                     </div>
                     <div class="col" id="adminCityList">
                          <label  class="form-label">City :</label>
                         <select asp-for="@Model.particularUser.CityId" class="form-select" onchange="removeUserValidation()" asp-items="@Model.cities"  id="CityId" aria-label="Default select example" >
-                          <option value="" selected>Select City</option>
+                          <option value="-1" selected>Select City</option>
                         </select>
                         <span id="CityIdValidation" class="text-danger"></span>
                     </div>
+                <div class="row mb-3">
                     <div class="col">
                         <label  class="form-label">Status :</label>
                         <select asp-for="@Model.particularUser.Status" id="status"  class="form-select" aria-label="Default select example">
@@ -75,6 +76,14 @@
                           <option value="0">InActive</option>
                         </select>
                     </div>
+                    <div class="col">
+                        <label  class="form-label">Role :</label>
+                        <select asp-for="@Model.particularUser.Role" id="Role"  class="form-select" aria-label="Default select example">
+                          <option value="USER" selected>USER</option>
+                          <option value="ADMIN">ADMIN</option>
+                        </select>
+                    </div>
+                </div>
                    @* <div class="col">
                         <label  class="form-label">Role :</label>
                         <select asp-for="@Model.particularUser.ro" id="status" class="form-select" aria-label="Default select example">
@@ -92,9 +101,9 @@
     
 </div>
 
-<script>
-    $("#country").on('change',function() {
-        let countryId =   $("#country").find(":selected").val();
+@*<script>
+    $("#CountryId").on('change',function() {
+        let countryId =   $("#CountryId").find(":selected").val();
         $.ajax({
             url: "/Mission/GetCityByCountry?CountryId="+countryId,
             type:"GET",
@@ -104,11 +113,11 @@
                 for(let i=0 ; i< data.length; i++ ) {
                     items += `<option value="${data[i].cityId}" selected>${data[i].name}</option>`
                 }
-                $('#city').html(items);
+                $('#CityId').html(items);
             },
             error: function (error) {
                 console.log(error);
             }
         })
     })
-</script>
+</script>*@

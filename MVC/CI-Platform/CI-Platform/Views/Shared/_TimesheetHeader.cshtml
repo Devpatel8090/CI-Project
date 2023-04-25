@@ -40,16 +40,18 @@
                                     Policies
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                @{
+                               @{
                                     var cmsdata = @Model.CmsPages.ToList();
                                     if(cmsdata != null)
                                     {   @foreach (var item in cmsdata)
                                         {
-                                            <li><a class="dropdown-item" asp-action="@item.Slug" asp-controller="PrivacyPolicy">@item.Slug</a></li>
+                            
+                                            <li><a class="dropdown-item" asp-controller="PrivacyPolicy" asp-action="PrivacyPolicy">@item.Title</a></li>
+                            
                                         }
                                      
-                                    }                                
-                                 }
+                                    }                                   
+                                }
                                 </ul>
                             </li>
 
@@ -62,8 +64,7 @@
                                     class="rounded-circle">
                                 <span class="d-none d-sm-inline"> @Model.user.FirstName   @Model.user.LastName</span>
                             </a>
-                            <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">                                
                                 <li><a class="dropdown-item" asp-action="VolunteeringTimesheet" asp-controller="VolunteeringTimeSheet">TimeSheet</a></li>
                                 <li><a class="dropdown-item" asp-action="UserProfile" asp-controller="Registration">Profile</a></li>
                                 <li>

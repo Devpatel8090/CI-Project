@@ -60,21 +60,28 @@
                         <label lass="form-label">Story Videos :</label>
                         <div class="StoryVideoContianer d-flex mt-2">
                              @foreach (var storyvid in Model.particularStory.StoryMedia.Where(s=>s.Type == "URL"))
-                            {   string videostring = @storyvid.Path.Replace("watch?v=", "embed/");
-                           
+                            {  
+                                  int GetURLlength = storyvid.Path.Length;
 
-                                <div class="ms-2">
-                                  
-                                    
-                                    <iframe  width="300" height="250" src="@storyvid.Path.Replace("watch?v=", "embed/")">
-                                    </iframe>
-                                    
-                                    <iframe width="300" height="250" src="@videostring">
-                                    </iframe>
-                                    
-                                </div>
-                                
-                                
+                                string findDot = storyvid.Path.Substring(13, 1);
+                                if (findDot == ".")
+                                {
+                                    string GetURLValue = storyvid.Path.Substring(17);
+                                    string YoutubeURL = "https://www.youtube.com/embed/" + GetURLValue + "?rel=0";
+                                    <div class="ms-2">
+                                        <iframe width="300" height="250" src="@YoutubeURL">
+                                        </iframe>
+                                    </div>
+                                }
+                                else
+                                {
+                                     string videostring = @storyvid.Path.Replace("watch?v=", "embed/");
+                                    <div class="ms-2">
+                                        <iframe width="300" height="250" src="@videostring">
+                                        </iframe>
+                                    </div>
+                                }
+                               
                             }
                         </div>
                     </div>

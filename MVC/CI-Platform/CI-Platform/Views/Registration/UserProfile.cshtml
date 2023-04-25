@@ -237,14 +237,12 @@
                         <div class="" style="max-height: 130px;overflow-y: scroll;  background-color: #e9ecef;" id="SkillsTextArea">                           
                             @{
                                 var userSkills = @Model.user.UserSkills.ToList();
-                                if(userSkills != null)
+                                if(userSkills.Count > 0)
                                 {
                                     foreach (var item in userSkills)
                                     {
 
                                         <p class="m-0"> @item.Skill.SkillName</p>
-
-
                                     }
                                 }
                                 else
@@ -479,11 +477,11 @@
           $(this).prev('label').text(file);
         });
     </script>*@
+
 @section Scripts{
     @{
         <partial name="_ValidationScriptsPartial" />
     }
 }
-
 
 <script src=~/js/userProfile.js></script>

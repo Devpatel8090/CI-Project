@@ -16,7 +16,7 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
         public IEnumerable<Timesheet> timesheets { get; set; } = Enumerable.Empty<Timesheet>();
 
-        public Timesheet particularTimesheet { get; set; } = new Timesheet();
+        public Timesheet particularTimesheet { get; set; }
 
         public int hour { get; set; } 
 

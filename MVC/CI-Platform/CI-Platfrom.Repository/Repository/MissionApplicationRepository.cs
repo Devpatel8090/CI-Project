@@ -25,7 +25,7 @@ namespace CI_Platfrom.Repository.Repository
         }
         public List<MissionApplication> GetUsersByMissionId(long missionId)
         {
-            List<MissionApplication> missionApplication = _db.MissionApplications.Where(e => e.MissionId == missionId).ToList();
+            List<MissionApplication> missionApplication = _db.MissionApplications.Where(e => e.MissionId == missionId ).ToList();
             return missionApplication;
         }
 

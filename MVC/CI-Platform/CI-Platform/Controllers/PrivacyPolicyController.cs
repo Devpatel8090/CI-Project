@@ -49,13 +49,12 @@ namespace CI_Platform.Controllers
             {
                 var user = _unitOfWork.User.GetFirstOrDefault(user => user.Email == ses);
                 ProfileVM slug = new ProfileVM();
-                var cmspage = _unitOfWork.CMSPage.GetFirstOrDefault(cms => cms.CmsPageId == SlugId && cms.DeletedAt == null);
+                var cmspage = _unitOfWork.CMSPage.GetFirstOrDefault(cms => cms.CmsPageId == SlugId && cms.DeletedAt == null&& cms.Status ==1);
                 slug.CmsPage = cmspage;
+                slug.CmsPages = _unitOfWork.CMSPage.GetAll().Where(cms => cms.DeletedAt == null && cms.Status == 1);
                 slug.user = user;
                 return PartialView("_Slug", slug);
             }
-
-
         }
     }
 }

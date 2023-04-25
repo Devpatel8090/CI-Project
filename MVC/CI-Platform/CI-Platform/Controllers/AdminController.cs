@@ -487,15 +487,24 @@ namespace CI_Platform.Controllers
                     editUser.CityId = model.particularUser.CityId;
                     editUser.CountryId = model.particularUser.CountryId;
                     editUser.Status = model.particularUser.Status;
+                    editUser.Role = model.particularUser.Role;
                     editUser.UpdatedAt = DateTime.Now;
                     _unitOfWork.User.Update(editUser);
 
                 }
                 else
-                {
-                    model.particularUser.Password = @model.particularUser.FirstName + "@CI123";
-                    _unitOfWork.User.Add(model.particularUser);
-
+                { 
+                    var userEmails = _unitOfWork.User.GetAll().Select(user => user.Email);
+                    if(userEmails.Contains(model.particularUser.Email) ){
+                        TempData["error"] = "Ops !Email Id is Already Registered!";
+                        return RedirectToAction("UserAdminTab", "Admin");
+                    }
+                    else
+                    {
+                        model.particularUser.Password = @model.particularUser.FirstName + "@CI123";
+                        _unitOfWork.User.Add(model.particularUser);
+                    }
+                   
                 }
                 _unitOfWork.save();
             }
@@ -581,17 +590,13 @@ namespace CI_Platform.Controllers
 
 
         [HttpPost]
-        public IActionResult AddMission(AdminVM model, List<string> skills, string videourls, List<IFormFile> files, List<IFormFile> documents)
+        public IActionResult AddMission(AdminVM model, List<int> skills, string videourls, List<IFormFile> files, List<IFormFile> documents)
         {
             var rootpath = _webHostEnvironment.WebRootPath;
             var imagefilePaths = new List<string>();
-            var documentfilePaths = new List<string>();
-            
-
-
+            var documentfilePaths = new List<string>();            
             var images = _unitOfWork.MissionMedia.GetAll();
           
-
             foreach (var formFile in files)
             {
                 var imagename = formFile.FileName;
@@ -645,14 +650,13 @@ namespace CI_Platform.Controllers
 
             foreach (var skill in skills)
             {
-                MissionSkill missionSkill = new MissionSkill();
-                var skillId = int.Parse(skill);
-                missionSkill.SkillId = skillId;
+                MissionSkill missionSkill = new MissionSkill();              
+                missionSkill.SkillId = skill;
 
                 if (model.particularMission.MissionId > 0)
                 {
                     var missionSkills = _unitOfWork.MissionSkill.GetAll().Where(m => m.MissionId == model.particularMission.MissionId);
-                    if (!missionSkills.Any(s => s.SkillId.ToString().Contains(skill)))
+                    if (!missionSkills.Any(s => s.SkillId == skill))
                     {
                         model.particularMission.MissionSkills.Add(missionSkill);
                     }
@@ -668,7 +672,7 @@ namespace CI_Platform.Controllers
                 var missionSkills = _unitOfWork.MissionSkill.GetAll().Where(m => m.MissionId == model.particularMission.MissionId);
                 foreach (var skill in missionSkills)
                 {
-                    if (!skills.Contains(skill.SkillId.ToString()))
+                    if (!skills.Contains(skill.SkillId))
                     {
                         _unitOfWork.MissionSkill.Remove(skill);
                     }
@@ -680,7 +684,7 @@ namespace CI_Platform.Controllers
                 foreach (var image in images.Where(i => i.MissionId == model.particularMission.MissionId && i.MediaType != "URL"))
                 {
                    /* if (!documents.Any(i => image.MediaPath.Contains(i.FileName)))*/
-                        if (!documents.Any(i => i.FileName.Contains(image.MediaPath)))
+                        if (!files.Any(i => i.FileName.Contains(image.MediaPath)))
                         {
                         var filepath = rootpath + image.MediaPath;
                         FileInfo fileInfo = new FileInfo(filepath);
@@ -715,15 +719,15 @@ namespace CI_Platform.Controllers
             {
                 if (videourls.Contains(" "))
                 {
-                    arr = videourls.Split(" ");
+                    arr = videourls.Split(" ", StringSplitOptions.RemoveEmptyEntries);
                 }
                 else if (videourls.Contains(","))
                 {
-                    arr = videourls.Split(",");
+                    arr = videourls.Split(",",StringSplitOptions.RemoveEmptyEntries);
                 }
                 else
                 {
-                    arr = videourls.Split("\n");
+                    arr = videourls.Split("\n", StringSplitOptions.RemoveEmptyEntries);
                 }
                 foreach (var video in arr)
                 {
@@ -752,6 +756,7 @@ namespace CI_Platform.Controllers
                 alreadyMission.Description = model.particularMission.Description;
                 alreadyMission.StartDate = model.particularMission.StartDate;
                 alreadyMission.EndDate = model.particularMission.EndDate;
+                alreadyMission.Deadline = model.particularMission.Deadline;
                 alreadyMission.TotalSeats = model.particularMission.TotalSeats;
                 alreadyMission.MissionType = model.particularMission.MissionType;
                 alreadyMission.Status = model.particularMission.Status;
@@ -825,7 +830,7 @@ namespace CI_Platform.Controllers
                     }
                         if (banner.particularBanner.BannerId != 0)
                         {
-                            var bannerdetail = _unitOfWork.Banner.GetFirstOrDefault(banner => banner.BannerId == banner.BannerId);
+                            var bannerdetail = _unitOfWork.Banner.GetFirstOrDefault(ban => ban.BannerId == banner.particularBanner.BannerId);
                             bannerdetail.Text = banner.particularBanner.Text;
                             bannerdetail.SortOrder = banner.particularBanner.SortOrder;
                             bannerdetail.Image = "/images/BannerImages/" + files.FileName;

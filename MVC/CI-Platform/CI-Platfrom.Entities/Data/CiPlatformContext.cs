@@ -358,6 +358,7 @@ public partial class CiPlatformContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("create_at");
+            entity.Property(e => e.Deadline).HasColumnType("datetime");
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
@@ -536,7 +537,9 @@ public partial class CiPlatformContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("create_at");
-            entity.Property(e => e.DefaultMissionMedia).HasColumnName("default_mission_media");
+            entity.Property(e => e.DefaultMissionMedia)
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("default_mission_media");
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");

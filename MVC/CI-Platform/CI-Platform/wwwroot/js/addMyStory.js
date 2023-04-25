@@ -119,6 +119,34 @@ function StorySave() {
         $('#storyTitleValidation').text("Length of title must between 5 to 255 characters");
         return false;
     }
+    var regex = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/gm;
+    
+    
+        if (storyurl != "") {
+            if (storyurl.includes(" "))
+            {
+                var arr = storyurl.split(" ");
+            }
+            else if (storyurl.includes(","))
+            {
+                var arr = storyurl.split(",")
+            }
+            else
+            {
+                var arr = storyurl.split("\n");
+            }
+            if (arr.length > 20) {
+                toastr.error('maximum 20 urls are allowed')
+                return false;
+            }
+            for (var url of arr) {
+
+                if (url.match(regex) == null) {
+                    toastr.error('Only Youtube URLs are allowed')
+                    return false;
+                }
+            }
+    }
 
     let addStoryObj = {
         MissionId: missionId,
@@ -127,8 +155,6 @@ function StorySave() {
         StoryVideoUrl: storyurl,
         storyImages: PreviousImages,
     };
-
-  
 
     formphotos.append("addStoryObj", JSON.stringify(addStoryObj));
 
@@ -207,12 +233,15 @@ $("#selectMission").on("change", function () {
 
                     console.log(PreviousImages);
                 }
+               
                 $("#oldImages").html(items);
+               
             }
             else {
                 $("#storyTitle").val("");
                 CKEDITOR.instances["Content"].setData('');
                 $("#oldImages").html('');
+              
             }
         },
         error: function (error) {

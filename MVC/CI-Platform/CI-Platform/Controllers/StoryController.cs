@@ -74,7 +74,7 @@ namespace CI_Platform.Controllers
 
 
         [HttpPost]
-       public async Task<IActionResult> AddYourStoryPage(StoryVM story,List<IFormFile> files)
+        public async Task<IActionResult> AddYourStoryPage(StoryVM story, List<IFormFile> files)
         {
             var emailFromSession = HttpContext.Session.GetString("userEmail");
             var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
@@ -99,25 +99,26 @@ namespace CI_Platform.Controllers
 
             //Story story1 = new Story();
             StoryMedium videoMedia = new StoryMedium();
-            
-            
 
-            var status= _unitOfWork.Story.GetFirstOrDefault(e => e.UserId == user.UserId && e.MissionId == story.particularStory.MissionId && e.Status == "DRAFT");
-            if(status != null)
+
+
+            var status = _unitOfWork.Story.GetFirstOrDefault(e => e.UserId == user.UserId && e.MissionId == story.particularStory.MissionId && e.Status == "DRAFT");
+            if (status != null)
             {
                 status.Status = "PENDING";
-                status.Title = story.particularStory.Title; 
+                status.Title = story.particularStory.Title;
                 status.Description = story.particularStory.Description;
 
                 _unitOfWork.Story.updateStory(status);
-                
-                
+
+
             }
-            else { 
-            story.particularStory.UserId = user.UserId;
-            story.particularStory.Status = "PENDING";
-            _unitOfWork.Story.Add(story.particularStory);
-            _unitOfWork.save();
+            else
+            {
+                story.particularStory.UserId = user.UserId;
+                story.particularStory.Status = "PENDING";
+                _unitOfWork.Story.Add(story.particularStory);
+                _unitOfWork.save();
             }
 
 
@@ -127,7 +128,7 @@ namespace CI_Platform.Controllers
         }
 
 
-      
+
 
         [HttpPost]
         public long saveStory(IFormFileCollection totalfiles, string addStoryObj)
@@ -135,7 +136,7 @@ namespace CI_Platform.Controllers
             var sessionValue = HttpContext.Session.GetString("userEmail");
             var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == sessionValue);
 
-     
+
 
 
             //var StoryObjcet = new Story()
@@ -171,78 +172,36 @@ namespace CI_Platform.Controllers
             var videourl = parseObj.Value<string>("StoryVideoUrl");
             JArray previousPhotoesArray = (JArray)parseObj["storyImages"];
 
-          /*  for (int i = 0; i < previousPhotoesArray.Count; i++)
-            {
-                Console.WriteLine(previousPhotoesArray[i]);
-            }*/
+            /*  for (int i = 0; i < previousPhotoesArray.Count; i++)
+              {
+                  Console.WriteLine(previousPhotoesArray[i]);
+              }*/
 
-            var StoryObjcet = new Story()
-            {
-                MissionId = missionId,
-                UserId = user.UserId,
-                Status = "DRAFT",
-                Title = storyTitle,
-                Description = storyDetails,
-               
-
-            };
 
 
             var alreadyStoryUploaded = _unitOfWork.Story.GetFirstOrDefault(e => e.UserId == user.UserId && e.MissionId == missionId && e.Status == "DRAFT");
-           
+
             if (alreadyStoryUploaded != null)
             {
 
-                var alreadyimageuploaded = _unitOfWork.StoryMedia.GetAll().Where(e => e.StoryId == alreadyStoryUploaded.StoryId ).ToList();
+                var alreadyimageuploaded = _unitOfWork.StoryMedia.GetAll().Where(e => e.StoryId == alreadyStoryUploaded.StoryId).ToList();
 
-                foreach(var image in alreadyimageuploaded)
+                foreach (var image in alreadyimageuploaded)
                 {
                     _unitOfWork.StoryMedia.Remove(image);
                     _unitOfWork.save();
                 }
 
-                for(int i = 0;i < previousPhotoesArray.Count; i++)
+                for (int i = 0; i < previousPhotoesArray.Count; i++)
                 {
                     StoryMedium storymedium = new StoryMedium();
                     storymedium.StoryId = alreadyStoryUploaded.StoryId;
                     storymedium.Type = "PNG";
                     storymedium.Path = previousPhotoesArray[i].ToString();
                     storymedium.UpdatedAt = DateTime.Now;
-                   
-
-                    _unitOfWork.StoryMedia.Add(storymedium);
-                    _unitOfWork.save();
-                    
+                    alreadyStoryUploaded.StoryMedia.Add(storymedium);
                 }
-
-                alreadyStoryUploaded.Title = storyTitle;
-                alreadyStoryUploaded.Description = storyDetails;
-                alreadyStoryUploaded.UpdatedAt = DateTime.Now;
-                _unitOfWork.Story.Update(alreadyStoryUploaded);
-                _unitOfWork.save();
-                return alreadyStoryUploaded.StoryId;
-                
-                
-            }
-            else
-            {
-                _unitOfWork.Story.Add(StoryObjcet);
-                _unitOfWork.save();
-                return StoryObjcet.StoryId;
-            }
-/*
-            if (alreadyimageuploaded != null)
-            {
-                foreach(var image in alreadyimageuploaded)
-                {
-                    image.DeletedAt = DateTime.Now;
-                    _unitOfWork.StoryMedia.Update(image);
-                }
-                _unitOfWork.save();
-                
-             }*/
-            
-            foreach (var formFile in totalfiles)
+                foreach (var formFile in totalfiles)
                 {
                     StoryMedium mediaobj = new StoryMedium();
                     if (formFile.Length > 0)
@@ -258,49 +217,109 @@ namespace CI_Platform.Controllers
                     mediaobj.Path = "/images/StoryImages/" + formFile.FileName;
                     mediaobj.Type = "PNG";
 
-                    if (alreadyStoryUploaded != null)
-                    {                       
-                        mediaobj.StoryId = alreadyStoryUploaded.StoryId;
-                    /*videoUrlObject.StoryId = alreadyStoryUploaded.StoryId;*/
-                    }
 
-                    else
-                    { 
-                        mediaobj.StoryId = (_unitOfWork.Story.GetAll().OrderByDescending(e => e.StoryId).FirstOrDefault().StoryId);
-                    }
-                        _unitOfWork.StoryMedia.Add(mediaobj);
-                        _unitOfWork.save();
-
+                    alreadyStoryUploaded.StoryMedia.Add(mediaobj);
 
                 }
 
-                    if(videourl != null) 
-                    { 
-          
-                            StoryMedium videoUrlObject = new StoryMedium();
-
-                            if (alreadyStoryUploaded != null)
-                            {
+                var uploadedUrls = _unitOfWork.StoryMedia.GetAll().Where(url => url.Type == "URL" && url.StoryId == alreadyStoryUploaded.StoryId);
                 
-                                videoUrlObject.StoryId = alreadyStoryUploaded.StoryId;
-               
-                             }
-                            else
-                            {
-                                videoUrlObject.StoryId = StoryObjcet.StoryId;
-               
-                            }
-                            videoUrlObject.Type = "URL";
-                            videoUrlObject.Path = videourl;
-                            _unitOfWork.StoryMedia.Add(videoUrlObject);
-                            _unitOfWork.save();
-
+                foreach(var url in uploadedUrls)
+                {
+                    _unitOfWork.StoryMedia.Remove(url);
+                    _unitOfWork.save();
+                }
+                string[] urlArray;
+                if (videourl != null)
+                {
+                    if (videourl.Contains(" "))
+                    {
+                        urlArray = videourl.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                    }
+                    else if (videourl.Contains(","))
+                    {
+                        urlArray = videourl.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                    }
+                    else
+                    {
+                        urlArray = videourl.Split("\n", StringSplitOptions.RemoveEmptyEntries);
                     }
 
-                    
+                    foreach (var url in urlArray)
+                    {
+                        StoryMedium videoUrlObject = new StoryMedium();
+                        videoUrlObject.Type = "URL";
+                        videoUrlObject.Path = videourl;
+                        alreadyStoryUploaded.StoryMedia.Add(videoUrlObject);
+                    }
 
+                }
+                alreadyStoryUploaded.Title = storyTitle;
+                alreadyStoryUploaded.Description = storyDetails;
+                alreadyStoryUploaded.UpdatedAt = DateTime.Now;
+                _unitOfWork.Story.Update(alreadyStoryUploaded);
+                _unitOfWork.save();
+                return alreadyStoryUploaded.StoryId;
+            }
+            else
+            {   
+                var StoryObjcet = new Story()
+                {
+                    MissionId = missionId,
+                    UserId = user.UserId,
+                    Status = "DRAFT",
+                    Title = storyTitle,
+                    Description = storyDetails,
+                };
+                foreach (var formFile in totalfiles)
+                {
+                    StoryMedium mediaobj = new StoryMedium();
+                    if (formFile.Length > 0)
+                    {
+                        // full path to file in temp location
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/StoryImages", formFile.FileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            formFile.CopyTo(stream);
+                        }
+                    }
+                    mediaobj.Path = "/images/StoryImages/" + formFile.FileName;
+                    mediaobj.Type = "PNG";                               
+                    StoryObjcet.StoryMedia.Add(mediaobj);
+                }
+
+                string[] arr;
+                if (videourl != null)
+                {
+                    if (videourl.Contains(" "))
+                    {
+                        arr = videourl.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                    }
+                    else if (videourl.Contains(","))
+                    {
+                        arr = videourl.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                    }
+                    else
+                    {
+                        arr = videourl.Split("\n", StringSplitOptions.RemoveEmptyEntries);
+                    }
+
+                    foreach (var url in arr)
+                    {
+                        StoryMedium videoUrlObject = new StoryMedium();
+                        videoUrlObject.Type = "URL";
+                        videoUrlObject.Path = videourl;                       
+                        StoryObjcet.StoryMedia.Add(videoUrlObject);
+                    }
+                }
+                _unitOfWork.Story.Add(StoryObjcet);
+                _unitOfWork.save();
+                return StoryObjcet.StoryId;
+            }
+       
         }
-            
+
 
         public IActionResult storyDetailPage(long storyId)
         {
@@ -400,13 +419,19 @@ namespace CI_Platform.Controllers
             StoryVM storyModel = new StoryVM();
             var sessionValue = HttpContext.Session.GetString("userEmail");
             var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == sessionValue).UserId;
-            
 
-            storyModel.particularStory = _unitOfWork.Story.getUserMissions(user,missionID).FirstOrDefault(e => e.Status == "DRAFT");
+            
+            storyModel.particularStory = _unitOfWork.Story.getUserMissions(user, missionID).FirstOrDefault(e => e.Status == "DRAFT");
 
             var draftedStory = storyModel.particularStory;
-
-            
+           /* var mission = _unitOfWork.Mission.GetFirstOrDefault(mission => mission.MissionId == missionID);
+            var maxDate = mission.EndDate < DateTime.Now ? mission.EndDate.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd");
+            var minDate = mission.StartDate.Value.ToString("yyyy-MM-dd");*/
+           /* var obj = new JsonResult(new
+            {
+                maxDate = maxDate,
+                minDate = minDate,
+            });*/
 
             if (draftedStory == null)
             {
@@ -414,21 +439,22 @@ namespace CI_Platform.Controllers
             }
             else
             {
-                
-                if(storyModel.particularStory.StoryMedia != null) { 
-                var images = _unitOfWork.StoryMedia.GetStoryPhotoesByStoryID(storyModel.particularStory.StoryId).Select(e => e.Path).ToList();
-                var videos = _unitOfWork.StoryMedia.GetStoryVideosByStoryID(storyModel.particularStory.StoryId).Select(e => e.Path).ToList();
-                var storyObj = new JsonResult(new
-                {
-                    draftedStory.Title,
-                    draftedStory.Description,
-                    draftedStory.CreateAt,
-                    videos,
-                    images
 
-                }
-                ) ;
-                return storyObj;
+                if (storyModel.particularStory.StoryMedia != null)
+                {
+                    var images = _unitOfWork.StoryMedia.GetStoryPhotoesByStoryID(storyModel.particularStory.StoryId).Select(e => e.Path).ToList();
+                    var videos = _unitOfWork.StoryMedia.GetStoryVideosByStoryID(storyModel.particularStory.StoryId).Select(e => e.Path).ToList();
+                    var storyObj = new JsonResult(new
+                    {
+                        draftedStory.Title,
+                        draftedStory.Description,
+                        draftedStory.CreateAt,
+                        videos,
+                        images,
+                        
+
+                    });
+                    return storyObj;
                 }
 
                 else

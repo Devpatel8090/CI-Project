@@ -111,8 +111,6 @@ namespace CI_Platform.Controllers
                 _unitOfWork.User.Update(user);
                 _unitOfWork.save();
                 TempData["success"] = "yey!! Data has been updated Successfully";
-
-
             }
             else
             {
@@ -120,46 +118,38 @@ namespace CI_Platform.Controllers
                 _unitOfWork.save();
                 TempData["success"] = "yey! Data has been added Successfully";
             }
-
-
-
-
             return RedirectToAction("UserProfile", "Registration");
         }
-
 
         [HttpPost]
         public IActionResult saveUserProfilePhoto(IFormFile files)
         {
-
             var emailFromSession = HttpContext.Session.GetString("userEmail");
             var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
-            if(files != null) { 
+            if(files != null)
+            { 
 
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/UserAvtarImages", files.FileName); //we are using Temp file name just for the example. Add your own file path.
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/UserAvtarImages", files.FileName); //we are using Temp file name just for the example. Add your own file path.
             
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                 files.CopyTo(stream);
-            }
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                     files.CopyTo(stream);
+                }
 
-            if(user.Avatar != null)
-            {
-                user.Avatar = "/images/UserAvtarImages/" + files.FileName;
-                _unitOfWork.User.Update(user);
-                _unitOfWork.save();
-            }
-            else
-            {
-                user.Avatar = "/images/UserAvtarImages/" + files.FileName;
-                _unitOfWork.User.Add(user);
-                _unitOfWork.save();
-            }
+                if(user.Avatar != null)
+                {
+                    user.Avatar = "/images/UserAvtarImages/" + files.FileName;
+                    _unitOfWork.User.Update(user);
+                    _unitOfWork.save();
+                }
+                else
+                {
+                    user.Avatar = "/images/UserAvtarImages/" + files.FileName;
+                    _unitOfWork.User.Add(user);
+                    _unitOfWork.save();
+                }
             }
             return RedirectToAction("UserProfile", "Registration");
-
-
-
         }
 
         [HttpPost]
@@ -177,11 +167,11 @@ namespace CI_Platform.Controllers
                         _unitOfWork.User.Update(user);
                         _unitOfWork.save();
                         TempData["success"] = "Yey! Password has been added Successfully";
-                }
+                    }
                     else
                     {
                     TempData["error"] = "New Password and Cofirm Password Doesn't match";
-                }
+                    }
 
                
                

@@ -36,12 +36,27 @@ namespace CI_Platform.Controllers
             }
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public JsonResult SavedReport(long missionId)
         {
+            var mission = _unitOfWork.Mission.GetFirstOrDefault(mission => mission.MissionId == missionId);
+            if(mission == null)
+            {
+                return Json("Empty");
+            }
+            else
+            {
+                var maxDate = mission.EndDate < DateTime.Now ? mission.EndDate.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd");
+                var minDate = mission.StartDate.Value.ToString("yyyy-MM-dd");
+                var obj = new JsonResult(new {
+                    maxDate = maxDate,
+                    minDate = minDate,
+                });
 
-            return null;
-        }*/
+                return obj;
+
+            }
+        }
 
         [HttpPost]
         public IActionResult AddTimeSheet(TimesheetVM timesheet,int hour, int minute)
@@ -125,7 +140,7 @@ namespace CI_Platform.Controllers
         [HttpPost]
         public void deleteTimesheet(long timesheetId)
         {
-            var alreadyCreatedTimesheet = _unitOfWork.TimeSheet.GetAll().FirstOrDefault(e => e.TimesheetId == timesheetId);
+            var alreadyCreatedTimesheet = _unitOfWork.TimeSheet.GetFirstOrDefault(timesheet => timesheet.TimesheetId == timesheetId);
 
             _unitOfWork.TimeSheet.Remove(alreadyCreatedTimesheet);
             _unitOfWork.save();

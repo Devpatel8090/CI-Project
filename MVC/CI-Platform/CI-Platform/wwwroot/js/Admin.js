@@ -367,6 +367,25 @@ function delDocument(index) {
     showMissionDocumentcount();
 }
 
+$("#CountryId").on('change', function () {
+    let countryId = $("#CountryId").find(":selected").val();
+    $.ajax({
+        url: "/Mission/GetCityByCountry?CountryId=" + countryId,
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+            var items = "";
+            for (let i = 0; i < data.length; i++) {
+                items += `<option value="${data[i].cityId}" selected>${data[i].name}</option>`
+            }
+            $('#CityId').html(items);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    })
+})
+
 
 
 function isValidUserAdmin() {
@@ -377,7 +396,7 @@ function isValidUserAdmin() {
     var PhoneNumber = $('#PhoneNumber').val();
     var EmployeeId = $('#EmployeeId').val();
     var Department = $('#DepartmentName').val();
-    var Country = $('#SelectedContry').find(":selected").val();
+    var Country = $('#CountryId').find(":selected").val();
     var City = $('#city').val();
     var EmailRegex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     var PhoneRegex = /^[0-9]{10}$/;
@@ -410,7 +429,7 @@ function isValidUserAdmin() {
         $('#DepartmentNameValidation').text("Department is Required");
         flag = 0;
     }
-    if (Country != -1) {
+    if (Country == -1) {
 
         $('#CountryIdValidation').text("Select The Country Please");
         flag = 0;
@@ -421,14 +440,14 @@ function isValidUserAdmin() {
         flag = 0;
     }
 
-    if (FirstName.length <= 5 || FirstName.length >= 25) {
-        $('#FirstNameValidation').text("Length of First Name must between 5 to 25 characters");
+    if (FirstName.length <= 2 || FirstName.length >= 25) {
+        $('#FirstNameValidation').text("Length of First Name must between 2 to 25 characters");
        
         flag = 0;
     }
 
-    if (LastName.length <= 5 || LastName.length >= 25) {
-        $('#LastNameValidation').text("Length of First Name must between 5 to 25 characters");
+    if (LastName.length <= 2 || LastName.length >= 25) {
+        $('#LastNameValidation').text("Length of First Name must between 2 to 25 characters");
        
         flag = 0;
     }

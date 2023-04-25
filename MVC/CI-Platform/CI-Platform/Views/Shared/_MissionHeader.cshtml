@@ -48,8 +48,7 @@
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="@Model.user.Avatar" alt="user image" width="40" height="40" class="rounded-circle">
                     </a>
-                    <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                    <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">                   
                         <li><a class="dropdown-item" asp-action="VolunteeringTimesheet" asp-controller="VolunteeringTimeSheet">TimeSheet</a></li>
                         <li><a class="dropdown-item" asp-action="UserProfile" asp-controller="Registration">Profile</a></li>
                         <li>
@@ -78,14 +77,13 @@
                                     Policies
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                   @{
+                                  @{
                                     var cmsdata = @Model.CmsPages.ToList();
                                     if(cmsdata != null)
                                     {   @foreach (var item in cmsdata)
                                         {
-                                            <li><a class="dropdown-item" asp-action="@item.Slug" asp-controller="PrivacyPolicy">@item.Slug</a></li>
+                                            <li><a class="dropdown-item" asp-controller="PrivacyPolicy" asp-action="PrivacyPolicy">@item.Title</a></li>                     
                                         }
-                                     
                                     }                                   
                                 }
                                 </ul>
@@ -101,7 +99,6 @@
                                 <span class=""> @Model.user.FirstName   @Model.user.LastName</span>
                             </a>
                             <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="#">New project...</a></li>
                                 <li><a class="dropdown-item" asp-action="VolunteeringTimesheet" asp-controller="VolunteeringTimeSheet">TimeSheet</a></li>
                                 <li><a class="dropdown-item" asp-action="UserProfile" asp-controller="Registration">Profile</a></li>
                                 <li>
@@ -148,16 +145,9 @@
                                
                             @foreach (var item in Model.Country)
                             {
-                                 <li  value="@item.CountryId @item.Name"><a class="dropdown-item countryList" asp-controller="Mission" asp-action="LandingPage" asp-route-countryId=@item.CountryId>@item.Name</a></li>
-                                    
+                                 <li  value="@item.CountryId @item.Name"><a class="dropdown-item countryList" asp-controller="Mission" asp-action="LandingPage" asp-route-countryId=@item.CountryId>@item.Name</a></li>      
                             }
-                           
-                           
                         </ul>
-                       @* <script>
-                            $(document).ready(function(){
-                              
-                        </script>*@
                     </div>
                 </div>
                 <div class="col-auto col-sm-2 mt-2 border-end">
@@ -171,8 +161,6 @@
                                     d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
                             </svg>
                         </a>
-
-
                         <ul id="cities" class="dropdown-menu ps-4 scrollbar" aria-labelledby="navbarDropdownMenuLink">
                             @foreach (var item in Model.City)
                             {
@@ -182,10 +170,7 @@
                                             @item.Name
                                          </label>
                                </div>
-                            }
-                          
-                          
-                           
+                            }         
                         </ul>
                     </div>
                 </div>
@@ -200,12 +185,7 @@
                                     d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
                             </svg>
                         </a>
-
-
-
                         <ul class="dropdown-menu ps-4 scrollbar" aria-labelledby="dropdownMenuLink">
-                            
-                        
                              @foreach (var item in Model.skills)
                             {
                                <div class="form-check  ">
@@ -349,8 +329,8 @@
                            
                         </ul>
             </a>
-            <a   asp-action="StoryListingPage" asp-controller="Story">
-                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
+            <div  >
+                <a class="nav-link dropdown-toggle " asp-action="StoryListingPage" asp-controller="Story" id="navbarDropdownMenuLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Stories
                 </a>
@@ -360,23 +340,32 @@
                         if(cmsdataof != null)
                         {   @foreach (var item in cmsdataof)
                             {
-                                <li><a class="dropdown-item" asp-action="@item.Slug" asp-controller="PrivacyPolicy">@item.Slug</a></li>
+                                <li><a class="dropdown-item" asp-controller="PrivacyPolicy" asp-action="PrivacyPolicy">@item.Slug</a></li>
                             }
                          
                         }                                   
                      }
                 </ul>
 
-            </a>
+            </div>
             <a href="#">
                 <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Policies
                 </a>
                 <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Policy 1</a></li>
-                    <li><a class="dropdown-item" href="#">Policy 2</a></li>
-                    <li><a class="dropdown-item" href="#">Policy 3</a></li>
+                   @{
+                                    var cmsdatasm = @Model.CmsPages.ToList();
+                                    if(cmsdatasm != null)
+                                    {   @foreach (var item in cmsdatasm)
+                                        {
+                            
+                                            <li><a class="dropdown-item" asp-controller="PrivacyPolicy" asp-action="Slug" asp-route-SlugId="@item.CmsPageId">@item.Title</a></li>
+                            
+                                        }
+                                     
+                                    }                                   
+                                }
                 </ul>
             </a>
 

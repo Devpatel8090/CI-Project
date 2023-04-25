@@ -19,12 +19,12 @@ namespace CI_Platfrom.Repository.Repository
 
         public List<StoryMedium> GetStoryPhotoesByStoryID(long storyId)
         {
-            var storyMediaDetails = _db.StoryMedia.Where(e => e.StoryId == storyId && e.Type == "PNG" ).ToList();
+            var storyMediaDetails = _db.StoryMedia.Where(e => e.StoryId == storyId && e.Type == "PNG" && e.DeletedAt == null ).ToList();
             return storyMediaDetails;
         }
         public List<StoryMedium> GetStoryVideosByStoryID(long storyId)
         {
-            var storyMediaDetails = _db.StoryMedia.Where(e => e.StoryId == storyId && e.Type == "URL").ToList();
+            var storyMediaDetails = _db.StoryMedia.Where(e => e.StoryId == storyId && e.Type == "URL" && e.DeletedAt == null).ToList();
             return storyMediaDetails;
         }
     }

@@ -19,7 +19,7 @@ namespace CI_Platfrom.Repository.Repository
         }
         public List<MissionMedium> GetAllMissionMedia()
         {
-            List<MissionMedium> missionMediaDetails = _db.MissionMedia.ToList();
+            List<MissionMedium> missionMediaDetails = _db.MissionMedia.Where(media => media.DeletedAt == null).ToList();
             return missionMediaDetails;
         }
     }

@@ -19,7 +19,7 @@ namespace CI_Platfrom.Repository.Repository
         }
         public List<CmsPage> GetAllCMSPageDetails()
         {
-            var cmsPage = _db.CmsPages.ToList();
+            var cmsPage = _db.CmsPages.Where(cms => cms.DeletedAt == null).ToList();
             return cmsPage;
         }
     }

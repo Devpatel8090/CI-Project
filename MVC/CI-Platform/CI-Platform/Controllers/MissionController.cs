@@ -248,13 +248,7 @@ namespace CI_Platform.Controllers
             _unitOfWork.MissionInvite.Add(recObj);
             _unitOfWork.save();
             SendEmail(mailTo, userEmailOptions);
-
-            //}
-
-
-
         }
-
 
         public void SendEmail(string toEmail, UserEmailOptions userEmailOptions)
         {
@@ -280,7 +274,6 @@ namespace CI_Platform.Controllers
                 smtp.Disconnect(true);
             }
         }
-
 
         public void userStarRating(string userRatingObj)
         {
@@ -361,6 +354,5 @@ namespace CI_Platform.Controllers
             _unitOfWork.MissionApplication.Add(applyObject);
             _unitOfWork.save();
         }
-
     }
 }

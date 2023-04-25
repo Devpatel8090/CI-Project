@@ -19,9 +19,9 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
         <div class="row">
             <div class="col-md-4 col-sm-6">
                 <label  class="form-label">Select Mission</label>
-                <select  id="selectMission" asp-for="@Model.particularStory.MissionId" class="form-select mb-3" aria-label="Default select example">
+                <select  id="selectMission" onchange="RemoveAddyourStoryValidation()"  asp-for="@Model.particularStory.MissionId" class="form-select mb-3" aria-label="Default select example">
                   
-                  <option onchange="RemoveAddyourStoryValidation()"  selected value="-1">Select your mission</option>
+                  <option   selected value="-1">Select your mission</option>
                     @{
                         
                         {
