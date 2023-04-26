@@ -12,5 +12,6 @@ namespace CI_Platfrom.Repository.Interface
     
 
        public  List<Comment> GetAllCommentsByMission(long id);
+       public  List<Comment> GetAllComments();
     }
 }

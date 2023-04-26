@@ -40,5 +40,9 @@ namespace CI_Platfrom.Entities.Models.ViewModel
 
         public GoalMission ?GoalMission { get; set; }
 
+        public IEnumerable<Comment> comments = Enumerable.Empty<Comment>();
+
+        public IEnumerable<Timesheet> timesheets = Enumerable.Empty<Timesheet>();
+
     }
 }

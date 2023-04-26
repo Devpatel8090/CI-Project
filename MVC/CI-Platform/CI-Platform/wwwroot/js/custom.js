@@ -94,6 +94,8 @@ function search_mission() {
 }
 
 
+
+
         //taking the sortby value 
 
 for (var i = 0; i < sortBy.length; i++) {

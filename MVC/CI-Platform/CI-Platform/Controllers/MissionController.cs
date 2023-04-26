@@ -236,13 +236,14 @@ namespace CI_Platform.Controllers
                 
             };
 
-            var inviteLink = Url.Action("LandingPage", "Mission", new { id = missionId }, Request.Scheme);
+            var inviteLink = Url.Action("VolunteeringPage", "Mission", new { id = missionId }, Request.Scheme);
+            var loginUrl = Url.Action("login", "Authentication", new { URL = inviteLink }, Request.Scheme);
             TempData["link"] = inviteLink;
 
             UserEmailOptions userEmailOptions = new UserEmailOptions()
             {
                 Subject = "He is invinting you in this mission ",
-                Body = "<a href=" + inviteLink + ">"  + inviteLink +  "</a>"
+                Body = "Your Collegue invites you in this mission" + "<a href=" + loginUrl + ">"  + loginUrl +  "</a>"
             };
 
             _unitOfWork.MissionInvite.Add(recObj);
@@ -334,7 +335,7 @@ namespace CI_Platform.Controllers
             //{
                 _unitOfWork.Comment.Add(commentObject);
                 _unitOfWork.save();
-                IEnumerable<Comment> comments = _unitOfWork.Comment.GetAllCommentsByMission(missionId);
+                IEnumerable<Comment> comments = _unitOfWork.Comment.GetAllCommentsByMission(missionId).Where(comment => comment.ApprovalStatus == "PUBLISHED");
                 return PartialView("_Comments", comments);
             //}
         }

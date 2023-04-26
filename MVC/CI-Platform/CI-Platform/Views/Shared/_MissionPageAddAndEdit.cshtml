@@ -233,19 +233,7 @@
                 <div class="mb-3">
                     <label for="formFileMultiple" class="form-label">Video Url : </label>
                     <input class="form-control" name="videourls" type="text"
-                    id="youtubeurl">
-                       <div id="video-container" class="d-flex mt-3">
-                          @if(Model.particularMission != null){
-                              var videoUrl = Model.particularMission.MissionMedia.Where(mission => mission.MediaType == "URL");
-                              for(var i=0;i<videoUrl.Count();i++)
-                              {
-                                   <div class="URLs">
-                                       <a target="_blank" href="@videoUrl.ElementAt(i).MediaPath" class="docpill mx-1 oldDocs">@videoUrl.ElementAt(i).MediaPath</a>
-                                        <button class="mx-2 pillbtn" type="button" onclick="delURL(@i)">X</button>
-                                   </div>                                
-                              }
-                          }
-                      </div>
+                    id="youtubeurl">                       
                 </div>
 
                 

@@ -128,13 +128,12 @@
                     <img src="@Model.user.Avatar" alt="user image" width="40" height="40" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" asp-action="VolunteeringTimesheet" asp-controller="VolunteeringTimeSheet">TimeSheet</a></li>
+                    <li><a class="dropdown-item" asp-action="UserProfile" asp-controller="Registration">Profile</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    <li><a class="dropdown-item" asp-action="logout" asp-controller="Authentication" >Sign out</a></li>
                 </ul>
             </div>
         </div>
@@ -176,13 +175,12 @@
                             <span class="">@Model.user.FirstName @Model.user.LastName</span>
                         </a>
                         <ul class="dropdown-menu text-small mt-3" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="#">New project...</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" asp-action="VolunteeringTimesheet" asp-controller="VolunteeringTimeSheet">TimeSheet</a></li>
+                            <li><a class="dropdown-item" asp-action="UserProfile" asp-controller="Registration">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" asp-action="login" asp-controller="Authentication">Sign out</a></li>
+                            <li><a class="dropdown-item" asp-action="logout" asp-controller="Authentication" >Sign out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -212,7 +210,7 @@
 
 
 
-                        if (Model.particularMission.MissionMedia.Any(s => s.MediaType == "Video"))
+                        if (Model.particularMission.MissionMedia.Any(s => s.MediaType == "URL"))
                         {
                             if (Model.particularMission.MissionMedia.Count() == 1)
                             {
@@ -366,14 +364,14 @@
                                         <div class="d-flex flex-column">
 
                                         @{
-                                                                  var targetValue = @Model.particularMission.GoalMissions.FirstOrDefault().GoalValue;
-                                                                  var totalTimesheet = @Model.particularMission.Timesheets;
-                                                                  int? achievedValue = 0;
-                                                              
-                                                                   foreach (var action in totalTimesheet)
-                                                                    {
-                                                                        achievedValue +=  @action.Action ;
-                                                                    }
+                                             var targetValue = @Model.particularMission.GoalMissions.FirstOrDefault().GoalValue;
+                                             var totalTimesheet = @Model.particularMission.Timesheets.Where(timesheet => timesheet.Status == "APPROVED");
+                                             int? achievedValue = 0;
+                                             
+                                              foreach (var action in totalTimesheet)
+                                               {
+                                                   achievedValue +=  @action.Action ;
+                                               }
                                             <div class="Progress__bar"><progress max="@targetValue" value="@achievedValue"></progress></div>
                                             <span>@achievedValue Achived</span>
 
@@ -476,21 +474,27 @@
 
                     <div class="d-flex align-items-center justify-content-center mt-2">
                          <div class="mt-2   text-center  " id="applyToMissionText">
-                        @{
-                            var appliedusercount = @Model.particularMission.MissionApplications.FirstOrDefault(e => e.UserId == @Model.user.UserId);
-                            if(appliedusercount != null)
-                            {
-                                <a  class="btn rounded-pill text-center border-1 border-success text-success btn_no py-3 px-5   apply__text__list">Already Applied
-                                  </a>
-                            }
-                            else{
-                           
-                            <a href="#" class="btn rounded-pill text-center btn_no py-3 px-5 apply__text__list" id="ApplyTomission" value="@Model.particularMission.MissionId @Model.user.UserId">Apply
-                                Now<img src="~/images/right-arrow.png" class="ms-4" style="pointer-events:none"></a>
-                            }
+               
 
-                       
-                    }
+                     @{
+                                        var appliedusercount = @Model.missionApplications.FirstOrDefault(e => e.UserId == @Model.user.UserId && e.MissionId == Model.particularMission.MissionId  && e.ApprovalStatus != "DECLINE");
+                                        if(appliedusercount != null)
+                                        {
+                                            if(appliedusercount.ApprovalStatus == "PENDING")
+                                            {
+                                               <a  class="btn rounded-pill text-center border-1 border-info text-info btn_no py-3 px-5   apply__text__list">Pending
+                                                                 </a>
+                                            }
+                                            else{
+                                                <a class="btn rounded-pill text-center border-1 border-success text-success btn_no py-3 px-5   apply__text__list" asp-controller="Mission" asp-action="VolunteeringPage" >Already Applied </a>
+                                            }
+                                            
+                                        }
+                                        else
+                                        {
+                                             <a href="#" class="btn rounded-pill text-center btn_no py-3 px-5 apply__text__list" id="ApplyTomission" value="@Model.particularMission.MissionId @Model.user.UserId">ApplyNow<img src="~/images/right-arrow.png" class="ms-4" style="pointer-events:none"></a>
+                                        }
+                                    }
                      </div> 
                     </div>
 
@@ -531,7 +535,7 @@
                         aria-labelledby="nav-mission-tab" tabindex="0">
                         <div class="mt-3">
                             <h3>Introducation</h3>
-                            <p class="">@Model.particularMission.Description
+                            <p class="">@Html.Raw(@Model.particularMission.Description)
                             </p>
                         </div>
                         <div>
@@ -628,7 +632,7 @@
 
                         <div class="d-flex align-items-center justify-content-start mt-2">
                             <div class="mt-2  w-75  ">
-                                <button id="postCommentButton" class="btn rounded-pill text-center btn_no py-2 px-3 apply__text__list" value="@Model.particularMission.MissionId @Model.user.UserId">Post
+                                <button  class="btn rounded-pill text-center btn_no py-2 px-3 apply__text__list" onclick="postcommentfunction()" value="@Model.particularMission.MissionId @Model.user.UserId">Post
                                     Comment<img src="~/images/right-arrow.png" style="pointer-events:none" class="ms-2"></button>
 
                             </div>
@@ -670,8 +674,10 @@
                                     <p class="mt-2">Good Opportunity</p>
                                 </div> 
                                 *@
-
-                            <partial name="_Comments" model="Model.particularMission.Comments.OrderByDescending(e => e.CreateAt)" />
+                            @{
+                                var status = "PUBLISHED";
+                            }
+                            <partial name="_Comments" model="Model.particularMission.Comments.Where(c => c.ApprovalStatus == @status && c.DeletedAt == null ).OrderByDescending(e => e.CreateAt)" />
                         </div>
                     </div>
 
@@ -735,7 +741,7 @@
 
                         <div class="row row-cols-3 ">
                           
-                        @{   @foreach (var item in Model.RecentVolunteers)
+                        @{   @foreach (var item in Model.RecentVolunteers.Where(volunteer => volunteer.ApprovalStatus == "APPROVED"))
                              {
                                     <div class="col d-flex flex-column align-items-center justify-content-center recent-vol">
                                 <img src="@item.User.Avatar" class="rounded-circle " height="50" width="50" />
@@ -919,211 +925,245 @@
               @foreach (var item in Model.RelatedMission) {
 
 
-                <div class="col  mb-3 total__mission" >
-                    <div class="card" style="max-width: 26rem;">
+                
+                    <div class="col  mb-3 total__mission" >
+                        <div class="card" style="max-width: 26rem;">
 
-                        <div style="position: relative;">
-                       
-                        @{
+                            <div style="position: relative;">
+                                @{
                                     var missionImages = @item.MissionMedia.Where(media => media.MediaType != "URL"  );
                                     if(missionImages.Count() > 0)
-                                    {
+                                {
                                     <img class="card-img-top"
                                      src="@missionImages.FirstOrDefault().MediaPath"
                                      alt="Card image cap" width="350" height="220">
-                                    }
-                                    else
-                                    {
-                                        <img class="card-img-top"
-                                         src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png"  width="350" height="220"
-                                         alt="Card image cap">                                    
-                                    }
-                          }
-                            <div style="position: absolute;bottom: 0;width: 100%;">
-                                <p class="m-0 bg-white border rounded-pill text-center w-50"
-                                    style="transform: translate(50%, 50%) ;">@item.Theme.Title</p>
-                            </div>
-
-                            <div class="heart_image_container rounded-circle ">
-                                    @{
-                                         var favCountofgrid = item.FavoriteMissions.Where(m => m.UserId == Model.user.UserId).Count();
-                                        if (favCountofgrid > 0)
-                                         {
-                                        <button
-                                                    class="heart__image addToFavdiv rounded-circle bg-transparent border-0 pt-2 pt-sm-1 ps-sm-1 ps-2 pt-md-2 ps-md-2 m-0" value="@item.MissionId @Model.user.UserId"   >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill fill-red  " style="color:red;pointer-events:none" viewBox="0 0 16 16">
-                                          <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-
-                                      
-                                        </svg>
- 
-                            
-                                        </button>
-                                         }
-                                        else
-                                        {
-                                            <button
-                                                class=" heart__image addToFavdiv rounded-circle bg-transparent border-0 m-0 p-2"    value="@item.MissionId @Model.user.UserId">
-                                                <img src="~/images/heart.png" alt="" class="" style="pointer-events:none" width="20px" height="20px" />
-                            
-                                            </button>
-                                        }
-                                     }
-                            </div>
-
-                            <div class="rounded-circle add__person__image__container " data-bs-toggle="modal" data-bs-target="#RecomendModal">
-                                <img src="~/images/user.png" class="add__person__image">
-                            </div>
-
-                            <div class="city__container rounded-pill p-2">
-                                <img src="~/images/pin.png" class="locatin__image">
-                                <span class="text-white ">@item.City.Name</span>
-                            </div>
-
+                                }
+                                else
+                                {
+                                    <img class="card-img-top"
+                                    src="~/images/NoImage.png"
+                                     alt="Card image cap" width="350" height="220">                                    
+                                }
+                                }
+                        <div style="position: absolute;bottom: 0;width: 100%;">
+                            <p class="m-0 bg-white border rounded-pill text-center w-50"
+                                style="transform: translate(50%, 50%) ;">@item.Theme.Title</p>
                         </div>
 
-                        <div class="card-body">
-                            <h3 class="card-title  text-start mt-2">@item.Title</h3>
-                            <p class="card-text text-start">@item.ShortDescription</p>
-                            <div class="d-flex justify-content-between mb-1 ">
-                                <span>@item.OrganizationName</span>
-                                <div class="star__container">
-                                    @{
-                                        int sum = 0;
-                                        var averageRating = 0;
-                                        foreach (MissionRating rating in item.MissionRatings)
-                                                {
-                                                    sum += rating.Rating;
-                                                }
-                                                if (sum > 0)
-                                                {
-                                                     averageRating = sum / item.MissionRatings.Count();
-                                                }
-                                                else
-                                                {
-                                                    averageRating = 0;
-                                                }
-                                            for(var i =0 ; i <  averageRating; i++)
-                                            {
-                                                <img src="~/images/selected-star.png" width="26px" height="26px" />
-                                            }
-                                            for(var i=  averageRating ;i< 5 ;i++  )
-                                            {
-                                                <img src="~/images/star-empty.png" /> 
-                                            }
-                                      }
-                                </div>
-                            </div>
-                            <br />
-                            <hr>
-                            <div class="time__text border rounded-pill w-75 mx-auto ">
+                        <div class="heart_image_container rounded-circle ">
                                 @{
-                                    if(@item.MissionType == "TIME") {
+                                     var favCountofgrid = item.FavoriteMissions.Where(m => m.UserId == Model.user.UserId).Count();
+                                    if (favCountofgrid > 0)
+                                     {
+                                    <button
+                                                class="heart__image addToFavdiv rounded-circle bg-transparent border-0 pt-2 pt-sm-1 ps-sm-1 ps-2 pt-md-2 ps-md-2 m-0" value="@item.MissionId @Model.user.UserId"   >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill fill-red  " style="color:red;pointer-events:none" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
 
-                                        if(item.EndDate > DateTime.Now)
-                                        {
-                                            <span>Ongoing Opportunity</span>
-
-                                        }
-                                        else
-                                        {
-                                           <span>From @item.StartDate.Value.ToShortDateString() until @item.EndDate.Value.ToShortDateString()</span>
-                                        }
-                                    }
-
-                                    else
-                                    {
-                                        var goalText = item.GoalMissions.FirstOrDefault();
-                                        if(goalText == null )
-                                        {
-                                            <span>Goal is not defined</span>
-                                        }
-                                        else
-                                        {
-                                          <span>@goalText.GoalObjectiveText</span>  
-                                        }
-                                    
-                                    }
-
-                             }
-                            </div>
-
-
-                            <div class="row mt-3 ms-2 mb-3">
-
-                             @if (@item.MissionType == "TIME")
-                                    {
-                                <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
-                                    <img src="~/images/Seats-left.png" class="" width="30px" height="30px">
-                                    <div class="d-flex flex-column ">
-                                         <h5 class="mb-0">  @{
-                                                var totalseatsformission = @item.TotalSeats;
-                                            
-                                                var enrolledseatsinmission = @Model.missionApplications.Where(e => e.MissionId == @item.MissionId).Count();
-                                                var seatsLeftformission = totalseatsformission - enrolledseatsinmission;    
-                                        }
-                                        @seatsLeftformission</h5> 
-                                        <span>Seats left</span>
-                                    </div>
-                                </div>
-
-                               
-                                        <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
-                                            <img src="~/images/deadline.png" width="40px" height="40px">
-                                            <div class="d-flex flex-column">
-                                                <h5 class="mb-0">@item.EndDate.Value.ToShortDateString()</h5>
-                                                <span>Deadline</span>
-                                            </div>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                         <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
-                                                <img src="~/images/mission.png" width="30px" height="30px">
-                                                 <div class="d-flex flex-column">
-                                                    @{
-                                                       var targetValue = @item.GoalMissions.FirstOrDefault().GoalValue;
-                                                        var totalTimesheet = @item.Timesheets;
-                                                    
-                                                        int? achievedValue = 0;
-                                                   
-                                                        foreach (var action in totalTimesheet)
-                                                        {
-                                                            achievedValue +=  @action.Action ;
-                                                        }
-                                                    
-
-
-                                                     <div class="Progress__bar"><progress max="@targetValue" value="@achievedValue"></progress></div>
-                                                     <span>@achievedValue Achived</span>
-                                                     }
-                                                </div>
-                                        </div>
-                                    }
-
-                            </div>
-                            <hr>
-                            <div class="mt-2 apply__button    text-center apply__button  ">
-                                        @{
-                                            var userappliedOrNot = @Model.missionApplications.FirstOrDefault(e => e.UserId == @Model.user.UserId && e.MissionId == item.MissionId);
-                                            if(userappliedOrNot != null)
-                                            {
-                                               <a class="btn rounded-pill text-center border-1 border-success text-success btn_no py-3 px-5   apply__text__list" asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId"> Already Applied </a>
-                                            }
-                                            else
-                                            {
-                                                <a class="btn rounded-pill   text-center apply__text " asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId" >Apply <img
-                                                                          src="~/images/right-arrow.png" class="ms-2"></a>
-                                            }
-                                        }
+                                      
+                                    </svg>
+ 
                             
+                                    </button>
+                                     }
+                                    else
+                                    {
+                                        <button
+                                            class=" heart__image addToFavdiv rounded-circle bg-transparent border-0 m-0 p-2"    value="@item.MissionId @Model.user.UserId">
+                                            <img src="~/images/heart.png" alt="" class="" style="pointer-events:none" width="20px" height="20px" />
+                            
+                                        </button>
+                                    }
+                                 }
+                        </div>
 
+                        <div class="rounded-circle add__person__image__container " data-bs-toggle="modal" data-bs-target="#RecomendModal_@item.MissionId">
+                            <img src="~/images/user.png" class="add__person__image">
+                        </div>
+
+                                <!-- Recommendation Modal -->
+                            <div class="modal fade " id="RecomendModal_@item.MissionId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content" >
+                                
+                                  <div class="modal-body">
+                                  @foreach( var recuser in Model.User)
+                                {
+                                                @* onclick method is putted in volunteering page so kindly refer it*@
+                                                   @* var mission = @Model.Mission.Where( e=> e.MissionId ==  )*@
+                                                    <div class="d-flex flex-row justify-content-between mt-1">
+                                                        <div class="d-flex flex-row gap-2">
+                                                            <img src="~/images/volunteer1.png" class="rounded-circle" width="30px" height="30px" />
+                                                            <span>@recuser.FirstName  @recuser.LastName</span>
+                                                        </div>
+                                                        <div>
+                                                            <button type="button" value="@item.MissionId @Model.user.UserId @recuser.UserId @recuser.Email" onclick="recomendtoyourfriend()" class="btn btn-primary RecommendationButton">Recommend </button>
+                                                        </div>
+                                                    </div>
+                                       
+                                    }      
+                                            </div>
+                                  
+                                </div>
+                              </div>
                             </div>
+
+                        <div class="city__container rounded-pill p-2">
+                            <img src="~/images/pin.png" class="locatin__image">
+                            <span class="text-white ">@item.City.Name</span>
                         </div>
 
                     </div>
-           
+
+                    <div class="card-body">
+                        <h3 class="card-title  text-start mt-2">@item.Title
+                        </h3>
+                        <p class="card-text text-start">@item.ShortDescription</p>
+                        <div class="d-flex justify-content-between mb-1 ">
+                            <span>@item.OrganizationName</span>
+                            <div class="star__container">
+                                @{
+                                    int sum = 0;
+                                    var averageRating = 0;
+                                    foreach (MissionRating rating in item.MissionRatings.Where(rating => rating.User.Status == 1))
+                                            {
+                                                sum += rating.Rating;
+                                            }
+                                            if (sum > 0)
+                                            {
+                                                 averageRating = sum / item.MissionRatings.Count();
+                                            }
+                                            else
+                                            {
+                                                averageRating = 0;
+                                            }
+                                        for(var i =0 ; i <  averageRating; i++)
+                                        {
+                                            <img src="~/images/selected-star.png" width="26px" height="26px" />
+                                        }
+                                        for(var i=  averageRating ;i< 5 ;i++  )
+                                        {
+                                            <img src="~/images/star-empty.png" /> 
+                                        }
+                                  }
+                            </div>
+                        </div>
+                        <br />
+                        <hr>
+                        <div class="time__text border rounded-pill w-75 mx-auto ">
+                            @{
+                                if(@item.MissionType == "TIME") {
+
+                                    if(item.EndDate > DateTime.Now)
+                                    {
+                                        <span>Ongoing Opportunity</span>
+
+                                    }
+                                    else
+                                    {
+                                       <span>From @item.StartDate.Value.ToShortDateString() until @item.EndDate.Value.ToShortDateString()</span>
+                                    }
+                                }
+
+                                else
+                                {
+                                    var goalText = item.GoalMissions.FirstOrDefault();
+                                    if(goalText == null )
+                                    {
+                                        <span>Goal is not defined</span>
+                                    }
+                                    else
+                                    {
+                                      <span>@goalText.GoalObjectiveText</span>  
+                                    }
+                                    
+                                }
+
+                         }
+                        </div>
+
+
+                        <div class="row mt-3 ms-2 mb-3">
+
+                         @if (@item.MissionType == "TIME")
+                                {
+                            <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                <img src="~/images/Seats-left.png" class="" width="30px" height="30px">
+                                <div class="d-flex flex-column ">
+                                     <h5 class="mb-0"> 
+                                     @{
+                                            var totalseatsInRelated = @item.TotalSeats;
+                                            
+                                            var enrolledseatsInRelated = @Model.missionApplications.Where(e => e.MissionId == @item.MissionId && e.ApprovalStatus == "APPROVED").Count();
+                                            var seatsLeftInRelated = totalseatsInRelated - enrolledseatsInRelated;    
+                                    }
+                                    @seatsLeftInRelated</h5> 
+                                    <span>Seats left</span>
+                                </div>
+                            </div>
+
+                               
+                                    <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                        <img src="~/images/deadline.png" width="40px" height="40px">
+                                        <div class="d-flex flex-column">
+                                            <h5 class="mb-0">@item.EndDate.Value.ToShortDateString()</h5>
+                                            <span>Deadline</span>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                     <div class="d-flex flex-row gap-3 align-items-center justify-content-center col-auto">
+                                            <img src="~/images/mission.png" width="30px" height="30px">
+                                             <div class="d-flex flex-column">
+                                                @{
+                                                   var targetValue = @item.GoalMissions.FirstOrDefault().GoalValue;
+                                                    var totalTimesheet = @item.Timesheets.Where(timesheet => timesheet.Status == "APPROVED");
+                                                    
+                                                    int? achievedValue = 0;
+                                                   
+                                                    foreach (var action in totalTimesheet)
+                                                    {
+                                                        achievedValue +=  @action.Action ;
+                                                    }
+                                                    
+
+
+                                                 <div class="Progress__bar"><progress max="@targetValue" value="@achievedValue"></progress></div>
+                                                 <span>@achievedValue Achived</span>
+                                                 }
+                                            </div>
+                                    </div>
+                                }
+
+                        </div>
+                        <hr>
+                        <div class="mt-2 apply__button    text-center apply__button  ">
+                                    @{
+                                        var userappliedOrNot = @Model.missionApplications.FirstOrDefault(e => e.UserId == @Model.user.UserId && e.MissionId == item.MissionId  && e.ApprovalStatus != "DECLINE");
+                                        if(userappliedOrNot != null)
+                                        {
+                                            if(userappliedOrNot.ApprovalStatus == "PENDING")
+                                            {
+                                                <a class="btn rounded-pill text-center border-1 border-info text-info btn_no py-3 px-5   apply__text__list" asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId">Pending <i class="bi bi-arrow-right text-info"></i> </a>
+                                            }
+                                            else{
+                                                <a class="btn rounded-pill text-center border-1 border-success text-success btn_no py-3 px-5   apply__text__list" asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId">Already Applied <i class="bi bi-arrow-right text-success"></i></a>
+                                            }
+                                            
+                                        }
+                                        else
+                                        {
+                                            <a class="btn rounded-pill   text-center apply__text " asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId" >Apply <img src="~/images/right-arrow.png" class="ms-2"></a>
+                                        }
+                                    }
+                            
+
+                        </div>
+                    </div>
+
                 </div>
+            </div>
             
                      }
                
@@ -1198,37 +1238,6 @@
             </div>
 
 
-
-
-
-
-
-
-
-
-
-
-    <script>
-        var ids = [];
-        function show(img_show) {
-            ids.push(img_show);
-            document.getElementById(img_show).style.display = "block";
-            var len = ids.length;
-            if (len > 1) {
-                var curr = ids[0];
-                if (len == 2) {
-                    var prev = ids[0];
-                    ids.shift();
-                    var curr = ids[0];
-                }
-                document.getElementById(prev).style.display = "none";
-                document.getElementById(curr).style.display = "block";
-            }
-
-        }
-    </script>
-
-
     <script>
 
         function openNav() {
@@ -1267,105 +1276,14 @@
 
     </script>
    
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-    $(document).ready(function () {
-    var itemsMainDiv = ('.MultiCarousel');
-    var itemsDiv = ('.MultiCarousel-inner');
-    var itemWidth = "";
-
-    $('.leftLst, .rightLst').click(function () {
-        var condition = $(this).hasClass("leftLst");
-        if (condition)
-            click(0, this);
-        else
-            click(1, this)
-    });
-
-    ResCarouselSize();
-
-
-
-
-    $(window).resize(function () {
-        ResCarouselSize();
-    });
-
-    //this function define the size of the items
-    function ResCarouselSize() {
-        var incno = 0;
-        var dataItems = ("data-items");
-        var itemClass = ('.item');
-        var id = 0;
-        var btnParentSb = '';
-        var itemsSplit = '';
-        var sampwidth = $(itemsMainDiv).width();
-        var bodyWidth = $('body').width();
-        $(itemsDiv).each(function () {
-            id = id + 1;
-            var itemNumbers = $(this).find(itemClass).length;
-            btnParentSb = $(this).parent().attr(dataItems);
-            itemsSplit = btnParentSb.split(',');
-            $(this).parent().attr("id", "MultiCarousel" + id);
-
-            incno = itemsSplit[1];
-            itemWidth = sampwidth / incno;
-
-            $(this).css({ 'transform': 'translateX(0px)', 'width': itemWidth * itemNumbers });
-            $(this).find(itemClass).each(function () {
-                $(this).outerWidth(itemWidth);
-            });
-
-            $(".leftLst").addClass("over");
-            $(".rightLst").removeClass("over");
-
-        });
-    }
-
-
-    //this function used to move the items
-    function ResCarousel(e, el, s) {
-        var leftBtn = ('.leftLst');
-        var rightBtn = ('.rightLst');
-        var translateXval = '';
-        var divStyle = $(el + ' ' + itemsDiv).css('transform');
-        var values = divStyle.match(/-?[\d\.]+/g);
-        var xds = Math.abs(values[4]);
-        if (e == 0) {
-            translateXval = parseInt(xds) - parseInt(itemWidth * s);
-            $(el + ' ' + rightBtn).removeClass("over");
-
-            if (translateXval <= itemWidth / 2) {
-                translateXval = 0;
-                $(el + ' ' + leftBtn).addClass("over");
-            }
-        }
-        else if (e == 1) {
-            var itemsCondition = $(el).find(itemsDiv).width() - $(el).width();
-            translateXval = parseInt(xds) + parseInt(itemWidth * s);
-            $(el + ' ' + leftBtn).removeClass("over");
-
-            if (translateXval >= itemsCondition - itemWidth / 2) {
-                translateXval = itemsCondition;
-                $(el + ' ' + rightBtn).addClass("over");
-            }
-        }
-        $(el + ' ' + itemsDiv).css('transform', 'translateX(' + -translateXval + 'px)');
-    }
-
-    //It is used to get some elements from btn
-    function click(ell, ee) {
-        var Parent = "#" + $(ee).parent().attr("id");
-        var slide = $(Parent).attr("data-slide");
-        ResCarousel(ell, Parent, slide);
-    }
-
-});
-</script>
-
-    <script src="~/js/VolunteeringPage.js" asp-append-version="true"></script>
    
+    
+     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/VolunteeringPage.js" ></script>
+    <script src="~/js/site.js" ></script>
+   
+
 
 </body>
 

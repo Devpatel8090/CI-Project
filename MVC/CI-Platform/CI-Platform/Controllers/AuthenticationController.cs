@@ -21,12 +21,14 @@ namespace CI_Platform.Controllers
         private IConfiguration _configuration;
         private readonly SMTPConfigModel _smtpconfig;
         private readonly IUnitOfWorkRepository _unitOfWork;
-        public AuthenticationController(/*CiPlatformContext db*/IUnitOfWorkRepository unitOfWorkRepository , IConfiguration configuration , IOptions<SMTPConfigModel> smtpConfig)
+        private readonly Utilities _utility;
+        public AuthenticationController(/*CiPlatformContext db*/IUnitOfWorkRepository unitOfWorkRepository , IConfiguration configuration , IOptions<SMTPConfigModel> smtpConfig,Utilities utility)
         {
             //_db = db;
             _unitOfWork = unitOfWorkRepository;
             _configuration = configuration;
             _smtpconfig = smtpConfig.Value;
+            _utility = utility;
 
         }
 
@@ -36,10 +38,18 @@ namespace CI_Platform.Controllers
         /// <returns> empty view with only login page </returns>
 
         [HttpGet]
-        public IActionResult login()
+        public IActionResult login(string? URL)
         {
-            ViewBag.Banners = _unitOfWork.Banner.GetAll().Where(banner => banner.DeletedAt == null);
-            return View();
+            var userEmail = HttpContext.Session.GetString("userEmail");
+            if (userEmail != null && URL != null)
+            {
+                return Redirect(URL);
+            }
+            else
+            {
+                ViewBag.Banners = _unitOfWork.Banner.GetAll().Where(banner => banner.DeletedAt == null);
+                return View();
+            }
         }
 
         /// <summary>
@@ -49,27 +59,34 @@ namespace CI_Platform.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        public IActionResult login(User user)
+        public IActionResult login(User user,string? URL)
         {
             //var userDetails = _db.Users.FirstOrDefault(e => e.Email == user.Email);
             var userDetails = _unitOfWork.User.GetUserDetails().Where(e => e.Email == user.Email).FirstOrDefault();
-
+            var password = user.Password;
+            var encryptedPassword = _utility.Encodepass(password);
             if (ModelState.IsValid)
             {
+               
                 if (userDetails == null)
                 {
                     ModelState.AddModelError("email", "Email is Not Register");
                 }
-                else if (userDetails.Status == 0)
+                else if (userDetails.Status == 0 || userDetails.DeletedAt != null)
                 {
-                    TempData["error"] = "You Are Inactivated Please Contact Admin";
+                    TempData["error"] = "You Are Inactivated or Remove Please Contact Admin";
                     return RedirectToAction("login");
                 }
-                else if (userDetails.Password == user.Password)
+                else if (userDetails.Password == encryptedPassword)
                 {
                         
-                        HttpContext.Session.SetString("userEmail",userDetails.Email);
-                     if(userDetails.Role == "ADMIN")
+                     HttpContext.Session.SetString("userEmail",userDetails.Email);
+                    if (URL != null)
+                    {
+                        TempData["success"] = "Hurray! You are redirected to Invited mission";
+                        return Redirect(URL);
+                    }
+                    else if(userDetails.Role == "ADMIN")
                     {
                         TempData["success"] = "Hurray! Admin Logged in Successfully";
                         return RedirectToAction("UserAdminTab", "Admin");

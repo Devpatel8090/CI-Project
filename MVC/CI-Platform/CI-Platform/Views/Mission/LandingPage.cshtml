@@ -895,37 +895,7 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
                 </div>*@
 
 
-      <!-- Recommendation Modal -->
-            <div class="modal fade " id="RecomendModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Recommendation to co-worker</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                                @foreach( var item in Model.User)
-                                {
-                                   @* var mission = @Model.Mission.Where( e=> e.MissionId ==  )*@
-                                    <div class="d-flex flex-row justify-content-between mt-1">
-                                        <div class="d-flex flex-row gap-2">
-                                            <img src="~/images/volunteer1.png" class="rounded-circle" width="30px" height="30px" />
-                                            <span>@item.FirstName  @item.LastName</span>
-                                        </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary RecommendationButton">Recommend </button>
-                                        </div>
-                                    </div>
-                       
-                                }
-                            </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+      
 
 
             @* <div >

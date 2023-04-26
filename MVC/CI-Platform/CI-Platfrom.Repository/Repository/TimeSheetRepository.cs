@@ -21,7 +21,7 @@ namespace CI_Platfrom.Repository.Repository
 
         public List<Timesheet> GetTimesheetDetails()
         {
-            List<Timesheet> timesheetDetails = _db.Timesheets.Include(e => e.Mission).ToList();
+            List<Timesheet> timesheetDetails = _db.Timesheets.Include(e => e.Mission).Include(e => e.User).ToList();
             return timesheetDetails;
         }
     }

@@ -25,5 +25,11 @@ namespace CI_Platfrom.Repository.Repository
             return comments;
             
         }
+        public List<Comment> GetAllComments()
+        {
+            List<Comment> comments = _db.Comments.Include(u => u.User).Where(c => c.DeletedAt == null).ToList();
+            return comments;
+
+        }
     }
 }

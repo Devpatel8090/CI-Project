@@ -26,7 +26,7 @@ namespace CI_Platfrom.Repository.Repository
         }
         public List<Story> GetPublishedStoryDetails()
         {
-            List<Story> storyList = _db.Stories.Where(e => e.Status == "PUBLISHED" && e.DeletedAt == null).Include(e => e.StoryMedia).ToList();
+            List<Story> storyList = _db.Stories.Where(e => e.Status == "PUBLISHED" && e.DeletedAt == null ).Include(user => user.User).Include(e => e.StoryMedia).ToList();
             return storyList;
         }
 

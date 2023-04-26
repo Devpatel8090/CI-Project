@@ -14,7 +14,7 @@ ViewData["Title"] = "Registration";
       </div>
       <div class="col-12 col-xl-4 d-flex flex-column mt-2 flex-sm-row justify-content-center align-items-center">
 
-        <form class="form mt-3 w-75" method="post" asp-controller="Registration" asp-action="Register" >
+        <form class="form mt-3 w-75" method="post" onsubmit="return checkValidation()" asp-controller="Registration" asp-action="Register" >
 
           <div class="mb-1 mb-sm-3">
             <h6><label asp-for="User.FirstName" class="form-label">First Name</label></h6>
@@ -32,8 +32,8 @@ ViewData["Title"] = "Registration";
             <h6>
               <label asp-for="User.PhoneNumber" class="form-label">Phone Number</label>
             </h6>
-            <input type="tel" pattern="[0-9]{10}"  asp-for="User.PhoneNumber" class="form-control"  aria-describedby="emailHelp" placeholder="8923454615" />
-            <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+            <input type="text"   asp-for="User.PhoneNumber" oninput="removeValidation()" id="PhoneNumber" class="form-control"  aria-describedby="emailHelp" placeholder="8923454615" />
+            <span class="text-danger" id="PhoneNumberValidation"></span>
           </div>
 
           <div class="mb-1 mb-sm-3">
@@ -82,4 +82,19 @@ ViewData["Title"] = "Registration";
       </div>
     </div>
   </div>
+  <script>
+      function checkValidation() {
+          var phoneNumber = $('#PhoneNumber').val();
+          var regEx = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+
+          if(phoneNumber.match(regEx) == null) {
+              $('#PhoneNumberValidation').html("Please Enter Correct 10 digit mobile Number");
+              return false;
+          }
+      }
+      function removeValidation() {
+          var input = event.target.getAttribute('id');
+          $('#'+ input + "Validation").html('');
+      }
+  </script>
 

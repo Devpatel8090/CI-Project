@@ -73,6 +73,7 @@ namespace CI_Platform.Controllers
                 {
                     MissionId = timesheet.particularTimesheet.MissionId,
                     UserId = userId,
+                    Action = timesheet.particularTimesheet.Action,
                     Notes = timesheet.particularTimesheet.Notes,
                     DateVolunteered = timesheet.particularTimesheet.DateVolunteered,
                     Time = time,
@@ -83,6 +84,7 @@ namespace CI_Platform.Controllers
                     alreadyCreatedTimesheet.UpdatedAt = DateTime.Now;
                     alreadyCreatedTimesheet.MissionId = timesheet.particularTimesheet.MissionId;
                     alreadyCreatedTimesheet.UserId = userId;
+                    alreadyCreatedTimesheet.Action = timesheet.particularTimesheet.Action;
                     alreadyCreatedTimesheet.Notes = timesheet.particularTimesheet.Notes;
                     alreadyCreatedTimesheet.DateVolunteered = timesheet.particularTimesheet.DateVolunteered;
                     alreadyCreatedTimesheet.Time = time;
@@ -146,6 +148,5 @@ namespace CI_Platform.Controllers
             _unitOfWork.save();
             
         }
-    
     }
 }

@@ -246,7 +246,55 @@ namespace CI_Platform.Controllers
             }
         }
 
-        public IActionResult DeleteRecord(long userId = 0, long CmsPageId = 0, long missionId = 0,long storyId = 0, long bannerId=0)
+        public IActionResult TimesheetAdminTab()
+        {
+            AdminVM model = new AdminVM();
+            var missionThemeDetails = _unitOfWork.Theme.GetThemeDetails();
+            var userEmail = HttpContext.Session.GetString("userEmail");
+            var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            var timesheets = _unitOfWork.TimeSheet.GetTimesheetDetails().Where(timesheet => timesheet.DeletedAt == null);
+            if (userEmail == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else if (loggedinUser.Role == "USER")
+            {
+                return RedirectToAction("UnAuthorize", "Authentication");
+            }
+            else
+            {
+                model.LoggedInUser = loggedinUser;
+                model.timesheets = timesheets;
+                return View(model);
+            }
+
+        }
+
+        public IActionResult AdminCommentTab()
+        {
+            AdminVM model = new AdminVM();
+            var missionThemeDetails = _unitOfWork.Theme.GetThemeDetails();
+            var userEmail = HttpContext.Session.GetString("userEmail");
+            var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
+            var comments = _unitOfWork.Comment.GetAllComments();
+            if (userEmail == null)
+            {
+                return RedirectToAction("login", "Authentication");
+            }
+            else if (loggedinUser.Role == "USER")
+            {
+                return RedirectToAction("UnAuthorize", "Authentication");
+            }
+            else
+            {
+                model.LoggedInUser = loggedinUser;
+                model.comments = comments;
+                return View(model);
+            }
+
+        }
+
+        public IActionResult DeleteRecord(long userId = 0, long CmsPageId = 0, long missionId = 0,long storyId = 0, long bannerId=0 , long TimesheetId=0)
         {
             if (userId != 0)
             {
@@ -255,6 +303,8 @@ namespace CI_Platform.Controllers
                 user.DeletedAt = DateTime.Now;
                 _unitOfWork.User.Update(user);
                 _unitOfWork.save();
+
+
 
                 return RedirectToAction("UserAdminTab");
             }
@@ -276,6 +326,7 @@ namespace CI_Platform.Controllers
                 _unitOfWork.Mission.Update(missionDetail);
                 _unitOfWork.save();
 
+
                 return RedirectToAction("MissionAdminTab");
             }
             if(storyId != 0)
@@ -295,16 +346,20 @@ namespace CI_Platform.Controllers
                 _unitOfWork.save();
                 return RedirectToAction("BannerManagementAdminTab");
             }
+            if(TimesheetId != 0)
+            {
+                var timesheetDetail = _unitOfWork.TimeSheet.GetFirstOrDefault(timesheet => timesheet.TimesheetId == TimesheetId);
+                timesheetDetail.DeletedAt = DateTime.Now;
+                _unitOfWork.TimeSheet.Update(timesheetDetail);
+                _unitOfWork.save();
+                return RedirectToAction("TimesheetAdminTab");
 
-
-
+            }
             return RedirectToAction("UserAdminTab");
-
-
         }
 
 
-        public IActionResult Approve(long missionAppId = 0, long skillId = 0, long missionThemeId = 0,long storyId = 0, long bannerId = 0)
+        public IActionResult Approve(long missionAppId = 0, long skillId = 0, long missionThemeId = 0,long storyId = 0, long bannerId = 0,long commentId=0,long timesheetId=0)
         {
             if (missionAppId != 0)
             {
@@ -344,10 +399,28 @@ namespace CI_Platform.Controllers
                 _unitOfWork.save();
                 return RedirectToAction("StoryAdminTab");
             }
-            return RedirectToAction("MissionApplicationAdminTab", "Admin");
+            if (timesheetId != 0)
+            {
+                var timesheetDetails = _unitOfWork.TimeSheet.GetFirstOrDefault(timesheet => timesheet.TimesheetId == timesheetId);
+                timesheetDetails.Status = "APPROVED";
+                timesheetDetails.UpdatedAt = DateTime.Now;
+                _unitOfWork.TimeSheet.Update(timesheetDetails);
+                _unitOfWork.save();
+                return RedirectToAction("TimesheetAdminTab");
+            }
+            if (commentId != 0)
+            {
+                var commentDetails = _unitOfWork.Comment.GetFirstOrDefault(comment => comment.CommentId == commentId);
+                commentDetails.ApprovalStatus = "PUBLISHED";
+                commentDetails.UpdatedAt = DateTime.Now;
+                _unitOfWork.Comment.Update(commentDetails);
+                _unitOfWork.save();
+                return RedirectToAction("AdminCommentTab");
+            }
+            return RedirectToAction("UserAdminTab");
 
         }
-        public IActionResult DisApprove(long missionAppId = 0, long skillId = 0, long missionThemeId = 0, long storyId=0)
+        public IActionResult DisApprove(long missionAppId = 0, long skillId = 0, long missionThemeId = 0, long storyId=0, long commentId = 0, long timesheetId = 0)
         {
             if (missionAppId != 0)
             {
@@ -388,7 +461,25 @@ namespace CI_Platform.Controllers
                 _unitOfWork.save();
                 return RedirectToAction("StoryAdminTab");
             }
-            return RedirectToAction("MissionApplicationAdminTab", "Admin");
+            if (timesheetId != 0)
+            {
+                var timesheetDetails = _unitOfWork.TimeSheet.GetFirstOrDefault(timesheet => timesheet.TimesheetId == timesheetId);
+                timesheetDetails.Status = "PENDING";
+                timesheetDetails.UpdatedAt = DateTime.Now;
+                _unitOfWork.TimeSheet.Update(timesheetDetails);
+                _unitOfWork.save();
+                return RedirectToAction("TimesheetAdminTab");
+            }
+            if (commentId != 0)
+            {
+                var commentDetails = _unitOfWork.Comment.GetFirstOrDefault(comment => comment.CommentId == commentId);
+                commentDetails.ApprovalStatus = "DECLINE";
+                commentDetails.UpdatedAt = DateTime.Now;
+                _unitOfWork.Comment.Update(commentDetails);
+                _unitOfWork.save();
+                return RedirectToAction("AdminCommentTab");
+            }
+            return RedirectToAction("UserAdminTab");
         }
 
         public void AddSkill(string skillName)
@@ -678,12 +769,9 @@ namespace CI_Platform.Controllers
                     }
                 }
             
-
-            /*if (model.particularMission.MissionId > 0)
-            {*/
                 foreach (var image in images.Where(i => i.MissionId == model.particularMission.MissionId && i.MediaType != "URL"))
                 {
-                   /* if (!documents.Any(i => image.MediaPath.Contains(i.FileName)))*/
+                
                         if (!files.Any(i => i.FileName.Contains(image.MediaPath)))
                         {
                         var filepath = rootpath + image.MediaPath;
@@ -693,11 +781,6 @@ namespace CI_Platform.Controllers
                     }
 
                 }
-            /*}
-*/
-
-            /*if (model.particularMission.MissionId > 0)
-            {*/
                     foreach (var doc in docs.Where(i => i.MissionId == model.particularMission.MissionId))
                     {
                         if (!documents.Any(i => doc.DocumentPath.Contains(i.FileName)))
@@ -709,10 +792,8 @@ namespace CI_Platform.Controllers
                         }
 
                     }
-                /*}*/
+               
             }
-
-
 
             string[] arr;
             if (videourls != null)
@@ -741,8 +822,6 @@ namespace CI_Platform.Controllers
                 }
               
             }
-
-
             if (model.particularMission.MissionId != 0)
             {
                 
@@ -870,8 +949,10 @@ namespace CI_Platform.Controllers
             AdminVM story = new AdminVM();
             story.particularStory = storyDetail;
             return PartialView("_StoryViewAdminPage", story);
-        /*    return RedirectToAction("BannerManagementAdminTab", "Admin");*/
+       
         }
+
+      
        
 
     }

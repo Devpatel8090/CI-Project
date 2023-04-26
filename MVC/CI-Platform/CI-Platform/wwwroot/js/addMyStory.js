@@ -1,6 +1,96 @@
 
+let files = [];
+function StorySave() {
+    var missionId = $("#selectMission").find(":selected").val();
+    var storytitle = $("#storyTitle").val();
+    var storydate = $("#StoryDate").val();
+    /*  var storyDetails = CKEDITOR.instances['Content'].getData();*/
+    var storyDetails = CKEDITOR.instances["Content"].getData();
+    var storyurl = $("#storyVideoUrl").val();
 
-let files = [],
+    var formphotos = new FormData();
+
+    var uploadedfiles = /*$('#filesName')[0].files*/ files;
+
+    for (var i = 0, j = 0; i < uploadedfiles.length && j < 20; i++) {
+        var filesfromdata = uploadedfiles[i];
+        formphotos.append("totalfiles", filesfromdata);
+    }
+
+    if (missionId == -1) {
+        $('#selectMissionValidation').text("Please Select Mission");
+        return false;
+    }
+
+    if (storytitle == "") {
+        $('#storyTitleValidation').text("Please Enter  Story Tilte");
+        return false;
+    }
+
+    if (storytitle.trim().length < 5 || storytitle.trim().length > 255) {
+        $('#storyTitleValidation').text("Length of title must between 5 to 255 characters");
+        return false;
+    }
+    var regex = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/gm;
+
+
+    if (storyurl != "") {
+        if (storyurl.includes(" ")) {
+            var arr = storyurl.split(" ");
+        }
+        else if (storyurl.includes(",")) {
+            var arr = storyurl.split(",")
+        }
+        else {
+            var arr = storyurl.split("\n");
+        }
+        if (arr.length > 20) {
+            toastr.error('maximum 20 urls are allowed')
+            return false;
+        }
+        for (var url of arr) {
+
+            if (url.match(regex) == null) {
+                toastr.error('Only Youtube URLs are allowed')
+                return false;
+            }
+        }
+    }
+
+    let addStoryObj = {
+        MissionId: missionId,
+        StoryTitle: storytitle,
+        StoryDetails: storyDetails,
+        StoryVideoUrl: storyurl,
+        storyImages: PreviousImages,
+    };
+
+    formphotos.append("addStoryObj", JSON.stringify(addStoryObj));
+
+    var url = "/Story/saveStory";
+
+    $.ajax({
+        url: url,
+        data: formphotos,
+        type: "POST",
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $('#StorySubmitButton').removeAttr("disabled");
+            $('#StorySubmitButton').removeAttr("style");
+            $('#StoryPreviewButton').removeAttr("disabled");
+            $('#StoryPreviewButton').removeAttr("style");
+            var link = "/Story/storyDetailPage?storyId=" + data;
+            $('#StoryPreviewButton').attr("href", link);
+            console.log(data);
+        },
+        error: function (error) {
+            consol.log(data);
+        },
+    });
+}
+
+
     dragArea = document.querySelector(".drag-area"),
     input = document.querySelector(".drag-area input"),
     button = document.querySelector(".drag-card button"),
@@ -88,98 +178,7 @@ function textareaval() {
 // Adding  Story To db
 
 /*$('#StorySaveButton').on('click',*/
-function StorySave() {
-    var missionId = $("#selectMission").find(":selected").val();
-    var storytitle = $("#storyTitle").val();
-    var storydate = $("#StoryDate").val();
-    /*  var storyDetails = CKEDITOR.instances['Content'].getData();*/
-    var storyDetails = CKEDITOR.instances["Content"].getData();
-    var storyurl = $("#storyVideoUrl").val();
 
-    var formphotos = new FormData();
-
-    var uploadedfiles = /*$('#filesName')[0].files*/ files;
-
-    for (var i = 0, j = 0; i < uploadedfiles.length && j < 20; i++) {
-        var filesfromdata = uploadedfiles[i];
-        formphotos.append("totalfiles", filesfromdata);
-    }
-
-    if (missionId == -1) {
-        $('#selectMissionValidation').text("Please Select Mission");
-        return false;
-    }
-
-    if (storytitle == "") {
-        $('#storyTitleValidation').text("Please Enter  Story Tilte");
-        return false;
-    }
-
-    if (storytitle.trim().length < 5 || storytitle.trim().length > 255) {
-        $('#storyTitleValidation').text("Length of title must between 5 to 255 characters");
-        return false;
-    }
-    var regex = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/gm;
-    
-    
-        if (storyurl != "") {
-            if (storyurl.includes(" "))
-            {
-                var arr = storyurl.split(" ");
-            }
-            else if (storyurl.includes(","))
-            {
-                var arr = storyurl.split(",")
-            }
-            else
-            {
-                var arr = storyurl.split("\n");
-            }
-            if (arr.length > 20) {
-                toastr.error('maximum 20 urls are allowed')
-                return false;
-            }
-            for (var url of arr) {
-
-                if (url.match(regex) == null) {
-                    toastr.error('Only Youtube URLs are allowed')
-                    return false;
-                }
-            }
-    }
-
-    let addStoryObj = {
-        MissionId: missionId,
-        StoryTitle: storytitle,
-        StoryDetails: storyDetails,
-        StoryVideoUrl: storyurl,
-        storyImages: PreviousImages,
-    };
-
-    formphotos.append("addStoryObj", JSON.stringify(addStoryObj));
-
-    var url = "/Story/saveStory";
-
-    $.ajax({
-        url: url,
-        data: formphotos,
-        type: "POST",
-        contentType: false,
-        processData: false,
-        success: function (data) {
-            $('#StorySubmitButton').removeAttr("disabled");
-            $('#StorySubmitButton').removeAttr("style");
-            $('#StoryPreviewButton').removeAttr("disabled");
-            $('#StoryPreviewButton').removeAttr("style");
-            var link = "/Story/storyDetailPage?storyId=" + data;
-            $('#StoryPreviewButton').attr("href",link);
-            console.log(data);
-        },
-        error: function (error) {
-            consol.log(data);
-        },
-    });
-}
 
 var PreviousImages = [];
 
@@ -222,6 +221,7 @@ $("#selectMission").on("change", function () {
                 CKEDITOR.instances["Content"].setData(data.description);
                 $("#StoryDate").val(data.createAt);
                 $("#storyVideoUrl").val(data.videos);
+
                 var items = "";
                 for (var i = 0; i < data.images.length; i++) {
                     console.log(data.images[i]);
@@ -233,8 +233,9 @@ $("#selectMission").on("change", function () {
 
                     console.log(PreviousImages);
                 }
-               
                 $("#oldImages").html(items);
+               
+                
                
             }
             else {

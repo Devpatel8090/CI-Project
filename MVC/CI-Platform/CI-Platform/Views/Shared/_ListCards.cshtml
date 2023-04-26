@@ -59,9 +59,37 @@
                             }
 
                         </div>
-                        <div class="rounded-circle add__person__image__container__listView" data-bs-toggle="modal" data-bs-target="#RecomendModal">
+                        <div class="rounded-circle add__person__image__container__listView" data-bs-toggle="modal" data-bs-target="#RecomendModalList_@item.MissionId">
                             <img src="~/images/user.png" class="add__person__image">
                         </div>
+
+
+                             <!-- Recommendation Modal -->
+                            <div class="modal fade " id="RecomendModalList_@item.MissionId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content" >
+                                
+                                  <div class="modal-body">
+                                  @foreach( var recuser in Model.User)
+                                {
+                                                @* onclick method is putted in volunteering page so kindly refer it*@
+                                                   @* var mission = @Model.Mission.Where( e=> e.MissionId ==  )*@
+                                                    <div class="d-flex flex-row justify-content-between mt-1">
+                                                        <div class="d-flex flex-row gap-2">
+                                                            <img src="~/images/volunteer1.png" class="rounded-circle" width="30px" height="30px" />
+                                                            <span>@recuser.FirstName  @recuser.LastName</span>
+                                                        </div>
+                                                        <div>
+                                                            <button type="button" value="@item.MissionId @Model.user.UserId @recuser.UserId @recuser.Email" onclick="recomendtoyourfriend()" class="btn btn-primary RecommendationButton">Recommend </button>
+                                                        </div>
+                                                    </div>
+                                       
+                                    }      
+                                            </div>
+                                  
+                                </div>
+                              </div>
+                            </div>
                         <div class="city__container__list rounded-pill">
                             <img src="~/images/pin.png" class="locatin__image">
                             <span class="text-white">@item.City.Name</span>
@@ -81,7 +109,7 @@
                                     @{
                                         int sum = 0;
                                         var averageRating = 0;
-                                        foreach (MissionRating rating in item.MissionRatings)
+                                        foreach (MissionRating rating in item.MissionRatings.Where(rating => rating.User.Status == 1))
                                         {
                                             sum += rating.Rating;
                                         }
@@ -115,20 +143,23 @@
                         </div>
                         <div class="row justify-content-between  mt-3">
                             <div class="col mt-2 ml-0 apply__button__list     ">
-                                @{
-                                    var userappliedOrNot = @Model.missionApplications.FirstOrDefault(e => e.UserId == @Model.user.UserId && e.MissionId == item.MissionId);
-                                    if (userappliedOrNot != null)
-                                    {
-                                        <a asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId" class="btn rounded-pill  border-1 border-success text-center text-success">Already Applied </a>
-
-
-                                    }
-                                    else
-                                    {
-                                        <a class="btn rounded-pill text-center apply__text__list" asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId">
-                                            Apply <img src="~/images/right-arrow.png" class="ms-2">
-                                        </a>
-                                    }
+                                   @{
+                                        var userappliedOrNot = @Model.missionApplications.FirstOrDefault(e => e.UserId == @Model.user.UserId && e.MissionId == item.MissionId  && e.ApprovalStatus != "DECLINE");
+                                        if(userappliedOrNot != null)
+                                        {
+                                            if(userappliedOrNot.ApprovalStatus == "PENDING")
+                                            {
+                                                <a class="btn rounded-pill text-center border-1 border-info text-info   apply__text__list" asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId">Pending <i class="bi bi-arrow-right text-info"></i> </a>
+                                            }
+                                            else{
+                                                <a class="btn rounded-pill text-center border-1 border-success text-success    apply__text__list" asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId">Already Applied  <i class="bi bi-arrow-right text-success"></i></a>
+                                            }
+                                            
+                                        }
+                                        else
+                                        {
+                                            <a class="btn rounded-pill   text-center apply__text " asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId" >Apply <img src="~/images/right-arrow.png" class="ms-2"></a>
+                                        }
                                 }
                             </div>
                             <div class="col">
@@ -146,7 +177,7 @@
                                                     <h5 class="mb-0">
                                                         @{
                                                             var totalseats = @item.TotalSeats;
-                                                            var enrolledseats = @Model.missionApplications.Where(e => e.MissionId == @item.MissionId).Count();
+                                                            var enrolledseats = @Model.missionApplications.Where(e => e.MissionId == @item.MissionId && e.ApprovalStatus == "APPROVED").Count();
                                                             var seatsLeft = totalseats - enrolledseats;
                                                         }
                                                         @seatsLeft
@@ -173,7 +204,7 @@
                                                 <div class="d-flex flex-column">
                                                     @{
                                                         var targetValue = @item.GoalMissions.FirstOrDefault().GoalValue;
-                                                        var totalTimesheet = @item.Timesheets;
+                                                        var totalTimesheet = @item.Timesheets.Where(timesheet => timesheet.Status == "APPROVED");
                                                         int? achievedValue = 0;
 
                                                         foreach (var action in totalTimesheet)

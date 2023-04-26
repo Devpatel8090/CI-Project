@@ -42,7 +42,7 @@ namespace CI_Platform.Controllers
         {
             var emailFromSession = HttpContext.Session.GetString("userEmail");
             StoryVM story = new StoryVM();
-            story.Story = _unitOfWork.Story.GetPublishedStoryDetails().ToList();
+            story.Story = _unitOfWork.Story.GetPublishedStoryDetails().Where(user => user.User.DeletedAt == null).ToList();
             story.Mission = _unitOfWork.Mission.GetMissionDetails().ToList();
             story.user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
             story.LogingUserMissions = _unitOfWork.MissionApplication.getUserMissions(story.user.UserId);

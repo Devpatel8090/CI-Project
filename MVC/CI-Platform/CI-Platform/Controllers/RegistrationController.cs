@@ -1,4 +1,6 @@
 ﻿
+
+using CI_Platform.Model;
 using CI_Platfrom.Entities.Data;
 using CI_Platfrom.Entities.Models;
 using CI_Platfrom.Entities.Models.ViewModel;
@@ -13,11 +15,13 @@ namespace CI_Platform.Controllers
 
         //private readonly CiPlatformContext _db;
         private readonly IUnitOfWorkRepository _unitOfWork;
+        private readonly Utilities _utility ;
 
-        public RegistrationController(/*CiPlatformContext db*/IUnitOfWorkRepository unitOfWork)
+        public RegistrationController(/*CiPlatformContext db*/IUnitOfWorkRepository unitOfWork,Utilities utility)
         {
             //_db = db;
             _unitOfWork = unitOfWork;
+            _utility = utility;
         }
 
         public IActionResult Register()
@@ -42,6 +46,7 @@ namespace CI_Platform.Controllers
                 {
                     if (obj.ConfirmPassword == obj.User.Password)
                     {
+                        obj.User.Password = _utility.Encodepass(obj.ConfirmPassword);
                         _unitOfWork.User.Add(obj.User);
                         _unitOfWork.save();
                         TempData["success"] = "Congratulation! You are Registered Now login with the same Email and Password";
@@ -53,6 +58,7 @@ namespace CI_Platform.Controllers
                     }
                 }
             }
+            ViewBag.Banners = _unitOfWork.Banner.GetAll().Where(banner => banner.DeletedAt == null);
             return View();
         }
 
@@ -145,7 +151,7 @@ namespace CI_Platform.Controllers
                 else
                 {
                     user.Avatar = "/images/UserAvtarImages/" + files.FileName;
-                    _unitOfWork.User.Add(user);
+                    _unitOfWork.User.Update(user);
                     _unitOfWork.save();
                 }
             }

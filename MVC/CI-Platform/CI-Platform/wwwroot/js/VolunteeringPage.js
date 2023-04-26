@@ -87,10 +87,10 @@ function StarRatingFunction() {
 }   
 
 /*comment section */
-
+/*
 let commentButton = document.getElementById("postCommentButton");
 
-commentButton.addEventListener("click", postcommentfunction);
+commentButton.addEventListener("click", postcommentfunction);*/
 
 function postcommentfunction () {
     var commentText = document.getElementById("WriteCommentText").value;
@@ -131,7 +131,7 @@ $('#ApplyTomission').on('click', function () {
         success: function (data) {
             var temp = "";
             var applyToMissionText = $('#applyToMissionText');
-            temp +=` <a class="btn rounded-pill text-center border-1 border-success text-success btn_no py-3 px-5   apply__text__list"> Already Applied 
+            temp +=` <a class="btn rounded-pill text-center border-1 border-info text-info btn_no py-3 px-5   apply__text__list"> wait for approval 
             </a>`;
             applyToMissionText.html(temp);
         },

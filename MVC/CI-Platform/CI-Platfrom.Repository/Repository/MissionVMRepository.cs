@@ -267,7 +267,7 @@ namespace CI_Platfrom.Repository.Repository
                 }
                 else if (sort == "Deadline")
                 {
-                    filterMissions = filterMissions.OrderBy(m => m.EndDate).ToList();
+                    filterMissions = filterMissions.OrderBy(m => m.Deadline).ToList();
                 }
                 else
                 {
@@ -317,7 +317,7 @@ namespace CI_Platfrom.Repository.Repository
             }
             else if (sort == "Deadline")
             {
-                missions = missions.OrderBy(m => m.EndDate).ToList();
+                missions = missions.OrderBy(m => m.Deadline).ToList();
             }
             else
             {

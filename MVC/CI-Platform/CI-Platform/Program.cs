@@ -28,7 +28,7 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.Configure<SMTPConfigModel>(builder.Configuration.GetSection("SMTPConfig"));
-
+builder.Services.AddScoped<Utilities>();
 //builder.Services.AddScoped<IUserRepository, UserRepository>();
 //builder.Services.AddScoped<ICityRepository, CityRepository>();
 //builder.Services.AddScoped<ICountryRepository, CountryRepository>();
