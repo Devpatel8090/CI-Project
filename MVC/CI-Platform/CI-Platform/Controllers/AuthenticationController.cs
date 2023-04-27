@@ -38,12 +38,12 @@ namespace CI_Platform.Controllers
         /// <returns> empty view with only login page </returns>
 
         [HttpGet]
-        public IActionResult login(string? URL)
+        public IActionResult login(string? InviteURL)
         {
             var userEmail = HttpContext.Session.GetString("userEmail");
-            if (userEmail != null && URL != null)
+            if (userEmail != null && InviteURL != null)
             {
-                return Redirect(URL);
+                return Redirect(InviteURL);
             }
             else
             {
@@ -59,7 +59,7 @@ namespace CI_Platform.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        public IActionResult login(User user,string? URL)
+        public IActionResult login(User user,string? InviteURL)
         {
             //var userDetails = _db.Users.FirstOrDefault(e => e.Email == user.Email);
             var userDetails = _unitOfWork.User.GetUserDetails().Where(e => e.Email == user.Email).FirstOrDefault();
@@ -81,10 +81,10 @@ namespace CI_Platform.Controllers
                 {
                         
                      HttpContext.Session.SetString("userEmail",userDetails.Email);
-                    if (URL != null)
+                    if (InviteURL != null)
                     {
                         TempData["success"] = "Hurray! You are redirected to Invited mission";
-                        return Redirect(URL);
+                        return Redirect(InviteURL);
                     }
                     else if(userDetails.Role == "ADMIN")
                     {

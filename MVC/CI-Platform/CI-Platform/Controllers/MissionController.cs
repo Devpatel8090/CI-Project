@@ -237,7 +237,7 @@ namespace CI_Platform.Controllers
             };
 
             var inviteLink = Url.Action("VolunteeringPage", "Mission", new { id = missionId }, Request.Scheme);
-            var loginUrl = Url.Action("login", "Authentication", new { URL = inviteLink }, Request.Scheme);
+            var loginUrl = Url.Action("login", "Authentication", new { InviteURL = inviteLink }, Request.Scheme);
             TempData["link"] = inviteLink;
 
             UserEmailOptions userEmailOptions = new UserEmailOptions()

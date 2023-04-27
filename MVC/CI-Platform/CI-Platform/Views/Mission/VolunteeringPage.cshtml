@@ -6,56 +6,7 @@
 @{
     Layout = null;
 }
-<style>
-    .MultiCarousel {
-    float: left;
-    overflow: hidden;
-    padding: 15px;
-    width: 100%;
-    position: relative;
-}
 
-.MultiCarousel .MultiCarousel-inner {
-    transition: 1s ease all;
-    float: left;
-}
-
-.MultiCarousel .MultiCarousel-inner .item {
-    float: left;
-}
-
-.MultiCarousel .MultiCarousel-inner .item > div {
-    text-align: center;
-    padding: 10px;
-    margin: 10px;
-    background: #f1f1f1;
-    color: #666;
-}
-
-.btn-custom {
-    height: 80%;
-    background-color: #000000 !important;
-    opacity: 50%;
-    color: #FFFFFF !important;
-}
-
-.MultiCarousel .leftLst, .MultiCarousel .rightLst {
-    position: absolute;
-}
-
-.MultiCarousel .leftLst {
-    left: 0;
-}
-
-.MultiCarousel .rightLst {
-    right: 0;
-}
-
-.MultiCarousel .leftLst.over, .MultiCarousel .rightLst.over {
-    pointer-events: none;
-    background: #ccc;
-}
-</style>
 @model MissionVM
 
 <!DOCTYPE html>
@@ -69,6 +20,7 @@
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/landingpage.css">
+    <link rel="stylesheet" href="~/css/Carousel.css" />
      <link rel="stylesheet" href="~/css/volunteeringMissionPage.css">
    
    @* 
@@ -1191,7 +1143,7 @@
                                 {
                                     <div class="d-flex flex-row justify-content-between mt-1">
                                         <div class="d-flex flex-row gap-2">
-                                            <img src="~/images/volunteer1.png" class="rounded-circle" width="30px" height="30px" />
+                                            <img src="@item.Avatar" class="rounded-circle" width="30" height="30" />
                                             <span>@item.FirstName  @item.LastName</span>
                                         </div>
                                         <div id="RecommendationDiv">

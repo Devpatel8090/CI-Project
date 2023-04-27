@@ -363,21 +363,18 @@ namespace CI_Platform.Controllers
             };
 
             var inviteLink = Url.Action("storyDetailPage", "Story", new { storyId = storyId }, Request.Scheme);
+            var loginUrl = Url.Action("login","Authentication",new { InviteURL = inviteLink}, Request.Scheme);
             TempData["link"] = inviteLink;
 
             UserEmailOptions userEmailOptions = new UserEmailOptions()
             {
                 Subject = "He is invinting you to read this Story ",
-                Body = "<a href=" + inviteLink + ">" + inviteLink + "</a>"
+                Body = "Your college invite you to Read this story" +"<a href=" + loginUrl + ">" + loginUrl + "</a>"
             };
 
             _unitOfWork.StoryInvite.Add(recObj);
             _unitOfWork.save();
             SendEmail(mailTo, userEmailOptions);
-
-            //}
-
-
 
         }
 

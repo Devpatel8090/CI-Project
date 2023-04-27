@@ -1,4 +1,5 @@
 ﻿
+
 let addToFavourite = document.getElementsByClassName("addToFavdiv");
 
 for (var i = 0; i < addToFavourite.length; i++) {
@@ -18,6 +19,7 @@ function addToFavouritefun() {
     $.ajax({
         url: url,
         success: function (data) {
+           
             window.location.reload();
         },
         error: function (error) {
@@ -48,6 +50,7 @@ function recomendtoyourfriend() {
     $.ajax({
         url: url,
         success: function (data) {
+            toastr.success("Email Sent Successfully");
             window.location.reload();
         },
         error: function (error) {

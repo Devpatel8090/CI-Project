@@ -52,6 +52,7 @@ function recomendtoyourfriend() {
     $.ajax({
         url: url,
         success: function (data) {
+            toastr.success("Email Sent Successfully");
             window.location.reload();
         },
         error: function (error) {

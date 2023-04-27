@@ -937,31 +937,23 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
 
 
    <script>
-        function openNav() {
+        function openNav() 
+        {
             document.getElementById("mySidebar").style.width = "250px";
             document.getElementById("main").style.marginLeft = "250px";
             document.getElementById("openbtn").style.display = "none";
-
         }
 
-        function gridView() {
-               document.getElementById("grid__view__container").classList.remove("hide");
+        function gridView()
+        {
+            document.getElementById("grid__view__container").classList.remove("hide");
             document.getElementById("list__view__container").classList.add("hide");
-          
-
         }
-        
-     
-
-        function listView() {
-          
-            document.getElementById("list__view__container").classList.remove("hide");
-           
+        function listView()
+        {  
+             document.getElementById("list__view__container").classList.remove("hide");        
              document.getElementById("grid__view__container").classList.add("hide");
-
         }
-
-     
 
         function closeNav() {
             document.getElementById("mySidebar").style.width = "0";
@@ -969,8 +961,7 @@ Layout = "~/Views/Shared/_HomeLayout.cshtml";
             document.getElementById("openbtn").style.display = "block";
         }
 
-      
-         
-
     </script>
-     <script src="~/js/VolunteeringPage.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/VolunteeringPage.js"></script>
+  

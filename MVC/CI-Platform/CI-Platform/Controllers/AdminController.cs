@@ -33,41 +33,44 @@ namespace CI_Platform.Controllers
               adminDetails.missionApplication = _unitOfWork.MissionApplication.GetMissionApplications();*//*
              return View(adminDetails);
          }*/
-/*
-        public IActionResult AdminLoginPage()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult AdminLoginPage(Admin obj)
-        {
-            var userDetails = _unitOfWork.Admin.GetFirstOrDefault(e => e.Email == obj.Email);
-            if (ModelState.IsValid)
-            {
-                if (userDetails == null)
+        /*
+                public IActionResult AdminLoginPage()
                 {
-                    TempData["error"] = "User is not Registered";
+                    return View();
                 }
-
-                if (userDetails.Password == obj.Password)
+                [HttpPost]
+                public IActionResult AdminLoginPage(Admin obj)
                 {
-                    TempData["success"] = "Login As Admin Successfully";
-                    return RedirectToAction("AdminLandingPage", "Admin");
-                }
-                else
-                {
-                    TempData["error"] = "opps! Password is wrong";
-                    return View(obj);
-                }
-            }
-            else
-            {
-                TempData["error"] = "Please Enter proper Details";
-                return View(obj);
-            }
+                    var userDetails = _unitOfWork.Admin.GetFirstOrDefault(e => e.Email == obj.Email);
+                    if (ModelState.IsValid)
+                    {
+                        if (userDetails == null)
+                        {
+                            TempData["error"] = "User is not Registered";
+                        }
 
-        }*/
+                        if (userDetails.Password == obj.Password)
+                        {
+                            TempData["success"] = "Login As Admin Successfully";
+                            return RedirectToAction("AdminLandingPage", "Admin");
+                        }
+                        else
+                        {
+                            TempData["error"] = "opps! Password is wrong";
+                            return View(obj);
+                        }
+                    }
+                    else
+                    {
+                        TempData["error"] = "Please Enter proper Details";
+                        return View(obj);
+                    }
 
+                }*/
+        /// <summary>
+        /// Getting UserAdmin Tab admin after clicking on UserAdmin tab in left side sidebar 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult UserAdminTab()
         {
             AdminVM model = new AdminVM();
@@ -90,7 +93,10 @@ namespace CI_Platform.Controllers
             }
             
         }
-
+        /// <summary>
+        /// Getting CMSPageAdmin Tab admin after clicking on CMSPageAdmin tab in left side sidebar
+        /// </summary>
+        /// <returns></returns>
         public IActionResult CMSPageAdminTab()
         {
             var model = new AdminVM();
@@ -113,7 +119,10 @@ namespace CI_Platform.Controllers
             }
           
         }
-
+        /// <summary>
+        /// Getting MissionAdmin Tab admin after clicking on MissionAdmin tab in left side sidebar
+        /// </summary>
+        /// <returns></returns>
         public IActionResult MissionAdminTab()
         {
             AdminVM model = new AdminVM();
@@ -136,7 +145,10 @@ namespace CI_Platform.Controllers
             }
             
         }
-
+        /// <summary>
+        /// Getting MissionThemeAdmin Tab admin after clicking on MissionThemeAdmin tab in left side sidebar
+        /// </summary>
+        /// <returns></returns>
         public IActionResult MissionThemeAdminTab()
         {
             AdminVM model = new AdminVM();
@@ -159,6 +171,10 @@ namespace CI_Platform.Controllers
             }
            
         }
+        /// <summary>
+        /// Getting MissionSkills Tab admin after clicking on MissionSkills tab in left side sidebar
+        /// </summary>
+        /// <returns></returns>
         public IActionResult MissionSkillsAdminTab()
         {
             AdminVM model = new AdminVM();
@@ -180,7 +196,10 @@ namespace CI_Platform.Controllers
                 return View(model);
             }
         }
-
+        /// <summary>
+        /// Getting MissionApplication Tab admin after clicking on MissionApplication tab in left side sidebar 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult MissionApplicationAdminTab()
         {
             AdminVM model = new AdminVM();
@@ -202,7 +221,10 @@ namespace CI_Platform.Controllers
                 return View(model);
             }
         }
-
+        /// <summary>
+        /// Getting StoryAdmin Tab admin after clicking on StoryAdmin tab  in left side sidebar
+        /// </summary>
+        /// <returns></returns>
         public IActionResult StoryAdminTab()
         {
             AdminVM model = new AdminVM();
@@ -225,6 +247,10 @@ namespace CI_Platform.Controllers
             }
         }
 
+        /// <summary>
+        /// Getting BannerManagement Tab admin after clicking on BannerManagement tab in left side sidebar
+        /// </summary>
+        /// <returns></returns>
         public IActionResult BannerManagementAdminTab()
         {
             AdminVM model = new AdminVM();
@@ -245,7 +271,10 @@ namespace CI_Platform.Controllers
                 return View(model);
             }
         }
-
+        /// <summary>
+        /// Getting Timesheet Tab admin after clicking on Timesheet tab  in left side sidebar
+        /// </summary>
+        /// <returns></returns>
         public IActionResult TimesheetAdminTab()
         {
             AdminVM model = new AdminVM();
@@ -269,7 +298,10 @@ namespace CI_Platform.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Getting Comment Tab admin after clicking on comment tab in left side sidebar
+        /// </summary>
+        /// <returns></returns>
         public IActionResult AdminCommentTab()
         {
             AdminVM model = new AdminVM();
@@ -358,7 +390,7 @@ namespace CI_Platform.Controllers
             return RedirectToAction("UserAdminTab");
         }
 
-
+        
         public IActionResult Approve(long missionAppId = 0, long skillId = 0, long missionThemeId = 0,long storyId = 0, long bannerId = 0,long commentId=0,long timesheetId=0)
         {
             if (missionAppId != 0)
@@ -481,35 +513,58 @@ namespace CI_Platform.Controllers
             }
             return RedirectToAction("UserAdminTab");
         }
-
+        /// <summary>
+        /// Add skill in skill table by callling ajax call  
+        /// </summary>
+        /// <param name="skillName"></param>
         public void AddSkill(string skillName)
         {
-            var skill = new Skill();
-            skill.SkillName = skillName;
-
-            _unitOfWork.Skill.Add(skill);
-            _unitOfWork.save();
-
-
+            var Allskills = _unitOfWork.Skill.GetAll();
+            if(Allskills.Any(skill => skill.SkillName.ToLower() == skillName.ToLower()))
+            {
+                TempData["error"] = "Skill Already Exists!";
+            }
+            else
+            {
+                var skill = new Skill();
+                skill.SkillName = skillName;
+                _unitOfWork.Skill.Add(skill);
+                _unitOfWork.save();
+            }
         }
-
+        /// <summary>
+        /// Adding theme in theme table by calling ajax call 
+        /// </summary>
+        /// <param name="MissionThemeName"></param>
         public void AddMissionThemeName(string MissionThemeName)
         {
-            var missionTheme = new MissionTheme();
-            missionTheme.Title = MissionThemeName;
-
-            _unitOfWork.Theme.Add(missionTheme);
-            _unitOfWork.save();
-
-
-
+            var AllThemes = _unitOfWork.Theme.GetAll();
+            if (AllThemes.Any(theme => theme.Title.ToLower() == MissionThemeName.ToLower()))
+            {
+                TempData["error"] = "Theme Already Exists!";
+            }
+            else
+            {
+                var missionTheme = new MissionTheme();
+                missionTheme.Title = MissionThemeName;
+                _unitOfWork.Theme.Add(missionTheme);
+                _unitOfWork.save();
+            }
+          
         }
-
+        /// <summary>
+        /// Getting Partial View of Add Cms page after clicking add cms page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult AddCMSPage()
         {
             return PartialView("_CMSPageAddAndEdit");
         }
-
+        /// <summary>
+        /// Getting Partial View of edit Cms page after clicking edit cms page
+        /// </summary>
+        /// <param name="cmspageID"></param>
+        /// <returns></returns>
         public IActionResult EditCMSPage(long cmspageID)
         {
             AdminVM admin = new AdminVM();
@@ -542,7 +597,10 @@ namespace CI_Platform.Controllers
             return RedirectToAction("CMSPageAdminTab", "Admin");
         }
 
-
+        /// <summary>
+        /// Getting AddUserPage Partial view after cliking Add button
+        /// </summary>
+        /// <returns></returns>
         public IActionResult AddUser()
         {
             AdminVM adduser = new AdminVM();
@@ -560,6 +618,11 @@ namespace CI_Platform.Controllers
             return PartialView("_UserAddAndEdit", adduser);
         }
 
+        /// <summary>
+        /// Add User Post Method of Admin Panel
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
 
         [HttpPost]
         public IActionResult AddUser(AdminVM model)
@@ -602,6 +665,11 @@ namespace CI_Platform.Controllers
             return RedirectToAction("UserAdminTab", "Admin");
         }
 
+        /// <summary>
+        /// Getting Edit User Partial view Page By clicking Edit button
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
         public IActionResult EditUser(long UserId)
         {
             
@@ -624,6 +692,10 @@ namespace CI_Platform.Controllers
             return PartialView("_UserAddAndEdit", user);
         }
 
+        /// <summary>
+        /// Getting Add mission Partial view Page By clicking ADD button
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult AddMission()
         {
@@ -648,11 +720,13 @@ namespace CI_Platform.Controllers
             return PartialView("_MissionPageAddAndEdit", mission);
         }
 
-
+        /// <summary>
+        /// Edit mission by Admin By clicking edit button
+        /// </summary>
+        /// <param name="MissionId"></param>
+        /// <returns></returns>
         public IActionResult EditMission(long MissionId)
         {
-            
-
             AdminVM mission = new AdminVM();
             mission.particularMission = _unitOfWork.Mission.GetMissionByMissionId(MissionId);
             mission.skills = _unitOfWork.Skill.GetAll();
@@ -679,7 +753,15 @@ namespace CI_Platform.Controllers
 
 
 
-
+        /// <summary>
+        /// Post method for Adding Mission by Admin
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="skills"></param>
+        /// <param name="videourls"></param>
+        /// <param name="files"></param>
+        /// <param name="documents"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult AddMission(AdminVM model, List<int> skills, string videourls, List<IFormFile> files, List<IFormFile> documents)
         {
@@ -824,8 +906,6 @@ namespace CI_Platform.Controllers
             }
             if (model.particularMission.MissionId != 0)
             {
-                
-                
                 var alreadyMission = _unitOfWork.Mission.GetMissionByMissionId(model.particularMission.MissionId);
                 alreadyMission.ThemeId = model.particularMission.ThemeId;
                 alreadyMission.CityId = model.particularMission.CityId;
@@ -843,8 +923,7 @@ namespace CI_Platform.Controllers
                 alreadyMission.OrganizationDetails = model.particularMission.OrganizationDetails;
                 alreadyMission.Availability = model.particularMission.Availability;
                 alreadyMission.UpdatedAt = DateTime.Now;
-
-                
+ 
                 if(model.particularMission.MissionType =="GOAL")
                 {
                     var goalmission = _unitOfWork.GoalMission.GetFirstOrDefault(mission => mission.MissionId == model.particularMission.MissionId);
@@ -883,10 +962,21 @@ namespace CI_Platform.Controllers
             return RedirectToAction("MissionAdminTab", "Admin");
         }
 
+        /// <summary>
+        /// getting partial view of add banner design by clicking add banner button
+        /// </summary>
+        /// <returns></returns>
         public IActionResult AddBanner()
         {
             return PartialView("_BannerManagementAddAndEdit");
         }
+
+
+        /// <summary>
+        /// getting partial view of Edit banner design by clicking Edit banner button
+        /// </summary>
+        /// <param name="BannerId"></param>
+        /// <returns></returns>
         public IActionResult EditBanner(long BannerId)
         {
             AdminVM model = new AdminVM();
@@ -895,7 +985,12 @@ namespace CI_Platform.Controllers
             return PartialView("_BannerManagementAddAndEdit",model);
         }
 
-
+        /// <summary>
+        /// Post request for Adding  Banner By Admin and saves photo in local BannerImages folder
+        /// </summary>
+        /// <param name="banner"></param>
+        /// <param name="files"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult AddBanner(AdminVM banner,IFormFile files)
         {
@@ -932,28 +1027,24 @@ namespace CI_Platform.Controllers
                         bannerdetail.UpdatedAt = DateTime.Now;
                         _unitOfWork.Banner.Update(bannerdetail);
                 }
-               
-                _unitOfWork.save();
-                
+                _unitOfWork.save();  
             }
 
             return RedirectToAction("BannerManagementAdminTab", "Admin");
         }
 
-
+        /// <summary>
+        /// getting ViewStory partial view by story id 
+        /// </summary>
+        /// <param name="StoryId"></param>
+        /// <returns></returns>
         public IActionResult ViewStoryAdmin(long StoryId)
         {
-            /* return PartialView("_")*/
             var storyDetail = _unitOfWork.Story.getStoryById(StoryId);
-
             AdminVM story = new AdminVM();
             story.particularStory = storyDetail;
-            return PartialView("_StoryViewAdminPage", story);
-       
+            return PartialView("_StoryViewAdminPage", story);       
         }
-
-      
-       
 
     }
 }

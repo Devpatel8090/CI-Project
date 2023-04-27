@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "hO6YhTu2Dz6xnFkqIT3tTvgs+c7zgvMG3BuPmry8IGE=",
+  "Hash": "FAjqI2VcWmv+2ByMBXU1YfWsGHrcHpuVxeDxHfNULJk=",
   "Source": "CI-Platform",
   "BasePath": "_content/CI-Platform",
   "Mode": "Default",
@@ -66,6 +66,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\addMyStroy.css"
+    },
+    {
+      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\css\\Carousel.css",
+      "SourceId": "CI-Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\",
+      "BasePath": "_content/CI-Platform",
+      "RelativePath": "css/Carousel.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Carousel.css"
     },
     {
       "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\css\\datatables.css",
@@ -1955,12 +1972,12 @@
       "OriginalItemSpec": "wwwroot\\images\\MissionImages\\MissionMedia -25042023532854.png"
     },
     {
-      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\images\\MissionImages\\MissionMedia -26042023463023.png",
+      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\images\\MissionImages\\MissionMedia -27042023824455.png",
       "SourceId": "CI-Platform",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\",
       "BasePath": "_content/CI-Platform",
-      "RelativePath": "images/MissionImages/MissionMedia -26042023463023.png",
+      "RelativePath": "images/MissionImages/MissionMedia -27042023824455.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1969,15 +1986,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\MissionImages\\MissionMedia -26042023463023.png"
+      "OriginalItemSpec": "wwwroot\\images\\MissionImages\\MissionMedia -27042023824455.png"
     },
     {
-      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\images\\MissionImages\\MissionMedia -26042023617149.png",
+      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\images\\MissionImages\\MissionMedia -27042023832313.png",
       "SourceId": "CI-Platform",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\",
       "BasePath": "_content/CI-Platform",
-      "RelativePath": "images/MissionImages/MissionMedia -26042023617149.png",
+      "RelativePath": "images/MissionImages/MissionMedia -27042023832313.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1986,15 +2003,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\MissionImages\\MissionMedia -26042023617149.png"
+      "OriginalItemSpec": "wwwroot\\images\\MissionImages\\MissionMedia -27042023832313.png"
     },
     {
-      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\images\\MissionImages\\MissionMedia -26042023740114.png",
+      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\images\\MissionImages\\MissionMedia -27042023840918.png",
       "SourceId": "CI-Platform",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\",
       "BasePath": "_content/CI-Platform",
-      "RelativePath": "images/MissionImages/MissionMedia -26042023740114.png",
+      "RelativePath": "images/MissionImages/MissionMedia -27042023840918.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -2003,15 +2020,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\MissionImages\\MissionMedia -26042023740114.png"
+      "OriginalItemSpec": "wwwroot\\images\\MissionImages\\MissionMedia -27042023840918.png"
     },
     {
-      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\images\\MissionImages\\MissionMedia -26042023900265.png",
+      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\images\\MissionImages\\MissionMedia -27042023843915.png",
       "SourceId": "CI-Platform",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\",
       "BasePath": "_content/CI-Platform",
-      "RelativePath": "images/MissionImages/MissionMedia -26042023900265.png",
+      "RelativePath": "images/MissionImages/MissionMedia -27042023843915.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -2020,7 +2037,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\MissionImages\\MissionMedia -26042023900265.png"
+      "OriginalItemSpec": "wwwroot\\images\\MissionImages\\MissionMedia -27042023843915.png"
     },
     {
       "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\images\\my-story.png",
@@ -3177,6 +3194,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\user1.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\images\\UserAvtarImages\\user1.png",
+      "SourceId": "CI-Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\",
+      "BasePath": "_content/CI-Platform",
+      "RelativePath": "images/UserAvtarImages/user1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\UserAvtarImages\\user1.png"
     },
     {
       "Identity": "C:\\Users\\pca39\\Desktop\\CI platform\\MVC\\CI-Platform\\CI-Platform\\wwwroot\\images\\UserAvtarImages\\volunteer1.png",

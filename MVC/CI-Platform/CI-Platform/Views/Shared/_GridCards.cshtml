@@ -117,7 +117,7 @@
                                                    @* var mission = @Model.Mission.Where( e=> e.MissionId ==  )*@
                                                     <div class="d-flex flex-row justify-content-between mt-1">
                                                         <div class="d-flex flex-row gap-2">
-                                                            <img src="~/images/volunteer1.png" class="rounded-circle" width="30px" height="30px" />
+                                                          <img src="@recuser.Avatar" class="rounded-circle" width="30" height="30" />    
                                                             <span>@recuser.FirstName  @recuser.LastName</span>
                                                         </div>
                                                         <div>
@@ -302,19 +302,19 @@
                             <div >
                                 <nav aria-label="Page navigation example" id="Pagination">
                                     <ul class="pagination d-flex justify-content-center mt-3">
-                                        <li class="page-item">
-                                            <a class="page-link curser-pointer" aria-label="Previous" onclick = "PrevPointer()">
+                                        <li class="page-item ">
+                                            <a class="page-link orange_color curser-pointer" aria-label="Previous" onclick = "PrevPointer()">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
                                         @for (var i = 0; i <= (Model.totalMissions / 9); i++)
                                         {
-                                            <li class="page-item"><a class="page-link pagination curser-pointer" onclick = "AddPagination()">@(i+1)</a></li>
+                                            <li class="page-item"><a class="page-link orange_color pagination curser-pointer" onclick = "AddPagination()">@(i+1)</a></li>
                                         }
             
 
                                         <li class="page-item">
-                                            <a class="page-link curser-pointer" aria-label="Next" onclick = "NextPointer()">
+                                            <a class="page-link orange_color curser-pointer" aria-label="Next" onclick = "NextPointer()">
                                             <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>
