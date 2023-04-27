@@ -17,7 +17,7 @@
           <div class="carousel-inner">
         @{
             
-            foreach(var item in banners)
+            foreach(var item in banners.OrderBy(ban => ban.SortOrder))
             {
                 @if(item.Equals(banners.ElementAt(0)))
                 {

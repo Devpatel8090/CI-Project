@@ -10,14 +10,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="~/css/datatables.css" >
-    <link rel="stylesheet" href="~/css/datatables.min.css" >
+    
      <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
      <link rel ="stylesheet" href="~/css/addMyStroy.css" />
      <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-    <style>
+    <link rel="stylesheet" href="~/DataTable/css/jquery.dataTables.min.css" >
+    <link rel="stylesheet" href="~/DataTable/css/responsive.dataTables.min.css" >
+     
+     <style>
             .nav-pills .nav-link.active, .nav-pills .show>.nav-link{ 
                 background-color: #FFFFFF ; 
                 color: #F88634;
@@ -56,44 +58,44 @@
             <span class="text-white ms-4 mt-5 pt-5  mb-2">Navigation</span>
             <a class="nav-link text-start activeBtn ms-2 me-2 mb-2" id="UserTab" asp-controller="Admin" asp-action="UserAdminTab" type="button" role="tab" aria-controls="v-pills-home" >
               <i class="bi bi-person ms-2"></i>   
-              User
+              <span class="d-md-inline d-none">User</span>
             </a>
             <a class="nav-link mb-2 text-start  ms-2 me-2" id="CMSPageTab" asp-controller="Admin" asp-action="CMSPageAdminTab" type="button" role="tab" aria-controls="v-pills-profile" >
-              <i class="bi bi-file-earmark-text"></i>
-              CMS Page
+              <i class="bi bi-file-earmark-text"></i>   
+              <span class="d-md-inline d-none">CMS Page</span>
             </a>
             <a class="nav-link mb-2 text-start ms-2 me-2" id="MissionTab" asp-controller="Admin" asp-action="MissionAdminTab" type="button" role="tab" aria-controls="v-pills-messages" >
-              <i class="bi bi-bullseye"></i>
-              Mission
+              <i class="bi bi-bullseye"></i> 
+              <span class="d-md-inline d-none">Mission</span>
             </a>
             <a class="nav-link mb-2 text-start ms-2 me-2" id="MissionThemeTab" asp-controller="Admin" asp-action="MissionThemeAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
-              <i class="bi bi-grid-1x2"></i>
-              Mission Theme
+              <i class="bi bi-grid-1x2"></i> 
+              <span class="d-md-inline d-none">Mission Theme</span>
             </a>
               
             <a class="nav-link mb-2 text-start ms-2 me-2" id="MissionSkillsTab" asp-controller="Admin" asp-action="MissionSkillsAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
-                <i class="bi bi-tools"></i>
-                Mission Skills                                                                                                                                                                                                    
+                <i class="bi bi-tools"></i> 
+                <span class="d-md-inline d-none">Mission Skills </span>
             </a>                                                                                                                                                                                                           
             <a class="nav-link mb-2 text-start ms-2 me-2" id="MissionApplicationTab" asp-controller="Admin" asp-action="MissionApplicationAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
-              <i class="bi bi-folder2"></i>
-              Mission Application
+              <i class="bi bi-folder2"></i>              
+              <span class="d-md-inline d-none">Mission Application</span>
             </a>
             <a class="nav-link mb-2 text-start ms-2 me-2" id="StoryTab" asp-controller="Admin" asp-action="StoryAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
-              <i class="bi bi-journal-medical"></i>
-              Story
+              <i class="bi bi-journal-medical"></i>              
+              <span class="d-md-inline d-none">Story</span>
             </a>
             <a class="nav-link mb-2 text-start ms-2 me-2" id="BannerManagementTab" asp-controller="Admin" asp-action="BannerManagementAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
-              <i class="bi bi-emoji-wink"></i>
-              Banner Management
+              <i class="bi bi-emoji-wink"></i>              
+              <span class="d-md-inline d-none">Banner Management</span>
             </a>
             <a class="nav-link mb-2 text-start ms-2 me-2" id="TimesheetTab" asp-controller="Admin" asp-action="TimesheetAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
-              <i class="bi bi-list-task"></i>
-              Timesheets
+              <i class="bi bi-list-task"></i>              
+              <span class="d-md-inline d-none">Timesheets</span>
             </a>
             <a class="nav-link mb-2 text-start ms-2 me-2" id="CommentsTab" asp-controller="Admin" asp-action="AdminCommentTab" type="button" role="tab" aria-controls="v-pills-settings" >
-              <i class="bi bi-receipt-cutoff"></i>
-              Comments
+              <i class="bi bi-receipt-cutoff"></i>              
+              <span class="d-md-inline d-none">Comments</span>
             </a>
           
         </div>
@@ -137,8 +139,9 @@
         
           <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
-      <script src="~/js/datatables.js"></script>
-      <script src="~/js/datatables.min.js"></script>
+      
+      <script src="~/DataTable/js/jquery.dataTables.min.js"></script>
+      <script src="~/DataTable/js/dataTables.responsive.min.js"></script>
      
       
       <script>
@@ -148,6 +151,7 @@
             lengthChange:false,
             dom: '<"float-start"f><".DataTablesId"t>i<"#paginatorId"lp>',
             pageLength:15,
+            responsive: true,
            language: {
                     searchPlaceholder: "Search Records"
                 },

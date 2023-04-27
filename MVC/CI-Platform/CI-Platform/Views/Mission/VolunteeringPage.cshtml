@@ -40,11 +40,11 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
 
 
-        <a href="#">
-            <a class="nav-link" href="#" role="button" aria-expanded="false">
+        <div >
+            <a class="nav-link" href="/Story/StoryListingPage" role="button" aria-expanded="false">
                 Stories
             </a>
-        </a>
+        </div>
 
         <div >
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -286,6 +286,7 @@
                         <div class="d-flex flex-row gap-1 gap-sm-3 align-items-center justify-content-center col-auto">
                             <img src="~/images/Seats-left.png" width="30px" height="30px">
                             <div class="d-flex flex-column ">
+                                
                                 <h5 class="mb-0">
                                     @{
                                         var totalseats = @Model.particularMission.TotalSeats;
@@ -428,25 +429,35 @@
                          <div class="mt-2   text-center  " id="applyToMissionText">
                
 
-                     @{
-                                        var appliedusercount = @Model.missionApplications.FirstOrDefault(e => e.UserId == @Model.user.UserId && e.MissionId == Model.particularMission.MissionId  && e.ApprovalStatus != "DECLINE");
-                                        if(appliedusercount != null)
+                            @{
+                                var appliedusercount = @Model.missionApplications.FirstOrDefault(e => e.UserId == @Model.user.UserId && e.MissionId == Model.particularMission.MissionId  && e.ApprovalStatus != "DECLINE");
+                                var today = DateTime.Now;
+                                var Deadline = @Model.particularMission.Deadline;
+
+                                if(today > Deadline)
+                                {
+                                    <a  class="btn rounded-pill text-center border-1 border-danger text-danger btn_no py-3 px-5   apply__text__list">Closed</a>
+                                }
+                                else 
+                                {
+                                    if (appliedusercount != null)
+                                    {
+                                        if (appliedusercount.ApprovalStatus == "PENDING")
                                         {
-                                            if(appliedusercount.ApprovalStatus == "PENDING")
-                                            {
-                                               <a  class="btn rounded-pill text-center border-1 border-info text-info btn_no py-3 px-5   apply__text__list">Pending
-                                                                 </a>
-                                            }
-                                            else{
-                                                <a class="btn rounded-pill text-center border-1 border-success text-success btn_no py-3 px-5   apply__text__list" asp-controller="Mission" asp-action="VolunteeringPage" >Already Applied </a>
-                                            }
-                                            
+                                            <a  class="btn rounded-pill text-center border-1 border-info text-info btn_no py-3 px-5   apply__text__list">Pending
+                                            </a>
                                         }
-                                        else
-                                        {
-                                             <a href="#" class="btn rounded-pill text-center btn_no py-3 px-5 apply__text__list" id="ApplyTomission" value="@Model.particularMission.MissionId @Model.user.UserId">ApplyNow<img src="~/images/right-arrow.png" class="ms-4" style="pointer-events:none"></a>
+                                        else {
+                                            <a class="btn rounded-pill text-center border-1 border-success text-success btn_no py-3 px-5   apply__text__list" asp-controller="Mission" asp-action="VolunteeringPage" >Already Applied </a>
                                         }
+
                                     }
+                                    else
+                                    {
+                                        <a href="#" class="btn rounded-pill text-center btn_no py-3 px-5 apply__text__list" id="ApplyTomission" value="@Model.particularMission.MissionId @Model.user.UserId">ApplyNow<img src="~/images/right-arrow.png" class="ms-4" style="pointer-events:none"></a>
+                                    }
+                                }
+                            }
                      </div> 
                     </div>
 

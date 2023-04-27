@@ -145,7 +145,16 @@
                             <div class="col mt-2 ml-0 apply__button__list     ">
                                    @{
                                         var userappliedOrNot = @Model.missionApplications.FirstOrDefault(e => e.UserId == @Model.user.UserId && e.MissionId == item.MissionId  && e.ApprovalStatus != "DECLINE");
-                                        if(userappliedOrNot != null)
+                                       
+                                        var EndDateforcloseList = @item.Deadline;
+                                        var TodayList = DateTime.Now;
+                                        if(TodayList > EndDateforcloseList)
+                                        {
+                                        <a class="btn rounded-pill text-center border-1 border-danger text-danger btn_no apply__text__list" asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId">Closed <i class="bi bi-arrow-right text-danger"></i></a>
+                                    }
+                                    else
+                                    {
+                                    if(userappliedOrNot != null)
                                         {
                                             if(userappliedOrNot.ApprovalStatus == "PENDING")
                                             {
@@ -160,6 +169,7 @@
                                         {
                                             <a class="btn rounded-pill   text-center apply__text " asp-controller="Mission" asp-action="VolunteeringPage" asp-route-id="@item.MissionId" >Apply <img src="~/images/right-arrow.png" class="ms-2"></a>
                                         }
+                                   }
                                 }
                             </div>
                             <div class="col">

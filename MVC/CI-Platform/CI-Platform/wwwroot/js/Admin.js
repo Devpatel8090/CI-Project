@@ -2,11 +2,13 @@
 let uploadBtn = document.getElementById("UploadFiles");
 let chosenImage = document.getElementById("ImageChooseFile");
 var files = [];
+let imagecount = 0;
 let missionfiles = [];
 let documentfiles = [];
 
 function chooseImageBanner() {
     $('#UploadFiles').click();
+    imagecount = 1;
 }
 
 
@@ -129,6 +131,8 @@ $('.EditUserButton').on('click', function (event) {
         success: function (data) {
             console.log(data);
             $('#UserTabAdd').html(data);
+            
+            
         },
         error: function (error) {
             console.log(error);
@@ -254,6 +258,7 @@ $('.bannerEditButton').on('click', function (event) {
                 console.log(files);
             }
             $('#ImageChooseFile').attr('src', image);
+            imagecount = 1;
         },
         error: function (error) {
             console.log(error);
@@ -524,7 +529,7 @@ function isValidBannerAdmin() {
         $('#BannerSortOrderValidation').text("Please Enter SortValue and Accept only Number");
         flag = 0;
     }
-    if (files == 0) {
+    if (imagecount == 0) {
         $('#BannerImagesValidaion').text("Please Add Image");
         flag = 0;
     }
