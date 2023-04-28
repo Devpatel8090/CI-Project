@@ -156,7 +156,7 @@
                     {
                         if(Model.particularMission.MissionMedia.Any(img => img.MediaType != "URL"))
                         {
-                            <img src="@Model.particularMission.MissionMedia.First(img => img.MediaType != "URL").MediaPath" class="w-100"
+                            <img src="@Model.particularMission.MissionMedia.First(img => img.MediaType != "URL").MediaPath" class="w-100" height="500"
                             id="main-img" />
                         }
 
@@ -370,32 +370,44 @@
                     <br>
                     <hr class="">
                     <!-- <div class="text-center"> -->
-                    <div
-                        class="d-flex  align-items-center justify-content-center  text-center w-25 mx-auto  flex-row star__images" data-bs-toggle="modal" data-bs-target="#RatingModal" >
-                        @{
-                            var Rating = Model.particularMission.MissionRatings.FirstOrDefault(m => m.UserId == Model.user.UserId);
-                            if (Rating != null)
-                            {
-                                var rating = Rating.Rating;
-                                for (var i = 0; i < rating; i++)
+                    @if (Model.particularMission.MissionApplications.FirstOrDefault(applicant => applicant.ApprovalStatus == "APPROVED" && applicant.UserId == Model.user.UserId) != null)
+                    {
+                        <div class="d-flex  align-items-center justify-content-center  text-center w-25 mx-auto  flex-row star__images" data-bs-toggle="modal" data-bs-target="#RatingModal" >
+                            @{
+                                var Rating = Model.particularMission.MissionRatings.FirstOrDefault(m => m.UserId == Model.user.UserId);
+                                if (Rating != null)
                                 {
-                                    <img src="~/images/selected-star.png" width="26px" height="26px" alt="" />
+                                    var rating = Rating.Rating;
+                                    for (var i = 0; i < rating; i++)
+                                    {
+                                        <img src="~/images/selected-star.png" width="26px" height="26px" alt="" />
+                                    }
+                                    for (var i = rating; i < 5; i++)
+                                    {
+                                        <img src="/images/star-empty.png"    alt="" />
+                                    }
                                 }
-                                for (var i = rating; i < 5; i++)
+                                else
                                 {
-                                    <img src="/images/star-empty.png"    alt="" />
+                                    for (var i = 0; i < 5; i++)
+                                    {
+                                        <img src="/images/star-empty.png"    alt="" />
+                                    }
                                 }
                             }
-                            else
-                            {
-                                for (var i = 0; i < 5; i++)
-                                {
-                                    <img src="/images/star-empty.png"    alt="" />
-                                }
-                            }
-                        }
 
-                    </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex  align-items-center justify-content-center  text-center w-25 mx-auto  flex-row star__images">
+                             @for (var j = 0; j < 5; j++)
+                                    {
+                                        <img src="/images/star-empty.png"    alt="" />
+                                    }
+                        </div>
+                        
+                    }
                     <!-- </div> -->
                     <div class="row align-items-center justify-content-center gap-2 mt-4 ">
                         <div class="col d-flex flex-column align-items-start border justify-content-start p-2">
@@ -595,8 +607,17 @@
 
                         <div class="d-flex align-items-center justify-content-start mt-2">
                             <div class="mt-2  w-75  ">
-                                <button  class="btn rounded-pill text-center btn_no py-2 px-3 apply__text__list" onclick="postcommentfunction()" value="@Model.particularMission.MissionId @Model.user.UserId">Post
-                                    Comment<img src="~/images/right-arrow.png" style="pointer-events:none" class="ms-2"></button>
+                                @if(Model.particularMission.MissionApplications.FirstOrDefault(missionapp => missionapp.UserId == @Model.user.UserId && missionapp.ApprovalStatus == "APPROVED") != null)
+                                {
+                                    <button  disable class="btn rounded-pill text-center btn_no py-2 px-3 apply__text__list" onclick="postcommentfunction()" value="@Model.particularMission.MissionId @Model.user.UserId">Post
+                                        Comment<img src="~/images/right-arrow.png" style="pointer-events:none" class="ms-2"></button>
+                                }
+                                else
+                                {
+                                    <button  class="btn rounded-pill text-center btn_no py-2 px-3 apply__text__list opacity-25 " >Post
+                                        Comment<img src="~/images/right-arrow.png" style="pointer-events:none" class="ms-2"></button>
+                                }
+
 
                             </div>
                         </div>
@@ -704,7 +725,7 @@
 
                         <div class="row row-cols-3 ">
                           
-                        @{   @foreach (var item in Model.RecentVolunteers.Where(volunteer => volunteer.ApprovalStatus == "APPROVED"))
+                        @{   @foreach (var item in Model.RecentVolunteers.Where(volunteer => volunteer.ApprovalStatus == "APPROVED" && volunteer.UserId != Model.user.UserId))
                              {
                                     <div class="col d-flex flex-column align-items-center justify-content-center recent-vol">
                                 <img src="@item.User.Avatar" class="rounded-circle " height="50" width="50" />
@@ -718,7 +739,9 @@
 
                         </div>
 
-                        <div>
+                        @if(Model.RecentVolunteers.Where(volunteer => volunteer.ApprovalStatus == "APPROVED" && volunteer.UserId != Model.user.UserId).FirstOrDefault() != null)
+                        {
+                              <div>
                             <nav aria-label="Page navigation example">
                                     <ul class="pagination justify-content-between border border-3" style="margin : 0px; align-items : center;">
                                         <li class="page-item disabled">
@@ -732,6 +755,9 @@
                                     </ul>
                                 </nav>
                         </div>
+                            
+                        }
+                      
                     </div>
                 </div>
             </div>

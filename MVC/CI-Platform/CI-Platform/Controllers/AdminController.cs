@@ -950,12 +950,15 @@ namespace CI_Platform.Controllers
             }
             else
             {
-                GoalMission goalmission = new GoalMission
+                if(model.particularMission.MissionType == "GOAL")
                 {
-                    GoalObjectiveText = model.GoalMission.GoalObjectiveText,
-                    GoalValue = model.GoalMission.GoalValue
-                };
-                model.particularMission.GoalMissions.Add(goalmission);
+                    GoalMission goalmission = new GoalMission
+                    {
+                        GoalObjectiveText = model.GoalMission.GoalObjectiveText,
+                        GoalValue = model.GoalMission.GoalValue
+                    };
+                    model.particularMission.GoalMissions.Add(goalmission);
+                }
                 _unitOfWork.Mission.Add(model.particularMission);
             }
             _unitOfWork.save();

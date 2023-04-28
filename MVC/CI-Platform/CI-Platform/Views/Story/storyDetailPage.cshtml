@@ -46,7 +46,7 @@
             {
                 if (Model.storyById.StoryMedia.Any(img => img.Type != "URL"))
                 {
-                    <img src="@Model.storyById.StoryMedia.First(img => img.Type != "URL").Path" class="w-100"
+                    <img src="@Model.storyById.StoryMedia.First(img => img.Type != "URL").Path" class="w-100" height="500"
                  id="main-img" />
                 }
 

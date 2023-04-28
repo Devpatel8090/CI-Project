@@ -25,7 +25,7 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
                     @{
                         
                         {
-                            foreach (var item in @Model.LogingUserMissions)
+                            foreach (var item in @Model.LogingUserMissions.Where(mission => mission.ApprovalStatus == "APPROVED"))
                             {
                                 <option value="@item.Mission.MissionId" class="MissionIdFromTitle"  > @item.Mission.Title</option>
                             }
