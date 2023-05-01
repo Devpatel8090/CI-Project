@@ -62,12 +62,12 @@ namespace CI_Platform.Controllers
         public IActionResult login(User user,string? InviteURL)
         {
             //var userDetails = _db.Users.FirstOrDefault(e => e.Email == user.Email);
-            var userDetails = _unitOfWork.User.GetUserDetails().Where(e => e.Email == user.Email).FirstOrDefault();
-            var password = user.Password;
-            var encryptedPassword = _utility.Encodepass(password);
+            
             if (ModelState.IsValid)
             {
-               
+                var userDetails = _unitOfWork.User.GetUserDetails().Where(e => e.Email == user.Email).FirstOrDefault();
+                var password = user.Password;
+                var encryptedPassword = _utility.Encodepass(password);
                 if (userDetails == null)
                 {
                     ModelState.AddModelError("email", "Email is Not Register");

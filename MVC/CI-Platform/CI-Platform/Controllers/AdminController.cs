@@ -78,11 +78,13 @@ namespace CI_Platform.Controllers
             var userEmail = HttpContext.Session.GetString("userEmail");
             var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
             if(userEmail == null)
-            {  
+            {
+                TempData["error"] = "Please Login First";
                 return RedirectToAction("login", "Authentication");
             }
             else if(loggedinUser.Role == "USER")
             {
+                TempData["error"] = "Sorry! You Can't Access";
                 return RedirectToAction("UnAuthorize", "Authentication");
             }
             else
@@ -105,10 +107,12 @@ namespace CI_Platform.Controllers
             var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
             if (userEmail == null)
             {
+                TempData["error"] = "Please Login First";
                 return RedirectToAction("login", "Authentication");
             }
             else if (loggedinUser.Role == "USER")
             {
+                TempData["error"] = "Sorry! You Can't Access";
                 return RedirectToAction("UnAuthorize", "Authentication");
             }
             else
@@ -131,10 +135,12 @@ namespace CI_Platform.Controllers
             var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
             if (userEmail == null)
             {
+                TempData["error"] = "Please Login First";
                 return RedirectToAction("login", "Authentication");
             }
             else if (loggedinUser.Role == "USER")
             {
+               
                 return RedirectToAction("UnAuthorize", "Authentication");
             }
             else
@@ -157,6 +163,7 @@ namespace CI_Platform.Controllers
             var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
             if (userEmail == null)
             {
+                TempData["error"] = "Please Login First";
                 return RedirectToAction("login", "Authentication");
             }
             else if (loggedinUser.Role == "USER")
@@ -183,6 +190,7 @@ namespace CI_Platform.Controllers
             var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
             if (userEmail == null)
             {
+                TempData["error"] = "Please Login First";
                 return RedirectToAction("login", "Authentication");
             }
             else if (loggedinUser.Role == "USER")
@@ -208,6 +216,7 @@ namespace CI_Platform.Controllers
             var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
             if (userEmail == null)
             {
+                TempData["error"] = "Please Login First";
                 return RedirectToAction("login", "Authentication");
             }
             else if (loggedinUser.Role == "USER")
@@ -233,6 +242,7 @@ namespace CI_Platform.Controllers
             var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
             if (userEmail == null)
             {
+                TempData["error"] = "Please Login First";
                 return RedirectToAction("login", "Authentication");
             }
             else if (loggedinUser.Role == "USER")
@@ -258,6 +268,7 @@ namespace CI_Platform.Controllers
             var loggedinUser = _unitOfWork.User.GetFirstOrDefault(user => user.Email == userEmail);
             if (userEmail == null)
             {
+                TempData["error"] = "Please Login First";
                 return RedirectToAction("login", "Authentication");
             }
             else if (loggedinUser.Role == "USER")
@@ -284,6 +295,7 @@ namespace CI_Platform.Controllers
             var timesheets = _unitOfWork.TimeSheet.GetTimesheetDetails().Where(timesheet => timesheet.DeletedAt == null);
             if (userEmail == null)
             {
+                TempData["error"] = "Please Login First";
                 return RedirectToAction("login", "Authentication");
             }
             else if (loggedinUser.Role == "USER")
@@ -311,6 +323,7 @@ namespace CI_Platform.Controllers
             var comments = _unitOfWork.Comment.GetAllComments();
             if (userEmail == null)
             {
+                TempData["error"] = "Please Login First";
                 return RedirectToAction("login", "Authentication");
             }
             else if (loggedinUser.Role == "USER")
@@ -335,9 +348,7 @@ namespace CI_Platform.Controllers
                 user.DeletedAt = DateTime.Now;
                 _unitOfWork.User.Update(user);
                 _unitOfWork.save();
-
-
-
+                TempData["success"] = "User Deleted Successfully";
                 return RedirectToAction("UserAdminTab");
             }
             if (CmsPageId != 0)
@@ -347,7 +358,7 @@ namespace CI_Platform.Controllers
                 cmspageDetail.DeletedAt = DateTime.Now;
                 _unitOfWork.CMSPage.Update(cmspageDetail);
                 _unitOfWork.save();
-
+                TempData["success"] = "CMSPage Deleted Successfully";
                 return RedirectToAction("CMSPageAdminTab");
             }
             if (missionId != 0)
@@ -357,8 +368,7 @@ namespace CI_Platform.Controllers
                 missionDetail.DeletedAt = DateTime.Now;
                 _unitOfWork.Mission.Update(missionDetail);
                 _unitOfWork.save();
-
-
+                TempData["success"] = "Mission Deleted Successfully";
                 return RedirectToAction("MissionAdminTab");
             }
             if(storyId != 0)
@@ -368,6 +378,7 @@ namespace CI_Platform.Controllers
                 storyDetails.DeletedAt = DateTime.Now;
                 _unitOfWork.Story.Update(storyDetails);
                 _unitOfWork.save();
+                TempData["success"] = "Story Deleted Successfully";
                 return RedirectToAction("StoryAdminTab");
             }
             if (bannerId != 0)
@@ -376,6 +387,7 @@ namespace CI_Platform.Controllers
                 bannerDetails.DeletedAt = DateTime.Now;
                 _unitOfWork.Banner.Update(bannerDetails);
                 _unitOfWork.save();
+                TempData["success"] = "Banner Deleted Successfully";
                 return RedirectToAction("BannerManagementAdminTab");
             }
             if(TimesheetId != 0)
@@ -384,9 +396,11 @@ namespace CI_Platform.Controllers
                 timesheetDetail.DeletedAt = DateTime.Now;
                 _unitOfWork.TimeSheet.Update(timesheetDetail);
                 _unitOfWork.save();
+                TempData["success"] = "Timesheet Deleted Successfully";
                 return RedirectToAction("TimesheetAdminTab");
 
             }
+            
             return RedirectToAction("UserAdminTab");
         }
 
@@ -400,6 +414,7 @@ namespace CI_Platform.Controllers
                 missionApplicationDetail.UpdatedAt = DateTime.Now;
                 _unitOfWork.MissionApplication.Update(missionApplicationDetail);
                 _unitOfWork.save();
+                TempData["success"] = "Mission Approved Successfully";
                 return RedirectToAction("MissionApplicationAdminTab", "Admin");
             }
             if (skillId != 0)
@@ -409,6 +424,7 @@ namespace CI_Platform.Controllers
                 skillDetail.UpdatedAt = DateTime.Now;
                 _unitOfWork.Skill.Update(skillDetail);
                 _unitOfWork.save();
+                TempData["success"] = "Skills Approved Successfully";
                 return RedirectToAction("MissionSkillsAdminTab", "Admin");
             }
 
@@ -419,6 +435,7 @@ namespace CI_Platform.Controllers
                 missionThemeDetails.UpdatedAt = DateTime.Now;
                 _unitOfWork.Theme.Update(missionThemeDetails);
                 _unitOfWork.save();
+                TempData["success"] = "Theme Approved Successfully";
                 return RedirectToAction("MissionThemeAdminTab");
 
             }
@@ -429,6 +446,7 @@ namespace CI_Platform.Controllers
                 storyDetails.UpdatedAt = DateTime.Now;
                 _unitOfWork.Story.Update(storyDetails);
                 _unitOfWork.save();
+                TempData["success"] = "Story Approved Successfully";
                 return RedirectToAction("StoryAdminTab");
             }
             if (timesheetId != 0)
@@ -438,6 +456,7 @@ namespace CI_Platform.Controllers
                 timesheetDetails.UpdatedAt = DateTime.Now;
                 _unitOfWork.TimeSheet.Update(timesheetDetails);
                 _unitOfWork.save();
+                TempData["success"] = "Timesheet Approved Successfully";
                 return RedirectToAction("TimesheetAdminTab");
             }
             if (commentId != 0)
@@ -447,6 +466,7 @@ namespace CI_Platform.Controllers
                 commentDetails.UpdatedAt = DateTime.Now;
                 _unitOfWork.Comment.Update(commentDetails);
                 _unitOfWork.save();
+                TempData["success"] = "Comment Approved Successfully";
                 return RedirectToAction("AdminCommentTab");
             }
             return RedirectToAction("UserAdminTab");
@@ -461,6 +481,7 @@ namespace CI_Platform.Controllers
                 missionApplicationDetail.UpdatedAt = DateTime.Now;
                 _unitOfWork.MissionApplication.Update(missionApplicationDetail);
                 _unitOfWork.save();
+                TempData["success"] = "Comment DisApproved Successfully";
                 return RedirectToAction("MissionApplicationAdminTab", "Admin");
 
             }
@@ -471,6 +492,7 @@ namespace CI_Platform.Controllers
                 skillDetail.UpdatedAt = DateTime.Now;
                 _unitOfWork.Skill.Update(skillDetail);
                 _unitOfWork.save();
+                TempData["success"] = "Skill DisApproved Successfully";
                 return RedirectToAction("MissionSkillsAdminTab", "Admin");
             }
             if (missionThemeId != 0)
@@ -480,7 +502,7 @@ namespace CI_Platform.Controllers
                 missionThemeDetails.UpdatedAt = DateTime.Now;
                 _unitOfWork.Theme.Update(missionThemeDetails);
                 _unitOfWork.save();
-
+                TempData["success"] = "Theme DisApproved Successfully";
                 return RedirectToAction("MissionThemeAdminTab");
 
             }
@@ -491,6 +513,7 @@ namespace CI_Platform.Controllers
                 storyDetails.UpdatedAt = DateTime.Now;
                 _unitOfWork.Story.Update(storyDetails);
                 _unitOfWork.save();
+                TempData["success"] = "Story DisApproved Successfully";
                 return RedirectToAction("StoryAdminTab");
             }
             if (timesheetId != 0)
@@ -500,6 +523,7 @@ namespace CI_Platform.Controllers
                 timesheetDetails.UpdatedAt = DateTime.Now;
                 _unitOfWork.TimeSheet.Update(timesheetDetails);
                 _unitOfWork.save();
+                TempData["success"] = "Timesheet DisApproved Successfully";
                 return RedirectToAction("TimesheetAdminTab");
             }
             if (commentId != 0)
@@ -509,6 +533,7 @@ namespace CI_Platform.Controllers
                 commentDetails.UpdatedAt = DateTime.Now;
                 _unitOfWork.Comment.Update(commentDetails);
                 _unitOfWork.save();
+                TempData["success"] = "Comment DisApproved Successfully";
                 return RedirectToAction("AdminCommentTab");
             }
             return RedirectToAction("UserAdminTab");

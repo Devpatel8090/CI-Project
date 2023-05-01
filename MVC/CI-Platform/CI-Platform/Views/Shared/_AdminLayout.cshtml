@@ -13,6 +13,7 @@
     
      <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
      <link rel ="stylesheet" href="~/css/addMyStroy.css" />
+     <link rel ="stylesheet" href="~/css/Admin.css" />
      <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
@@ -20,7 +21,7 @@
     <link rel="stylesheet" href="~/DataTable/css/responsive.dataTables.min.css" >
      
      <style>
-            .nav-pills .nav-link.active, .nav-pills .show>.nav-link{ 
+           /* .nav-pills .nav-link.active, .nav-pills .show>.nav-link{ 
                 background-color: #FFFFFF ; 
                 color: #F88634;
                 
@@ -37,6 +38,14 @@
                 background-color: #F88634;
                 border-color:#F88634;
             }
+
+            .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+                background-color: #FFFFFF;
+                color: #F88634;
+                width:50px;
+                
+            }*/
+
            /* .paginate_button{
                color:#F88634;
                 background-color: #F88634;
@@ -55,45 +64,46 @@
         
         <div class="orange__color col-2 nav flex-column nav-pills min-vh-100 position-sticky top-0" id="AllAdminTabsList" role="tablist" aria-orientation="vertical">
          
-            <span class="text-white ms-4 mt-5 pt-5  mb-2">Navigation</span>
-            <a class="nav-link text-start activeBtn ms-2 me-2 mb-2" id="UserTab" asp-controller="Admin" asp-action="UserAdminTab" type="button" role="tab" aria-controls="v-pills-home" >
+            <span class="text-white d-none d-md-inline ms-4 mt-5 pt-5  mb-2">Navigation</span>
+            <span class="text-white d-md-none ms-3 mt-5 pt-5  mb-2">Nav</span>
+            <a class="nav-link text-start activeBtn ms-md-2 me-2 mb-2" id="UserTab" asp-controller="Admin" asp-action="UserAdminTab" type="button" role="tab" aria-controls="v-pills-home" >
               <i class="bi bi-person ms-2"></i>   
               <span class="d-md-inline d-none">User</span>
             </a>
-            <a class="nav-link mb-2 text-start  ms-2 me-2" id="CMSPageTab" asp-controller="Admin" asp-action="CMSPageAdminTab" type="button" role="tab" aria-controls="v-pills-profile" >
+            <a class="nav-link mb-2 text-start  ms-md-2 me-2" id="CMSPageTab" asp-controller="Admin" asp-action="CMSPageAdminTab" type="button" role="tab" aria-controls="v-pills-profile" >
               <i class="bi bi-file-earmark-text"></i>   
               <span class="d-md-inline d-none">CMS Page</span>
             </a>
-            <a class="nav-link mb-2 text-start ms-2 me-2" id="MissionTab" asp-controller="Admin" asp-action="MissionAdminTab" type="button" role="tab" aria-controls="v-pills-messages" >
+            <a class="nav-link mb-2 text-start ms-md-2 me-2" id="MissionTab" asp-controller="Admin" asp-action="MissionAdminTab" type="button" role="tab" aria-controls="v-pills-messages" >
               <i class="bi bi-bullseye"></i> 
               <span class="d-md-inline d-none">Mission</span>
             </a>
-            <a class="nav-link mb-2 text-start ms-2 me-2" id="MissionThemeTab" asp-controller="Admin" asp-action="MissionThemeAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
+            <a class="nav-link mb-2 text-start ms-md-2 me-2" id="MissionThemeTab" asp-controller="Admin" asp-action="MissionThemeAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
               <i class="bi bi-grid-1x2"></i> 
               <span class="d-md-inline d-none">Mission Theme</span>
             </a>
               
-            <a class="nav-link mb-2 text-start ms-2 me-2" id="MissionSkillsTab" asp-controller="Admin" asp-action="MissionSkillsAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
+            <a class="nav-link mb-2 text-start ms-md-2 me-2" id="MissionSkillsTab" asp-controller="Admin" asp-action="MissionSkillsAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
                 <i class="bi bi-tools"></i> 
                 <span class="d-md-inline d-none">Mission Skills </span>
             </a>                                                                                                                                                                                                           
-            <a class="nav-link mb-2 text-start ms-2 me-2" id="MissionApplicationTab" asp-controller="Admin" asp-action="MissionApplicationAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
+            <a class="nav-link mb-2 text-start ms-md-2 me-2" id="MissionApplicationTab" asp-controller="Admin" asp-action="MissionApplicationAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
               <i class="bi bi-folder2"></i>              
               <span class="d-md-inline d-none">Mission Application</span>
             </a>
-            <a class="nav-link mb-2 text-start ms-2 me-2" id="StoryTab" asp-controller="Admin" asp-action="StoryAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
+            <a class="nav-link mb-2 text-start ms-md-2 me-2" id="StoryTab" asp-controller="Admin" asp-action="StoryAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
               <i class="bi bi-journal-medical"></i>              
               <span class="d-md-inline d-none">Story</span>
             </a>
-            <a class="nav-link mb-2 text-start ms-2 me-2" id="BannerManagementTab" asp-controller="Admin" asp-action="BannerManagementAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
+            <a class="nav-link mb-2 text-start ms-md-2 me-2" id="BannerManagementTab" asp-controller="Admin" asp-action="BannerManagementAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
               <i class="bi bi-emoji-wink"></i>              
               <span class="d-md-inline d-none">Banner Management</span>
             </a>
-            <a class="nav-link mb-2 text-start ms-2 me-2" id="TimesheetTab" asp-controller="Admin" asp-action="TimesheetAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
+            <a class="nav-link mb-2 text-start ms-md-2 me-2" id="TimesheetTab" asp-controller="Admin" asp-action="TimesheetAdminTab" type="button" role="tab" aria-controls="v-pills-settings" >
               <i class="bi bi-list-task"></i>              
               <span class="d-md-inline d-none">Timesheets</span>
             </a>
-            <a class="nav-link mb-2 text-start ms-2 me-2" id="CommentsTab" asp-controller="Admin" asp-action="AdminCommentTab" type="button" role="tab" aria-controls="v-pills-settings" >
+            <a class="nav-link mb-2 text-start ms-md-2 me-2" id="CommentsTab" asp-controller="Admin" asp-action="AdminCommentTab" type="button" role="tab" aria-controls="v-pills-settings" >
               <i class="bi bi-receipt-cutoff"></i>              
               <span class="d-md-inline d-none">Comments</span>
             </a>
