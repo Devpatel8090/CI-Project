@@ -34,7 +34,6 @@
 
 /* Recommendation to Co-worker */
 
-
 function recomendtoyourfriend() {
 
     var userDetails = event.target.getAttribute("value");

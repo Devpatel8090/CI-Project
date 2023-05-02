@@ -22,6 +22,9 @@
     <link rel="stylesheet" href="~/css/landingpage.css">
     <link rel="stylesheet" href="~/css/Carousel.css" />
      <link rel="stylesheet" href="~/css/volunteeringMissionPage.css">
+     
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+  
    
    @* 
     <script>
@@ -725,7 +728,8 @@
 
                         <div class="row row-cols-3 ">
                           
-                        @{   @foreach (var item in Model.RecentVolunteers.Where(volunteer => volunteer.ApprovalStatus == "APPROVED" && volunteer.UserId != Model.user.UserId))
+                        @{
+                            @foreach (var item in Model.RecentVolunteers.Where(volunteer => volunteer.ApprovalStatus == "APPROVED" && volunteer.UserId != Model.user.UserId))
                              {
                                     <div class="col d-flex flex-column align-items-center justify-content-center recent-vol">
                                 <img src="@item.User.Avatar" class="rounded-circle " height="50" width="50" />
@@ -1162,11 +1166,6 @@
 
 
 
-
-
-
-
-
                 <!-- Recommendation Modal -->
             <div class="modal fade " id="RecomendModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -1227,6 +1226,8 @@
             </div>
 
 
+       
+
     <script>
 
         function openNav() {
@@ -1266,9 +1267,10 @@
     </script>
    
    
-    
+   
      <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="~/js/VolunteeringPage.js" ></script>
     <script src="~/js/site.js" ></script>
    

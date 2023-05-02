@@ -429,6 +429,9 @@
                         <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
                         </svg> Camera
                   </button>
+                  <figure>
+                    <img src=@Model.user.Avatar class="rounded-circle" id="ImageChooseFile" width="120" height="120" alt="">                    
+                </figure>
      
                   <label> </label>
                   <input type="file" name="files" id="file" class="d-none" accept="image/gif, image/jpeg, image/png" />
@@ -469,14 +472,22 @@
         }
     </script>
 
-@* <script>
+ <script>
+      var selectedImage = document.getElementById("ImageChooseFile");
             $('#file').change(function() {
-               
           var i = $(this).prev('label').clone();
           var file = $('#file')[0].files[0].name;
+          console.log($('#file')[0].files[0]);
+          selectedImage.setAttribute("src", URL.createObjectURL($('#file')[0].files[0]));
           $(this).prev('label').text(file);
         });
-    </script>*@
+    </script>
+    <script>
+        //var uploadButton = $('#file');
+        
+        //uploadButton.onchange = () => {
+        //}
+     </script>
 
 @section Scripts{
     @{

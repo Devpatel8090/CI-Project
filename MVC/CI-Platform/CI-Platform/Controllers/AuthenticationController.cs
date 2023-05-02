@@ -131,8 +131,6 @@ namespace CI_Platform.Controllers
             ViewBag.Banners = _unitOfWork.Banner.GetAll().Where(banner => banner.DeletedAt == null);
             return View();
         }
-
-
         
       
 
@@ -173,12 +171,8 @@ namespace CI_Platform.Controllers
                     SendEmail(email, userEmailOptions);
 
 
-
-
                     TempData["success"] = "Now Check your mail box to reset password";
                     return RedirectToAction("login","Authentication");
-
-
                 }
                 else
                 {
@@ -187,7 +181,7 @@ namespace CI_Platform.Controllers
                 }
             }
 
-
+            ViewBag.Banners = _unitOfWork.Banner.GetAll().Where(banner => banner.DeletedAt == null);
             return View();
         }
 
@@ -259,10 +253,13 @@ namespace CI_Platform.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (obj.password == obj.confirmpassword)
+                var encryptedPassword = _utility.Encodepass(obj.password);
+                var encryptedConfirmPassword = _utility.Encodepass(obj.confirmpassword);
+
+                if (encryptedPassword == encryptedConfirmPassword)
                 {
                     var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == obj.email);
-                    user.Password = obj.password;
+                    user.Password = encryptedPassword;
                     _unitOfWork.User.Update(user);
                     _unitOfWork.save();
                     return RedirectToAction("login", "Authentication");
@@ -276,13 +273,6 @@ namespace CI_Platform.Controllers
                 }
             }
             return View();
-
         }
-
-     
-       
-
-
-
     }
 }

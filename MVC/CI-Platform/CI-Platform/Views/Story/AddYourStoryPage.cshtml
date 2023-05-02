@@ -12,6 +12,8 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
 
 
 
+ <script src="~/js/addMyStory.js" asp-append-version="true"></script>
+
 
 <div class="container">
     <h1 class="sharestoryheader mb-4">Share your story</h1> 
@@ -96,10 +98,10 @@ Layout = "~/Views/Shared/_StoryHeader.cshtml";
         </div>
         <div class="d-flex flex-column flex-sm-row gap-1 justify-content-between">
             <div>
-                <button type="button" class="px-4 py-1 px-md-5  text-center  rounded-pill bg-white border-2 border-secondary">Cancel</button>
+                <a type="button" asp-action="StoryListingPage" asp-controller="Story" class="px-4 py-1 px-md-5  text-center text-decoration-none  rounded-pill bg-white border-2 orage_color border-secondary">Cancel</a>
             </div>
             <div class="d-flex flex-row gap-1 justify-content-between flex-warp">
-                     <button disabled style="opacity:0.5;"   type="button" class="px-4 py-1 px-md-5  orage_color rounded-pill bg-white border-2" id="StoryPreviewButton" >Preview</button>
+                     <a disabled style="opacity:0.5;"   type="button" class="px-4 py-1 px-md-5  orage_color rounded-pill bg-white border-2 text-decoration-none" id="StoryPreviewButton" >Preview</a>
                    <button type="button" class="px-4 py-1 px-md-5 orage_color rounded-pill bg-white border-2 "  onclick="return StorySave()">Save</button>
                 <button disabled style="opacity:0.5;"  type="submit" class="px-4 py-1 px-md-5  orage_color rounded-pill bg-white border-2 " onclick=" textareaval()"   id="StorySubmitButton"  >Submit</button>
             </div>

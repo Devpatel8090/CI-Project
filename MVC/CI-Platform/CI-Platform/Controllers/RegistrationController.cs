@@ -164,22 +164,25 @@ namespace CI_Platform.Controllers
             
                 var emailFromSession = HttpContext.Session.GetString("userEmail");
                 var user = _unitOfWork.User.GetFirstOrDefault(e => e.Email == emailFromSession);
-                if (profile.OldPassword == user.Password && user != null)
+               
+                var encryptedOldPassword = _utility.Encodepass(profile.OldPassword);
+                var encryptedNewPassword = _utility.Encodepass(profile.NewPassword);
+                var encryptedConfirmPassword = _utility.Encodepass(profile.NewPassword);
+
+                if (encryptedOldPassword == user.Password &&  user != null)
                 {
-                    if(profile.ConfirmPassword == profile.NewPassword)
+                    if (encryptedConfirmPassword == encryptedNewPassword)
                     {
-                        user.Password = profile.ConfirmPassword;
+                        user.Password = encryptedConfirmPassword;
                         user.UpdatedAt = DateTime.Now;
                         _unitOfWork.User.Update(user);
                         _unitOfWork.save();
-                        TempData["success"] = "Yey! Password has been added Successfully";
+                        TempData["success"] = "Yey! Password has been Changed Successfully";
                     }
                     else
                     {
                     TempData["error"] = "New Password and Cofirm Password Doesn't match";
                     }
-
-               
                
                 }
                 else

@@ -864,6 +864,7 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.Avatar)
                 .HasMaxLength(2048)
                 .IsUnicode(false)
+                .HasDefaultValueSql("('\\images\\UserAvtarImages\\user1.png')")
                 .HasColumnName("avatar");
             entity.Property(e => e.CityId)
                 .HasDefaultValueSql("((1))")
@@ -912,7 +913,7 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnName("profile_text");
             entity.Property(e => e.Role)
                 .HasMaxLength(50)
-                .HasDefaultValueSql("(user_name())")
+                .HasDefaultValueSql("('USER')")
                 .HasColumnName("role");
             entity.Property(e => e.Status)
                 .HasDefaultValueSql("((1))")

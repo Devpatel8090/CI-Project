@@ -47,7 +47,8 @@ ViewData["Title"] = "Registration";
 
           <div class="mb-1 mb-sm-3">
             <h6><label asp-for="User.Password" class="form-label">Password</label></h6>
-            <input type="password" asp-for="User.Password" class="form-control"  placeholder="**********" />
+            <input type="password" oninput="removeValidation()" asp-for="User.Password" class="form-control"  placeholder="**********" id="Password" />
+            <span class="text-danger" id="PasswordValidation"></span>
             <span asp-validation-for="User.Password" class="text-danger"></span>
           </div>
 
@@ -86,9 +87,16 @@ ViewData["Title"] = "Registration";
       function checkValidation() {
           var phoneNumber = $('#PhoneNumber').val();
           var regEx = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+          var password = $('#Password').val();
+          var passregEx = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
 
           if(phoneNumber.match(regEx) == null) {
               $('#PhoneNumberValidation').html("Please Enter Correct 10 digit mobile Number");
+              return false;
+          }
+          if(password.match(passregEx) ==  null){
+               $('#PasswordValidation').html("Password must have Minimum eight characters, at least one letter and one number:: Example: abcd1234 ");
               return false;
           }
       }
